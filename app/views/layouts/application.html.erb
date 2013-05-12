@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ProjectLectito</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <!-- Responeible for responsive-ness on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<%= render 'layouts/header' %>
+	<div class = "container" >
+		<div class = "row">
+			<div class = "span12">
+				<p class="label label-success"><%= notice %></p>
+				<p class="label label-important"><%= alert %></p>
+				<%= yield %>
+			</div>		
+		</div>		
+	</div>
+</body>
+</html>

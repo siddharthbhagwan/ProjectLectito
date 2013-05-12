@@ -1,0 +1,33 @@
+<h1>Current addresses</h1>
+
+<table>
+  <tr>
+    <th>Address Line 1</th>
+    <th>Address Line 2</th>
+    <th>Address Line 3</th>
+    <th>Address Line 4</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Pin</th>
+    <th>Country</th>
+  </tr>
+
+<% @address.each do |address| %>
+  <tr>
+    <td><%= address.address_line1 %></td>
+    <td><%= address.address_line2 %></td>
+    <td><%= address.address_line3 %></td>
+    <td><%= address.address_line4 %></td>
+    <td><%= address.city %></td>
+    <td><%= address.state %></td>
+    <td><%= address.pin %></td>
+    <td><%= address.country %></td>  
+    <td><%= link_to "Edit", address_edit_path(:address_id => address.id), :action => "edit", class: "btn btn-small "%></td>
+    <td><%= link_to "Delete", address_delete_path(:address_id => address.id), :action => "delete", class: "btn btn-small "%></td>
+  </tr>
+  <% end %>
+</table>
+
+<br />
+
+<%= link_to 'New address', address_new_path, class: "btn btn-small btn-primary" %>

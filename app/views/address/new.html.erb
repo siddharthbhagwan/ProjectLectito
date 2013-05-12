@@ -1,0 +1,33 @@
+<h1>Build your profile</h1>
+<%= form_for @address, :url => "create" do |f| %>
+<%= render 'error_messages' %>
+
+<%= f.label :address_line1 %>
+<%= f.text_field :address_line1, :size => 10 %>
+
+<%= f.label :address_line2 %>
+<%= f.text_field :address_line2 %></br>	
+
+<%= f.label :address_line3 %>
+<%= f.text_field :address_line3 %></br>
+	
+<%= f.label :address_line4 %>
+<%= f.text_field :address_line4 %></br>
+
+<%= f.label :city %>
+<%= f.text_field :city %></br>
+
+<%= f.label :state %>
+<%= f.text_field :state %></br>
+
+<%= f.label :pin %>
+<%= f.text_field :pin %></br>
+
+<%= f.label :country %>
+<%= f.text_field :country, :value => "India" ,:readonly => true %></br>
+
+</br></br>
+
+<%= f.submit "Create", class: "btn btn-large btn-primary" %>
+
+<% end %>

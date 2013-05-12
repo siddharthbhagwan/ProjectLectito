@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  house_no: MyString
+  bldg: MyString
+  street: MyString
+  area: MyString
+  city: MyString
+  state: MyString
+  pin: 1
+  country: MyString
+
+two:
+  house_no: MyString
+  bldg: MyString
+  street: MyString
+  area: MyString
+  city: MyString
+  state: MyString
+  pin: 1
+  country: MyString
