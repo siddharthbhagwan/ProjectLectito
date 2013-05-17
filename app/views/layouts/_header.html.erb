@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a class="brand" href="/users/sign_in">Project Lectito</a>
+			<a class="brand" href="/home">Project Lectito</a>
 			<div class="nav-collapse">
 				<ul class="nav">
 					<% if user_signed_in? %>
@@ -15,7 +15,8 @@
 						<% end %>	
 						<li><%= link_to "Home" , home_path %></li>
 						<!--<li><%= link_to "Edit Profile" , edit_user_registration_path  %></li> -->
-						<li><%= link_to "Build Profile" , profile_new_path  %></li>
+						
+							<li><%= link_to "Build Profile" , profile_new_path  %></li>
 						<% if current_user.has_role? :user %>
 							<li><%= link_to "Edit Profile" , profile_edit_path  %></li>
 						<% end %>

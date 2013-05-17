@@ -17,5 +17,5 @@ en:
         address_line1: "Address Line 1"
         address_line2: "Address Line 2"
         address_line3: "Address Line 3"
-        address_line4: "Address Line 4"
+      #  address_line4: "Address Line 4"
       # will translate User attribute "login" as "Handle"

@@ -1,4 +1,7 @@
 class AddressController < ApplicationController
+  load_and_authorize_resource :class => Address
+  autocomplete :location, :area , :full => true, :extra_data => [:city, :state, :pincode], :data => { :no_matches_label => "" }
+
   def new
   	@address = Address.new
   end
@@ -30,5 +33,8 @@ class AddressController < ApplicationController
   def delete
     @address = Address.find(params[:address_id])
     @address.destroy
+    redirect_to address_view_path
+    flash[:info] = "The Address has been deleted"
   end
+
 end

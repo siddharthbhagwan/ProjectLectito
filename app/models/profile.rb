@@ -9,7 +9,4 @@ class Profile < ActiveRecord::Base
 
   validates_inclusion_of :gender, :in => %w( M F ), :message => " can only be 'M' or 'F'"
 
-  def getStatus
-  	profile_status
-  end
 end

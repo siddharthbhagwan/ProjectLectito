@@ -15,10 +15,10 @@ Gender </br>
 <%= f.radio_button :gender, "F" %><p>Female</p>
 
 <%= f.label "Date", "Date Of Birth" %>
-<%= f.date_select :DoB, :start_year => 1950, :order => [:day, :month, :year], :end_year =>2000, :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'} %>
+<%= f.date_select :DoB, :start_year => 1950, :order => [:day, :month, :year], :end_year =>2000, :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'}, :use_short_month => :true %>
 
 </br></br>
 
-<%= f.submit "Proceed To Address", class: "btn btn-large " %>
+<%= f.submit "Proceed To Address", class: "btn btn-small " %>
 
 <% end %>

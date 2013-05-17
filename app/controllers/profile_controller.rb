@@ -1,5 +1,5 @@
 class ProfileController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :class => Profile
   def new
   	@profile = Profile.new
   end
@@ -25,5 +25,8 @@ class ProfileController < ApplicationController
 
   def edit
     @profile = Profile.find_by_user_id(current_user.id)
+    if @profile.nil?
+      redirect_to new_profile_path
+    end
   end
 end

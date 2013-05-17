@@ -11,23 +11,24 @@
 <%= f.label :address_line3 %>
 <%= f.text_field :address_line3 %></br>
 	
-<%= f.label :address_line4 %>
-<%= f.text_field :address_line4 %></br>
+<%= f.label :locality %>
+<%= f.autocomplete_field :locality, address_autocomplete_location_area_path, :id_element => '', :update_elements => {:city => '#address_city',:state => '#address_state', :pincode => '#address_pin' } %></br>
+
 
 <%= f.label :city %>
-<%= f.text_field :city %></br>
+<%= f.text_field :city, :readonly => true %></br>
 
 <%= f.label :state %>
-<%= f.text_field :state %></br>
+<%= f.text_field :state, :readonly => true %></br>
 
 <%= f.label :pin %>
-<%= f.text_field :pin %></br>
+<%= f.text_field :pin, :readonly => true %></br>
 
 <%= f.label :country %>
 <%= f.text_field :country, :value => "India" ,:readonly => true %></br>
 
 </br></br>
 
-<%= f.submit "Update", class: "btn btn-large btn-primary" %>
+<%= f.submit "Update", class: "btn btn-small" %>
 
 <% end %>

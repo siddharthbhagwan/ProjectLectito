@@ -5,13 +5,15 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'pg'
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'cancan', '1.6.7'
 gem 'role_model'
+gem 'rack'
+gem 'rails3-jquery-autocomplete'
 
 
 # Gems used only for assets and not required

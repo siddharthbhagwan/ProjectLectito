@@ -1,5 +1,7 @@
 class AdminController < ApplicationController
-	def view
+	authorize_resource :class => false
+
+	def admin_view
 		@profile = Profile.all
 	end
 
@@ -7,6 +9,6 @@ class AdminController < ApplicationController
 		@profile = Profile.all
 	end
 
-	def permissions
+	def admin_index
 	end
 end
