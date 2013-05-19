@@ -1,0 +1,223 @@
+LOG:  could not bind IPv4 socket: Address already in use
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+LOG:  could not bind IPv6 socket: Address already in use
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+LOG:  could not bind IPv6 socket: Address already in use
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+WARNING:  could not create listen socket for "localhost"
+FATAL:  could not create any TCP/IP sockets
+LOG:  could not bind IPv6 socket: Address already in use
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+LOG:  could not bind IPv4 socket: Address already in use
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+LOG:  could not bind IPv6 socket: Address already in use
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+WARNING:  could not create listen socket for "localhost"
+FATAL:  could not create any TCP/IP sockets
+LOG:  database system was shut down at 2013-05-12 20:11:59 IST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  relation "users" does not exist at character 315
+STATEMENT:              SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod
+	              FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	             WHERE a.attrelid = '"users"'::regclass
+	               AND a.attnum > 0 AND NOT a.attisdropped
+	             ORDER BY a.attnum
+	
+ERROR:  column "uid" of relation "users" already exists
+STATEMENT:  ALTER TABLE "users" RENAME COLUMN "id" TO "uid"
+ERROR:  integer out of range
+STATEMENT:  INSERT INTO "profiles" ("id", "user_first_name", "user_last_name", "DoB", "gender", "created_at", "updated_at", "user_id", "profile_status", "user_phone_no", "current_status", "last_update") VALUES (29, 'Siddharth', 'Bhagwan', '1953-03-05', 'M', '2013-05-05 10:21:45.924494+0000', '2013-05-11 11:16:25.334281+0000', 17, 'C', 9637396836, NULL, NULL), (31, 'T', 'S', '1954-02-05', 'M', '2013-05-05 12:54:52.686348+0000', '2013-05-05 12:54:52.686348+0000', NULL, NULL, NULL, NULL, NULL), (32, 'Toshal', 'Sakhare', '1950-04-04', 'F', '2013-05-05 15:25:58.971593+0000', '2013-05-08 09:05:19.964316+0000', 18, NULL, 9960098833, NULL, NULL)
+ERROR:  value "9637396836" is out of range for type integer
+STATEMENT:  INSERT INTO "profiles" ("DoB", "created_at", "current_status", "gender", "last_update", "profile_status", "updated_at", "user_first_name", "user_id", "user_last_name", "user_phone_no") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"
+ERROR:  relation "profile" does not exist
+STATEMENT:  ALTER TABLE "profile" ALTER COLUMN "user_phone_no" TYPE character varying(255)
+ERROR:  integer out of range
+STATEMENT:  INSERT INTO "profiles" ("id", "user_first_name", "user_last_name", "DoB", "gender", "created_at", "updated_at", "user_id", "profile_status", "user_phone_no", "current_status", "last_update") VALUES (29, 'Siddharth', 'Bhagwan', '1953-03-05', 'M', '2013-05-05 10:21:45.924494+0000', '2013-05-11 11:16:25.334281+0000', 17, 'C', 9637396836, NULL, NULL), (31, 'T', 'S', '1954-02-05', 'M', '2013-05-05 12:54:52.686348+0000', '2013-05-05 12:54:52.686348+0000', NULL, NULL, NULL, NULL, NULL), (32, 'Toshal', 'Sakhare', '1950-04-04', 'F', '2013-05-05 15:25:58.971593+0000', '2013-05-08 09:05:19.964316+0000', 18, NULL, 9960098833, NULL, NULL)
+ERROR:  value "9637396836" is out of range for type integer
+STATEMENT:  INSERT INTO "profiles" ("DoB", "created_at", "current_status", "gender", "last_update", "profile_status", "updated_at", "user_first_name", "user_id", "user_last_name", "user_phone_no") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"
+ERROR:  operator does not exist: character varying = integer at character 68
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT "addresses".* FROM "addresses"  WHERE "addresses"."user_id" = 17
+ERROR:  operator does not exist: character varying = integer at character 68
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT "addresses".* FROM "addresses"  WHERE "addresses"."user_id" = 17
+ERROR:  operator does not exist: character varying = integer at character 68
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT "addresses".* FROM "addresses"  WHERE "addresses"."user_id" = 19
+ERROR:  operator does not exist: character varying = integer at character 68
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT "addresses".* FROM "addresses"  WHERE "addresses"."user_id" = 19
+ERROR:  operator does not exist: character varying = integer at character 68
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT "addresses".* FROM "addresses"  WHERE "addresses"."user_id" = 19
+ERROR:  operator does not exist: character varying = integer at character 68
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT "addresses".* FROM "addresses"  WHERE "addresses"."user_id" = 19
+ERROR:  column "user_id" cannot be cast automatically to type integer
+HINT:  Specify a USING expression to perform the conversion.
+STATEMENT:  ALTER TABLE "addresses" ALTER COLUMN "user_id" TYPE integer
+ERROR:  column "user_id" cannot be cast automatically to type integer
+HINT:  Specify a USING expression to perform the conversion.
+STATEMENT:  ALTER TABLE "addresses" ALTER COLUMN "user_id" TYPE integer
+ERROR:  column "user_id" cannot be cast automatically to type integer
+HINT:  Specify a USING expression to perform the conversion.
+STATEMENT:  ALTER TABLE "addresses" ALTER COLUMN "user_id" TYPE integer
+ERROR:  syntax error at end of input at character 110
+STATEMENT:  
+	        alter table addresses
+	        alter column user_id type integer using cast(user_id as integer),
+	    
+ERROR:  syntax error at or near "SELECT" at character 8
+STATEMENT:  select
+	SELECT 
+	SELECT * FROM USERS
+	SELECT * FROM USERS;
+ERROR:  syntax error at or near "SELECT" at character 18
+STATEMENT:  select version()
+	SELECT version()
+	SELECT version();
+ERROR:  syntax error at or near "select" at character 21
+STATEMENT:  select * from users
+	select * from users ;
+ERROR:  syntax error at or near "select" at character 21
+STATEMENT:  select * from USERS
+	select * from profiles
+	select * from addresses
+	SELECT "users".* FROM "users"
+	SELECT "users".* FROM "users";
+ERROR:  relation "uers" does not exist at character 15
+STATEMENT:  SELECT * FROM UERS;
+ERROR:  column "name" does not exist at character 39
+STATEMENT:  SELECT "users".* FROM "users"  WHERE (name='s')
+LOG:  database system was interrupted; last known up at 2013-05-13 21:55:41 IST
+LOG:  database system was not properly shut down; automatic recovery in progress
+LOG:  record with zero length at 0/18CF650
+LOG:  redo is not required
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  lock file "postmaster.pid" already exists
+HINT:  Is another postmaster (PID 490) running in data directory "/usr/local/var/postgres"?
+FATAL:  role "postgres" does not exist
+FATAL:  role "postgres" does not exist
+FATAL:  role "siddharth.bhagwan" does not exist
+ERROR:  syntax error at or near "insert" at character 48
+STATEMENT:  insert into locations values ('a','a','a','a')
+	insert into locations values ('a','a','a','a');
+ERROR:  syntax error at or near "'a'" at character 24
+STATEMENT:  INSERT INTO LOCATIONS ('a','a','a','a');
+ERROR:  column "magarpatta" does not exist at character 109
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ('1', Magarpatta, Pune, Maharashtra);
+	
+ERROR:  INSERT has more target columns than expressions at character 59
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ('1', 'Magarpatta', 'Pune', 'Maharashtra');
+	
+ERROR:  INSERT has more target columns than expressions at character 68
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ('1', 'Magarpatta', 'Pune', 'Maharashtra','411028');
+	
+ERROR:  column "sysdate" does not exist at character 154
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ('1', 'Magarpatta', 'Pune', 'Maharashtra','411028',sysdate,sysdate);
+	
+ERROR:  invalid input syntax for type timestamp: "sysdate" at character 154
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ('1', 'Magarpatta', 'Pune', 'Maharashtra','411028','sysdate','sysdate');
+	
+ERROR:  duplicate key value violates unique constraint "locations_pkey"
+DETAIL:  Key (id)=(2) already exists.
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ('2', 'Shivaji Nagar', 'Pune', 'Maharashtra','411009',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+	
+ERROR:  syntax error at or near ")" at character 61
+STATEMENT:  SELECT "locations".* FROM "locations"  WHERE (area like ?%S%) ORDER BY area
+ERROR:  syntax error at or near ")" at character 62
+STATEMENT:  SELECT "locations".* FROM "locations"  WHERE (area like ?%Sh%) ORDER BY area
+ERROR:  column "pin" does not exist at character 52
+STATEMENT:  SELECT  locations.id, locations.area, city, state, pin FROM "locations"  WHERE (LOWER(locations.area) ILIKE 'maga%') ORDER BY locations.area ASC LIMIT 10
+ERROR:  column "Andheri" does not exist at character 107
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES (4, "Andheri", "Bombay", "Maharashtra", "400099", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  column "4" does not exist at character 104
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ("4", "Andheri", "Bombay", "Maharashtra", "400099", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  syntax error at or near "," at character 104
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES (, 'Akurdi', 'Pune', 'Maharashtra', '411035', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  INSERT has more target columns than expressions at character 80
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ( 'Akurdi', 'Pune', 'Maharashtra', '411035', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  invalid input syntax for integer: "" at character 105
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES ( '','Akurdi', 'Pune', 'Maharashtra', '411035', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  duplicate key value violates unique constraint "locations_pkey"
+DETAIL:  Key (id)=(1) already exists.
+STATEMENT:  INSERT INTO locations(
+	             area, city, state, pincode, created_at, updated_at)
+	    VALUES ( 'Akurdi', 'Pune', 'Maharashtra', '411035', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  null value in column "created_at" violates not-null constraint
+DETAIL:  Failing row contains (2, Akurdi, Pune, Maharashtra, 211035, null, null).
+STATEMENT:  INSERT INTO public.locations(area, city, state, pincode) VALUES ('Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text)
+ERROR:  null value in column "created_at" violates not-null constraint
+DETAIL:  Failing row contains (5, Akurdi, Pune, Maharashtra, 211035, null, null).
+STATEMENT:  INSERT INTO public.locations(id, area, city, state, pincode) VALUES ('5'::integer, 'Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text)
+ERROR:  null value in column "created_at" violates not-null constraint
+DETAIL:  Failing row contains (5, Akurdi, Pune, Maharashtra, 211035, null, null).
+STATEMENT:  INSERT INTO public.locations(id, area, city, state, pincode) VALUES ('5'::integer, 'Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text)
+ERROR:  invalid input syntax for type timestamp: "2" at character 163
+STATEMENT:  INSERT INTO public.locations(id, area, city, state, pincode, created_at) VALUES ('5'::integer, 'Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text, '2'::timestamp without time zone)
+ERROR:  invalid input syntax for type timestamp: "2" at character 175
+STATEMENT:  INSERT INTO public.locations(id, area, city, state, pincode, created_at, updated_at) VALUES ('5'::integer, 'Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text, '2'::timestamp without time zone, '2'::timestamp without time zone)
+ERROR:  invalid input syntax for type timestamp: "2" at character 175
+STATEMENT:  INSERT INTO public.locations(id, area, city, state, pincode, created_at, updated_at) VALUES ('5'::integer, 'Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text, '2'::timestamp without time zone, '2'::timestamp without time zone)
+ERROR:  invalid input syntax for type timestamp: "2" at character 175
+STATEMENT:  INSERT INTO public.locations(id, area, city, state, pincode, created_at, updated_at) VALUES ('5'::integer, 'Akurdi'::text, 'Pune'::text, 'Maharashtra'::text, '211035'::text, '2'::timestamp without time zone, '2'::timestamp without time zone)
+ERROR:  INSERT has more expressions than target columns at character 168
+STATEMENT:  INSERT INTO locations(
+	             area, city, state, pincode, created_at, updated_at)
+	    VALUES ( '5','Akurdi', 'Pune', 'Maharashtra', '411035', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  column profiles.Gender does not exist at character 44
+STATEMENT:  SELECT "profiles".* FROM "profiles"  WHERE "profiles"."Gender" = 'M'
+ERROR:  syntax error at or near "." at character 77
+STATEMENT:  SELECT "users".* FROM "users" INNER JOIN profiles on profiles.user_id = User.id
+ERROR:  missing FROM-clause entry for table "profile" at character 8
+STATEMENT:  SELECT profile.* FROM "profiles" INNER JOIN "users" ON "users"."id" = "profiles"."user_id"
+ERROR:  syntax error at or near "." at character 24
+STATEMENT:  SELECT profiles.*, user.* FROM "profiles" INNER JOIN "users" ON "users"."id" = "profiles"."user_id"
+ERROR:  syntax error at or near "." at character 24
+STATEMENT:  SELECT profiles.*, user.id FROM "profiles" INNER JOIN "users" ON "users"."id" = "profiles"."user_id"
+ERROR:  syntax error at or near "." at character 24
+STATEMENT:  SELECT profiles.*, user.email FROM "profiles" INNER JOIN "users" ON "users"."id" = "profiles"."user_id"
+ERROR:  column "profiles.id" must appear in the GROUP BY clause or be used in an aggregate function at character 8
+STATEMENT:  SELECT profiles.*, count(users.email) as user_email FROM "profiles" INNER JOIN "users" ON "users"."id" = "profiles"."user_id"
+ERROR:  column "profiles.id" must appear in the GROUP BY clause or be used in an aggregate function at character 8
+STATEMENT:  SELECT profiles.*, count(users.email) as user_email FROM "profiles" INNER JOIN "users" ON "users"."id" = "profiles"."user_id"
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-05-18 19:45:59 IST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started

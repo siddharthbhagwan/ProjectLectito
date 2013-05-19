@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515110306) do
+ActiveRecord::Schema.define(:version => 20130519120348) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -81,5 +81,17 @@ ActiveRecord::Schema.define(:version => 20130515110306) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "will_filter_filters", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.text     "data"
+    t.integer  "user_id"
+    t.string   "model_class_name"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "will_filter_filters", ["user_id"], :name => "index_will_filter_filters_on_user_id"
 
 end

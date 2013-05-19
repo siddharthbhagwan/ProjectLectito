@@ -161,6 +161,10 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
+    will_filter (3.1.9)
+      kaminari
+      rails (>= 3.2.3)
+      sass
 
 PLATFORMS
   ruby
@@ -184,3 +188,4 @@ DEPENDENCIES
   therubyracer
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
+  will_filter (~> 3.1.0)
