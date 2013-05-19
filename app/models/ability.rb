@@ -5,7 +5,7 @@ class Ability
     user ||= User.new # guest user (not logged in)    
     
     if user.admin?
-    	can [:admin_view, :admin_index, :admin_edit], :admin
+    	can [:admin_view, :admin_index, :admin_edit, :admin_user_details], :admin
     end
 
     if user.user?

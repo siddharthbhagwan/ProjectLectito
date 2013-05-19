@@ -14,6 +14,7 @@ gem 'cancan', '1.6.7'
 gem 'role_model'
 gem 'rack'
 gem 'rails3-jquery-autocomplete'
+gem 'kaminari'
 
 
 # Gems used only for assets and not required

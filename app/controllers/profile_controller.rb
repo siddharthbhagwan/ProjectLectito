@@ -25,8 +25,8 @@ class ProfileController < ApplicationController
 
   def edit
     @profile = Profile.find_by_user_id(current_user.id)
-    if @profile.nil?
-      redirect_to new_profile_path
+    if !@profile
+        @profile = Profile.new
     end
   end
 end

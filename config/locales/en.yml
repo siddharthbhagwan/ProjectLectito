@@ -19,3 +19,7 @@ en:
         address_line3: "Address Line 3"
       #  address_line4: "Address Line 4"
       # will translate User attribute "login" as "Handle"
+  views:
+    pagination:
+      previous: " &lt; Previous "
+      next: " Next &gt; "

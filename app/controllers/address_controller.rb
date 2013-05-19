@@ -14,6 +14,9 @@ class AddressController < ApplicationController
 
   def edit
     @address = Address.find(params[:address_id])
+    if  @address.user_id != current_user.id
+        redirect_to address_view_path, :alert => "You are not authorized to view that address"
+    end 
   end
 
   def view
@@ -32,9 +35,13 @@ class AddressController < ApplicationController
 
   def delete
     @address = Address.find(params[:address_id])
-    @address.destroy
-    redirect_to address_view_path
-    flash[:info] = "The Address has been deleted"
+    if  @address.user_id != current_user.id
+        redirect_to address_view_path, :alert => "You are not authorized to delete that address"
+    else
+        @address.destroy
+        redirect_to address_view_path
+        flash[:info] = "The Address has been deleted"
+    end
   end
 
 end
