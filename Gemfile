@@ -17,7 +17,7 @@ gem 'rails3-jquery-autocomplete'
 gem 'kaminari'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'will_filter'
-gem 'heroku'
+
 
 
 # Gems used only for assets and not required
