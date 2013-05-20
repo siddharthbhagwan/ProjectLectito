@@ -19,6 +19,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'will_filter'
 
 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

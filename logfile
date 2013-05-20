@@ -221,3 +221,34 @@ LOG:  database system is shut down
 LOG:  database system was shut down at 2013-05-18 19:45:59 IST
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+LOG:  database system was shut down at 2013-05-19 23:04:06 IST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "se" at character 1
+STATEMENT:  se;
+ERROR:  syntax error at or near "ect" at character 1
+STATEMENT:  ect * from locations
+	slsect * from locations
+	;
+ERROR:  could not open file "/Users/siddharthbhagwan/ppc.csv.xslx" for reading: No such file or directory
+STATEMENT:  COPY locations 
+	FROM '/Users/siddharthbhagwan/ppc.csv.xslx'
+	;
+ERROR:  invalid byte sequence for encoding "UTF8": 0x00
+CONTEXT:  COPY locations, line 1
+STATEMENT:  COPY locations 
+	FROM '/Users/siddharthbhagwan/ppc.csv.xlsx'
+	;
+ERROR:  invalid byte sequence for encoding "UTF8": 0x00
+CONTEXT:  COPY locations, line 1
+STATEMENT:  COPY locations 
+	FROM '/Users/siddharthbhagwan/ppc.csv.xlsx'
+	;
+ERROR:  invalid byte sequence for encoding "UTF8": 0x00
+CONTEXT:  COPY locations, line 1
+STATEMENT:  COPY locations 
+	FROM '/Users/siddharthbhagwan/ppc.csv';
+ERROR:  invalid byte sequence for encoding "UTF8": 0x00
+CONTEXT:  COPY locations, line 1
+STATEMENT:  COPY locations 
+	FROM '/Users/siddharthbhagwan/ppc.csv';
