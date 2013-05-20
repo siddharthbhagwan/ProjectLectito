@@ -14,4 +14,5 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require autocomplete-rails
-//= require custom
+//= require dataTables/jquery.dataTables
+

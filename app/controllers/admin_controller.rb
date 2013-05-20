@@ -1,15 +1,15 @@
 class AdminController < ApplicationController
-	authorize_resource :class => false
+	load_and_authorize_resource :class => User
 
-	def admin_view
-		@user = User.order("id").page(params[:page]).per(5)
+	def view
+		@user = User.all
 	end
 
 	def edit
 		@profile = Profile.all
 	end
 
-	def admin_user_details
+	def user_details
 		@user = User.find(params[:user_id])
 	end
 

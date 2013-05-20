@@ -15,7 +15,8 @@ gem 'role_model'
 gem 'rack'
 gem 'rails3-jquery-autocomplete'
 gem 'kaminari'
-
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'will_filter'
 
 
 # Gems used only for assets and not required

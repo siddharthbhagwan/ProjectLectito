@@ -6,10 +6,10 @@ ProjectLectito::Application.routes.draw do
   get "address/delete"
 
 
-  get "admin/view" => "admin#admin_view"
+  get "admin/view" => "admin#view"
   get "admin/edit" => "admin#admin_edit"
   match "admin" => "admin#admin_index"
-  get "admin/user_details" => "admin#admin_user_details"
+  get "admin/user_details" => "admin#user_details"
 
   match "address/update/:address_id" => "address#update"
   match "address/view" => "address#view"
