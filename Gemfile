@@ -19,6 +19,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'will_filter'
 gem 'twitter-bootstrap-rails'
 gem 'less-rails'
+gem 'jquery-rails'
 
 
 # Gems used only for assets and not required
@@ -30,7 +31,7 @@ group :assets do
   gem 'therubyracer'
 end
 
-gem 'jquery-rails'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
