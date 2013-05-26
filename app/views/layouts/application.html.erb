@@ -6,11 +6,6 @@
 	<%= javascript_include_tag "application" %>
 	<%= javascript_include_tag "autocomplete-rails.js" %>
 	<%= stylesheet_link_tag "jquery-ui-1.10.3.custom.css" %>
-	<script type="text/javascript" charset="utf-8">
-  		$('#address_locality').bind('railsAutocomplete.select', function(event, data){ 
-   		 alert("Check");
- 		 }); 
-	</script>
 	<%= csrf_meta_tags %>
 	<!-- Responeible for responsive-ness on mobile devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

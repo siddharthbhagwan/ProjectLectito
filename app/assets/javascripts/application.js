@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require twitter/bootstrap
-//= require_tree .
 //= require autocomplete-rails
 //= require dataTables/jquery.dataTables
-
+//= require_tree .

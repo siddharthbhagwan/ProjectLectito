@@ -2,7 +2,33 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-jQuery ->
-	$('#admin_view').dataTable()
-		sPaginationType: "full_numbers"
-		sPaginationType: "full_numbers"
+asInitVals = new Array()
+$(document).ready ->
+  oTable = $("#admin_view").dataTable(
+    oLanguage: sSearch: "Search All : "
+    sPaginationType: "full_numbers"
+  )
+
+
+  $("tfoot input").keyup ->    
+    # Filter on the column (the index) of this element 
+    oTable.fnFilter @value, $("tfoot input").index(this)
+  
+  #
+  #	 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
+  #	 * the footer
+  #	 
+  $("tfoot input").each (i) ->
+    asInitVals[i] = @value
+
+
+  $("tfoot input").focus ->
+    if @className is "search_init"
+      @className = ""
+      @value = ""
+
+  $("tfoot input").blur (i) ->
+    if @value is ""
+      @className = "search_init"
+      @value = asInitVals[$("tfoot input").index(this)]
+   

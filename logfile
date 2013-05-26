@@ -252,3 +252,19 @@ ERROR:  invalid byte sequence for encoding "UTF8": 0x00
 CONTEXT:  COPY locations, line 1
 STATEMENT:  COPY locations 
 	FROM '/Users/siddharthbhagwan/ppc.csv';
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-05-21 20:26:37 IST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "<" at character 30
+STATEMENT:  DELETE FROM locations
+	 WHERE <id =19>;
+	
+ERROR:  syntax error at or near "Pune" at character 120
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES (20, 'Kasarwadi 'Pune', 'Maharashtra', '411034', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	

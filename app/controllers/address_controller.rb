@@ -1,5 +1,8 @@
 class AddressController < ApplicationController
+  # CanCan for authorization on controller actions
   load_and_authorize_resource :class => Address
+
+  # Autocomplete for address Form
   autocomplete :location, :area , :full => true, :extra_data => [:city, :state, :pincode], :data => { :no_matches_label => "" }
 
   def new
@@ -19,10 +22,12 @@ class AddressController < ApplicationController
     end 
   end
 
+  # List all addresses
   def view
     @address = User.find(current_user.id).addresses
   end
 
+  # Create a New Address
   def create
     @address = Address.new(params[:address])
     @address.user_id = current_user.id
@@ -33,6 +38,7 @@ class AddressController < ApplicationController
     end
   end
 
+  # Delete the address of the passed Id
   def delete
     @address = Address.find(params[:address_id])
     if  @address.user_id != current_user.id

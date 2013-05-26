@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   has_one :profile
   has_many :addresses
-
+  has_many :books
 
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid, :email)).first_or_create do |user|
