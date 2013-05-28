@@ -35,8 +35,13 @@ ProjectLectito::Application.routes.draw do
   match "bookdb/update/:bookdetail_id" => "book_detail#update"
   get "bookdb/new" => "book_detail#new"
 
+  get "user_book/autocomplete_book_detail_book_name"
+  get "mybooks/view" => "user_book#view"
+  match "user_book/create" => "user_book#create"
+  get "user_book/delete"
+
   
   root :to => "home_page#home"
-  resources :profile, :address, :home_page, :admin, :book_detail
+  resources :profile, :address, :home_page, :admin, :book_detail, :user_book
 
 end

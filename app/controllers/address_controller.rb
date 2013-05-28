@@ -44,7 +44,7 @@ class AddressController < ApplicationController
     @address = Address.find(params[:address_id])
     if  @address.user_id != current_user.id
         redirect_to address_view_path
-        flash[:alert] = "You are not authorized to view that address"
+        flash[:alert] = "You are not authorized to delete that address"
     else
         @address.destroy
         redirect_to address_view_path

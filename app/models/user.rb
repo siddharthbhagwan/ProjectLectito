@@ -19,8 +19,12 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :roles_mask
   # attr_accessible :title, :body
 
+  # Associations
   has_one :profile
   has_many :addresses
+  has_many :user_books
+  has_many :book_details, :through => :user_books 
+
 
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid, :email)).first_or_create do |user|

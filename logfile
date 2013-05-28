@@ -301,3 +301,48 @@ STATEMENT:  SHOW BOOK_DETAILS;
 ERROR:  relation "postgres" does not exist at character 15
 STATEMENT:  select * from postgres
 	;
+ERROR:  column user_books.book_detail_id does not exist at character 94
+STATEMENT:  SELECT "book_details".* FROM "book_details" INNER JOIN "user_books" ON "book_details"."id" = "user_books"."book_detail_id" WHERE "user_books"."user_id" = 19
+ERROR:  column user_books.book_detail_id does not exist at character 94
+STATEMENT:  SELECT "book_details".* FROM "book_details" INNER JOIN "user_books" ON "book_details"."id" = "user_books"."book_detail_id" WHERE "user_books"."user_id" = 19
+ERROR:  relation "user_books" already exists
+STATEMENT:  CREATE TABLE "user_books" ("id" serial primary key, "user_id" integer, "bookdetail_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+ERROR:  column user_books.book_detail_id does not exist at character 94
+STATEMENT:  SELECT "book_details".* FROM "book_details" INNER JOIN "user_books" ON "book_details"."id" = "user_books"."book_detail_id" WHERE "user_books"."user_id" = 19
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN, author, language, edition, genre, mrp, pages, publisher, version FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%infer%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "author_name" does not exist at character 50
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author_name FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 58
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author, isbn FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 58
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author, isbn FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 58
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 58
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 58
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "langauage" does not exist at character 58
+STATEMENT:  SELECT  book_details.id, book_details.book_name, author, langauage FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 68
+STATEMENT:  SELECT  book_details.id, book_details.book_name, language, author, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 68
+STATEMENT:  SELECT  book_details.id, book_details.book_name, language, author, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%inf%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  column "isbn" does not exist at character 68
+STATEMENT:  SELECT  book_details.id, book_details.book_name, language, author, ISBN FROM "book_details"  WHERE (LOWER(book_details.book_name) ILIKE '%in%') ORDER BY book_details.book_name ASC LIMIT 10
+ERROR:  duplicate key value violates unique constraint "user_books_pkey"
+DETAIL:  Key (id)=(1) already exists.
+STATEMENT:  INSERT INTO "user_books" ("book_detail_id", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4) RETURNING "id"
