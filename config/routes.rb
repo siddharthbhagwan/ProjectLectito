@@ -28,12 +28,15 @@ ProjectLectito::Application.routes.draw do
   match "admin" => "admin#admin"
 
 
-  match  "book/create" => "book#create"
-  get "book/view" => "book#view"
-  match "book/edit" => "book#edit"
-  match "book/delete" => "book#delete"
-  match "book/update/:book_id" => "book#update"
+  post  "bookdb/create" => "book_detail#create"
+  get "bookdb/view" => "book_detail#view"
+  match "bookdb/edit" => "book_detail#edit"
+  match "bookdb/delete" => "book_detail#delete"
+  match "bookdb/update/:bookdetail_id" => "book_detail#update"
+  get "bookdb/new" => "book_detail#new"
+
+  
   root :to => "home_page#home"
-  resources :profile, :address, :home_page, :admin, :book
+  resources :profile, :address, :home_page, :admin, :book_detail
 
 end

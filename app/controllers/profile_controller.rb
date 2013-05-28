@@ -10,13 +10,15 @@ class ProfileController < ApplicationController
       @profile = Profile.new
       @profile.user_id = current_user.id
   	   if @profile.update_attributes(params[:profile])
-          redirect_to address_new_path
+          redirect_to profile_edit_path
+          flash[:notice] = "Your Profile has been updated"
         else
           render 'new'
         end
     else
         if @profile.update_attributes(params[:profile])
-           redirect_to address_view_path
+           redirect_to profile_edit_path
+           flash[:notice] = "Your Profile has been updated"
          else
           render 'edit'
         end

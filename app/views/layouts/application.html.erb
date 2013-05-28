@@ -4,8 +4,6 @@
 	<title>ProjectLectito</title>
 	<%= stylesheet_link_tag    "application", :media => "all" %>
 	<%= javascript_include_tag "application" %>
-	<%= javascript_include_tag "autocomplete-rails.js" %>
-	<%= stylesheet_link_tag "jquery-ui-1.10.3.custom.css" %>
 	<%= csrf_meta_tags %>
 	<!-- Responeible for responsive-ness on mobile devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +12,55 @@
 	<%= render 'layouts/header' %>
 	<div class = "container" >
 		<div class = "row">
-			<div class = "span12">
+			<div class="span2">
+				<% if user_signed_in? %>
+				<div class="accordion" id="menu_accordion">  
+					<% if current_user.has_role? :admin %>
+					<div class="accordion-group">  
+						<div class="accordion-heading">  
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseThree">  
+								Admin  
+							</a>  
+						</div>  
+						<div id="collapseThree" class="accordion-body collapse">  
+							<div class="accordion-inner">  
+								<%= link_to "User Management", admin_view_path, class: "accordian" %>
+								<%= link_to "Book Management", bookdb_view_path, class: "accordian" %>
+							</div>  
+						</div>  
+					</div>
+					<% end %>
+						<div class="accordion-group">  
+						<div class="accordion-heading">  
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseTwo">  
+								Books  
+							</a>  
+						</div>  
+						<div id="collapseTwo" class="accordion-body collapse">  
+							<div class="accordion-inner">  
+								<%= link_to "My Books", admin_view_path, class: "accordian" %>
+							</div>  
+						</div>  
+					</div>				
+					<div class="accordion-group">  
+						<div class="accordion-heading">  
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseOne">  
+								Profile  
+							</a>  
+						</div>  
+						<div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">  
+							<div class="accordion-inner">								
+								<%= link_to "Personal", profile_edit_path, class: "accordian" %></br>
+								<%= link_to "Addresses", address_view_path, class: "accordian" %>								
+							</div>  
+						</div>  
+					</div>   
+				</div>
+				<% end %>  
+			</div>
+
+
+			<div class = "span8">
 				<% if flash[:notice] %>
 				<p class="label label-success"><%= flash[:notice] %></p>
 				<% end %>
@@ -25,10 +71,13 @@
 				<p class="label label-info"><%= flash[:info] %></p>
 				<% end %>
 				<% if alert %>
- 				<p class="alert alert-error"><%= alert %></p>
+				<p class="alert alert-error"><%= alert %></p>
 				<% end %>
 				<%= yield %>
-			</div>		
+			</div>
+
+
+			<div class="span2"></div>
 		</div>		
 	</div>
 </body>

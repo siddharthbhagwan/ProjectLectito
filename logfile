@@ -268,3 +268,36 @@ STATEMENT:  INSERT INTO locations(
 	            id, area, city, state, pincode, created_at, updated_at)
 	    VALUES (20, 'Kasarwadi 'Pune', 'Maharashtra', '411034', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 	
+ERROR:  relation "book" does not exist
+STATEMENT:  ALTER TABLE "book" DROP "user_id"
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+ERROR:  column books.user_id does not exist at character 38
+STATEMENT:  SELECT "books".* FROM "books"  WHERE "books"."user_id" = 19
+WARNING:  there is no transaction in progress
+ERROR:  syntax error at or near ";" at character 7
+STATEMENT:  SHOW 
+	;
+ERROR:  unrecognized configuration parameter "book_details"
+STATEMENT:  SHOW BOOK_DETAILS;
+ERROR:  relation "postgres" does not exist at character 15
+STATEMENT:  select * from postgres
+	;

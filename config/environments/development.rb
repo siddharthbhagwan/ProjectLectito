@@ -33,7 +33,7 @@ ProjectLectito::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   #Default Url
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }

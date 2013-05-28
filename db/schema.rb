@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130524102529) do
+ActiveRecord::Schema.define(:version => 20130527140206) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20130524102529) do
     t.integer  "user_id"
   end
 
-  create_table "books", :force => true do |t|
+  create_table "book_details", :force => true do |t|
     t.string   "ISBN"
     t.string   "book_name"
     t.string   "author"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(:version => 20130524102529) do
     t.integer  "mrp"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "user_id"
   end
 
   create_table "locations", :force => true do |t|
@@ -64,6 +63,13 @@ ActiveRecord::Schema.define(:version => 20130524102529) do
     t.string   "user_phone_no"
     t.string   "current_status"
     t.datetime "last_update"
+  end
+
+  create_table "user_books", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.integer  "book_id"
   end
 
   create_table "users", :force => true do |t|
