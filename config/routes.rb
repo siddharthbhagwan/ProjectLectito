@@ -26,6 +26,7 @@ ProjectLectito::Application.routes.draw do
   get "devise/User"
   match "home" => "home_page#home"
   match "admin" => "admin#admin"
+  match "users/sign_out" => "home_page#home"
 
 
   post  "bookdb/create" => "book_detail#create"
