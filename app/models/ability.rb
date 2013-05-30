@@ -6,6 +6,7 @@ class Ability
     
     if user.admin?
     	can :manage, User
+      can :manage, BookDetail
     end
 
     if user.user?
