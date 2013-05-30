@@ -1,0 +1,41 @@
+<h3>Add a book</h3>
+<%= form_for @bookdetail, :url => "create" do |f| %>
+
+<%= render 'error_messages' %>
+
+<%= f.label :isbn %>
+<%= f.text_field :isbn %>
+
+<%= f.label :book_name %>
+<%= f.text_field :book_name %></br>	
+
+<%= f.label :author %>
+<%= f.text_field :author %></br>
+	
+<%= f.label :language %>
+<%= f.text_field :language %>
+
+<%= f.label :genre %>
+<%= f.text_field :genre %></br>
+
+<%= f.label :version %>
+<%= f.text_field :version %></br>
+
+<%= f.label :edition %>
+<%= f.text_field :edition %>
+
+<%= f.label :publisher %>
+<%= f.text_field :publisher %>
+
+<%= f.label :pages %>
+<%= f.text_field :pages %>
+
+<%= f.label :mrp %>
+<%= f.text_field :mrp %>
+
+</br></br>
+
+<%= f.submit "Add", class: "btn btn-small" %>
+<%= link_to "Back", bookdb_view_path, class: "btn btn-small" %>
+
+<% end %>

@@ -1,0 +1,42 @@
+<h3>Add a book</h3>
+<%= form_for @bookdetail, :url => "create" do |f| %>
+
+<%= f.label :isbn %>
+<%= f.text_field :isbn , :readonly => true %>
+
+<%= f.label :book_name %>
+<%= f.autocomplete_field :book_name, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#book_detail_id', :isbn => '#book_detail_isbn', :author => '#book_detail_author',:language => '#book_detail_language', :genre => '#book_detail_genre', :version => '#book_detail_version', :edition => '#book_detail_edition', :publisher => '#book_detail_publisher', :pages => '#book_detail_pages', :mrp => '#book_detail_mrp' } %>
+</br>
+
+<%= f.label :author %>
+<%= f.text_field :author, :readonly => true %></br>
+	
+<%= f.label :language %>
+<%= f.text_field :language, :readonly => true %>
+
+<%= f.label :genre %>
+<%= f.text_field :genre, :readonly => true %></br>
+
+<%= f.label :version %>
+<%= f.text_field :version, :readonly => true %></br>
+
+<%= f.label :edition %>
+<%= f.text_field :edition, :readonly => true %>
+
+<%= f.label :publisher %>
+<%= f.text_field :publisher, :readonly => true %>
+
+<%= f.label :pages %>
+<%= f.text_field :pages, :readonly => true %>
+
+<%= f.label :mrp %>
+<%= f.text_field :mrp, :readonly => true %>
+
+<%= f.hidden_field :id %>
+
+</br></br>
+
+<%= f.submit " Add ", class: "btn btn-small" %>
+<%= link_to " Cancel ", mybooks_view_path, class: "btn btn-small" %>
+
+<% end %>
