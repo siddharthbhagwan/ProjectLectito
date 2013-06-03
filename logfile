@@ -347,3 +347,18 @@ ERROR:  duplicate key value violates unique constraint "user_books_pkey"
 DETAIL:  Key (id)=(1) already exists.
 STATEMENT:  INSERT INTO "user_books" ("book_detail_id", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4) RETURNING "id"
 FATAL:  database "siddharthbhagwan" does not exist
+FATAL:  database "user_books" does not exist
+ERROR:  duplicate key value violates unique constraint "locations_pkey"
+DETAIL:  Key (id)=(47) already exists.
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES (47, 'Wanawadi', '411040', 'Pune', 'Maharashtra', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  syntax error at or near "411006" at character 120
+STATEMENT:  INSERT INTO locations(
+	            id, area, city, state, pincode, created_at, updated_at)
+	    VALUES (50, Yerawada', '411006', 'Pune', 'Maharashtra', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+ERROR:  syntax error at or near "locations" at character 12
+STATEMENT:  copy 
+	copy locations to '/Users/siddharthbhagwan/Rails/locations_data.csv';

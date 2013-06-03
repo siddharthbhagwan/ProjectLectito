@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :roles_mask
   # attr_accessible :title, :body
 
-  # Associations
+  # Active Record Associations
   has_one :profile
   has_many :addresses
   has_many :user_books
@@ -58,6 +58,8 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  # Function to return the role assigned
   def checkrole
     if roles_mask == 4
       "User"

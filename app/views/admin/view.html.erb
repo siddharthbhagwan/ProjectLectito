@@ -14,10 +14,10 @@
  <%  @user.each do |u| %> 
    <tr>
     <td><%= link_to "#{u.id}", admin_user_details_path(:user_id => u.id) , class:"btn btn-small" %></td>
-    <td><%= u.profile.user_first_name + " " + u.profile.user_last_name %></td>
+    <td><%= u.profile.user_first_name + " " + u.profile.user_last_name unless u.profile.blank? %></td>
     <td><%= u.email %></td>    
-    <td><%= u.profile.gender %></td>
-    <td><%= u.profile.current_status %></td>
+    <td><%= u.profile.gender unless u.profile.blank? %></td>
+    <td><%= u.profile.current_status unless u.profile.blank? %></td>
     <td><%= u.checkrole %></td>
   </tr>
 <% end %>

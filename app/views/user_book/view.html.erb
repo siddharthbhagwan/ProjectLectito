@@ -1,6 +1,5 @@
 <h3>My Books</h3>
 
-
 <table class="table table-striped table-bordered table-condensed">
   <tr>
     <th>ISBN</th>
@@ -16,7 +15,7 @@
     <th>Manage</th>
   </tr>
 
-<% @userbook.each do |userbook| %>
+  <% @userbook.each do |userbook| %>
   <tr>
     <td><%= userbook.book_detail.isbn %></td>
     <td><%= userbook.book_detail.book_name %></td>
@@ -30,7 +29,7 @@
     <td><%= userbook.book_detail.mrp %></td>
     <td><%= link_to "Remove", user_book_delete_path(:user_book_id => userbook.id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
   </tr>
-  <% end %>
+<% end %>
 </table>
 
 <br />
