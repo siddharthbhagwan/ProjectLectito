@@ -215,10 +215,13 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
     require "omniauth-google-oauth2"
-    config.omniauth :twitter, 'ql2NzezDs22gdIjAbpLfw', 'YZMGsmFfPQ9J5f67N57sgkkjkw9bKHFb1bI1OcVhzY'
-    config.omniauth :facebook, '118017795063722', '90349a74e5305e306d3bb64b658d9eee', {:client_options => {:ssl => {:verify => false}}}
-    config.omniauth :google_oauth2, '684836737669.apps.googleusercontent.com', 'i2Q9sqcVdVf8KFHml5abHowj', { access_type: "offline", approval_prompt: "", :client_options => {:ssl => {:verify => false}} }
-
+    if Rails.env.production?
+        config.omniauth :facebook, '530380563690095', 'f5843ac8dccbe4571f552ec5b04d240d', {:client_options => {:ssl => {:verify => false}}}
+    else Rails.env.development?  
+        config.omniauth :twitter, 'ql2NzezDs22gdIjAbpLfw', 'YZMGsmFfPQ9J5f67N57sgkkjkw9bKHFb1bI1OcVhzY'
+        config.omniauth :facebook, '118017795063722', '90349a74e5305e306d3bb64b658d9eee', {:client_options => {:ssl => {:verify => false}}}
+        config.omniauth :google_oauth2, '684836737669.apps.googleusercontent.com', 'i2Q9sqcVdVf8KFHml5abHowj', { access_type: "offline", approval_prompt: "", :client_options => {:ssl => {:verify => false}} }
+    end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
