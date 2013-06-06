@@ -5,5 +5,7 @@ class Address < ActiveRecord::Base
   validates :pin, :numericality => true
 
   belongs_to :user
+
+  CITIES = ['Pune', 'Mumbai']
   
 end

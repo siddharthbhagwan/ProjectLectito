@@ -18,15 +18,20 @@ class AddressController < ApplicationController
   def edit
     @address = Address.find(params[:address_id])
     if  @address.user_id != current_user.id
-        redirect_to address_view_path
-        flash[:alert] = "You are not authorized to view that address"
+      redirect_to address_view_path
+      flash[:alert] = "You are not authorized to view that address"
     end 
   end
 
   # List all addresses
   def view
     @address = User.find(current_user.id).addresses
-  end
+
+    respond_to do |format|
+      format.html  # index.html.erb
+      format.json  { render :json => @address }
+    end
+end
 
   # Create a New Address
   def create
@@ -43,12 +48,12 @@ class AddressController < ApplicationController
   def delete
     @address = Address.find(params[:address_id])
     if  @address.user_id != current_user.id
-        redirect_to address_view_path
-        flash[:alert] = "You are not authorized to delete that address"
+      redirect_to address_view_path
+      flash[:alert] = "You are not authorized to delete that address"
     else
-        @address.destroy
-        redirect_to address_view_path
-        flash[:info] = "The Address has been deleted"
+      @address.destroy
+      redirect_to address_view_path
+      flash[:info] = "The Address has been deleted"
     end
   end
 

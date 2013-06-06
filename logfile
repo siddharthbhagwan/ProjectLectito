@@ -362,3 +362,9 @@ STATEMENT:  INSERT INTO locations(
 ERROR:  syntax error at or near "locations" at character 12
 STATEMENT:  copy 
 	copy locations to '/Users/siddharthbhagwan/Rails/locations_data.csv';
+ERROR:  schema "bookdetail" does not exist
+STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_detail_id=BookDetail.first.id)
+ERROR:  invalid input syntax for integer: "BookDetail.first.id" at character 64
+STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_detail_id='BookDetail.first.id')
+ERROR:  schema "bookdetail" does not exist
+STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_detail_id=BookDetail.first.id)

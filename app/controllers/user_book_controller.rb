@@ -15,7 +15,6 @@ class UserBookController < ApplicationController
 		@userbook = UserBook.new
 		@bookdetail = BookDetail.find(params[:book_detail][:id])
 		@userbook.user_id = current_user.id
-		Rails.logger.debug "My debugging message " + @bookdetail.inspect
 		@userbook.book_detail_id = @bookdetail.id
 		if @userbook.save
 			redirect_to mybooks_view_path
@@ -25,9 +24,22 @@ class UserBookController < ApplicationController
 	end
 
 	def delete
-		Rails.logger.debug "Entered"
 		@userbook = UserBook.find(params[:user_book_id])
 		@userbook.destroy
 		redirect_to mybooks_view_path
+	end
+
+	def search
+		Rails.logger.debug "Checking!" + params[:search_by].to_s
+		if params[:search_by] == "author"
+			@bookdetail = BookDetail.where("author = ?", params[:search_param])
+		else
+			@bookdetail = BookDetail.where("book_name = ?", params[:search_param])
+		end
+
+		respond_to do |format|
+    		format.html  
+    		format.json  { render :json => @bookdetail}
+  		end
 	end
 end

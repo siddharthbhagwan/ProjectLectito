@@ -24,7 +24,7 @@ ProjectLectito::Application.routes.draw do
   controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
   get "devise/User"
-  match "home" => "home_page#home"
+  match "home" => "user_book#search"
   match "admin" => "admin#admin"
   match "users/sign_out" => "home_page#home"
 
@@ -40,6 +40,7 @@ ProjectLectito::Application.routes.draw do
   get "mybooks/view" => "user_book#view"
   match "user_book/create" => "user_book#create"
   get "user_book/delete"
+  match "user_book/search" => "user_book#search"
 
   
   root :to => "home_page#home"

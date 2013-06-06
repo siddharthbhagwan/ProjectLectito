@@ -216,7 +216,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
     require "omniauth-google-oauth2"
     if Rails.env.production?
-        config.omniauth :google_oauth2, '684836737669.apps.googleusercontent.com', 'i2Q9sqcVdVf8KFHml5abHowj', { access_type: "offline", approval_prompt: "", :client_options => {:ssl => {:verify => false}} }
+        config.omniauth :google_oauth2, '275953175384.apps.googleusercontent.com', '7ZudHU0fRqvdu3Ux5vVROGZO', { access_type: "offline", approval_prompt: "", :client_options => {:ssl => {:verify => false}} }
         config.omniauth :twitter, 'ql2NzezDs22gdIjAbpLfw', 'YZMGsmFfPQ9J5f67N57sgkkjkw9bKHFb1bI1OcVhzY'
         config.omniauth :facebook, '530380563690095', 'f5843ac8dccbe4571f552ec5b04d240d', {:client_options => {:ssl => {:verify => false}}}
     else Rails.env.development?  

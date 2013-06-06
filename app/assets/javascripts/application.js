@@ -10,5 +10,13 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require jquery
+//= require twitter/bootstrap
+//= require book
+//= require devise
+//= require home_page
+//= require profile
+//= require user_book
+//= require autocomplete-rails
 //= require dataTables/jquery.dataTables
 //= require_tree .

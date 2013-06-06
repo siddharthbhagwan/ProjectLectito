@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   # Active Record Associations
-  has_one :profile
-  has_many :addresses
-  has_many :user_books
+  has_one :profile, :dependent => :destroy
+  has_many :addresses, :dependent => :destroy
+  has_many :user_books ,:dependent => :destroy
   has_many :book_details, :through => :user_books 
 
 
