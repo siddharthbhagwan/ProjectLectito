@@ -20,8 +20,7 @@ ProjectLectito::Application.routes.draw do
   match "profile/update"  => "profile#update"
 
 
-  devise_for :users,
-  controllers: {omniauth_callbacks: "omniauth_callbacks"}
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
   get "devise/User"
   match "home" => "user_book#search"
@@ -29,21 +28,24 @@ ProjectLectito::Application.routes.draw do
   match "users/sign_out" => "home_page#home"
 
 
-  post  "bookdb/create" => "book_detail#create"
+  get "bookdb/new" => "book_detail#new"
   get "bookdb/view" => "book_detail#view"
+  post  "bookdb/create" => "book_detail#create"  
   match "bookdb/edit" => "book_detail#edit"
   match "bookdb/delete" => "book_detail#delete"
   match "bookdb/update/:bookdetail_id" => "book_detail#update"
-  get "bookdb/new" => "book_detail#new"
 
-  get "user_book/autocomplete_book_detail_book_name"
-  get "mybooks/view" => "user_book#view"
-  match "user_book/create" => "user_book#create"
+
   get "user_book/delete"
+  get "mybooks/view" => "user_book#view"
+  get "user_book/autocomplete_book_detail_book_name"  
+  post "user_book/create" => "user_book#create"
+  match "user_book/create" => "user_book#create"
   match "user_book/search" => "user_book#search"
+  match "user_book/sub_search" => "user_book#sub_search"
 
   
-  root :to => "home_page#home"
+  root :to => "user_book#search"
   resources :profile, :address, :home_page, :admin, :book_detail, :user_book
 
 end

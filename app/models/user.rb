@@ -63,9 +63,8 @@ class User < ActiveRecord::Base
   def checkrole
     if roles_mask == 4
       "User"
-    else if roles_mask == 6
+    elsif roles_mask == 6
       "Administrator"
     end      
-    end
   end
 end

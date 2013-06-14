@@ -36,6 +36,7 @@ end
   # Create a New Address
   def create
     @address = Address.new(params[:address])
+    Rails.logger.debug "checking" + @address.inspect
     @address.user_id = current_user.id
     if @address.save
       redirect_to address_view_path

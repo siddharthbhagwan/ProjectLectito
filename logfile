@@ -368,3 +368,92 @@ ERROR:  invalid input syntax for integer: "BookDetail.first.id" at character 64
 STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_detail_id='BookDetail.first.id')
 ERROR:  schema "bookdetail" does not exist
 STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_detail_id=BookDetail.first.id)
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-06-08 21:28:53 IST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "locations" at character 1
+STATEMENT:  locations
+	;
+ERROR:  syntax error at or near "=" at character 23
+STATEMENT:  update locations city = 'Pune' where id >21
+	;
+ERROR:  syntax error at or near "=" at character 23
+STATEMENT:  update locations city = "Pune" where id>21
+	;
+ERROR:  column "Pune" does not exist at character 29
+STATEMENT:  update locations set city = "Pune" where id>21
+	;
+ERROR:  column "pune" does not exist at character 29
+STATEMENT:  update locations set city = Pune where id =21
+	;
+ERROR:  syntax error at or near "select" at character 8
+STATEMENT:  commit
+	select * from book_details
+	;
+ERROR:  syntax error at or near "select" at character 8
+STATEMENT:  commit
+	select * from book_details
+	;
+ERROR:  column "available_in_city" cannot be cast automatically to type integer
+HINT:  Specify a USING expression to perform the conversion.
+STATEMENT:  ALTER TABLE "user_books" ALTER COLUMN "available_in_city" TYPE integer
+ERROR:  column "rental_price" of relation "user_books" already exists
+STATEMENT:  ALTER TABLE "user_books" ADD COLUMN "rental_price" integer
+ERROR:  invalid input syntax for integer: "---
+	- '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "---
+	- '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "---
+	- '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "---
+	- '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: ''
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: ''
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "---
+	- '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+	address_id: '55'
+	"
+STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
+ERROR:  column "book_id" does not exist at character 49
+STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_id = '7')

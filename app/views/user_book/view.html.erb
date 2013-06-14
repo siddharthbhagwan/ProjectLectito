@@ -12,6 +12,8 @@
     <th>Publisher</th>
     <th>Pages</th>
     <th>MRP</th>
+    <th>Available @</th>
+    <th>Rental Price</th>
     <th>Manage</th>
   </tr>
 
@@ -27,6 +29,8 @@
     <td><%= userbook.book_detail.publisher %></td>
     <td><%= userbook.book_detail.pages %></td>
     <td><%= userbook.book_detail.mrp %></td>
+    <td><%= userbook.user.addresses.find(userbook.available_in_city).address_summary %></td>
+    <td><%= userbook.rental_price %></td>
     <td><%= link_to "Remove", user_book_delete_path(:user_book_id => userbook.id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
   </tr>
 <% end %>

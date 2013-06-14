@@ -1,42 +1,44 @@
 <h3>Add a book</h3>
-<%= form_for @bookdetail, :url => "create" do |f| %>
+<%= form_tag  user_book_create_path, :action => "create", :method => "post" do %>
 
-<%= f.label :isbn %>
-<%= f.text_field :isbn , :readonly => true %>
+<%= label_tag :isbn %>
+<%= text_field_tag :isbn, nil, :disabled => true  %>
 
-<%= f.label :book_name %>
-<%= f.autocomplete_field :book_name, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#book_detail_id', :isbn => '#book_detail_isbn', :author => '#book_detail_author',:language => '#book_detail_language', :genre => '#book_detail_genre', :version => '#book_detail_version', :edition => '#book_detail_edition', :publisher => '#book_detail_publisher', :pages => '#book_detail_pages', :mrp => '#book_detail_mrp' } %>
-</br>
+<%= label_tag :book_name %>
+<%= autocomplete_field_tag :book_name, nil, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' } %>
 
-<%= f.label :author %>
-<%= f.text_field :author, :readonly => true %></br>
+<%= label_tag :author %>
+<%= text_field_tag :author , nil, :disabled => true %></br>
 	
-<%= f.label :language %>
-<%= f.text_field :language, :readonly => true %>
+<%= label_tag :language %>
+<%= text_field_tag :language, nil, :disabled => true %>
 
-<%= f.label :genre %>
-<%= f.text_field :genre, :readonly => true %></br>
+<%= label_tag :genre %>
+<%= text_field_tag :genre, nil, :disabled => true %></br>
 
-<%= f.label :version %>
-<%= f.text_field :version, :readonly => true %></br>
+<%= label_tag :version %>
+<%= text_field_tag :version, nil, :disabled => true %></br>
 
-<%= f.label :edition %>
-<%= f.text_field :edition, :readonly => true %>
+<%= label_tag :edition %>
+<%= text_field_tag :edition, nil, :disabled => true %>
 
-<%= f.label :publisher %>
-<%= f.text_field :publisher, :readonly => true %>
+<%= label_tag :publisher %>
+<%= text_field_tag :publisher, nil, :disabled => true %>
 
-<%= f.label :pages %>
-<%= f.text_field :pages, :readonly => true %>
+<%= label_tag :pages %>
+<%= text_field_tag :pages, nil, :disabled => true %>
 
-<%= f.label :mrp %>
-<%= f.text_field :mrp, :readonly => true %>
+<%= label_tag :mrp %>
+<%= text_field_tag :mrp, nil, :disabled => true %>
 
-<%= f.hidden_field :id %>
+<%= label_tag :available_in_city , "Available from Address"%>
+<%= collection_select :user_book, :available_in_city, @address, :id, :address_summary  %>
 
-</br></br>
+<%= label_tag :rental_price %>
+<%= text_field_tag :rental_price %></br></br>
 
-<%= f.submit " Add ", class: "btn btn-small" %>
-<%= link_to " Cancel ", mybooks_view_path, class: "btn btn-small" %>
+<%= hidden_field_tag :id %>
+
+<%= submit_tag 'Submit' %>
 
 <% end %>
