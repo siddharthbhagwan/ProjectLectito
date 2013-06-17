@@ -457,3 +457,12 @@ ERROR:  invalid input syntax for integer: "--- !ruby/hash:ActiveSupport::HashWit
 STATEMENT:  INSERT INTO "user_books" ("available_in_city", "book_detail_id", "created_at", "rental_price", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"
 ERROR:  column "book_id" does not exist at character 49
 STATEMENT:  SELECT "user_books".* FROM "user_books"  WHERE (book_id = '7')
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-06-15 19:22:58 IST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  lock file "postmaster.pid" already exists
+HINT:  Is another postmaster (PID 2200) running in data directory "/usr/local/var/postgres"?

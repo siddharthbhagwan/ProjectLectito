@@ -1,8 +1,5 @@
 class ProfileController < ApplicationController
   load_and_authorize_resource :class => Profile
-  def new
-  	@profile = Profile.new
-  end
 
   def update
     @profile = Profile.find_by_user_id(current_user.id)
@@ -13,7 +10,7 @@ class ProfileController < ApplicationController
           redirect_to profile_edit_path
           flash[:notice] = "Your Profile has been updated"
         else
-          render 'new'
+          render 'edit'
         end
     else
         if @profile.update_attributes(params[:profile])

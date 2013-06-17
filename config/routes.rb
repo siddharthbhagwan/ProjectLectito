@@ -14,8 +14,7 @@ ProjectLectito::Application.routes.draw do
   get "admin" => "admin#admin_index"
   get "admin/user_details" => "admin#user_details"
 
-
-  get "profile/new"
+  # Profile Routes
   get "profile/edit"
   match "profile/update"  => "profile#update"
 
