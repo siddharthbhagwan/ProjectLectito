@@ -50,18 +50,7 @@ jQuery ->
         success: (msg) -> 
         	$(button_id_s).attr("disabled", true) 
         	$(button_id_s).attr("value","Request Sent...")
-      
-
-jQuery ->
-    updateBorrowRequests = ->
-        if $("#borrow_requests_table").length > 0
-          after = $("#borrow_requests_table tbody tr:last-child").attr("data-time")
-        else
-          after = "0"
-        $.getScript("/transaction/get_latest_borrowed.js?after=" + after)
-        #setTimeout updateBorrowRequests, 10000
-    $ ->
-        #setTimeout updateBorrowRequests, 10000  if $("#borrow_requests_table").length > 0
+    
 
 
 jQuery ->

@@ -1,9 +1,9 @@
 ProjectLectito::Application.routes.draw do
   
+  get "address/delete"
   get "address/autocomplete_location_area"
   get "address/new" => "address#new"
   get "address/edit" => "address#edit"
-  get "address/delete"
   match "address/update/:address_id" => "address#update"
   match "address/view" => "address#view"
   match "address/create" => "address#create"
@@ -38,13 +38,13 @@ ProjectLectito::Application.routes.draw do
   get "user_book/delete"
   get "mybooks/view" => "user_book#view"
   get "user_book/autocomplete_book_detail_book_name"  
-  post "user_book/create" => "user_book#create"
-  match "user_book/create" => "user_book#create"
-  match "user_book/search" => "user_book#search"
-  match "user_book/sub_search" => "user_book#sub_search"
+  post "create" => "transaction#create"
+  match "user_book/search_books" => "user_book#search_books"
+  match "user_book/search_books_city" => "user_book#search_books_city"
+  get "transaction/get_latest_lent" => "transaction#get_latest_lent"
 
   
   root :to => "user_book#search"
-  resources :profile, :address, :home_page, :admin, :book_detail, :user_book
+  resources :profile, :address, :home_page, :admin, :book_detail, :user_book, :transaction
 
 end

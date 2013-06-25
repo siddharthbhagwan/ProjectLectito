@@ -31,7 +31,7 @@ class UserBookController < ApplicationController
 		redirect_to mybooks_view_path
 	end
 
-	def search
+	def search_books
 		if params[:search_by_book_name] == ""
 			@bookdetail = BookDetail.where("author = ?", params[:search_by_author])
 		elsif params[:search_by_author] == ""
@@ -42,11 +42,11 @@ class UserBookController < ApplicationController
 
 		respond_to do |format|
     		format.html  
-    		format.json  { render :json => @bookdetail}
+    		format.js
   		end
 	end
 
-	def sub_search
+	def search_books_city
 		@users_with_book = UserBook.where("book_detail_id = ? ", params[:book_id])
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
@@ -63,7 +63,12 @@ class UserBookController < ApplicationController
 
 		respond_to do |format|
     		format.html  
-    		format.json  { render :json => @users_and_address}
+    		format.js
     	end
+	end
+
+	def search
+		@borrow = Transaction.where("borrower_id = ? ", current_user.id)
+		@lend = Transaction.where("lender_id = ? ", current_user.id)
 	end
 end

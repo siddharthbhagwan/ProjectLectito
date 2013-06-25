@@ -10,7 +10,6 @@ class TransactionController < ApplicationController
 		@transaction.save
 
 		@borrow = Transaction.where("borrower_id = ? and updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
-		@lent = Transaction.where("lender_id = ? and updated_at > ?", current_user.id, Time.at(params[:after_l].to_i + 1))
 
 		respond_to do |format|
     		format.html  
