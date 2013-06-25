@@ -1,0 +1,30 @@
+<h3 id="aaaa">Search </h3>
+
+<div id="borrow_requests_div">
+	<%= render "transaction/borrow_requests" %>
+</div>
+
+<div id="lend_requests_div">
+	<%= render "transaction/lend_requests" %>
+</div>
+
+<h5>Search for a book that you'd like to borrow in your city!</h5>
+
+<%= form_tag() do %>
+<div id="city_validation"></div>
+<%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city.."  %></br>
+<div id="author_book_validation"></div>
+<%= text_field_tag :search_by_author, nil, :placeholder => "Seacrh By Author"  %></br>
+<%= text_field_tag :search_by_book_name, nil, :placeholder => "Seacrh By Book Name"  %></br>
+<% end %>
+
+<%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
+<%= tag "input", :type => "button", :id => "search_books_1", :class => "btn" , :value => "Hide" %></br></br>
+
+<div id="search_text">
+
+</div>
+
+<div id="dynamicTable">
+
+</div>

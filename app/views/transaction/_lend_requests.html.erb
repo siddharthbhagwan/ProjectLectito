@@ -1,0 +1,19 @@
+<h4> Summary of Requests for books that you have </h4>
+<table id = "lend_requests_table" class="table table-striped table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>Book Name</th>
+			<th>Rental</th>
+			<th>Status</th>	    
+		</tr>
+	</thead>
+	<tbody>
+		<% @lend.each do |l| %>
+		<tr data-time= <%= l.updated_at.to_i %>>
+			<td><%= BookDetail.find(UserBook.find(l.user_book_id).book_detail_id).book_name %></td>
+			<td><%= UserBook.find(l.user_book_id).rental_price %></td>
+			<td><%= l.status %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

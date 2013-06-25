@@ -1,0 +1,5 @@
+<% unless @lent.empty? %>
+	<% @lent.each do |l| %>
+		$("#lent_requests_table > tbody:last").append("raw(<tr data-time='<%= l.updated_at.to_i %>'><td><%= BookDetail.find(UserBook.find(l.user_book_id).book_detail_id).book_name %></td><td><%= Address.find(UserBook.find(l.user_book_id).available_in_city).address_summary %></td><td><%= UserBook.find(l.user_book_id).rental_price %></td></tr>)");
+	<% end %>
+<% end %>
