@@ -9,13 +9,15 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @borrow.each do |b| %>
-		<tr data-time= <%= b.updated_at.to_i %> >
-			<td><%= BookDetail.find(UserBook.find(b.user_book_id).book_detail_id).book_name %></td>
-			<td><%= Address.find(UserBook.find(b.user_book_id).available_in_city).address_summary %></td>
-			<td><%= UserBook.find(b.user_book_id).rental_price %></td>
-			<td><%= b.status %></td>
-		</tr>
+		<% unless @borrow.nil? %>
+			<% @borrow.each do |b| %>
+				<tr data-time= <%= b.updated_at.to_i %> >
+					<td><%= BookDetail.find(UserBook.find(b.user_book_id).book_detail_id).book_name %></td>
+					<td><%= Address.find(UserBook.find(b.user_book_id).available_in_city).address_summary %></td>
+					<td><%= UserBook.find(b.user_book_id).rental_price %></td>
+					<td><%= b.status %></td>
+				</tr>
+			<% end %>
 		<% end %>
 	</tbody>
 </table>
