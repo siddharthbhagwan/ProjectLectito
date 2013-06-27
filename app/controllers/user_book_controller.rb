@@ -33,11 +33,11 @@ class UserBookController < ApplicationController
 
 	def search_books
 		if params[:search_by_book_name] == ""
-			@bookdetail = BookDetail.where("author = ?", params[:search_by_author])
+			@bookdetail = BookDetail.where("author LIKE ?", "%#{params[:search_by_author]}%")
 		elsif params[:search_by_author] == ""
-			@bookdetail = BookDetail.where("book_name = ?", params[:search_by_book_name])
+			@bookdetail = BookDetail.where("book_name LIKE ?", "%#{params[:search_by_book_name]}%")
 		else
-			@bookdetail = BookDetail.where("book_name = ? AND author = ? ", params[:search_by_book_name], params[:search_by_author])
+			@bookdetail = BookDetail.where("book_name LIKE ? AND author LIKE ? ", "%#{params[:search_by_book_name]}%"	, "%#{params[:search_by_author]}%")
 		end
 
 		respond_to do |format|

@@ -1,18 +1,16 @@
 <%= form_for @profile, :url => "update" do |f| %>
 <%= render 'error_messages' %>
 
-<%= f.label :user_first_name %>
-<%= f.text_field :user_first_name %>
+<%= f.text_field :user_first_name, :placeholder => "First Name" %></br>
 
-<%= f.label :user_last_name %>
-<%= f.text_field :user_last_name %></br>	
+<%= f.text_field :user_last_name, :placeholder => "Last Name" %></br>	
 
-<%= f.label :user_phone_no %>
-<%= f.text_field :user_phone_no %></br>
+<%= f.text_field :user_phone_no, :placeholder => "10 Digit Phone Number" %></br>
 
 Gender </br>	
-<%= f.radio_button :gender, "M", :checked => 'checked' %><p>Male</p>
-<%= f.radio_button :gender, "F" %><p>Female</p>
+<%= f.radio_button :gender, "M", :checked => 'checked' %>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<%= f.radio_button :gender, "F" %></br>
+Male &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Female </br></br>
 
 <%= f.label "Date", "Date Of Birth" %>
 <%= f.date_select :DoB, :start_year => 1950, :order => [:day, :month, :year], :end_year =>2000, :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'}, :use_short_month => :true %>

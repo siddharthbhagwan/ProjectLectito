@@ -1,16 +1,17 @@
-var $tbody, button_element, rental_available_at, rental_data, table_row_id, row_number;
+var $tbody, table_header, body_data, button_element, rental_available_at, rental_data, table_row_id, row_number;
 
 
 city = $("#city").val()
-$table = $("<table>")
 sub_table_id = "sub_search_results_table_" + <%= params[:book_id] %>
 sub_table_id_s = "#" + sub_table_id
 row_number = <%= params[:row_number] %>
 $(sub_table_id_s).remove()
+
+$table = $("<tr><td colspan='2'><table><tr><th>Price</th><th>Avail@</th><th>Borrow</th></tr>");
 $table.attr("class", "table table-hover table-condensed table-bordered");
 $table.attr("id", sub_table_id);
-$table.append("<thead>").children("thead").append("<tr />").children("tr").append("<th>Price</th><th>Avail@</th><th>Borrow</th>");
 $tbody = $table.append("<tbody />").children("tbody");
+$body_data
 
 if (<%= @users_and_address.length %> === 0) {
   rental_data = "<td colspan='2'> Sorry, this book isnt available in your city </td>";
@@ -25,10 +26,12 @@ if (<%= @users_and_address.length %> === 0) {
     rental_available_at = "<td>" + "<%= @users_and_address[j].locality %>" + "/" + "<%= @users_and_address[j].city %>" + "</td>";
     rental_data = "<td>" + <%= @users_and_address[i].rental_price %> + "</td>" + rental_available_at + button_element;
     table_row_id = "<tr/>";
-    $tbody.append(table_row_id).children("tr:last").append(rental_data);
+    body_data += rental_data;
     <%= i = i + 2 %>
   <% end %>
 }
 
-$final_table = "<tr><td>" + $table + "</td></td>"
+
+$row = "<tr><td colspan='2'><table><tr><th>yes</th><th>no</th></tr></table></td></tr>";
 $("#search_results_table > tbody > tr").eq(row_number).after($table);
+
