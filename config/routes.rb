@@ -35,9 +35,11 @@ ProjectLectito::Application.routes.draw do
   match "bookdb/update/:bookdetail_id" => "book_detail#update"
 
 
+
   get "user_book/delete"
   get "mybooks/view" => "user_book#view"
-  get "user_book/autocomplete_book_detail_book_name"  
+  get "user_book/autocomplete_book_detail_book_name"
+  get "user_book/autocomplete_book_detail_author"
   post "create" => "transaction#create"
   match "user_book/search_books" => "user_book#search_books"
   match "user_book/search_books_city" => "user_book#search_books_city"

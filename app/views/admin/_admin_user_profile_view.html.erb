@@ -11,12 +11,16 @@
 
 
 	<tr>
-		<td><%= @user.id %></td>
-		<td><%= @user.profile.user_first_name + " " + @user.profile.user_last_name %></td>
-		<td><%= @user.profile.DoB %></td>    
-		<td><%= @user.profile.gender %></td>
-		<td><%= @user.profile.current_status %></td>
-		<td><%= @user.profile.user_phone_no %></td>
+		<% if @user.profile.nil? %>
+			<td colspan='6'> This User has not yet built his profile </td>
+		<% else %>
+			<td><%= @user.id %></td>
+			<td><%= @user.profile.user_first_name %></td>
+			<td><%= @user.profile.DoB %></td>    
+			<td><%= @user.profile.gender %></td>
+			<td><%= @user.profile.current_status %></td>
+			<td><%= @user.profile.user_phone_no %></td>
+		<% end %>
 	</tr>
 
 </table>

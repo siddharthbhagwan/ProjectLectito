@@ -1,6 +1,7 @@
 class UserBookController < ApplicationController
 
 	autocomplete :book_detail, :book_name, :full => true, :extra_data => [:id, :isbn, :author, :language, :genre, :version, :edition, :publisher, :pages, :mrp], :data => { :no_matches_label => "" }
+	autocomplete :book_detail, :author, :full => true
 
 
 	def view
