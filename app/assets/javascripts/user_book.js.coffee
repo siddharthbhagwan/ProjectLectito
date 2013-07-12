@@ -22,7 +22,7 @@ jQuery ->
           search_by_book_name: search_by_book_name
 
         success: (msg) ->
-          
+          #TODO Add Error Handling
 
     if search_city
       if search_by_author.length or search_by_book_name.length
@@ -65,6 +65,14 @@ jQuery ->
           city: city
 
         success: (msg) ->
-          
+          #TODO Add error handling
 
     fetch_sub_search_data()  if typeof book_id isnt "undefined"
+
+
+
+jQuery ->
+  $("#test").on "click", ->
+    alert "yes"  if confirm("check")
+
+ 
