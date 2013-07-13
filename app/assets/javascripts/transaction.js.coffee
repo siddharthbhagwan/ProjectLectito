@@ -2,13 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-jQuery ->
-    $ ->
-        if $("#borrow_requests_table tr").length == 1
-            $("#borrow_requests_div").hide()
+empty_table_checks = ->
+  if $("#borrow_requests_table tr").length == 1
+    $("#borrow_requests_div").hide()
 
-        if $("#lend_requests_table tr").length == 1
-            $("#lend_requests_div").hide()          
+  if $("#lend_requests_table tr").length == 1
+    $("#lend_requests_div").hide()
+
+  if $("#accept_requests_table tr").length == 1
+    $("#accept_requests_div").hide()              
+
+
+jQuery ->
+  empty_table_checks()
 
 
 jQuery ->
@@ -54,6 +60,41 @@ jQuery ->
       
             #TODO Add Error Handling
 
+
+jQuery ->
+  $(document).on "click", "#accept", ->
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#" + tr_id
+
+    update_request_status = ->
+      $.ajax
+        url: "/transaction/update_request_status_accept.js?tr_id=" + tr_id
+        type: "get"
+        context: "this"
+        dataType: "script"
+        data:
+          tr_id: tr_id
+
+        success: (msg) ->
+          #TODO Add error handling
+        complete: (msg) ->
+          $(tr_id_s).fadeOut 500, ->
+            $(tr_id_s).remove()              
+
+
+    if(confirm("You are about to accept this request"))
+      update_request_status()
+
+
+
+jQuery ->
+  $(document).on "click", "#reject", ->
+    if(confirm("You are about to reject this request"))
+      alert "ok"
+
+
+
+
 jQuery ->
     updateLendRequests = ->
         if $("#lend_requests_table").length > 0
@@ -63,4 +104,8 @@ jQuery ->
         $.getScript("/transaction/get_latest_lent.js?after=" + after)
         setTimeout updateLendRequests, 50000
     $ ->
-        setTimeout updateLendRequests, 50000  if $("#lend_requests_table").length > 0        
+        setTimeout updateLendRequests, 50000  if $("#lend_requests_table").length > 0     
+
+
+jQuery ->
+  empty_table_checks()           

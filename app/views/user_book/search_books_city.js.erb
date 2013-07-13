@@ -24,7 +24,7 @@ if (<%= @users_and_address.length %> === 0) {
   <%= i = 0 %>
   <% while i < @users_and_address.length %>
     <%= j = i + 1 %>
-    if (<%= @transactions_requested.include?@users_and_address[j].user_id.to_s %>x){
+    if (<%= @transactions_requested.include?@users_and_address[j].user_id.to_s %>){
       button_element = "<td><input type='button' value='Request Sent' disabled = 'true' class='borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
     }
     else {

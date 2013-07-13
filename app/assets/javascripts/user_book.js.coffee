@@ -69,10 +69,3 @@ jQuery ->
 
     fetch_sub_search_data()  if typeof book_id isnt "undefined"
 
-
-
-jQuery ->
-  $("#test").on "click", ->
-    alert "yes"  if confirm("check")
-
- 

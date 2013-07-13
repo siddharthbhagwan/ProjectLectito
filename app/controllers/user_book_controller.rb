@@ -26,6 +26,11 @@ class UserBookController < ApplicationController
 		end
 	end
 
+	def edit
+		@userbook = UserBook.find(params[:user_book_id])
+		@address = User.find(current_user.id).addresses
+	end
+
 	def delete
 		@userbook = UserBook.find(params[:user_book_id])
 		@userbook.destroy
@@ -78,6 +83,7 @@ class UserBookController < ApplicationController
 
 	def search
 		@borrow = Transaction.where("borrower_id = ? ", current_user.id)
-		@lend = Transaction.where("lender_id = ? ", current_user.id)
+		@lend = Transaction.where("lender_id = ? AND status = ? ", current_user.id, "Pending")
+		@accept = Transaction.where("lender_id = ? AND status = ?", current_user.id, "Accepted")
 	end
 end

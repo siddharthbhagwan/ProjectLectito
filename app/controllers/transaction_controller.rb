@@ -9,7 +9,7 @@ class TransactionController < ApplicationController
 
 		@transaction.save
 
-		@borrow = Transaction.where("borrower_id = ? and updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
+		@borrow = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
 
 		respond_to do |format|
     		format.html  
@@ -19,11 +19,17 @@ class TransactionController < ApplicationController
 
 
 	def get_latest_borrowed
-		@borrow = Transaction.where("borrower_id = ? and updated_at > ?", current_user.id, Time.at(params[:after].to_i + 1))
+		@latest_borrowed = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after].to_i + 1))
 	end
 
 
 	def get_latest_lent
-		@lent = Transaction.where("lender_id = ? and updated_at > ?", current_user.id, Time.at(params[:after].to_i + 1))	
+		@latest_lent = Transaction.where("lender_id = ? AND status = ? AND updated_at > ?", current_user.id, "Pending", Time.at(params[:after].to_i + 1))	
+	end
+
+	def update_request_status_accept
+		@latest_accepted = Transaction.find(params[:tr_id])
+		@latest_accepted.status = "Accepted"
+		@latest_accepted.save
 	end
 end

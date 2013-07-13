@@ -18,13 +18,9 @@ ProjectLectito::Application.routes.draw do
   get "profile/edit"
   match "profile/update"  => "profile#update"
 
-
-  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
-
   get "devise/User"
   match "home" => "user_book#search"
   match "admin" => "admin#admin"
-  match "users/sign_out" => "home_page#home"
 
 
   get "bookdb/new" => "book_detail#new"
@@ -38,15 +34,23 @@ ProjectLectito::Application.routes.draw do
 
   get "user_book/delete"
   get "mybooks/view" => "user_book#view"
-  get "user_book/autocomplete_book_detail_book_name"
+  get "user_book/edit" => "user_book#edit"
   get "user_book/autocomplete_book_detail_author"
+  get "user_book/autocomplete_book_detail_book_name"
   post "create" => "transaction#create"
   match "user_book/search_books" => "user_book#search_books"
+  match "user_book/update/:user_book_id" => "address#update"
   match "user_book/search_books_city" => "user_book#search_books_city"
+  match "user_book/create" => "user_book#create"
+
+
+  get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   get "transaction/get_latest_lent" => "transaction#get_latest_lent"
+  
 
   
   root :to => "user_book#search"
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
   resources :profile, :address, :home_page, :admin, :book_detail, :user_book, :transaction
 
 end

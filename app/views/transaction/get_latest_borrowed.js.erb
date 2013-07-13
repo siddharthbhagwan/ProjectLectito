@@ -1,5 +1,5 @@
-<% unless @borrow.empty? %>
-	<% @borrow.each do |b| %>
+<% unless @latest_borrowed.empty? %>
+	<% @latest_borrowed.each do |b| %>
 		tr_id = "<tr data-time='<%= b.updated_at.to_i %>'>"
 		td_book_name = "<td><%= BookDetail.find(UserBook.find(b.user_book_id).book_detail.id).book_name %></td>"
 		td_address_summary = "<td><%= Address.find(UserBook.find(b.user_book_id).available_in_city).address_summary %></td>"
