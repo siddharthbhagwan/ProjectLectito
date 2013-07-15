@@ -53,6 +53,7 @@ class UserBookController < ApplicationController
 	end
 
 	def search_books_city
+		Rails.logger.debug "adsada " + params[:book_id]
 		@users_with_book = UserBook.where("book_detail_id = ? AND user_id != ? ", params[:book_id], current_user.id)
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
@@ -85,5 +86,9 @@ class UserBookController < ApplicationController
 		@borrow = Transaction.where("borrower_id = ? ", current_user.id)
 		@lend = Transaction.where("lender_id = ? AND status = ? ", current_user.id, "Pending")
 		@accept = Transaction.where("lender_id = ? AND status = ?", current_user.id, "Accepted")
+	end
+
+	def check_user_book_duplication
+		@duplicate_books = UserBook.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
 	end
 end

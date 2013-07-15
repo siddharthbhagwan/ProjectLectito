@@ -39,6 +39,7 @@
 
 <%= hidden_field_tag :id %>
 
-<%= submit_tag 'Submit' %>
+<%= submit_tag 'Add Book', :id => :add_book %></br>
+<%= link_to "Back", mybooks_view_path, class: "btn btn-small" %>
 
 <% end %>

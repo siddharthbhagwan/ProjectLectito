@@ -62,7 +62,7 @@ jQuery ->
 
 
 jQuery ->
-  $(document).on "click", "#accept", ->
+  $(document).on "click", "#accept0", ->
     tr_id = $(this).attr("data-trid")
     tr_id_s = "#" + tr_id
 
@@ -79,7 +79,7 @@ jQuery ->
           #TODO Add error handling
         complete: (msg) ->
           $(tr_id_s).fadeOut 500, ->
-            $(tr_id_s).remove()              
+          $(tr_id_s).remove()              
 
 
     if(confirm("You are about to accept this request"))
@@ -89,10 +89,85 @@ jQuery ->
 
 jQuery ->
   $(document).on "click", "#reject", ->
-    if(confirm("You are about to reject this request"))
-      alert "ok"
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#" + tr_id
+    $("#reject_request_confirm").data "trid", tr_id
+    $("#reject_request_confirm").data "trids", tr_id_s
+    $("#reject_request_confirm").dialog "open"
 
 
+jQuery ->
+  $("#reject_request_confirm").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+        tr_id = $("#reject_request_confirm").data("trid")
+        tr_id_s = $("#reject_request_confirm").data("trids")
+        reject_reason = $('input[name=rejectReason]:radio:checked').val()
+        alert reject_reason
+        $.ajax
+          url: "/transaction/update_request_status_reject.js?tr_id=" + tr_id + "&reject_reason=" + reject_reason
+          type: "get"
+          context: "this"
+          dataType: "script"
+          data:
+            tr_id: tr_id
+
+          success: (msg) ->
+            #TODO Add error handling
+          complete: (msg) ->
+            $(tr_id_s).fadeOut 500, ->
+              $(tr_id_s).remove()     
+
+      Cancel: ->
+        $(this).dialog "close"    
+      
+
+      Cancel: ->
+        $(this).dialog "close"
+
+    close: ->
+      $(this).dialog "close" 
+
+
+
+jQuery ->
+  $(document).on "click", "#accept", ->
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#" + tr_id
+    $("#accept_request_confirm").data "trid", tr_id
+    $("#accept_request_confirm").data "trids", tr_id_s
+    $("#accept_request_confirm").dialog "open"
+
+
+jQuery ->
+  $("#accept_request_confirm").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+        tr_id = $("#accept_request_confirm").data("trid")
+        tr_id_s = $("#accept_request_confirm").data("trids")
+        $.ajax
+          url: "/transaction/update_request_status_accept.js?tr_id=" + tr_id 
+          type: "get"
+          context: "this"
+          dataType: "script"
+          data:
+            tr_id: tr_id
+
+          success: (msg) ->
+            #TODO Add error handling
+          complete: (msg) ->
+            $(tr_id_s).fadeOut 500, ->
+              $(tr_id_s).remove()     
+
+      Cancel: ->
+        $(this).dialog "close"    
+      
 
 
 jQuery ->
@@ -105,7 +180,3 @@ jQuery ->
         setTimeout updateLendRequests, 50000
     $ ->
         setTimeout updateLendRequests, 50000  if $("#lend_requests_table").length > 0     
-
-
-jQuery ->
-  empty_table_checks()           

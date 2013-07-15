@@ -45,6 +45,7 @@ ProjectLectito::Application.routes.draw do
 
 
   get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
+  get "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
   get "transaction/get_latest_lent" => "transaction#get_latest_lent"
   
 

@@ -69,3 +69,18 @@ jQuery ->
 
     fetch_sub_search_data()  if typeof book_id isnt "undefined"
 
+
+jQuery ->
+  $("#add_book").click ->
+    book_id = $("#id").val()
+    $.ajax
+      url: "/user_book/check_user_book_duplication.js?book_id=" + book_id
+      type: "get"
+      context: "this"
+      dataType: "script"
+      data:
+        book_id: book_id
+
+      success: (msg) ->
+        #TODO Add error handling
+

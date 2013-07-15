@@ -8,6 +8,7 @@ class TransactionController < ApplicationController
 		@transaction.status = "Pending"
 
 		@transaction.save
+		AppMailer.borrow_request(current_user.id).deliver
 
 		@borrow = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
 
@@ -19,7 +20,7 @@ class TransactionController < ApplicationController
 
 
 	def get_latest_borrowed
-		@latest_borrowed = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after].to_i + 1))
+		@latest_borrowed = Transaction.where("borrower_id = ? AND status = ? AND updated_at > ?", current_user.id, "Pending", Time.at(params[:after].to_i + 1))
 	end
 
 
@@ -31,5 +32,11 @@ class TransactionController < ApplicationController
 		@latest_accepted = Transaction.find(params[:tr_id])
 		@latest_accepted.status = "Accepted"
 		@latest_accepted.save
+	end
+
+	def update_request_status_reject
+		@latest_rejected = Transaction.find(params[:tr_id])
+		@latest_rejected.status = params[:reject_reason]
+		@latest_rejected.save
 	end
 end
