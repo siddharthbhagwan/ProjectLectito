@@ -9,6 +9,8 @@ ProjectLectito::Application.routes.draw do
   match "address/create" => "address#create"
 
 
+  post "user_book/update/:user_book_id" => "user_book#update"
+
   get "admin/view" => "admin#view"
   get "admin/edit" => "admin#admin_edit"
   get "admin" => "admin#admin_index"
@@ -37,11 +39,14 @@ ProjectLectito::Application.routes.draw do
   get "user_book/edit" => "user_book#edit"
   get "user_book/autocomplete_book_detail_author"
   get "user_book/autocomplete_book_detail_book_name"
+  get "user_book/check_user_book_duplication" => "user_book#check_user_book_duplication"
+
   post "create" => "transaction#create"
-  match "user_book/search_books" => "user_book#search_books"
-  match "user_book/update/:user_book_id" => "address#update"
-  match "user_book/search_books_city" => "user_book#search_books_city"
   match "user_book/create" => "user_book#create"
+  match "user_book/search_books" => "user_book#search_books"
+
+  match "user_book/search_books_city" => "user_book#search_books_city"
+
 
 
   get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"

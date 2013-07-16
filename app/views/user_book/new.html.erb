@@ -35,11 +35,16 @@
 <%= collection_select :user_book, :available_in_city, @address, :id, :address_summary  %>
 
 <%= label_tag :rental_price %>
-<%= text_field_tag :rental_price %></br></br>
+<%= text_field_tag :rental_price %></br>
+
+<%= label_tag :availability %>
+<%= text_field_tag :availability %></br></br>
 
 <%= hidden_field_tag :id %>
 
 <%= submit_tag 'Add Book', :id => :add_book %></br>
 <%= link_to "Back", mybooks_view_path, class: "btn btn-small" %>
+
+<%= tag "input", :type => "button", :id => "test_dup", :class => "btn" , :value => "Dup" %></br></br>
 
 <% end %>

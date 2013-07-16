@@ -19,6 +19,7 @@ class UserBookController < ApplicationController
 		@userbook.book_detail_id = params[:id]
 		@userbook.available_in_city = params[:user_book][:available_in_city]
 		@userbook.rental_price = params[:rental_price]
+		@Userbook.availability = params[:availability]
  		if @userbook.save
 			redirect_to mybooks_view_path
 		else
@@ -29,6 +30,12 @@ class UserBookController < ApplicationController
 	def edit
 		@userbook = UserBook.find(params[:user_book_id])
 		@address = User.find(current_user.id).addresses
+	end
+
+	def update
+		@userbook = UserBook.find(params[:id])
+   		@userbook.update_attributes(params[:user_book])
+    	redirect_to mybooks_view_path
 	end
 
 	def delete

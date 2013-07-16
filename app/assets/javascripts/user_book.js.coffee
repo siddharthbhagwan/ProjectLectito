@@ -67,11 +67,13 @@ jQuery ->
         success: (msg) ->
           #TODO Add error handling
 
-    fetch_sub_search_data()  if typeof book_id isnt "undefined"
+    if typeof book_id isnt "undefined" && book_id.indexOf("city_") is -1   
+      fetch_sub_search_data()
+       
 
 
 jQuery ->
-  $("#add_book").click ->
+  $("#test_dup").click ->
     book_id = $("#id").val()
     $.ajax
       url: "/user_book/check_user_book_duplication.js?book_id=" + book_id
@@ -83,4 +85,3 @@ jQuery ->
 
       success: (msg) ->
         #TODO Add error handling
-

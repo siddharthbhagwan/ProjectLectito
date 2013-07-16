@@ -54,36 +54,15 @@ jQuery ->
             after_b: after_b
             after_l: after_l
 
+          beforeSend: ->
+            #TODO add loading.gif  
+
           success: (msg) -> 
           	$(button_id_s).attr("disabled", true) 
           	$(button_id_s).attr("value","Request Sent...")
       
-            #TODO Add Error Handling
-
-
-jQuery ->
-  $(document).on "click", "#accept0", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#" + tr_id
-
-    update_request_status = ->
-      $.ajax
-        url: "/transaction/update_request_status_accept.js?tr_id=" + tr_id
-        type: "get"
-        context: "this"
-        dataType: "script"
-        data:
-          tr_id: tr_id
-
-        success: (msg) ->
-          #TODO Add error handling
-        complete: (msg) ->
-          $(tr_id_s).fadeOut 500, ->
-          $(tr_id_s).remove()              
-
-
-    if(confirm("You are about to accept this request"))
-      update_request_status()
+          complete: ->
+            #TODO add loading.gif
 
 
 
@@ -177,6 +156,6 @@ jQuery ->
         else
           after = "0"  
         $.getScript("/transaction/get_latest_lent.js?after=" + after)
-        setTimeout updateLendRequests, 50000
+        setTimeout updateLendRequests, 500000
     $ ->
-        setTimeout updateLendRequests, 50000  if $("#lend_requests_table").length > 0     
+        setTimeout updateLendRequests, 500000  if $("#lend_requests_table").length > 0     
