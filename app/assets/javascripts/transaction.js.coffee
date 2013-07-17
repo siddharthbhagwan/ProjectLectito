@@ -162,16 +162,4 @@ jQuery ->
         setTimeout updateLendRequests, 500000
     $ ->
         setTimeout updateLendRequests, 500000  if $("#lend_requests_table").length > 0  
-
-
-
-jQuery ->
-  $("#test1").click ->
-    alert "ok"
-    
-    
-
-jQuery ->
-  $("#test2").click ->
-    $("body").removeClass("loading"); 
          
