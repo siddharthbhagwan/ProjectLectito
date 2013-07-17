@@ -4,14 +4,15 @@
 
 jQuery ->
   $("#search_books").on "click", ->
-    $("#search_text").html("<h5>Click on one of the titles to check availability</h5>")
+    $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
+    $("#search_text").fadeIn(500)
     search_city = $("#city").val()
     search_by_author = $("#search_by_author").val()
     search_by_book_name = $("#search_by_book_name").val()
+    $("#search_results_table").remove() 
+    $("#city_validation").empty()
+    $("#author_book_validation").empty()
     fetch_search_data = ->
-      $("#search_results_table").remove()	
-      $("#city_validation").empty()
-      $("#author_book_validation").empty()
       $.ajax
         url: "/user_book/search_books.js"
         type: "get"
@@ -28,10 +29,11 @@ jQuery ->
       if search_by_author.length or search_by_book_name.length
         fetch_search_data()
       else
-        $("#author_book_validation").text("Please Select either a Book Name, or an Author, or Both")
+        $("#author_book_validation").text("Please Select either a Book Name, or an Author, or Both").hide()
+        $("#author_book_validation").fadeIn(500)
     else
-      $("#city_validation").text("Please Select your city")
-
+      $("#city_validation").text("Please Select your city").hide()
+      $("#city_validation").fadeIn(500)
 
 
 jQuery ->

@@ -19,7 +19,7 @@ class UserBookController < ApplicationController
 		@userbook.book_detail_id = params[:id]
 		@userbook.available_in_city = params[:user_book][:available_in_city]
 		@userbook.rental_price = params[:rental_price]
-		@Userbook.availability = params[:availability]
+		@userbook.availability = params[:availability]
  		if @userbook.save
 			redirect_to mybooks_view_path
 		else
