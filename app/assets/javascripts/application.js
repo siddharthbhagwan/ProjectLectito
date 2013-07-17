@@ -19,4 +19,5 @@
 //= require user_book
 //= require autocomplete-rails
 //= require dataTables/jquery.dataTables
+//= require jquery.blockUI
 //= require_tree .

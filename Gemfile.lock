@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/rusanu/blockuijs-rails.git
+  revision: 5deb1d36a861327dd54002d559fcd0e6197a3c83
+  specs:
+    blockuijs-rails (0.1.0)
+      rails (>= 3.1)
+
+GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
   revision: 494f752b8eb8350f33841c822a67d014c869219f
   specs:
@@ -188,6 +195,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  blockuijs-rails!
   cancan (= 1.6.7)
   coffee-rails (~> 3.2.1)
   devise

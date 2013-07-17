@@ -55,14 +55,17 @@ jQuery ->
             after_l: after_l
 
           beforeSend: ->
-            #TODO add loading.gif  
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'   
 
           success: (msg) -> 
           	$(button_id_s).attr("disabled", true) 
           	$(button_id_s).attr("value","Request Sent...")
       
           complete: ->
-            #TODO add loading.gif
+            setTimeout $.unblockUI
 
 
 
@@ -158,4 +161,17 @@ jQuery ->
         $.getScript("/transaction/get_latest_lent.js?after=" + after)
         setTimeout updateLendRequests, 500000
     $ ->
-        setTimeout updateLendRequests, 500000  if $("#lend_requests_table").length > 0     
+        setTimeout updateLendRequests, 500000  if $("#lend_requests_table").length > 0  
+
+
+
+jQuery ->
+  $("#test1").click ->
+    alert "ok"
+    
+    
+
+jQuery ->
+  $("#test2").click ->
+    $("body").removeClass("loading"); 
+         
