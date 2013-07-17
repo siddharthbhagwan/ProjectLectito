@@ -1,0 +1,21 @@
+<h4> Summary of Requests for Books you've lent out </h4>
+<table id = "accept_requests_table" class="table table-striped table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>Book Name</th>
+			<th>Rental</th>
+			<th colspan='3'>Status</th>	    
+		</tr>
+	</thead>
+	<tbody>
+		<% unless @accept.nil? %>
+			<% @accept.each do |a| %>
+				<tr data-time = <%= a.updated_at.to_i %> id=<%= a.id %> >
+					<td><%= BookDetail.find(UserBook.find(a.user_book_id).book_detail_id).book_name %></td>
+					<td><%= UserBook.find(a.user_book_id).rental_price %></td>
+					<td><%= a.status %></td>
+				</tr>
+			<% end %>
+		<% end %>	
+	</tbody>
+</table>

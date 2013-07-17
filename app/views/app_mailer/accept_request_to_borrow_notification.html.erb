@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @user.email%>,</h1>
+    <p>
+      Your request for has been accepted
+      Please <%= link_to "Login", home_path %> to check the status.
+    </p>
+    <p>
+      Regards,
+      ProjectLectito Team
+    </p>
+  </body>
+</html>

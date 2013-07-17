@@ -1,0 +1,742 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: postgres; Type: COMMENT; Schema: -; Owner: siddharthbhagwan
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: addresses; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE addresses (
+    id integer NOT NULL,
+    address_line1 character varying(255),
+    address_line2 character varying(255),
+    address_line3 character varying(255),
+    locality character varying(255),
+    city character varying(255),
+    state character varying(255),
+    pin integer,
+    country character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    user_id integer
+);
+
+
+ALTER TABLE public.addresses OWNER TO siddharthbhagwan;
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE addresses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.addresses_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE addresses_id_seq OWNED BY addresses.id;
+
+
+--
+-- Name: book_details; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE book_details (
+    id integer NOT NULL,
+    isbn character varying(255),
+    book_name character varying(255),
+    author character varying(255),
+    language character varying(255),
+    genre character varying(255),
+    version character varying(255),
+    edition character varying(255),
+    publisher character varying(255),
+    pages integer,
+    mrp integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.book_details OWNER TO siddharthbhagwan;
+
+--
+-- Name: book_details_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE book_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.book_details_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: book_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE book_details_id_seq OWNED BY book_details.id;
+
+
+--
+-- Name: locations; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE locations (
+    id integer NOT NULL,
+    area character varying(255),
+    city character varying(255),
+    state character varying(255),
+    pincode character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.locations OWNER TO siddharthbhagwan;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE locations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.locations_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
+
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE profiles (
+    id integer NOT NULL,
+    user_first_name character varying(255),
+    user_last_name character varying(255),
+    "DoB" date,
+    gender character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    user_id integer,
+    profile_status character varying(255),
+    user_phone_no character varying(255),
+    current_status character varying(255),
+    last_update timestamp without time zone
+);
+
+
+ALTER TABLE public.profiles OWNER TO siddharthbhagwan;
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.profiles_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO siddharthbhagwan;
+
+--
+-- Name: transactions; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE transactions (
+    id integer NOT NULL,
+    borrower_id integer,
+    lender_id integer,
+    user_book_id integer,
+    status character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.transactions OWNER TO siddharthbhagwan;
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE transactions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.transactions_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE transactions_id_seq OWNED BY transactions.id;
+
+
+--
+-- Name: user_books; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE user_books (
+    id integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    user_id integer,
+    book_detail_id integer,
+    rental_price integer,
+    available_in_city character varying(255)
+);
+
+
+ALTER TABLE public.user_books OWNER TO siddharthbhagwan;
+
+--
+-- Name: user_books_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE user_books_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_books_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: user_books_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE user_books_id_seq OWNED BY user_books.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying(255) DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying(255),
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip character varying(255),
+    last_sign_in_ip character varying(255),
+    confirmation_token character varying(255),
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying(255),
+    failed_attempts integer DEFAULT 0,
+    unlock_token character varying(255),
+    locked_at timestamp without time zone,
+    authentication_token character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    provider character varying(255),
+    uid character varying(255),
+    roles_mask integer DEFAULT 4 NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO siddharthbhagwan;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: siddharthbhagwan
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO siddharthbhagwan;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY addresses ALTER COLUMN id SET DEFAULT nextval('addresses_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY book_details ALTER COLUMN id SET DEFAULT nextval('book_details_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY profiles ALTER COLUMN id SET DEFAULT nextval('profiles_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY transactions ALTER COLUMN id SET DEFAULT nextval('transactions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY user_books ALTER COLUMN id SET DEFAULT nextval('user_books_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: siddharthbhagwan
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: addresses; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY addresses (id, address_line1, address_line2, address_line3, locality, city, state, pin, country, created_at, updated_at, user_id) FROM stdin;
+48	L 902	Iris Aparments		Hadapsar	Pune	Maharashtra	411028	India	2013-06-04 10:12:42.437917	2013-06-04 10:12:42.437917	25
+55	H1/5	Hermes Heritage	Shastri Nagar	Yerawada	Pune	Maharashtra	411006	India	2013-06-11 12:44:20.717986	2013-06-11 12:44:20.717986	26
+56	L 902	Iris Aparments	Magarpatta City	Hadapsar	Pune	Maharashtra	411028	India	2013-06-12 11:18:46.167639	2013-06-12 11:18:46.167639	26
+57	Flat 5	Evershine Apts	J P Road	Andheri	Bombay	Maharashtra	400099	India	2013-06-13 06:31:36.128374	2013-06-13 06:31:36.128374	26
+\.
+
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('addresses_id_seq', 57, true);
+
+
+--
+-- Data for Name: book_details; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY book_details (id, isbn, book_name, author, language, genre, version, edition, publisher, pages, mrp, created_at, updated_at) FROM stdin;
+7	9780385537858	Inferno	Dan Brown	English	Thriller	Hard Cover	1st	Doubleday	480	750	2013-05-27 14:33:09.745277	2013-05-27 15:07:22.065516
+8	9780345529053	Game Of Thrones -  A Song Of Fire And Ice	George R R Martin	English	Fantasy	Paper Back	2nd	Penguin	976	440	2013-05-27 15:08:59.075042	2013-05-27 15:08:59.075042
+9	9780671027360	Angels & Demons	Dan Brown	English	Thriller	Paper Back	2nd	Pocket Star	673	200	2013-06-05 11:22:45.049376	2013-06-05 11:22:45.049376
+10	9780312944926	Digital Fortress	Dan Brown	English	Thriller	Hard Cover	4th	Penguin	580	399	2013-06-05 11:24:23.234646	2013-06-05 11:24:23.234646
+\.
+
+
+--
+-- Name: book_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('book_details_id_seq', 10, true);
+
+
+--
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY locations (id, area, city, state, pincode, created_at, updated_at) FROM stdin;
+22	Khadakwasala	Pune	Maharashtra	411024	2013-05-30 19:58:12.665989	2013-05-30 19:58:12.665989
+23	Khadaki	Pune	Maharashtra	411020	2013-05-30 19:58:26.601902	2013-05-30 19:58:26.601902
+24	Kothrud	Pune	Maharashtra	411038	2013-05-30 19:58:49.406748	2013-05-30 19:58:49.406748
+25	Lohgaon	Pune	Maharashtra	411047	2013-05-30 19:59:07.512355	2013-05-30 19:59:07.512355
+26	Market Yard	Pune	Maharashtra	411037	2013-05-30 19:59:25.344058	2013-05-30 19:59:25.344058
+27	Model Colony	Pune	Maharashtra	411016	2013-05-30 20:00:20.281933	2013-05-30 20:00:20.281933
+28	Mundhwa	Pune	Maharashtra	411036	2013-05-30 20:00:41.424993	2013-05-30 20:00:41.424993
+29	N.C.L.	Pune	Maharashtra	411008	2013-05-30 20:01:11.122642	2013-05-30 20:01:11.122642
+30	N.D.A.	Pune	Maharashtra	411023	2013-05-30 20:01:39.189425	2013-05-30 20:01:39.189425
+31	N.I.B.M.	Pune	Maharashtra	411048	2013-05-30 20:02:17.950153	2013-05-30 20:02:17.950153
+32	Navasahyadri	Pune	Maharashtra	411052	2013-05-30 20:02:42.351452	2013-05-30 20:02:42.351452
+33	Parvati	Pune	Maharashtra	411009	2013-05-30 20:03:09.458877	2013-05-30 20:03:09.458877
+34	Pashan	Pune	Maharashtra	411045	2013-05-30 20:03:21.360471	2013-05-30 20:03:21.360471
+35	Pimpri Chinchwad	Pune	Maharashtra	411044	2013-05-30 20:11:37.68856	2013-05-30 20:11:37.68856
+36	Pimpri Colony	Pune	Maharashtra	411017	2013-05-30 20:12:00.076564	2013-05-30 20:12:00.076564
+21	Katraj	Pune	Maharashtra	411046	2013-05-30 19:57:51.997969	2013-05-30 19:57:51.997969
+0	Andheri	Bombay	Maharashtra	400099	2013-05-16 15:56:24.689569	2013-05-16 15:56:24.689569
+1	Akurdi	Pune	Maharashtra	411035	2013-05-19 20:08:02.505066	2013-05-19 20:08:02.505066
+2	Anandnagar	Pune	Maharashtra	411051	2013-05-19 20:08:45.7586	2013-05-19 20:08:45.7586
+3	Armament	Pune	Maharashtra	411021	2013-05-19 20:09:31.646578	2013-05-19 20:09:31.646578
+4	Aundh Camp	Pune	Maharashtra	411027	2013-05-19 20:09:48.579816	2013-05-19 20:09:48.579816
+5	Bhosari (Indus.estate)	Pune	Maharashtra	411026	2013-05-19 20:10:07.683067	2013-05-19 20:10:07.683067
+6	Bhosari Gaon	Pune	Maharashtra	411039	2013-05-19 20:11:11.608535	2013-05-19 20:11:11.608535
+7	C.M.E.	Pune	Maharashtra	411031	2013-05-19 20:11:57.298542	2013-05-19 20:11:57.298542
+8	Chinchwad Gaon	Pune	Maharashtra	411033	2013-05-19 20:13:08.708729	2013-05-19 20:13:08.708729
+9	Chinchwad (East)	Pune	Maharashtra	411019	2013-05-19 20:13:50.719362	2013-05-19 20:13:50.719362
+10	Dapodi	Pune	Maharashtra	411012	2013-05-19 20:14:26.941948	2013-05-19 20:14:26.941948
+11	Deccan Gymkhana	Pune	Maharashtra	411004	2013-05-20 18:35:33.190747	2013-05-20 18:35:33.190747
+12	Dhankawadi	Pune	Maharashtra	411043	2013-05-20 18:35:56.672524	2013-05-20 18:35:56.672524
+13	Dighi Camp\t	Pune	Maharashtra	411015	2013-05-20 18:36:11.974264	2013-05-20 18:36:11.974264
+14	Dunkirk Line	Pune	Maharashtra	411014	2013-05-20 18:36:48.060735	2013-05-20 18:36:48.060735
+15	Ganeshkhind	Pune	Maharashtra	411007	2013-05-20 18:37:25.781946	2013-05-20 18:37:25.781946
+16	Hadapsar	Pune	Maharashtra	411028	2013-05-22 12:37:44.844543	2013-05-22 12:37:44.844543
+17	I.A.F. Station	Pune	Maharashtra	411032	2013-05-22 12:38:12.41274	2013-05-22 12:38:12.41274
+18	I.A.T. Pune	Pune	Maharashtra	411025	2013-05-22 12:38:44.31556	2013-05-22 12:38:44.31556
+19	Kasba Peth	Pune	Maharashtra	411011	2013-05-22 12:38:59.882994	2013-05-22 12:38:59.882994
+20	Kasarwadi	Pune	Maharashtra	411034	2013-05-22 12:39:29.467861	2013-05-22 12:39:29.467861
+37	Pimpri Penicillin Factory	Pune	Maharashtra	411018	2013-05-30 20:12:18.616009	2013-05-30 20:12:18.616009
+38	Pune City H.O.	Pune	Maharashtra	411002	2013-05-30 20:13:07.488393	2013-05-30 20:13:07.488393
+39	Pune H.O.	Pune	Maharashtra	411001	2013-05-30 20:13:35.871384	2013-05-30 20:13:35.871384
+40	Range Hill	Pune	Maharashtra	411020	2013-05-30 20:14:38.798871	2013-05-30 20:14:38.798871
+41	S.P. College	Pune	Maharashtra	411030	2013-05-30 20:15:07.18386	2013-05-30 20:15:07.18386
+42	S.R.P.F.	Pune	Maharashtra	411022	2013-05-30 20:15:35.620815	2013-05-30 20:15:35.620815
+43	S.S.C. Board	Pune	Maharashtra	411010	2013-05-30 20:16:07.075942	2013-05-30 20:16:07.075942
+44	Shivaji Hsg Society	Pune	Maharashtra	411053	2013-05-31 13:52:09.46266	2013-05-31 13:52:09.46266
+45	Shivajinagar H.O.	Pune	Maharashtra	411005	2013-05-31 13:52:44.028391	2013-05-31 13:52:44.028391
+46	Swargate	Pune	Maharashtra	411042	2013-05-31 13:53:00.000318	2013-05-31 13:53:00.000318
+47	Wadgaon Budruk	Pune	Maharashtra	411041	2013-05-31 13:53:19.882999	2013-05-31 13:53:19.882999
+48	Wanawadi	Pune	Maharashtra	411040	2013-05-31 13:53:46.756419	2013-05-31 13:53:46.756419
+49	Warje Malwadi	Pune	Maharashtra	411052	2013-05-31 13:54:31.27706	2013-05-31 13:54:31.27706
+50	Yerawada	Pune	Maharashtra	411006	2013-05-31 13:55:05.799198	2013-05-31 13:55:05.799198
+\.
+
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('locations_id_seq', 2, true);
+
+
+--
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY profiles (id, user_first_name, user_last_name, "DoB", gender, created_at, updated_at, user_id, profile_status, user_phone_no, current_status, last_update) FROM stdin;
+33	Siddharth 	Bhagwan	1988-01-20	M	2013-05-12 15:27:48.321396	2013-05-12 15:27:48.321396	19	\N	9637396836	\N	\N
+35	Gaurav	Balyan	1962-11-13	M	2013-05-17 11:03:52.381212	2013-05-21 08:06:24.213963	21	\N	8806266264	\N	\N
+37	Toshal	Sakhare	1963-05-17	F	2013-06-14 11:24:25.871181	2013-06-14 11:24:25.871181	26	\N	9960098833	\N	\N
+\.
+
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('profiles_id_seq', 37, true);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY schema_migrations (version) FROM stdin;
+20130426093404
+20130426115109
+20130503065751
+20130503103850
+20130503152401
+20130503152804
+20130503153821
+20130503154543
+20130503163819
+20130503171402
+20130503175939
+20130503180517
+20130505121111
+20130505121119
+20130508081921
+20130508084338
+20130508085451
+20130508104032
+20130510094529
+20130510112514
+20130511070356
+20130511071100
+20130511071801
+20130511072326
+20130511072456
+20130511073226
+20130511073806
+20130511080108
+20130512145517
+20130512153321
+20130515062013
+20130515110306
+20130519120348
+20130524091528
+20130524102529
+20130527053236
+20130527053555
+20130527054205
+20130527115556
+20130527124303
+20130527140206
+20130528075029
+20130528080427
+20130528132036
+20130611071307
+20130611072634
+20130611130600
+20130611132056
+20130618071834
+\.
+
+
+--
+-- Data for Name: transactions; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY transactions (id, borrower_id, lender_id, user_book_id, status, created_at, updated_at) FROM stdin;
+130	25	26	56	Pending	2013-07-04 11:42:19.477157	2013-07-04 11:42:19.477157
+\.
+
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('transactions_id_seq', 130, true);
+
+
+--
+-- Data for Name: user_books; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY user_books (id, created_at, updated_at, user_id, book_detail_id, rental_price, available_in_city) FROM stdin;
+51	2013-06-12 12:15:44.159181	2013-06-12 12:15:44.159181	26	8	78	56
+54	2013-06-13 06:32:13.96459	2013-06-13 06:32:13.96459	26	7	42	57
+56	2013-06-13 07:17:57.184658	2013-06-13 07:17:57.184658	26	7	34	55
+65	2013-06-18 06:54:56.852857	2013-06-18 06:54:56.852857	25	7	65	48
+66	2013-06-18 06:55:12.936203	2013-06-18 06:55:12.936203	25	10	12	48
+\.
+
+
+--
+-- Name: user_books_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('user_books_id_seq', 66, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: siddharthbhagwan
+--
+
+COPY users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, confirmation_token, confirmed_at, confirmation_sent_at, unconfirmed_email, failed_attempts, unlock_token, locked_at, authentication_token, created_at, updated_at, provider, uid, roles_mask) FROM stdin;
+26	toshal@gmail.com	$2a$10$gn0IigpGwxk2m.ENMG5b5OKlczKJ7c4Z9pMLcFRUsQyiMqITaCJRS	\N	\N	\N	60	2013-07-04 12:37:25.721439	2013-07-04 05:06:56.690515	127.0.0.1	127.0.0.1	\N	2013-06-04 16:38:58.121471	2013-06-04 16:38:22.170257	\N	0	\N	\N	\N	2013-06-04 16:38:22.170392	2013-07-04 12:37:25.722592	\N	\N	6
+28	gaurav@gmail.com	$2a$10$eukADcnNSDpp7qLz61p4vOcHXym1jN7NjhNe798hCmh797xuiw8aC	\N	\N	\N	1	2013-07-04 12:38:38.324334	2013-07-04 12:38:38.324334	127.0.0.1	127.0.0.1	\N	2013-07-04 12:38:38.320356	2013-07-04 12:38:25.356571	\N	0	\N	\N	\N	2013-07-04 12:38:25.357157	2013-07-04 12:38:38.324922	\N	\N	4
+25	sid_sss@hotmail.com		\N	\N	\N	31	2013-07-11 16:55:45.383203	2013-07-04 12:41:32.375301	127.0.0.1	127.0.0.1	\N	2013-06-04 10:12:17.529513	2013-06-04 10:11:38.184167	\N	0	\N	\N	\N	2013-06-04 10:11:38.184304	2013-07-11 16:55:45.38621	facebook	510242790	6
+27	sidunderscoresss@gmail.com		\N	\N	\N	0	\N	\N	\N	\N	YxY1BFjZeoAGx5xh7xJc	\N	2013-06-25 07:05:01.274077	\N	0	\N	\N	\N	2013-06-25 07:05:01.274617	2013-06-25 07:05:01.274617	google_oauth2	112090768589373334161	4
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: siddharthbhagwan
+--
+
+SELECT pg_catalog.setval('users_id_seq', 28, true);
+
+
+--
+-- Name: addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY addresses
+    ADD CONSTRAINT addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: book_details_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY book_details
+    ADD CONSTRAINT book_details_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_books_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY user_books
+    ADD CONSTRAINT user_books_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_users_on_authentication_token; Type: INDEX; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_authentication_token ON users USING btree (authentication_token);
+
+
+--
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_confirmation_token ON users USING btree (confirmation_token);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_unlock_token ON users USING btree (unlock_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: siddharthbhagwan; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: siddharthbhagwan
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM siddharthbhagwan;
+GRANT ALL ON SCHEMA public TO siddharthbhagwan;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
