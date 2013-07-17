@@ -79,3 +79,8 @@ jQuery ->
     $(this).css('textDecoration', 'underline')
 
 
+jQuery ->
+  $(document).on "mouseleave", "#search_results_table tbody tr", ->
+    $(this).css('textDecoration', 'none')
+
+
