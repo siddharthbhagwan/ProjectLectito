@@ -16,7 +16,7 @@ gem 'rack'
 gem 'rails3-jquery-autocomplete'
 gem 'kaminari'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails'
 gem 'jquery-rails'
 
