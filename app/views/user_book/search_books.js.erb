@@ -7,7 +7,7 @@ $table.append("<thead>").children("thead").append("<tr />").children("tr").appen
 $tbody = $table.append("<tbody />").children("tbody");
 
 if (<%= @bookdetail.length %> === 0) {
-	rental_data = "<td colspan='2'> Sorry, this book isnt available in your city </td>";
+	rental_data = "<td colspan='2'> Sorry, this book/books by this author arent available in your city </td>";
 	table_row_id = "<tr/>";
 	$tbody.append(table_row_id).children("tr:last").append(rental_data);
 } else {	

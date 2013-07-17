@@ -145,7 +145,7 @@ jQuery ->
             #TODO Add error handling
           complete: (msg) ->
             $(tr_id_s).fadeOut 500, ->
-              $(tr_id_s).remove()     
+              $(tr_id_s).remove()   
 
       Cancel: ->
         $(this).dialog "close"    

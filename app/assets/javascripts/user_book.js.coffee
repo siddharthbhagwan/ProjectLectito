@@ -4,8 +4,6 @@
 
 jQuery ->
   $("#search_books").on "click", ->
-    $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
-    $("#search_text").fadeIn(500)
     search_city = $("#city").val()
     search_by_author = $("#search_by_author").val()
     search_by_book_name = $("#search_by_book_name").val()
@@ -23,16 +21,19 @@ jQuery ->
           search_by_book_name: search_by_book_name
 
         success: (msg) ->
+          $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
+          $("#search_text").fadeIn(500)
+
           #TODO Add Error Handling
 
     if search_city
       if search_by_author.length or search_by_book_name.length
         fetch_search_data()
       else
-        $("#author_book_validation").text("Please Select either a Book Name, or an Author, or Both").hide()
+        $("#author_book_validation").html("<h5>Please Select either a Book Name, or an Author, or Both</h5>").hide()
         $("#author_book_validation").fadeIn(500)
     else
-      $("#city_validation").text("Please Select your city").hide()
+      $("#city_validation").html("<h5>Please Select your city</h5>").hide()
       $("#city_validation").fadeIn(500)
 
 
@@ -71,19 +72,10 @@ jQuery ->
 
     if typeof book_id isnt "undefined" && book_id.indexOf("city_") is -1   
       fetch_sub_search_data()
+
        
-
-
 jQuery ->
-  $("#test_dup").click ->
-    book_id = $("#id").val()
-    $.ajax
-      url: "/user_book/check_user_book_duplication.js?book_id=" + book_id
-      type: "get"
-      context: "this"
-      dataType: "script"
-      data:
-        book_id: book_id
+  $(document).on "mouseenter", "#search_results_table tbody tr", ->
+    $(this).css('textDecoration', 'underline')
 
-      success: (msg) ->
-        #TODO Add error handling
+

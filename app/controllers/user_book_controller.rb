@@ -60,7 +60,6 @@ class UserBookController < ApplicationController
 	end
 
 	def search_books_city
-		Rails.logger.debug "adsada " + params[:book_id]
 		@users_with_book = UserBook.where("book_detail_id = ? AND user_id != ? ", params[:book_id], current_user.id)
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
