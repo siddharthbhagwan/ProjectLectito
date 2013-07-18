@@ -24,7 +24,12 @@ jQuery ->
           $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
           $("#search_text").fadeIn(500)
 
-          #TODO Add Error Handling
+        error: ->
+          $("#error_message").dialog
+            modal: true
+            buttons:
+              Ok: ->
+                $(this).dialog "close"
 
     if search_city
       if search_by_author.length or search_by_book_name.length
@@ -68,9 +73,15 @@ jQuery ->
           city: city
 
         success: (msg) ->
-          #TODO Add error handling
+          
+        error: ->
+          $("#error_message").dialog
+            modal: true
+            buttons:
+              Ok: ->
+                $(this).dialog "close"
 
-    if typeof book_id isnt "undefined" && book_id.indexOf("city_") is -1   
+    if book_id != (undefined && "sub_search" && "sub_search_results_table_header") && book_id.indexOf("city_") is -1 
       fetch_sub_search_data()
 
        
