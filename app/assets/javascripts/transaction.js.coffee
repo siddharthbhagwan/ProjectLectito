@@ -18,54 +18,77 @@ jQuery ->
 
 
 jQuery ->
+  $("#error_message").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+
+jQuery ->
   $(document).on "click", ".borrow_button" ,->
-    if(confirm("You are about to send a request borrow this book"))
-      i = 0
-      j = 0
-      user_book_id = undefined    
-      rental_data = undefined
-      row_number = undefined
-      rental_data = undefined
-      button_id = undefined
-      user_book_id = $(this).attr("data-ubid")
-      user_id = $(this).attr("data-uid")
-      button_id = $(this).attr("id")
-      button_id_s = "#" + button_id
-      button_id = $(this).attr("id")
-      row_number = $(this).closest("tr")[0].rowIndex - 1
-      if $("#borrow_requests_table").length > 0
-            after_b = $("#borrow_requests_table tbody tr:last-child").attr("data-time")
-          else
-            after_b = "0"
+    $("#borrow_confirm").data "user_book_id", $(this).attr("data-ubid")
+    $("#borrow_confirm").data "user_id", $(this).attr("data-uid")
+    $("#borrow_confirm").data "button_id", $(this).attr("id")
+    $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
+    $("#borrow_confirm").data
+    $("#borrow_confirm").dialog "open"
 
-      if $("#lend_requests_table").length > 0
-            after_l = $("#lend_requests_table tbody tr:last-child").attr("data-time")
-          else
-            after_l = "0"  
 
-      $.ajax
-          url: "/transaction.js"
-          type: "post"
-          context: "this"
-          dataType: "script"
-          data:
-            user_book_id: user_book_id
-            user_id: user_id
-            after_b: after_b
-            after_l: after_l
+jQuery ->
+  $("#borrow_confirm").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+        i = 0
+        j = 0
+        user_book_id = $("#borrow_confirm").data("user_book_id")   
+        rental_data = $("#borrow_confirm").data("rental_data")
+        row_number = $("#borrow_confirm").data("row_number")
+        button_id = $("#borrow_confirm").data("button_id")
+        user_id = $("#borrow_confirm").data("user_id")
+        if $("#borrow_requests_table tr").length == 1
+          after_b = "0"
+        else
+          after_b = $("#borrow_requests_table tbody tr:last-child").attr("data-time")
+          
+        if $("#lend_requests_table tr").length == 1
+            after_l = "0"
+        else
+          after_l = $("#lend_requests_table tbody tr:last-child").attr("data-time")
+        $.ajax
+            url: "/transaction.js"
+            type: "post"
+            context: "this"
+            dataType: "script"
+            data:
+              user_book_id: user_book_id
+              user_id: user_id
+              after_b: after_b
+              after_l: after_l
 
-          beforeSend: ->
-            $.blockUI
-              theme:     true, 
-              title:    'Please Wait', 
-              message:  '<p>Your request is being processed</p>'   
+            beforeSend: ->
+              $.blockUI
+                theme:     true, 
+                title:    'Please Wait', 
+                message:  '<p>Your request is being processed</p>'   
 
-          success: (msg) -> 
-            $(button_id_s).attr("disabled", true) 
-            $(button_id_s).attr("value","Request Sent...")
-      
-          complete: ->
-            setTimeout $.unblockUI
+            success: (msg) -> 
+              $("#"+button_id).attr("disabled", true) 
+              $("#"+button_id).attr("value","Request Sent...")
+        
+            complete: ->
+              setTimeout $.unblockUI
+
+            error: ->
+              setTimeout $.unblockUI
+              $("#error_message").dialog "open"  
+
+      Cancel: ->
+        $(this).dialog "close"              
+
 
 
 jQuery ->
@@ -87,7 +110,6 @@ jQuery ->
         tr_id = $("#reject_request_confirm").data("trid")
         tr_id_s = $("#reject_request_confirm").data("trids")
         reject_reason = $('input[name=rejectReason]:radio:checked').val()
-        alert reject_reason
         $.ajax
           url: "/transaction/update_request_status_reject.js?tr_id=" + tr_id + "&reject_reason=" + reject_reason
           type: "get"
@@ -100,7 +122,10 @@ jQuery ->
             #TODO Add error handling
           complete: (msg) ->
             $(tr_id_s).fadeOut 500, ->
-              $(tr_id_s).remove()     
+              $(tr_id_s).remove()
+          error: ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"         
 
       Cancel: ->
         $(this).dialog "close"   
@@ -136,7 +161,10 @@ jQuery ->
             #TODO Add error handling
           complete: (msg) ->
             $(tr_id_s).fadeOut 500, ->
-              $(tr_id_s).remove()   
+              $(tr_id_s).remove()
+          error: ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"       
 
       Cancel: ->
         $(this).dialog "close"          
@@ -144,12 +172,12 @@ jQuery ->
 
 jQuery ->
     updateLendRequests = ->
-        if $("#lend_requests_table").length > 0
+        if $("#lend_requests_table tr").length > 1
           after = $("#lend_requests_table tbody tr:last-child").attr("data-time")
         else
-          after = "0"  
+          after = "0"
         $.getScript("/transaction/get_latest_lent.js?after=" + after)
-        setTimeout updateLendRequests, 500000
+        setTimeout updateLendRequests, 30000
     $ ->
-        setTimeout updateLendRequests, 500000  if $("#lend_requests_table").length > 0  
+        setTimeout updateLendRequests, 30000  #if $("#lend_requests_table").length > 0  
          

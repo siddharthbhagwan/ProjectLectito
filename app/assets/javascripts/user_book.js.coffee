@@ -10,6 +10,7 @@ jQuery ->
     $("#search_results_table").remove() 
     $("#city_validation").empty()
     $("#author_book_validation").empty()
+    $("#search_text").hide()
     fetch_search_data = ->
       $.ajax
         url: "/user_book/search_books.js"
@@ -23,6 +24,8 @@ jQuery ->
         success: (msg) ->
           $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
           $("#search_text").fadeIn(500)
+        error: ->
+          $("#error_message").dialog "open"  
           
 
     if search_city
@@ -68,13 +71,8 @@ jQuery ->
 
         success: (msg) ->
           #TODO Add error handling
-
         error: ->
-          $("#error_message").dialog
-            modal: true
-            buttons:
-              Ok: ->
-                $(this).dialog "close" 
+          $("#error_message").dialog "open"
 
 
     #TODO Check Why && not working
@@ -96,15 +94,14 @@ jQuery ->
       success: (data) ->
         label: data
         value: data
-          
 
-       
+
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->
     if ($(this).attr("id") != undefined && $(this).attr("id") != 'sub_search_results_table_header')
       if ($(this).attr("id").indexOf("city_") == -1 )
         $(this).css('textDecoration', 'underline')
-        $(this).css('font-size', '15px')
+        $(this).css('font-size', '14.5px')
 
 
 jQuery ->

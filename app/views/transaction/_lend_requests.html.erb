@@ -14,8 +14,8 @@
 					<td><%= BookDetail.find(UserBook.find(l.user_book_id).book_detail_id).book_name %></td>
 					<td><%= UserBook.find(l.user_book_id).rental_price %></td>
 					<td><%= l.status %></td>
-					<td><input type="button" value="Accept" id="accept" data-trid=<%= l.id %> /></td>
-					<td><input type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>					
+					<td><input class="btn btn-small" type="button" value="Accept" id="accept" data-trid=<%= l.id %> /></td>
+					<td><input class="btn btn-small" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>		
 				</tr>
 			<% end %>
 		<% end %>	

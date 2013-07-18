@@ -3,8 +3,11 @@
 		tr_id = "<tr data-time='<%= l.updated_at.to_i %>'>"
 		td_book_name = "<td><%= BookDetail.find(UserBook.find(l.user_book_id).book_detail_id).book_name %></td>"
 		td_rental_price = "<td><%= UserBook.find(l.user_book_id).rental_price %></td>"
-		td_status = "<td><%= l.status %></td></tr>"
-		table_row_data = tr_id + td_book_name + td_rental_price + td_status
+		td_status = "<td><%= l.status %></td>"
+		td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=<%= l.id %> /></td>"
+		td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=<%= l.id %> /></td></tr>"	
+		table_row_data = tr_id + td_book_name + td_rental_price + td_status + td_accept + td_reject
 		$("#lend_requests_table > tbody:last").append(table_row_data);
 	<% end %>
+	$("#lend_requests_div").fadeIn(700);
 <% end %>
