@@ -76,11 +76,16 @@ jQuery ->
        
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->
-    $(this).css('textDecoration', 'underline')
+    if ($(this).attr("id") != undefined && $(this).attr("id") != 'sub_search_results_table_header')
+      if ($(this).attr("id").indexOf("city_") == -1 )
+        $(this).css('textDecoration', 'underline')
+        $(this).css('font-size', '15px')
 
 
 jQuery ->
   $(document).on "mouseleave", "#search_results_table tbody tr", ->
     $(this).css('textDecoration', 'none')
+    $(this).css('font-size', '14px')
+
 
 
