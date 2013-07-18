@@ -84,6 +84,20 @@ jQuery ->
           if book_id.indexOf("city_") is -1
             fetch_sub_search_data()
 
+
+jQuery ->
+  $("#search_by_author").autocomplete source: (request, response) ->
+    $.ajax
+      url: "user_book/autocomplete_author"
+      dataType: "json"
+      data:
+        author: $("#search_by_author").val()
+        
+      success: (data) ->
+        label: data
+        value: data
+          
+
        
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->

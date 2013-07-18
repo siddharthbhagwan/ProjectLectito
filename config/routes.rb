@@ -39,6 +39,7 @@ ProjectLectito::Application.routes.draw do
   get "user_book/edit" => "user_book#edit"
   get "user_book/autocomplete_book_detail_author"
   get "user_book/autocomplete_book_detail_book_name"
+  get "user_book/autocomplete_author" => "user_book#autocomplete_author"
   get "user_book/check_user_book_duplication" => "user_book#check_user_book_duplication"
 
   post "create" => "transaction#create"

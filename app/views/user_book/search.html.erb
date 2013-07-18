@@ -16,9 +16,15 @@
 
 <%= form_tag() do %>
 <div id="city_validation"></div>
+
 <%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city.."  %></br>
+
 <div id="author_book_validation"></div>
+
 <%= autocomplete_field_tag :search_by_author, nil, user_book_autocomplete_book_detail_author_path, :id_element => '', :placeholder => "Search By Author "%></br>
+
+<!-- <%= text_field_tag :search_by_author, nil, :placeholder => "Author" %></br> -->
+
 <%= autocomplete_field_tag :search_by_book_name, nil, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :placeholder => "Search By Book Name"  %></br>
 <% end %>
 

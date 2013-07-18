@@ -97,4 +97,13 @@ class UserBookController < ApplicationController
 	def check_user_book_duplication
 		@duplicate_books = UserBook.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
 	end
+
+	def autocomplete_author
+		@authors_books = BookDetail.where("author like ?", "%#{params[:author]}%").pluck(:author).uniq
+
+		respond_to do |format|
+    		format.html  
+    		format.json { render :json => @authors_books.to_json }
+    	end
+	end
 end
