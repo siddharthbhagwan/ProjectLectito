@@ -61,12 +61,11 @@ jQuery ->
               message:  '<p>Your request is being processed</p>'   
 
           success: (msg) -> 
-          	$(button_id_s).attr("disabled", true) 
-          	$(button_id_s).attr("value","Request Sent...")
+            $(button_id_s).attr("disabled", true) 
+            $(button_id_s).attr("value","Request Sent...")
       
           complete: ->
             setTimeout $.unblockUI
-
 
 
 jQuery ->
@@ -104,15 +103,7 @@ jQuery ->
               $(tr_id_s).remove()     
 
       Cancel: ->
-        $(this).dialog "close"    
-      
-
-      Cancel: ->
-        $(this).dialog "close"
-
-    close: ->
-      $(this).dialog "close" 
-
+        $(this).dialog "close"   
 
 
 jQuery ->
@@ -148,8 +139,7 @@ jQuery ->
               $(tr_id_s).remove()   
 
       Cancel: ->
-        $(this).dialog "close"    
-      
+        $(this).dialog "close"          
 
 
 jQuery ->
