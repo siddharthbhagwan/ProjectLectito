@@ -20,6 +20,7 @@ gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails'
 gem 'jquery-rails'
 gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
+gem 'sidekiq'
 
 
 # Gems used only for assets and not required

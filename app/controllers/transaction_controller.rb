@@ -6,11 +6,12 @@ class TransactionController < ApplicationController
 		@transaction.lender_id = params[:user_id] 
 		@transaction.user_book_id = params[:user_book_id]
 		@transaction.status = "Pending"
+		mail_to_id = params[:user_id]
 
 		if !@transaction.save
 			raise "error"
 		else
-			#AppMailer.request_to_borrow_notification(@transaction.lender_id).deliver
+			MailWorker.perform_async(@transaction.lender_id)#, User.find(@transaction.lender_id).profile.user_first_name)
 		end
 
 		@borrow = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
@@ -35,8 +36,12 @@ class TransactionController < ApplicationController
 	def update_request_status_accept
 		@latest_accepted = Transaction.find(params[:tr_id])
 		@latest_accepted.status = "Accepted"
-		@latest_accepted.save
-		AppMailer.accept_request_to_borrow_notification(@latest_accepted.borrower_id).deliver
+		
+		if @latest_accepted.save
+			MailWorker.perform_async(@latest_accepted.borrower_id)
+		else
+			raise "error"
+		end
 	end
 
 

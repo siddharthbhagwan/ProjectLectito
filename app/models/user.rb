@@ -25,6 +25,14 @@ class User < ActiveRecord::Base
   has_many :user_books ,:dependent => :destroy
   has_many :book_details, :through => :user_books 
 
+  def welcome_name
+    if self.profile.nil? or (self.profile.user_first_name.nil? and self.prodile.user_last_name.nil?)
+      email 
+    else
+      self.profile.user_first_name + " " + self.profile.user_last_name
+    end
+  end
+  
 
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid, :email)).first_or_create do |user|

@@ -9,12 +9,4 @@ class Profile < ActiveRecord::Base
 
   validates_inclusion_of :gender, :in => %w( M F ), :message => " can only be 'M' or 'F'"
 
-
-  def welcome_name
-  	if user_first_name.nil? and user_last_name.nil?
-  		"Welcome " + self.user.email + ","
-  	else
-  		"Welcome " + user_first_name + " " + user_last_name + ","
-  	end
-  end
 end
