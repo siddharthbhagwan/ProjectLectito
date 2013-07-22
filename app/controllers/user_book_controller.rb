@@ -75,12 +75,8 @@ class UserBookController < ApplicationController
 			end
 		end
 
-		Rails.logger.debug " Tr Req before flatten " + @transactions_requested.inspect
 		@transactions_requested = @transactions_requested.flatten
-		Rails.logger.debug " Tr Req after flatten " + @transactions_requested.inspect
 		@transactions_requested = @transactions_requested.map(&:inspect).join(', ')
-		Rails.logger.debug " Tr Req after map " + @transactions_requested.inspect
-
 
 		respond_to do |format|
     		format.html  

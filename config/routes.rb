@@ -45,7 +45,6 @@ ProjectLectito::Application.routes.draw do
   post "create" => "transaction#create"
   match "user_book/create" => "user_book#create"
   match "user_book/search_books" => "user_book#search_books"
-
   match "user_book/search_books_city" => "user_book#search_books_city"
 
 

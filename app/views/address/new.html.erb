@@ -1,30 +1,30 @@
-<h1>Build your profile</h1>
+<h1>Build your profile</h1></br>
 <%= form_for @address, :url => "create" do |f| %>
 
 <%= render 'error_messages' %>
 
-<%= f.label :address_line1 %>
-<%= f.text_field :address_line1, :size => 10 %>
+<!-- <%= f.label :address_line1 %> -->
+<%= f.text_field :address_line1, :size => 10, :placeholder => "Address Line 1" %></br>
 
-<%= f.label :address_line2 %>
-<%= f.text_field :address_line2 %></br>	
+<!-- <%= f.label :address_line2 %> -->
+<%= f.text_field :address_line2, :placeholder => "Address Line 2" %></br>	
 
-<%= f.label :address_line3 %>
-<%= f.text_field :address_line3 %></br>
+<!-- <%= f.label :address_line3 %> -->
+<%= f.text_field :address_line3, :placeholder => "Address Line 3" %></br>
 	
-<%= f.label :locality %>
-<%= f.autocomplete_field :locality, address_autocomplete_location_area_path, :id_element => '', :update_elements => {:city => '#address_city',:state => '#address_state', :pincode => '#address_pin' } %>
+<!-- <%= f.label :locality %> -->
+<%= f.autocomplete_field :locality, address_autocomplete_location_area_path,:placeholder => :Locality, :id_element => '', :update_elements => {:city => '#address_city',:state => '#address_state', :pincode => '#address_pin' } %></br>
 
-<%= f.label :city %>
-<%= f.text_field :city ,:readonly => true %></br>
+<!-- <%= f.label :city %> -->
+<%= f.text_field :city ,:readonly => true, :placeholder => :City %></br>
 
-<%= f.label :state %>
-<%= f.text_field :state,:readonly => true %></br>
+<!-- <%= f.label :state %> -->
+<%= f.text_field :state,:readonly => true, :placeholder => :State %></br>
 
-<%= f.label :pin %>
-<%= f.text_field :pin,:readonly => true %></br>
+<!-- <%= f.label :pin %> -->
+<%= f.text_field :pin,:readonly => true, :placeholder => :Pin %></br>
 
-<%= f.label :country %>
+<!-- <%= f.label :country %> -->
 <%= f.text_field :country, :value => "India" ,:readonly => true %></br>
 
 </br></br>

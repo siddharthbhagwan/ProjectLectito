@@ -11,7 +11,7 @@ class TransactionController < ApplicationController
 		if !@transaction.save
 			raise "error"
 		else
-			MailWorker.perform_async(@transaction.lender_id)#, User.find(@transaction.lender_id).profile.user_first_name)
+			#MailWorker.perform_async(@transaction.lender_id)#, User.find(@transaction.lender_id).profile.user_first_name)
 		end
 
 		@borrow = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
@@ -38,7 +38,7 @@ class TransactionController < ApplicationController
 		@latest_accepted.status = "Accepted"
 		
 		if @latest_accepted.save
-			MailWorker.perform_async(@latest_accepted.borrower_id)
+			#MailWorker.perform_async(@latest_accepted.borrower_id)
 		else
 			raise "error"
 		end

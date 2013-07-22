@@ -15,7 +15,7 @@
     <th>Available @</th>
     <th>Rental Price</th>
     <th>Availability</th>
-    <th colspan='2'>Manage</th>
+    <th>Manage</th>
   </tr>
 
   <% @userbook.each do |userbook| %>
@@ -33,7 +33,7 @@
     <td><%= userbook.user.addresses.find(userbook.available_in_city).address_summary %></td>
     <td><%= userbook.rental_price %></td>
     <td><%= userbook.availability %></td>
-    <td><%= link_to "Edit", user_book_edit_path(:user_book_id => userbook.id), :action => "edit" ,class: "btn btn-small "%></td>
+    <!--<td><%= link_to "Edit", user_book_edit_path(:user_book_id => userbook.id), :action => "edit" ,class: "btn btn-small "%></td> -->
     <td><%= link_to "Remove", user_book_delete_path(:user_book_id => userbook.id), :action => "delete", :confirm => "Are You Sure? ", class: "btn btn-small "%></td>
   </tr>
 <% end %>

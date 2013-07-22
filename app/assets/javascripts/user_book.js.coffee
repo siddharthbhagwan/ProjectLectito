@@ -108,3 +108,8 @@ jQuery ->
   $(document).on "mouseleave", "#search_results_table tbody tr", ->
     $(this).css('textDecoration', 'none')
     $(this).css('font-size', '14px')
+
+
+jQuery ->
+  $(document).on "click", "#add_book", ->
+    alert "ok"   
