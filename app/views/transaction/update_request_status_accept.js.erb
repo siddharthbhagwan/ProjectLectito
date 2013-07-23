@@ -3,6 +3,8 @@
 	td_address_summary = "<td><%= Address.find(UserBook.find(@latest_accepted.user_book_id).available_in_city).address_summary %></td>"
 	td_rental_price = "<td><%= UserBook.find(@latest_accepted.user_book_id).rental_price %></td>"
 	td_status = "<td><%= @latest_accepted.status %></td></tr>"
-	table_row_data = tr_id + td_book_name + td_address_summary + td_rental_price + td_status
+	table_row_data = tr_id + td_book_name + td_rental_price + td_status
 	$("#accept_requests_table > tbody:last").append(table_row_data);
-	$("#accept_requests_div").show(500);
+	if (!$("#accept_requests_div").is(":visible")){
+		$("#accept_requests_div").show(500);
+	}

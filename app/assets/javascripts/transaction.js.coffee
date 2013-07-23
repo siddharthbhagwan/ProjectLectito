@@ -75,9 +75,8 @@ jQuery ->
                 title:    'Please Wait', 
                 message:  '<p>Your request is being processed</p>'   
 
-            success: (msg) -> 
-              $("#"+button_id).attr("disabled", true) 
-              $("#"+button_id).attr("value","Request Sent...")
+            success: (msg) ->
+              $("#"+button_id).attr("disabled", true).attr("value","Request Sent...")
         
             complete: ->
               setTimeout $.unblockUI
@@ -119,10 +118,10 @@ jQuery ->
             tr_id: tr_id
 
           success: (msg) ->
-            #TODO Add error handling
+
           complete: (msg) ->
-            $(tr_id_s).fadeOut 500, ->
-              $(tr_id_s).remove()
+            $(tr_id_s).fadeOut(500).remove()
+            empty_table_checks()
           error: ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"         
@@ -158,10 +157,10 @@ jQuery ->
             tr_id: tr_id
 
           success: (msg) ->
-            #TODO Add error handling
+
           complete: (msg) ->
-            $(tr_id_s).fadeOut 500, ->
-              $(tr_id_s).remove()
+            $(tr_id_s).fadeOut(500).remove()
+            $("#lend_requests_div").hide()
           error: ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
@@ -177,7 +176,14 @@ jQuery ->
         else
           after = "0"
         $.getScript("/transaction/get_latest_lent.js?after=" + after)
-        setTimeout updateLendRequests, 30000
+        setTimeout updateLendRequests, 10000
     $ ->
-        setTimeout updateLendRequests, 30000  #if $("#lend_requests_table").length > 0  
+        setTimeout updateLendRequests, 10000  #if $("#lend_requests_table").length > 0  
+
+jQuery ->
+  $("#test").click ->
+    if $("#accept_requests_div").is(":visible")
+      alert "ok"
+    else
+    alert "not ok "
          
