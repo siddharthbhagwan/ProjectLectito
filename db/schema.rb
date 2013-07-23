@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716134429) do
+ActiveRecord::Schema.define(:version => 20130723100638) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20130716134429) do
     t.string   "user_phone_no"
     t.string   "current_status"
     t.datetime "last_update"
+    t.boolean  "contact_via_sms"
   end
 
   create_table "transactions", :force => true do |t|

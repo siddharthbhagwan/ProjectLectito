@@ -5,7 +5,7 @@
 <%= text_field_tag :isbn, nil, :disabled => true, :placeholder => :ISBN  %></br>
 
 <!-- <%= label_tag :book_name %>  -->
-<%= autocomplete_field_tag :book_name, nil, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' } %></br>
+<%= autocomplete_field_tag :book_name, nil, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' }, :placeholder => "Book Name" %></br>
 
 <!-- <%= label_tag :author %> -->
 <%= text_field_tag :author , nil, :disabled => true, :placeholder => :Author %></br>

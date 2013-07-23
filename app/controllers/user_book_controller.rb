@@ -85,21 +85,40 @@ class UserBookController < ApplicationController
 	end
 
 	def search
-		@borrow = Transaction.where("borrower_id = ? ", current_user.id)
+		@borrow = Transaction.where("borrower_id = ? ", current_user.id).last(5)
 		@lend = Transaction.where("lender_id = ? AND status = ? ", current_user.id, "Pending")
 		@accept = Transaction.where("lender_id = ? AND status = ?", current_user.id, "Accepted")
 	end
 
-	def check_user_book_duplication
-		@duplicate_books = UserBook.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
-	end
-
 	def autocomplete_author
 		@authors_books = BookDetail.where("author like ?", "%#{params[:author]}%").pluck(:author).uniq
+
+		if @authors_books.empty?
+			@authors_books = ["No Matching Results Found"]
+		end
 
 		respond_to do |format|
     		format.html  
     		format.json { render :json => @authors_books.to_json }
     	end
 	end
+
+	def autocomplete_book_name
+		@book_name_books = BookDetail.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%").pluck(:book_name).uniq
+		
+		if @book_name_books.empty?
+			@book_name_books = ["No Matching Results Found"]
+		end
+
+		respond_to do |format|
+    		format.html  
+    		format.json { render :json => @book_name_books.to_json }
+    	end
+	end
+
+	def check_user_book_duplication
+		@duplicate_books = UserBook.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
+	end
+
+	
 end

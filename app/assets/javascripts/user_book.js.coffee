@@ -92,8 +92,20 @@ jQuery ->
         author: $("#search_by_author").val()
         
       success: (data) ->
-        label: data
-        value: data
+        response(data)
+        
+
+jQuery ->
+  $("#search_by_book_name").autocomplete source: (request, response) ->
+    $.ajax
+      url: "user_book/autocomplete_book_name"
+      dataType: "json"
+      data:
+        author: $("#search_by_author").val()
+        book_name: $("#search_by_book_name").val()
+        
+      success: (data) ->
+        response(data)        
 
 
 jQuery ->
@@ -111,5 +123,17 @@ jQuery ->
 
 
 jQuery ->
-  $(document).on "click", "#add_book", ->
-    alert "ok"   
+  $("#isbn").hide() 
+  $("#author").hide()  
+  $("#language").hide() 
+  $("#genre").hide() 
+  $("#version").hide()
+  $("#edition").hide() 
+  $("#publisher").hide()
+  $("#pages").hide() 
+  $("#mrp").hide() 
+
+
+jQuery ->
+  $("#book_name").change ->
+    alert "yes"  

@@ -1,5 +1,5 @@
 class Profile < ActiveRecord::Base
-  attr_accessible :DoB, :user_first_name, :gender, :user_last_name, :user_phone_no, :last_update
+  attr_accessible :DoB, :user_first_name, :gender, :user_last_name, :user_phone_no, :last_update, :contact_via_sms
 
   belongs_to :user
 
