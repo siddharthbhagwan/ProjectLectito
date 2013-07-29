@@ -1,4 +1,6 @@
 class AddressController < ApplicationController
+  before_filter :require_profile
+
   # CanCan for authorization on controller actions
   load_and_authorize_resource :class => Address
 
@@ -11,8 +13,10 @@ class AddressController < ApplicationController
 
   def update
     @address = Address.find(params[:address_id])
-    @address.update_attributes(params[:address])
-    redirect_to address_view_path
+    if @address.update_attributes(params[:address])
+      flash[:notice] = "The address has been updated"
+      redirect_to address_view_path
+    end
   end
 
   def edit
@@ -38,6 +42,7 @@ end
     @address = Address.new(params[:address])
     @address.user_id = current_user.id
     if @address.save
+      flash[:notice] = "The address has been added"
       redirect_to address_view_path
     else
       render 'new'
@@ -56,5 +61,16 @@ end
       flash[:info] = "The Address has been deleted"
     end
   end
+
+  private
+  
+  def require_profile
+      if current_user.profile.nil?
+        flash[:notice] = "Please complete your profile"
+        redirect_to profile_edit_path
+      else
+        return false
+      end
+    end
 
 end

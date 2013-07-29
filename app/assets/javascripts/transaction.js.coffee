@@ -176,14 +176,7 @@ jQuery ->
         else
           after = "0"
         $.getScript("/transaction/get_latest_lent.js?after=" + after)
-        setTimeout updateLendRequests, 10000
+        setTimeout updateLendRequests, 60000
     $ ->
-        setTimeout updateLendRequests, 10000  #if $("#lend_requests_table").length > 0  
+        setTimeout updateLendRequests, 60000  #if $("#lend_requests_table").length > 0  
 
-jQuery ->
-  $("#test").click ->
-    if $("#accept_requests_div").is(":visible")
-      alert "ok"
-    else
-    alert "not ok "
-         

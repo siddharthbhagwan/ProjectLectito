@@ -8,7 +8,6 @@ $(document).ready ->
     oLanguage: sSearch: "Search All : "    
   )
 
-
   $("tfoot input").keyup ->    
     # Filter on the column (the index) of this element 
     oTable.fnFilter @value, $("tfoot input").index(this)
@@ -31,3 +30,112 @@ $(document).ready ->
       @className = "search_init"
       @value = asInitVals[$("tfoot input").index(this)]
    
+
+
+jQuery ->
+  $(document).on "click", "#bar_user", ->
+    $("#bar_user_confirm").dialog "open"
+
+
+jQuery ->
+  $("#bar_user_confirm").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Bar": ->
+        $(this).dialog "close"
+        $.ajax
+          url: "bar_user.js"
+          type: "post"
+          context: "this"
+          dataType: "script"
+          data:
+            bar_user_id: $("#bar_user").attr("data-uid")
+
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+            
+          success: (msg) ->
+            $("#bar_user_success").dialog "open"
+            $("#bar_user").val("Un Bar User").attr("id","unbar_user")
+            $("#user_current_status").text("Locked").fadeIn(500)
+          complete: -> 
+            setTimeout $.unblockUI            
+          error: (msg) ->
+            alert msg.responseText
+            setTimeout $.unblockUI
+            $("#custom_error").html("Admin Cannot Block Itself")
+            $("#error_message").dialog "open"
+      Cancel: ->
+        $(this).dialog "close"  
+
+
+jQuery ->
+  $("#bar_user_success").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close" 
+
+
+jQuery ->
+  $("#error_message").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"   
+
+
+jQuery ->
+  $(document).on "click", "#unbar_user", ->
+    $("#unbar_user_confirm").dialog "open"
+
+
+jQuery ->
+  $("#unbar_user_confirm").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Un-Bar": ->
+        $(this).dialog "close"
+        $.ajax
+          url: "unbar_user.js"
+          type: "post"
+          context: "this"
+          dataType: "script"
+          data:
+            unbar_user_id: $("#unbar_user").attr("data-uid")
+
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+            
+          success: (msg) ->
+            $("#unbar_user_success").dialog "open"
+            $("#unbar_user").val("Bar User").attr("id","bar_user")
+            $("#user_current_status").text("Active").fadeIn(500)
+          complete: -> 
+            setTimeout $.unblockUI         
+          error: (msg) ->
+            setTimeout $.unblockUI
+            $("#custom_error").html("Unblocking Unsuccessful. Please contact admin")
+            $("#error_message").dialog "open"
+      Cancel: ->
+        $(this).dialog "close"         
+
+
+jQuery ->
+  $("#unbar_user_success").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+         

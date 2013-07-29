@@ -75,4 +75,5 @@ class User < ActiveRecord::Base
       "Administrator"
     end      
   end
+
 end

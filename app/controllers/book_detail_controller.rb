@@ -36,4 +36,15 @@ class BookDetailController < ApplicationController
 		redirect_to bookdb_view_path
 	end
 
+	def book_status
+		@available = UserBook.where(:availability => "Yes", :book_detail_id => params[:book_detail_id]).count
+		@available_list = UserBook.where(:availability => "Yes", :book_detail_id => params[:book_detail_id])
+		@borrowed = UserBook.where(:availability => "No", :book_detail_id => params[:book_detail_id]).count
+	end
+
+	def available_book_stats
+		@available_list = UserBook.where(:availability => "Yes", :book_detail_id => params[:book_detail_id])
+		Rails.logger.debug "adsasdasda " + @available_list.inspect
+	end
+
 end

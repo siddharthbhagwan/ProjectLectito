@@ -15,14 +15,17 @@ ProjectLectito::Application.routes.draw do
   get "admin/edit" => "admin#admin_edit"
   get "admin" => "admin#admin_index"
   get "admin/user_details" => "admin#user_details"
+  post "admin/bar_user" => "admin#bar_user"
+  post "admin/unbar_user" => "admin#unbar_user"
 
   # Profile Routes
-  get "profile/edit"
+  get "profile/edit" => "profile#edit"
   match "profile/update"  => "profile#update"
 
   get "devise/User"
   match "home" => "user_book#search"
   match "admin" => "admin#admin"
+  match "home_page/barred" => "home_page#user_barred"
 
 
   get "bookdb/new" => "book_detail#new"
@@ -31,6 +34,8 @@ ProjectLectito::Application.routes.draw do
   match "bookdb/edit" => "book_detail#edit"
   match "bookdb/delete" => "book_detail#delete"
   match "bookdb/update/:bookdetail_id" => "book_detail#update"
+  match "book_detail/book_status" => "book_detail#book_status"
+  match "book_detail/available_book_stats" => "book_detail#available_book_stats"
 
 
 
@@ -39,6 +44,7 @@ ProjectLectito::Application.routes.draw do
   get "user_book/edit" => "user_book#edit"
   get "user_book/autocomplete_author" => "user_book#autocomplete_author"
   get "user_book/autocomplete_book_name" => "user_book#autocomplete_book_name"
+  get "user_book/autocomplete_book_details" => "user_book#autocomplete_book_details"
   get "user_book/check_user_book_duplication" => "user_book#check_user_book_duplication"
 
   post "create" => "transaction#create"
@@ -47,11 +53,9 @@ ProjectLectito::Application.routes.draw do
   match "user_book/search_books_city" => "user_book#search_books_city"
 
 
-
   get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   get "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
-  get "transaction/get_latest_lent" => "transaction#get_latest_lent"
-  
+  get "transaction/get_latest_lent" => "transaction#get_latest_lent"  
 
   
   root :to => "user_book#search"

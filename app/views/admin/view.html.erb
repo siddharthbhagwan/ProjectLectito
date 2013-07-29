@@ -5,7 +5,6 @@
      <th>User Id</th>
      <th>Name</th>
      <th>Email</th>
-     <th>Gender</th>
      <th>Current Status</th>
      <th>Priveleges</th>
    </tr>
@@ -16,23 +15,21 @@
     <td><%= link_to "#{u.id}", admin_user_details_path(:user_id => u.id) , class:"btn btn-small" %></td>
     <td><%= u.profile.user_first_name + " " + u.profile.user_last_name unless u.profile.blank? %></td>
     <td><%= u.email %></td>    
-    <td><%= u.profile.gender unless u.profile.blank? %></td>
     <td><%= u.profile.current_status unless u.profile.blank? %></td>
     <td><%= u.checkrole %></td>
   </tr>
 <% end %>
 </tbody>
 <tfoot>
-  <%= form_tag ({:class => "search_init"}) do %>
-  <tr>
-    <th><%= text_field_tag("search_id", nil, placeholder: "Search Id" ) %></th>
+  <%= form_tag do %>
+  <tr class="search_init1">
+    <th><%= text_field_tag("search_id", nil, placeholder: "Search Id") %></th>
     <th><%= text_field_tag("search_name", nil, placeholder: "Search Name") %></th>
     <th><%= text_field_tag("search_email", nil, placeholder: "Search Email") %></th>
-    <th><%= text_field_tag("search_gender", nil, placeholder: "Search Gender") %></th>
     <th><%= text_field_tag("search_current status", nil, placeholder: "Search Current Status") %></th>
     <th><%= text_field_tag("search_priveleges", nil, placeholder: "Search Priveleges") %></th>
   </tr>
   <% end %>
-</tfoot>
+</tfoot> 
 </table>
 </br></br>

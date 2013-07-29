@@ -1,4 +1,6 @@
 class UserBookController < ApplicationController
+	before_filter :require_profile
+	before_filter :require_address
 
 	autocomplete :book_detail, :book_name, :full => true, :extra_data => [:id, :isbn, :author, :language, :genre, :version, :edition, :publisher, :pages, :mrp], :data => { :no_matches_label => "" }
 	autocomplete :book_detail, :author, :full => true
@@ -104,7 +106,7 @@ class UserBookController < ApplicationController
 	end
 
 	def autocomplete_book_name
-		@book_name_books = BookDetail.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%").pluck(:book_name).uniq
+		@book_name_books = BookDetail.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%").pluck(:book_name)
 		
 		if @book_name_books.empty?
 			@book_name_books = ["No Matching Results Found"]
@@ -116,9 +118,40 @@ class UserBookController < ApplicationController
     	end
 	end
 
+	def autocomplete_book_details
+		@book_details = BookDetail.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%")
+		
+		if @book_details.empty?
+			@book_details = ["No Matching Results Found"]
+		end
+
+		respond_to do |format|
+    		format.html  
+    		format.json { render :json => @book_details.to_json }
+    	end
+	end
+
 	def check_user_book_duplication
 		@duplicate_books = UserBook.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
 	end
 
-	
+	private
+
+	def require_profile
+    	if current_user.profile.nil?
+    		flash[:notice] = "Please complete your profile"
+    		redirect_to profile_edit_path
+    	else
+    		return false
+    	end
+  	end
+
+  	def require_address
+    	if current_user.addresses.empty?
+    		flash[:notice] = "Please Enter at least one Address"
+    		redirect_to address_view_path
+    	else
+    		return false
+    	end
+  	end	
 end

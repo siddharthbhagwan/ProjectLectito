@@ -26,6 +26,7 @@
 							<div class="accordion-inner">  
 								<%= link_to "User Management", admin_view_path, class: "accordian" %>
 								<%= link_to "Book Management", bookdb_view_path, class: "accordian" %>
+								<%= link_to "Transaction Management", "admin_view_path", class: "accordian" %>
 							</div>  
 						</div>  
 					</div>
@@ -84,5 +85,6 @@
 			</div>
 		</div>		
 	</div>
+	<%= render 'layouts/footer' %>
 </body>
 </html>

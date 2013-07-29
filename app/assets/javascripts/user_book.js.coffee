@@ -70,7 +70,7 @@ jQuery ->
           city: city
 
         success: (msg) ->
-          #TODO Add error handling
+         
         error: ->
           $("#error_message").dialog "open"
 
@@ -84,35 +84,72 @@ jQuery ->
 
 
 jQuery ->
-  $("#search_by_author").autocomplete source: (request, response) ->
-    $.ajax
-      url: "user_book/autocomplete_author"
-      dataType: "json"
-      data:
-        author: $("#search_by_author").val()
-        
-      success: (data) ->
-        response(data)
-        
+  $("#search_by_author").autocomplete 
+    source: (request, response) ->
+      $.ajax
+        url: "user_book/autocomplete_author"
+        dataType: "json"
+        data:
+          author: $("#search_by_author").val()
+          
+        success: (data) ->
+          response(data)
+
 
 jQuery ->
-  $("#search_by_book_name").autocomplete source: (request, response) ->
-    $.ajax
-      url: "user_book/autocomplete_book_name"
-      dataType: "json"
-      data:
-        author: $("#search_by_author").val()
-        book_name: $("#search_by_book_name").val()
-        
-      success: (data) ->
-        response(data)        
+  $("#search_by_book_name").autocomplete 
+    source: (request, response) ->
+      $.ajax
+        url: "user_book/autocomplete_book_name"
+        dataType: "json"
+        data:
+          author: $("#search_by_author").val()
+          book_name: $("#search_by_book_name").val()
+          
+        success: (data) ->
+          response(data)        
 
+
+jQuery ->
+  $("#book_name").autocomplete 
+    source: (request, response) ->
+      $.ajax
+        url: "autocomplete_book_details"
+        dataType: "json"
+        data:
+          book_name: $("#book_name").val()
+          
+        success: (data) ->
+          response $.map(data, (item) ->
+            label: item.book_name
+            id: item.id
+            mrp: item.mrp
+            isbn: item.isbn
+            author: item.author
+            language: item.language
+            genre: item.genre
+            version: item.version
+            pages: item.pages
+            publisher: item.publisher
+            edition: item.edition
+            ) 
+
+    select: (e, ui) ->
+      $("#mrp").val(ui.item.mrp).fadeIn(500)
+      $("#isbn").val(ui.item.isbn).fadeIn(500)
+      $("#author").val(ui.item.author).fadeIn(500)
+      $("#language").val(ui.item.language).fadeIn(500)
+      $("#genre").val(ui.item.genre).fadeIn(500)
+      $("#version").val(ui.item.version).fadeIn(500)
+      $("#pages").val(ui.item.pages).fadeIn(500)
+      $("#publisher").val(ui.item.publisher).fadeIn(500)
+      $("#edition").val(ui.item.edition).fadeIn(500)
 
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->
     if ($(this).attr("id") != undefined && $(this).attr("id") != 'sub_search_results_table_header')
       if ($(this).attr("id").indexOf("city_") == -1 )
-        $(this).css('textDecoration', 'underline')
+        $(this).css('cursor', 'pointer');
         $(this).css('font-size', '14.5px')
 
 
@@ -132,8 +169,3 @@ jQuery ->
   $("#publisher").hide()
   $("#pages").hide() 
   $("#mrp").hide() 
-
-
-jQuery ->
-  $("#book_name").change ->
-    alert "yes"  

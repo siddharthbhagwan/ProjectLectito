@@ -5,7 +5,7 @@
 
 <%= f.text_field :user_last_name, :placeholder => "Last Name" %></br>	
 
-<%= f.text_field :user_phone_no, :placeholder => "10 Digit Phone Number" %></br>
+<%= f.text_field :user_phone_no, :placeholder => "10 Digit Phone Number", :maxlength => "10" %></br>
 
 Gender </br>	
 <%= f.radio_button :gender, "M", :checked => 'checked' %>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -18,6 +18,8 @@ Male &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Female </br></br>
 </br></br>
 <%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br>
 
-<%= f.submit "Update", class: "btn btn-small " %>
+<%= f.submit "Update", class: "btn btn-small " %></br></br>
+
+<%= link_to 'Edit Addresses', address_view_path, class: "btn btn-small" %>
 
 <% end %>

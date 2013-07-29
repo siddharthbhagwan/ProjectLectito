@@ -1,5 +1,32 @@
+<% if @locked %>
+	<%= tag "input", :type => "button", :id => "unbar_user", :class => "btn btn-danger" , "data-uid" =>@user.id, :value => "Un Bar User" %>
+<% else %>
+	<%= tag "input", :type => "button", :id => "bar_user", :class => "btn btn-danger" , "data-uid" =>@user.id, :value => "Bar User" %>
+<% end %>
+<%= link_to "Back", admin_view_path, class:"btn btn-small" %></br></br>
 <%= render 'admin_user_credentials_view' %>
 <%= render 'admin_user_profile_view' %>
 <%= render 'admin_user_addresses_view' %>
 <%= render 'admin_user_books_view' %>
+
+<div id="bar_user_confirm" title="Accept Request">
+  <p> You are about to bar this User </p>
+</div>
+
+<div id="bar_user_success" title="User Account Barred">
+  <p> User Account Barred Successfully </p>
+</div>
+
+<div id="unbar_user_confirm" title="Accept Request">
+  <p> You are about to un-bar this User </p>
+</div>
+
+<div id="unbar_user_success" title="User Account UnBarred">
+  <p> User Account Un-Barred Successfully </p>
+</div>
+
+<div id="error_message" title="Error">
+  <p id="custom_error"></p>
+</div>
+
 <%= link_to "Back", admin_view_path, class:"btn btn-small" %>

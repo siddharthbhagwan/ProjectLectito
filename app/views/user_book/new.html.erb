@@ -1,43 +1,30 @@
 <h3>Add a book</h3>
 <%= form_tag  user_book_create_path, :action => "create", :method => "post" do %>
 
-<!-- <%= label_tag :isbn %> -->
-<%= text_field_tag :isbn, nil, :disabled => true, :placeholder => :ISBN  %></br>
+<%= text_field_tag :book_name, nil, :placeholder => "Book Name" %></br>
 
-<!-- <%= label_tag :book_name %>  -->
-<%= autocomplete_field_tag :book_name, nil, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' }, :placeholder => "Book Name" %></br>
+<%= text_field_tag :isbn, nil, :disabled => true, :placeholder => :ISBN  %>
 
-<!-- <%= label_tag :author %> -->
-<%= text_field_tag :author , nil, :disabled => true, :placeholder => :Author %></br>
+<%= text_field_tag :author , nil, :disabled => true, :placeholder => :Author %>
 	
-<!-- <%= label_tag :language %> -->
-<%= text_field_tag :language, nil, :disabled => true, :placeholder => :Language %></br>
+<%= text_field_tag :language, nil, :disabled => true, :placeholder => :Language %>
 
-<!-- <%= label_tag :genre %> -->
-<%= text_field_tag :genre, nil, :disabled => true, :placeholder => :Genre %></br>
+<%= text_field_tag :genre, nil, :disabled => true, :placeholder => :Genre %>
 
-<!-- <%= label_tag :version %> -->
-<%= text_field_tag :version, nil, :disabled => true, :placeholder => :Version %></br>
+<%= text_field_tag :version, nil, :disabled => true, :placeholder => :Version %>
 
-<!-- <%= label_tag :edition %> -->
-<%= text_field_tag :edition, nil, :disabled => true, :placeholder => :Edition %></br>
+<%= text_field_tag :edition, nil, :disabled => true, :placeholder => :Edition %>
 
-<!-- <%= label_tag :publisher %> -->
-<%= text_field_tag :publisher, nil, :disabled => true, :placeholder => :Publisher %></br>
+<%= text_field_tag :publisher, nil, :disabled => true, :placeholder => :Publisher %>
 
-<!-- <%= label_tag :pages %> -->
-<%= text_field_tag :pages, nil, :disabled => true, :placeholder => :Pages %></br>
+<%= text_field_tag :pages, nil, :disabled => true, :placeholder => :Pages %>
 
-<!-- <%= label_tag :mrp %> -->
-<%= text_field_tag :mrp, nil, :disabled => true, :placeholder => :MRP %></br>
+<%= text_field_tag :mrp, nil, :disabled => true, :placeholder => :MRP %>
 
-<!-- <%= label_tag :available_in_city , "Available from Address"%> -->
 <%= collection_select :user_book, :available_in_city, @address, :id, :address_summary %></br>
 
-<!-- <%= label_tag :rental_price %> -->
 <%= text_field_tag :rental_price, nil, :placeholder => "Rental Price" %></br>
 
-<!-- <%= label_tag :availability %> -->
 <%= text_field_tag :availability, nil,  :placeholder => :Availability %></br></br>
 
 <%= hidden_field_tag :id %>

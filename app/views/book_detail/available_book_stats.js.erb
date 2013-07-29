@@ -1,0 +1,16 @@
+var $tbody, button_element, rental_available_at, $status_row ="", table_row_id, row_number;
+book_detail_id = <%= params[:book_detail_id] %>
+
+$("#sub_available_list_" + book_detail_id).remove();
+
+$final_table ="<tr id='sub_available_list_" + book_detail_id +"'><td colspan='2'><table id='sub_available_list_table' class='table table-hover table-condensed table-bordered'>"
+$table_ending = "</table></td></tr>"
+$table_header = "<tr id='sub_search_results_table_header'><th>City</th><th>Rental</th></tr>"
+<%= i = 0 %>
+<% while i< @available_list.length %>
+	$status_row += "<tr><td id='available_" + book_detail_id + "'><%= Address.find(@available_list[i].available_in_city).city %></td><td id='borrowed_" + book_detail_id + "'><%= @available_list[i].rental_price.to_s %></td></tr>"
+	<% i+= 1 %>	
+<% end %>
+$final_table = $final_table + $table_header + $status_row + $table_ending
+
+$("#book_count_status_7 tr:last").after($final_table);

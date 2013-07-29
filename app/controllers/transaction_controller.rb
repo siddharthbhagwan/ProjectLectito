@@ -1,4 +1,6 @@
 class TransactionController < ApplicationController
+	before_filter :require_profile
+	before_filter :require_address
 
 	def create
 		@transaction = Transaction.new
@@ -50,4 +52,25 @@ class TransactionController < ApplicationController
 		@latest_rejected.status = params[:reject_reason]
 		@latest_rejected.save
 	end
+
+	private
+
+	def require_profile
+    	if current_user.profile.nil?
+    		flash[:notice] = "Please complete your profile"
+    		redirect_to profile_edit_path
+    	else
+    		return false
+    	end
+  	end
+
+
+	def require_address
+    	if current_user.addresses.empty?
+    		flash[:notice] = "Please Enter at least one Address"
+    		redirect_to address_view_path
+    	else
+    		return false
+    	end
+  	end
 end

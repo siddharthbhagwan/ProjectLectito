@@ -16,9 +16,9 @@
 		<% else %>
 			<td><%= @user.id %></td>
 			<td><%= @user.profile.user_first_name %></td>
-			<td><%= @user.profile.DoB %></td>    
+			<td><%= @user.profile.DoB.to_formatted_s(:long) %></td>    
 			<td><%= @user.profile.gender %></td>
-			<td><%= @user.profile.current_status %></td>
+			<td id='user_current_status'><%= @user.profile.current_status %></td>
 			<td><%= @user.profile.user_phone_no %></td>
 		<% end %>
 	</tr>
