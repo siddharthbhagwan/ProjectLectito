@@ -20,6 +20,7 @@ gem 'less-rails'
 gem 'jquery-rails'
 gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'sidekiq'
+gem 'jquery-ui-rails'
 
 
 # Gems used only for assets and not required

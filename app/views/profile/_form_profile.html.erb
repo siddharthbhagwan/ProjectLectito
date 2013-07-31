@@ -13,7 +13,10 @@ Gender </br>
 Male &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Female </br></br>
 
 <%= f.label "Date", "Date Of Birth" %>
-<%= f.date_select :DoB, {:start_year => 1950, :order => [:day, :month, :year], :end_year =>2000, :prompt => {:day => 'Day', :month => 'Month', :year => 'Year'}, :use_short_month => :true}, {:class => 'date-select'} %>
+<%= f.text_field :DoB, :placeholder => "Select Date of Birth" %>
+
+
+<!-- <%= f.date_select :DoB, {:start_year => 1950, :order => [:day, :month, :year], :end_year =>2000, :prompt => {:day => 'Day', :month => 'Month', :year => 'Year'}, :use_short_month => :true}, {:class => 'date-select'} %> -->
 
 </br></br>
 <%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br>
