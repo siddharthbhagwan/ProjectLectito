@@ -2,9 +2,6 @@ class UserInventoryController < ApplicationController
 	before_filter :require_profile
 	before_filter :require_address
 
-	autocomplete :book_detail, :book_name, :full => true, :extra_data => [:id, :isbn, :author, :language, :genre, :version, :edition, :publisher, :pages, :mrp], :data => { :no_matches_label => "" }
-	autocomplete :book_detail, :author, :full => true
-
 
 	def view
 		@userinventory = User.find(current_user.id).user_inventories

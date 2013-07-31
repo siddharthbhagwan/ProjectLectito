@@ -3,22 +3,16 @@
 
 <%= render 'error_messages' %>
 
-<!-- <%= f.label :address_line1 %> -->
 <%= f.text_area :address_line1, :size => "20 x 5", :resize => :none, :placeholder => "Address Line 1" %></br>
 	
-<!-- <%= f.label :locality %> -->
-<%= f.autocomplete_field :locality, address_autocomplete_location_area_path,:placeholder => :Locality, :id_element => '', :update_elements => {:city => '#address_city',:state => '#address_state', :pincode => '#address_pin' } %></br>
+<%= f.text_field :locality, :placeholder => :Locality %></br>
 
-<!-- <%= f.label :city %> -->
 <%= f.text_field :city ,:readonly => true, :placeholder => :City %></br>
 
-<!-- <%= f.label :state %> -->
 <%= f.text_field :state,:readonly => true, :placeholder => :State %></br>
 
-<!-- <%= f.label :pin %> -->
 <%= f.text_field :pin,:readonly => true, :placeholder => :Pin %></br>
 
-<!-- <%= f.label :country %> -->
 <%= f.text_field :country, :value => "India" ,:readonly => true %></br>
 
 </br></br>

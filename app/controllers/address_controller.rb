@@ -4,9 +4,6 @@ class AddressController < ApplicationController
   # CanCan for authorization on controller actions
   load_and_authorize_resource :class => Address
 
-  # Autocomplete for address Form
-  autocomplete :location, :area , :full => true, :extra_data => [:city, :state, :pincode], :data => { :no_matches_label => "" }
-
   def new
   	@address = Address.new
   end
@@ -60,6 +57,16 @@ end
       redirect_to address_view_path
       flash[:info] = "The Address has been deleted"
     end
+  end
+
+  def autocomplete_area
+    @locations = Location.where("area LIKE ? ", "%#{params[:area]}%")
+
+    respond_to do |format|
+      format.html  
+      format.json { render :json => @locations.to_json }
+    end
+    
   end
 
   private

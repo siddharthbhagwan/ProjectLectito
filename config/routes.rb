@@ -1,9 +1,9 @@
 ProjectLectito::Application.routes.draw do
   
   get "address/delete"
-  get "address/autocomplete_location_area"
   get "address/new" => "address#new"
   get "address/edit" => "address#edit"
+  get "address/autocomplete_area" => "address#autocomplete_area"
   match "address/update/:address_id" => "address#update"
   match "address/view" => "address#view"
   match "address/create" => "address#create"

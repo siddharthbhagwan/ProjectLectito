@@ -12,12 +12,12 @@
 //
 //= require jquery
 //= require twitter/bootstrap
+//= require address
 //= require book_detail
 //= require devise
 //= require home_page
 //= require profile
 //= require user_inventory
-//= require autocomplete-rails
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI
 //= require_tree .
