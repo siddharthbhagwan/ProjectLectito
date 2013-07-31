@@ -4,13 +4,7 @@
 <%= render 'error_messages' %>
 
 <!-- <%= f.label :address_line1 %> -->
-<%= f.text_field :address_line1, :size => 10, :placeholder => "Address Line 1" %></br>
-
-<!-- <%= f.label :address_line2 %> -->
-<%= f.text_field :address_line2, :placeholder => "Address Line 2" %></br>	
-
-<!-- <%= f.label :address_line3 %> -->
-<%= f.text_field :address_line3, :placeholder => "Address Line 3" %></br>
+<%= f.text_area :address_line1, :size => "20 x 5", :resize => :none, :placeholder => "Address Line 1" %></br>
 	
 <!-- <%= f.label :locality %> -->
 <%= f.autocomplete_field :locality, address_autocomplete_location_area_path,:placeholder => :Locality, :id_element => '', :update_elements => {:city => '#address_city',:state => '#address_state', :pincode => '#address_pin' } %></br>

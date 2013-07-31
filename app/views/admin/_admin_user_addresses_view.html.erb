@@ -3,8 +3,6 @@
   <thead>
     <tr>
       <th>Address Line 1</th>
-      <th>Address Line 2</th>
-      <th>Address Line 3</th>
       <th>Locality</th>
       <th>City</th>
       <th>State</th>
@@ -16,8 +14,6 @@
     <% @user.addresses.each do |ua| %>
     <tr>
       <td><%= ua.address_line1 %></td>
-      <td><%= ua.address_line2 %></td>
-      <td><%= ua.address_line3 %></td>
       <td><%= ua.locality %></td>
       <td><%= ua.city %></td>
       <td><%= ua.state %></td>

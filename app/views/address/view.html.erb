@@ -2,9 +2,7 @@
 
 <table id="address_table" class="table table-striped table-bordered table-condensed">
   <tr>
-    <th>Address Line 1</th>
-    <th>Address Line 2</th>
-    <th>Address Line 3</th>
+    <th>Address</th>
     <th>Locality</th>
     <th>City</th>
     <th>State</th>
@@ -16,8 +14,6 @@
 <% @address.each do |address| %>
   <tr>
     <td><%= address.address_line1 %></td>
-    <td><%= address.address_line2 %></td>
-    <td><%= address.address_line3 %></td>
     <td><%= address.locality %></td>
     <td><%= address.city %></td>
     <td><%= address.state %></td>

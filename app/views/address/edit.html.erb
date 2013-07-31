@@ -4,12 +4,6 @@
 
 <%= f.label :address_line1 %>
 <%= f.text_field :address_line1 %>
-
-<%= f.label :address_line2 %>
-<%= f.text_field :address_line2 %></br>	
-
-<%= f.label :address_line3 %>
-<%= f.text_field :address_line3 %></br>
 	
 <%= f.label :locality %>
 <%= f.autocomplete_field :locality, address_autocomplete_location_area_path, :id_element => '', :update_elements => {:city => '#address_city',:state => '#address_state', :pincode => '#address_pin' } %></br>
