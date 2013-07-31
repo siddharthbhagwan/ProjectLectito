@@ -6,14 +6,14 @@ class TransactionController < ApplicationController
 		@transaction = Transaction.new
 		@transaction.borrower_id = current_user.id
 		@transaction.lender_id = params[:user_id] 
-		@transaction.user_book_id = params[:user_book_id]
+		@transaction.user_inventory_id = params[:user_inventory_id]
 		@transaction.status = "Pending"
 		mail_to_id = params[:user_id]
 
 		if !@transaction.save
 			raise "error"
 		else
-			MailWorker.perform_async(@transaction.lender_id)#, User.find(@transaction.lender_id).profile.user_first_name)
+			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
 		end
 
 		@borrow = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
@@ -40,7 +40,7 @@ class TransactionController < ApplicationController
 		@latest_accepted.status = "Accepted"
 		
 		if @latest_accepted.save
-			MailWorker.perform_async(@latest_accepted.borrower_id)
+			#MailWorker.perform_borrow_accept_async(@latest_accepted.borrower_id)
 		else
 			raise "error"
 		end

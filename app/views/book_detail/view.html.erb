@@ -13,7 +13,7 @@
   <tr id=<%= bookdetail.id %> data-status="open">
     <td><%= bookdetail.book_name %></td>
     <td><%= bookdetail.author %></td>
-    <td><%= UserBook.count(:conditions => "book_detail_id = #{bookdetail.id}") %></td>
+    <td><%= UserInventory.count(:conditions => "book_detail_id = #{bookdetail.id}") %></td>
     <td><%= link_to "Edit", bookdb_edit_path(:bookdetail_id => bookdetail.id), :action => "edit", class: "btn btn-small "%></td>
     <td><%= link_to "Delete", bookdb_delete_path(:bookdetail_id => bookdetail.id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
   </tr>

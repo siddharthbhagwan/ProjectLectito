@@ -1,11 +1,11 @@
 <h3>Edit book</h3>
-<%= form_tag  url_for(:controller => "user_book", :action => "update/#{@userbook.id}"), :method => "post" do %>
+<%= form_tag  url_for(:controller => "user_inventory", :action => "update/#{@userinventory.id}"), :method => "post" do %>
 
 <%= label_tag :isbn %>
 <%= text_field_tag :isbn, nil, :disabled => true  %>
 
 <%= label_tag :book_name %>
-<%= autocomplete_field_tag :book_name, nil, user_book_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' } %>
+<%= autocomplete_field_tag :book_name, nil, user_inventory_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' } %>
 
 <%= label_tag :author %>
 <%= text_field_tag :author , nil, :disabled => true %></br>
@@ -32,13 +32,13 @@
 <%= text_field_tag :mrp, nil, :disabled => true %>
 
 <%= label_tag :available_in_city , "Available from Address"%>
-<%= collection_select :user_book, :available_in_city, @address, :id, :address_summary  %>
+<%= collection_select :user_inventory, :available_in_city, @address, :id, :address_summary  %>
 
 <%= label_tag :rental_price %>
 <%= text_field_tag :rental_price %></br>
 
-<%= label_tag :availability %>
-<%= text_field_tag :availability %></br></br>
+<%= label_tag :current_status %>
+<%= text_field_tag :current_status %></br></br>
 
 <%= hidden_field_tag :id %>
 

@@ -16,7 +16,7 @@
 //= require devise
 //= require home_page
 //= require profile
-//= require user_book
+//= require user_inventory
 //= require autocomplete-rails
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI

@@ -2,7 +2,6 @@ class AppMailer < ActionMailer::Base
   default from: "ProjectLectito@example.com"
 
   def request_to_borrow_notification(lender_id)
-  	#TODO Add Username instead of greeting to email
     @user = User.find(lender_id)
     mail(to: @user.email, subject: 'You have a new borrow request')
   end

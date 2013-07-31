@@ -43,7 +43,18 @@ jQuery ->
 	  error: ->
 
 
-
 jQuery ->
   $(document).on "click", "td[id^='borrowed_']", ->
-    alert "no"       		
+    id = $(this).attr('id').substring(9).toString()
+    $.ajax
+      url: "/book_detail/borrowed_book_stats.js"
+      type: "get"
+      dataType: "script"
+      data:
+        book_detail_id: id
+
+      success: (msg) ->
+
+	  error: ->	  	
+
+    		

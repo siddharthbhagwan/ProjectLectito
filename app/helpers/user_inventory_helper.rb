@@ -1,4 +1,4 @@
-module UserBooksHelper
+module UserInventoryHelper
 
 	def india_cities
 		[

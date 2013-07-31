@@ -22,8 +22,8 @@ class User < ActiveRecord::Base
   # Active Record Associations
   has_one :profile, :dependent => :destroy
   has_many :addresses, :dependent => :destroy
-  has_many :user_books ,:dependent => :destroy
-  has_many :book_details, :through => :user_books 
+  has_many :user_inventories ,:dependent => :destroy
+  has_many :book_details, :through => :user_inventories
 
   def welcome_name
     if self.profile.nil? or (self.profile.user_first_name.nil? and self.prodile.user_last_name.nil?)

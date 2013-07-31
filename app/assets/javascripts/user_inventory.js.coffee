@@ -13,7 +13,7 @@ jQuery ->
     $("#search_text").hide()
     fetch_search_data = ->
       $.ajax
-        url: "/user_book/search_books.js"
+        url: "/user_inventory/search_books.js"
         type: "get"
         dataType: "script"
         data:
@@ -61,7 +61,7 @@ jQuery ->
       sub_table_id_s = "#" + sub_table_id
       $(sub_table_id_s).remove()
       $.ajax
-        url: "/user_book/search_books_city.js?book_id=" + book_id + "&row_number=" + row_number
+        url: "/user_inventory/search_books_city.js?book_id=" + book_id + "&row_number=" + row_number
         type: "get"
         context: "this"
         dataType: "script"
@@ -87,7 +87,7 @@ jQuery ->
   $("#search_by_author").autocomplete 
     source: (request, response) ->
       $.ajax
-        url: "user_book/autocomplete_author"
+        url: "user_inventory/autocomplete_author"
         dataType: "json"
         data:
           author: $("#search_by_author").val()
@@ -100,7 +100,7 @@ jQuery ->
   $("#search_by_book_name").autocomplete 
     source: (request, response) ->
       $.ajax
-        url: "user_book/autocomplete_book_name"
+        url: "user_inventory/autocomplete_book_name"
         dataType: "json"
         data:
           author: $("#search_by_author").val()
@@ -144,6 +144,8 @@ jQuery ->
       $("#pages").val(ui.item.pages).fadeIn(500)
       $("#publisher").val(ui.item.publisher).fadeIn(500)
       $("#edition").val(ui.item.edition).fadeIn(500)
+      $("#book_detail_id").val(ui.item.id)
+
 
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->

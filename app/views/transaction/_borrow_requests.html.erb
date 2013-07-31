@@ -12,9 +12,9 @@
 		<% unless @borrow.nil? %>
 			<% @borrow.each do |b| %>
 				<tr data-time= <%= b.updated_at.to_i %> id=<%= b.id %>>
-					<td><%= BookDetail.find(UserBook.find(b.user_book_id).book_detail_id).book_name %></td>
-					<td><%= Address.find(UserBook.find(b.user_book_id).available_in_city).address_summary %></td>
-					<td><%= UserBook.find(b.user_book_id).rental_price %></td>
+					<td><%= BookDetail.find(UserInventory.find(b.user_inventory_id).book_detail_id).book_name %></td>
+					<td><%= Address.find(UserInventory.find(b.user_inventory_id).available_in_city).address_summary %></td>
+					<td><%= UserInventory.find(b.user_inventory_id).rental_price %></td>
 					<td><%= b.status %></td>
 				</tr>
 			<% end %>

@@ -15,7 +15,7 @@
     <th>Rental @</th>
   </tr>
 
-<% @user.user_books.each do |book| %>
+<% @user.user_inventories.each do |book| %>
   <tr>
     <td><%= book.book_detail.isbn %></td>
     <td><%= book.book_detail.book_name %></td>

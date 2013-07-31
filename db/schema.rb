@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723100638) do
+ActiveRecord::Schema.define(:version => 20130730100853) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -69,20 +69,26 @@ ActiveRecord::Schema.define(:version => 20130723100638) do
   create_table "transactions", :force => true do |t|
     t.integer  "borrower_id"
     t.integer  "lender_id"
-    t.integer  "user_book_id"
+    t.integer  "user_inventory_id"
     t.string   "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "user_books", :force => true do |t|
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+  end
+
+  create_table "user_inventories", :force => true do |t|
     t.integer  "user_id"
     t.integer  "book_detail_id"
-    t.integer  "rental_price"
-    t.string   "available_in_city"
-    t.string   "availability"
+    t.float    "rental_price"
+    t.integer  "available_in_city"
+    t.string   "current_status"
+    t.float    "commission"
+    t.integer  "no_of_borrows"
+    t.datetime "upload_date"
+    t.string   "condition_of_book"
+    t.boolean  "book_deleted"
+    t.datetime "deleted_date"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -116,5 +122,17 @@ ActiveRecord::Schema.define(:version => 20130723100638) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "will_filter_filters", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.text     "data"
+    t.integer  "user_id"
+    t.string   "model_class_name"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "will_filter_filters", ["user_id"], :name => "index_will_filter_filters_on_user_id"
 
 end

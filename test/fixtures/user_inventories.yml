@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 
+  book_detail_id: 
+  rental_price: 
+  available_in_city: 
+  current_status: 
+  commission: 
+  no_of_borrows: 
+  upload_date: 
+  condition_of_book: 
+  book_deleted: 
+  deleted_date: 2013-07-30 14:31:14
+
+two:
+  user_id: 
+  book_detail_id: 
+  rental_price: 
+  available_in_city: 
+  current_status: 
+  commission: 
+  no_of_borrows: 
+  upload_date: 
+  condition_of_book: 
+  book_deleted: 
+  deleted_date: 2013-07-30 14:31:14

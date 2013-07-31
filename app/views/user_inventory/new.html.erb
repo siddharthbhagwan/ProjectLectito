@@ -1,5 +1,5 @@
 <h3>Add a book</h3>
-<%= form_tag  user_book_create_path, :action => "create", :method => "post" do %>
+<%= form_tag  user_inventory_create_path, :action => "create", :method => "post" do %>
 
 <%= text_field_tag :book_name, nil, :placeholder => "Book Name" %></br>
 
@@ -21,17 +21,16 @@
 
 <%= text_field_tag :mrp, nil, :disabled => true, :placeholder => :MRP %>
 
-<%= collection_select :user_book, :available_in_city, @address, :id, :address_summary %></br>
+<%= collection_select :user_inventory, :available_in_city, @address, :id, :address_summary %></br>
 
 <%= text_field_tag :rental_price, nil, :placeholder => "Rental Price" %></br>
 
-<%= text_field_tag :availability, nil,  :placeholder => :Availability %></br></br>
+<%= text_field_tag :current_status, nil,  :placeholder => "Current Status" %></br></br>
 
-<%= hidden_field_tag :id %>
+<%= hidden_field_tag :book_detail_id %>
 
 <%= submit_tag 'Add Book', :id => :add_book %></br></br>
 <%= link_to "Back", mybooks_view_path, class: "btn btn-small" %>
 
-<!-- <%= tag "input", :type => "button", :id => "test_dup", :class => "btn" , :value => "Dup" %></br></br> -->
 
 <% end %>

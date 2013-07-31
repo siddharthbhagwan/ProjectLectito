@@ -1,4 +1,4 @@
-class UserBookController < ApplicationController
+class UserInventoryController < ApplicationController
 	before_filter :require_profile
 	before_filter :require_address
 
@@ -7,7 +7,7 @@ class UserBookController < ApplicationController
 
 
 	def view
-		@userbook = User.find(current_user.id).user_books
+		@userinventory = User.find(current_user.id).user_inventories
 	end
 
 	def new
@@ -16,13 +16,13 @@ class UserBookController < ApplicationController
 	end
 
 	def create
-		@userbook = UserBook.new
-		@userbook.user_id = current_user.id
-		@userbook.book_detail_id = params[:id]
-		@userbook.available_in_city = params[:user_book][:available_in_city]
-		@userbook.rental_price = params[:rental_price]
-		@userbook.availability = params[:availability]
- 		if @userbook.save
+		@userinventory = UserInventory.new
+		@userinventory.user_id = current_user.id
+		@userinventory.book_detail_id = params[:book_detail_id]
+		@userinventory.available_in_city = params[:user_inventory][:available_in_city]
+		@userinventory.rental_price = params[:rental_price]
+		@userinventory.current_status = params[:current_status]
+ 		if @userinventory.save
 			redirect_to mybooks_view_path
 		else
 			render 'new'
@@ -30,19 +30,19 @@ class UserBookController < ApplicationController
 	end
 
 	def edit
-		@userbook = UserBook.find(params[:user_book_id])
+		@userinventory = UserInventory.find(params[:user_inventory_id])
 		@address = User.find(current_user.id).addresses
 	end
 
 	def update
-		@userbook = UserBook.find(params[:id])
-   		@userbook.update_attributes(params[:user_book])
+		@userinventory = UserInventoryfind(params[:id])
+   		@userinventory.update_attributes(params[:user_inventory])
     	redirect_to mybooks_view_path
 	end
 
 	def delete
-		@userbook = UserBook.find(params[:user_book_id])
-		@userbook.destroy
+		@userinventory = UserInventoryfind(params[:user_inventory_id])
+		@userinventory.destroy
 		redirect_to mybooks_view_path
 	end
 
@@ -62,7 +62,7 @@ class UserBookController < ApplicationController
 	end
 
 	def search_books_city
-		@users_with_book = UserBook.where("book_detail_id = ? AND user_id != ? ", params[:book_id], current_user.id)
+		@users_with_book = UserInventory.where("book_detail_id = ? AND user_id != ? ", params[:book_id], current_user.id)
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
 		@users_and_address = []
@@ -73,7 +73,7 @@ class UserBookController < ApplicationController
  			if @address_uwb_in_city.city == params[:city]
 				@users_and_address << u_wb.clone	
 				@users_and_address << @address_uwb_in_city
-				@transactions_requested << Transaction.where("borrower_id = ? AND status = ? AND user_book_id = ? ", current_user.id, "Pending", u_wb.id).pluck(:lender_id)
+				@transactions_requested << Transaction.where("borrower_id = ? AND status = ? AND user_inventory_id = ? ", current_user.id, "Pending", u_wb.id).pluck(:lender_id)
 			end
 		end
 
@@ -131,8 +131,8 @@ class UserBookController < ApplicationController
     	end
 	end
 
-	def check_user_book_duplication
-		@duplicate_books = UserBook.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
+	def check_user_inventory_duplication
+		@duplicate_books = UserInventory.where("user_id = ? AND book_detail_id = ?", current_user.id, params[:book_id])
 	end
 
 	private
