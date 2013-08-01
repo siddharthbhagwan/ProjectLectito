@@ -179,9 +179,3 @@ jQuery ->
   $("#publisher").hide()
   $("#pages").hide() 
   $("#mrp").hide() 
-
-
-jQuery ->
-  $("#test").click ->
-    $("#ddd").blur()
-    console.log "cool"

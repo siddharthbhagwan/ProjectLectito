@@ -10,16 +10,23 @@
       <th>Country</th>
     </tr>
   </thead>
+
   <tbody>
-    <% @user.addresses.each do |ua| %>
-    <tr>
-      <td><%= ua.address_line1 %></td>
-      <td><%= ua.locality %></td>
-      <td><%= ua.city %></td>
-      <td><%= ua.state %></td>
-      <td><%= ua.pin %></td>
-      <td><%= ua.country %></td>  
-    </tr>
-  </tbody>
-  <% end %>
+    <% if @user.addresses.empty? %>
+      <tr>
+        <td colspan='6'>User has not added any addresses as of now </td>
+      </tr>
+    <% else %> 
+      <% @user.addresses.each do |ua| %>
+        <tr>
+          <td><%= ua.address_line1 %></td>
+          <td><%= ua.locality %></td>
+          <td><%= ua.city %></td>
+          <td><%= ua.state %></td>
+          <td><%= ua.pin %></td>
+          <td><%= ua.country %></td>  
+        </tr>
+      <% end %>
+    <% end %>  
+  </tbody>  
 </table>

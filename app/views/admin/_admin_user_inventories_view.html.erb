@@ -13,7 +13,7 @@
     <tbody>
         <% if @user.user_inventories.empty? %>
             <tr>
-                <td colspan='3'>User has not uploaded any books as of now </td>
+                <td colspan='4'>User has not uploaded any books as of now </td>
             </tr>
         <% else %>    
             <% @user.user_inventories.each do |user_inventory| %>
