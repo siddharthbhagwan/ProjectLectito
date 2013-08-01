@@ -6,6 +6,7 @@
     <th>Author</th>
     <th>Available @</th>
     <th>Rental</th>
+    <th>Current Status</th>
     <th colspan='2'>Manage</th>
   </tr>
 
@@ -15,6 +16,7 @@
     <td><%= userinventory.book_detail.author %></td>
     <td><%= userinventory.user.addresses.find(userinventory.available_in_city).address_summary %></td>
     <td><%= userinventory.rental_price %></td>
+    <td><%= userinventory.current_status %></td>
     <!--<td><%= link_to "Edit", user_inventory_edit_path(:user_inventory_id => userinventory.id), :action => "edit" ,class: "btn btn-small "%></td> -->
     <td><%= link_to "Remove", user_inventory_delete_path(:user_inventory_id => userinventory.id), :action => "delete", :confirm => "Are You Sure? ", class: "btn btn-small "%></td>
   </tr>

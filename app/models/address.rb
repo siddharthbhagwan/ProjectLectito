@@ -10,7 +10,4 @@ class Address < ActiveRecord::Base
   	address_line1 + "/" + locality + "/" + city
   end
 
-  def address_view
-    address_line1 + "\n" + locality + "\n" + city + "\n" + state + "\n" + pin.to_s
-  end
 end

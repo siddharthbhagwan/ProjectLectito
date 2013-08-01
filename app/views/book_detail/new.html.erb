@@ -1,39 +1,29 @@
-<h3>Add a book</h3>
+<h3>Add a book</h3></br>
 <%= form_for @bookdetail, :url => "create" do |f| %>
 
 <%= render 'error_messages' %>
 
-<%= f.label :isbn %>
-<%= f.text_field :isbn %>
+<%= f.text_field :isbn, :placeholder => :ISBN %></br>
 
-<%= f.label :book_name %>
-<%= f.text_field :book_name %></br>	
+<%= f.text_field :book_name, :placeholder => "Book Name" %></br>	
 
-<%= f.label :author %>
-<%= f.text_field :author %></br>
+<%= f.text_field :author, :placeholder => :Author %></br>
 	
-<%= f.label :language %>
-<%= f.text_field :language %>
+<%= f.text_field :language, :placeholder => :Language %></br>
 
-<%= f.label :genre %>
-<%= f.text_field :genre %></br>
+<%= f.text_field :genre, :placeholder => :Genre %></br>
 
-<%= f.label :version %>
-<%= f.text_field :version %></br>
+<%= f.text_field :version, :placeholder => :Version  %></br>
 
-<%= f.label :edition %>
-<%= f.text_field :edition %>
+<%= f.text_field :edition, :placeholder => :Edition %></br>
 
-<%= f.label :publisher %>
-<%= f.text_field :publisher %>
+<%= f.text_field :publisher, :placeholder => :Publisher %></br>
 
-<%= f.label :pages %>
-<%= f.text_field :pages %>
+<%= f.text_field :pages, :placeholder => :Pages  %></br>
 
-<%= f.label :mrp %>
-<%= f.text_field :mrp %>
+<%= f.text_field :mrp, :placeholder => :MRP %></br>
 
-</br></br>
+</br>
 
 <%= f.submit "Add", class: "btn btn-small" %>
 <%= link_to "Back", bookdb_view_path, class: "btn btn-small" %>

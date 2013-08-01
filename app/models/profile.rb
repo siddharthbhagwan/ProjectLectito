@@ -16,4 +16,12 @@ class Profile < ActiveRecord::Base
   	self.current_status ||= "Active"
   end
 
+  def sms_updates
+    if self.contact_via_sms?
+      "Yes"
+    else
+      "No"
+    end
+  end
+
 end

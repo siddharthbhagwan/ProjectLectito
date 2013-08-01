@@ -79,7 +79,6 @@ jQuery ->
         
             complete: ->
               $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
-              alert "ok2"
               setTimeout $.unblockUI
 
             error: ->

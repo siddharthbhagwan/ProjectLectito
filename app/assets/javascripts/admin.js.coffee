@@ -65,7 +65,6 @@ jQuery ->
           complete: -> 
             setTimeout $.unblockUI            
           error: (msg) ->
-            alert msg.responseText
             setTimeout $.unblockUI
             $("#custom_error").html("Admin Cannot Block Itself")
             $("#error_message").dialog "open"
