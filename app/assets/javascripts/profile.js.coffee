@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-#	$('#profile_DoB').attr("class","ui-widget")
+	#$("#profile_DoB").addClass("ui-widget-date")
 
 jQuery ->
 	$("#profile_DoB").datepicker
@@ -12,3 +12,4 @@ jQuery ->
   	  yearRange: '1950:2000'
   	  inline: true
   	  dateFormat: 'dd-MM-yy'
+  	  class: 'ui-widget-date'

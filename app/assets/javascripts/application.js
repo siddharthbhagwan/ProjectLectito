@@ -11,7 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery.ui.all
 //= require twitter/bootstrap
 //= require address
 //= require book_detail

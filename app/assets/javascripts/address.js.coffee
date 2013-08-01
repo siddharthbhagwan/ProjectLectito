@@ -20,6 +20,7 @@ jQuery ->
             ) 
 
     select: (e, ui) ->
+      $("#address_locality").val(ui.item.area)
       $("#address_state").val(ui.item.state)
       $("#address_city").val(ui.item.city)
       $("#address_pin").val(ui.item.pin)
