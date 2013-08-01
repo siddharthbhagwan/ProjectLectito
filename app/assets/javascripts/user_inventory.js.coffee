@@ -43,20 +43,14 @@ jQuery ->
   $(document).on "click", "#search_results_table tbody tr", (event) ->
     book_id = undefined
     fetch_sub_search_data = undefined
-    rental_data = undefined
     row_number = undefined
-    rental_data = undefined
-    i = 0
-    j = 0
+    city = undefined
+    sub_table_id = undefined
+    sub_table_id_s = undefined
     book_id = $(this).attr("id")
     row_number = $(this).closest("tr")[0].rowIndex - 1
     fetch_sub_search_data = ->
-      $table = undefined
-      city = undefined
-      sub_table_id = undefined
-      sub_table_id_s = undefined
       city = $("#city").val()
-      $table = $("<table>")
       sub_table_id = "sub_search_results_table_" + book_id
       sub_table_id_s = "#" + sub_table_id
       $(sub_table_id_s).remove()

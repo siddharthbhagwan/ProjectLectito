@@ -1,3 +1,5 @@
+<% #TODO Check for tbody addition %>
+
 var $table, $tbody, author_data, book_name_data, rental_data, table_row_id;
 
 $table = $("<table>");
@@ -8,7 +10,7 @@ $tbody = $table.append("<tbody />").children("tbody");
 
 if (<%= @bookdetail.length %> === 0) {
 	rental_data = "<td colspan='2'> Sorry, this book/books by this author arent available in your city </td>";
-	table_row_id = "<tr/>";
+	table_row_id = "<tr>";
 	$tbody.append(table_row_id).children("tr:last").append(rental_data);
 } else {	
 		
