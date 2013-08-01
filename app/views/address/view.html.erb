@@ -1,54 +1,6 @@
 <h3 id="address_view_idd">Current addresses</h3>
 
-<!--table id="address_table" class="table table-striped table-bordered table-condensed">
-  <tr>
-    <th>Address</th>
-    <th>Locality</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Pin</th>
-    <th>Country</th>
-    <th colspan="2">Manage</th>
-  </tr>
-
-<% @address.each do |address| %>
-  <tr>
-    <td><%= address.address_line1 %></td>
-    <td><%= address.locality %></td>
-    <td><%= address.city %></td>
-    <td><%= address.state %></td>
-    <td><%= address.pin %></td>
-    <td><%= address.country %></td>  
-    <td><%= link_to "Edit", address_edit_path(:address_id => address.id), :action => "edit", class: "btn btn-small "%></td>
-    <td><%= link_to "Delete", address_delete_path(:address_id => address.id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
-  </tr>
-  <% end %>
-</table> -->
-
-<!-- <table class="custom-table">
-  <tr>
-    <% @address.each do |address| %>
-    <td>
-      <table class="table table-striped table-bordered table-condensed table-nonfluid">
-        <tr>
-          <td colspan='2'>
-            <%= address.address_line1 %></br>      
-            <%= address.locality %></br>
-            <%= address.city %></br>
-            <%= address.state %></br>
-            <%= address.pin %></br>
-          </td>
-        </tr>
-        <tr>
-          <td><%= link_to "Edit", address_edit_path(:address_id => address.id), :action => "edit", class: "btn btn-small "%></td>
-          <td><%= link_to "Delete", address_delete_path(:address_id => address.id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
-        </tr>
-      </table>
-    </td>
-    <% end %>
-  </tr>
-</table> -->
-
+<% if !@address.empty? %>
 <table class="custom-table">
   <% i = 0 %> 
   <% while i <= @address.length/2 + @address.length%2  %>
@@ -93,6 +45,7 @@
   </tr>
   <% end %>  
 </table>
+<% end %>
 <br />
 
 <%= link_to 'Add an address', address_new_path, class: "btn btn-small" %>

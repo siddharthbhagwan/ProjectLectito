@@ -43,6 +43,7 @@ ProjectLectito::Application.routes.draw do
   get "user_inventory/delete"
   get "mybooks/view" => "user_inventory#view"
   get "user_inventory/edit" => "user_inventory#edit"
+  get "user_inventory/search" => "user_inventory#search"
   get "user_inventory/autocomplete_author" => "user_inventory#autocomplete_author"
   get "user_inventory/autocomplete_book_name" => "user_inventory#autocomplete_book_name"
   get "user_inventory/autocomplete_book_details" => "user_inventory#autocomplete_book_details"
