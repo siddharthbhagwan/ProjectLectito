@@ -91,7 +91,7 @@ jQuery ->
 
 
 jQuery ->
-  $("#search_by_book_name").autocomplete 
+  $("#search_by_book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
         url: "user_inventory/autocomplete_book_name"
@@ -101,7 +101,21 @@ jQuery ->
           book_name: $("#search_by_book_name").val()
           
         success: (data) ->
-          response(data)        
+          response(data)
+
+    select: (e, ui) ->
+      $("#search_by_book_name").data("selected_item", ui.item.label)
+
+  ).blur ->
+    value_typed = $("#search_by_book_name").val()
+    value_selected = $("#search_by_book_name").data("selected_item")
+    if value_typed != value_selected
+      $("#search_by_book_name").val("")
+
+    if value_selected == "No Matching Results Found"
+      $("#search_by_book_name").val("")  
+
+
 
 
 jQuery ->
@@ -165,3 +179,9 @@ jQuery ->
   $("#publisher").hide()
   $("#pages").hide() 
   $("#mrp").hide() 
+
+
+jQuery ->
+  $("#test").click ->
+    $("#ddd").blur()
+    console.log "cool"

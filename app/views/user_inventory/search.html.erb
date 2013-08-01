@@ -11,7 +11,7 @@
 <div id="accept_requests_div">
 	<%= render "transaction/accept_requests" %>
 </div>
-<h5>Search for a book that you'd like to borrow in your city!</h5>
+<h5 id="ddd">Search for a book that you'd like to borrow in your city!</h5>
 
 <%= form_tag() do %>
 <div id="city_validation"></div>
@@ -27,6 +27,7 @@
 <% end %>
 
 <%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
+<%= tag "input", :type => "button", :id => "test", :class => "btn" , :value => "test" %></br></br>
 
 <div id="search_text">
 
