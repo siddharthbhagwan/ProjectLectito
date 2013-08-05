@@ -1,0 +1,56 @@
+<h3 id="aaaa">Search </h3>
+
+<div id="borrow_requests_div">
+	<%= render "transaction/borrow_requests" %>
+</div>
+
+<div id="lend_requests_div">
+	<%= render "transaction/lend_requests" %>
+</div>
+
+<div id="accept_requests_div">
+	<%= render "transaction/accept_requests" %>
+</div>
+<h5 id="ddd">Search for a book that you'd like to borrow in your city!</h5>
+
+<%= form_tag() do %>
+<div id="city_validation"></div>
+
+<%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city.."  %></br>
+
+<div id="author_book_validation"></div>
+
+<%= text_field_tag :search_by_author, nil, :placeholder => "Search By Author" %></br>
+
+<%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name" %></br>
+
+<% end %>
+
+<%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
+
+<div id="search_text">
+
+</div>
+
+
+<div id="accept_request_confirm" title="Accept Request">
+  <p>You are about to accept this request to borrow - </p>
+</div>
+
+<div id="error_message" title="Error">
+  <p>Oops. Something went wrong. Please try again later</p>
+</div>
+
+<div id="borrow_confirm" title="Borrow Request">
+  <p>You are about to send a request to borrow this book </p>
+</div>
+
+<div id="reject_request_confirm" title="Reject Request">
+  <p>You are about to Reject this request</p>
+  <input type="radio" name="rejectReason" value="Reason 1"> Reason 1<br>
+  <input type="radio" name="rejectReason" value="Reason 2"> Reason 2
+</div>
+
+<div id="dynamicTable">
+
+</div>

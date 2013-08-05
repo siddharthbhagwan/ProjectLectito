@@ -1,0 +1,18 @@
+var book_id, row_number;
+
+book_id = <%= params[:book_id] %>
+row_number = <%= params[:row_number] %>
+$table = $("<table>")
+sub_table_id = "sub_book_status_table_" + book_id
+sub_table_id_s = "#" + sub_table_id
+tr_id = "book_count_status_" + book_id
+
+$(sub_table_id_s).remove()
+
+$table_begining ="<tr id='" + tr_id + "'><td colspan='5'><table id='" + sub_table_id + "'class='table table-hover table-condensed table-bordered'>"
+$table_ending = "</tbody></table></td></tr>"
+$table_header = "<thead><tr id='sub_search_results_table_header'><th>Available</th><th>Borrowed</th></tr></thead>"
+$status_row = "<tbody><tr data-specific_stats='closed'><td id='available_" + book_id + "'><%= @available %></td><td id='borrowed_" + book_id + "'><%= @borrowed %></tr></tbody>"
+$final_table = $table_begining + $table_header + $status_row + $table_ending
+
+$("#bookdetail_table > tbody > tr").eq(row_number).after($final_table);
