@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731081350) do
+ActiveRecord::Schema.define(:version => 20130805070810) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -38,6 +38,22 @@ ActiveRecord::Schema.define(:version => 20130731081350) do
     t.integer  "mrp"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "inventories", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "book_detail_id"
+    t.float    "rental_price"
+    t.integer  "available_in_city"
+    t.string   "current_status"
+    t.float    "commission"
+    t.integer  "no_of_borrows"
+    t.datetime "upload_date"
+    t.string   "condition_of_book"
+    t.boolean  "book_deleted"
+    t.datetime "deleted_date"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "locations", :force => true do |t|
@@ -67,26 +83,10 @@ ActiveRecord::Schema.define(:version => 20130731081350) do
   create_table "transactions", :force => true do |t|
     t.integer  "borrower_id"
     t.integer  "lender_id"
-    t.integer  "user_inventory_id"
+    t.integer  "inventory_id"
     t.string   "status"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
-
-  create_table "user_inventories", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "book_detail_id"
-    t.float    "rental_price"
-    t.integer  "available_in_city"
-    t.string   "current_status"
-    t.float    "commission"
-    t.integer  "no_of_borrows"
-    t.datetime "upload_date"
-    t.string   "condition_of_book"
-    t.boolean  "book_deleted"
-    t.datetime "deleted_date"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|

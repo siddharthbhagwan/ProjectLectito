@@ -27,7 +27,7 @@ jQuery ->
 
 jQuery ->
   $(document).on "click", ".borrow_button" ,->
-    $("#borrow_confirm").data "user_inventory_id", $(this).attr("data-ubid")
+    $("#borrow_confirm").data "inventory_id", $(this).attr("data-ubid")
     $("#borrow_confirm").data "user_id", $(this).attr("data-uid")
     $("#borrow_confirm").data "button_id", $(this).attr("id")
     $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
@@ -44,7 +44,7 @@ jQuery ->
         $(this).dialog "close"
         i = 0
         j = 0
-        user_inventory_id = $("#borrow_confirm").data("user_inventory_id")   
+        inventory_id = $("#borrow_confirm").data("inventory_id")   
         rental_data = $("#borrow_confirm").data("rental_data")
         row_number = $("#borrow_confirm").data("row_number")
         button_id = $("#borrow_confirm").data("button_id")
@@ -64,7 +64,7 @@ jQuery ->
             context: "this"
             dataType: "script"
             data:
-              user_inventory_id: user_inventory_id
+              inventory_id: inventory_id
               user_id: user_id
               after_b: after_b
               after_l: after_l

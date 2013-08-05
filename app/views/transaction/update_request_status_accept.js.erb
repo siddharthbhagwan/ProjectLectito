@@ -1,7 +1,7 @@
 	tr_id = "<tr data-time='<%= @latest_accepted.updated_at.to_i %>'>"
-	td_book_name = "<td><%= BookDetail.find(UserInventory.find(@latest_accepted.user_inventory_id).book_detail.id).book_name %></td>"
-	td_address_summary = "<td><%= Address.find(UserInventory.find(@latest_accepted.user_inventory_id).available_in_city).address_summary %></td>"
-	td_rental_price = "<td><%= UserInventory.find(@latest_accepted.user_inventory_id).rental_price %></td>"
+	td_book_name = "<td><%= BookDetail.find(Inventory.find(@latest_accepted.inventory_id).book_detail.id).book_name %></td>"
+	td_address_summary = "<td><%= Address.find(Inventory.find(@latest_accepted.inventory_id).available_in_city).address_summary %></td>"
+	td_rental_price = "<td><%= Inventory.find(@latest_accepted.inventory_id).rental_price %></td>"
 	td_status = "<td><%= @latest_accepted.status %></td></tr>"
 	table_row_data = tr_id + td_book_name + td_rental_price + td_status
 	$("#accept_requests_table > tbody:last").append(table_row_data);

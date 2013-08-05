@@ -17,7 +17,7 @@
 //= require devise
 //= require home_page
 //= require profile
-//= require user_inventory
+//= require inventory
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI
 //= require_tree .

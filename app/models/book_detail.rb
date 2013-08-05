@@ -4,8 +4,8 @@ class BookDetail < ActiveRecord::Base
   #validates :ISBN, :author,:book_name, :presence => {:message => "Cant be empty"}
 
   #Associations
-  has_many :user_inventories
-  has_many :users, :through => :user_inventories
+  has_many :inventories
+  has_many :users, :through => :inventories
 
 
 end

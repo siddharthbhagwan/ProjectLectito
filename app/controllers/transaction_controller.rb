@@ -6,7 +6,7 @@ class TransactionController < ApplicationController
 		@transaction = Transaction.new
 		@transaction.borrower_id = current_user.id
 		@transaction.lender_id = params[:user_id] 
-		@transaction.user_inventory_id = params[:user_inventory_id]
+		@transaction.inventory_id = params[:inventory_id]
 		@transaction.status = "Pending"
 		mail_to_id = params[:user_id]
 

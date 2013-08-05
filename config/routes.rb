@@ -9,7 +9,7 @@ ProjectLectito::Application.routes.draw do
   match "address/create" => "address#create"
 
 
-  post "user_inventory/update/:user_inventory_id" => "user_inventory#update"
+  post "inventory/update/:inventory_id" => "inventory#update"
 
   get "admin/view" => "admin#view"
   get "admin/edit" => "admin#admin_edit"
@@ -23,7 +23,7 @@ ProjectLectito::Application.routes.draw do
   match "profile/update"  => "profile#update"
 
   get "devise/User"
-  match "home" => "user_inventory#search"
+  match "home" => "inventory#search"
   match "admin" => "admin#admin"
   match "home_page/barred" => "home_page#user_barred"
 
@@ -40,19 +40,19 @@ ProjectLectito::Application.routes.draw do
 
 
 
-  get "user_inventory/delete"
-  get "mybooks/view" => "user_inventory#view"
-  get "user_inventory/edit" => "user_inventory#edit"
-  get "user_inventory/search" => "user_inventory#search"
-  get "user_inventory/autocomplete_author" => "user_inventory#autocomplete_author"
-  get "user_inventory/autocomplete_book_name" => "user_inventory#autocomplete_book_name"
-  get "user_inventory/autocomplete_book_details" => "user_inventory#autocomplete_book_details"
-  get "user_inventory/check_user_inventory_duplication" => "user_inventory#check_user_inventory_duplication"
+  get "inventory/delete"
+  get "mybooks/view" => "inventory#view"
+  get "inventory/edit" => "inventory#edit"
+  get "inventory/search" => "inventory#search"
+  get "inventory/autocomplete_author" => "inventory#autocomplete_author"
+  get "inventory/autocomplete_book_name" => "inventory#autocomplete_book_name"
+  get "inventory/autocomplete_book_details" => "inventory#autocomplete_book_details"
+  get "inventory/check_inventory_duplication" => "inventory#check_inventory_duplication"
 
   post "create" => "transaction#create"
-  match "user_inventory/create" => "user_inventory#create"
-  match "user_inventory/search_books" => "user_inventory#search_books"
-  match "user_inventory/search_books_city" => "user_inventory#search_books_city"
+  match "inventory/create" => "inventory#create"
+  match "inventory/search_books" => "inventory#search_books"
+  match "inventory/search_books_city" => "inventory#search_books_city"
 
 
   get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
@@ -60,8 +60,8 @@ ProjectLectito::Application.routes.draw do
   get "transaction/get_latest_lent" => "transaction#get_latest_lent"  
 
   
-  root :to => "user_inventory#search"
+  root :to => "inventory#search"
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
-  resources :profile, :address, :home_page, :admin, :book_detail, :user_inventory, :transaction
+  resources :profile, :address, :home_page, :admin, :book_detail, :inventory, :transaction
 
 end

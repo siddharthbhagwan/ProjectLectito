@@ -11,17 +11,17 @@
     </thead>
 
     <tbody>
-        <% if @user.user_inventories.empty? %>
+        <% if @user.inventories.empty? %>
             <tr>
                 <td colspan='4'>User has not uploaded any books as of now </td>
             </tr>
         <% else %>    
-            <% @user.user_inventories.each do |user_inventory| %>
+            <% @user.inventories.each do |inventory| %>
                 <tr>
-                    <td><%= user_inventory.book_detail.book_name %></td>
-                    <td><%= user_inventory.book_detail.author %></td>
-                    <td><%= user_inventory.rental_price %></td>
-                    <td><%= user_inventory.current_status %></td>
+                    <td><%= inventory.book_detail.book_name %></td>
+                    <td><%= inventory.book_detail.author %></td>
+                    <td><%= inventory.rental_price %></td>
+                    <td><%= inventory.current_status %></td>
                 </tr>
             <% end %>
         <% end %>

@@ -37,16 +37,16 @@ class BookDetailController < ApplicationController
 	end
 
 	def book_status
-		@available = UserInventory.where(:current_status => "Available", :book_detail_id => params[:book_detail_id]).count
-		@borrowed = UserInventory.where(:current_status => "Unavailable", :book_detail_id => params[:book_detail_id]).count
+		@available = Inventory.where(:current_status => "Available", :book_detail_id => params[:book_detail_id]).count
+		@borrowed = Inventory.where(:current_status => "Unavailable", :book_detail_id => params[:book_detail_id]).count
 	end
 
 	def available_book_stats
-		@available_list = UserInventory.where(:current_status => "Available", :book_detail_id => params[:book_detail_id])
+		@available_list = Inventory.where(:current_status => "Available", :book_detail_id => params[:book_detail_id])
 	end
 
 	def borrowed_book_stats
-		@borrowed_list = UserInventory.where(:current_status => "Unavailable", :book_detail_id => params[:book_detail_id])
+		@borrowed_list = Inventory.where(:current_status => "Unavailable", :book_detail_id => params[:book_detail_id])
 	end
 
 end
