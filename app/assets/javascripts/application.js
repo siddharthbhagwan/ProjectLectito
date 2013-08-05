@@ -13,7 +13,7 @@
 //= require jquery
 //= require twitter/bootstrap
 //= require address
-//= require book_detail
+//= require book
 //= require devise
 //= require home_page
 //= require profile

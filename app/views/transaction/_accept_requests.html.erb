@@ -11,7 +11,7 @@
 		<% unless @accept.nil? %>
 			<% @accept.each do |a| %>
 				<tr data-time = <%= a.updated_at.to_i %> id=<%= a.id %> >
-					<td><%= BookDetail.find(Inventory.find(a.inventory_id).book_detail_id).book_name %></td>
+					<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
 					<td><%= Inventory.find(a.inventory_id).rental_price %></td>
 					<td><%= a.status %></td>
 				</tr>

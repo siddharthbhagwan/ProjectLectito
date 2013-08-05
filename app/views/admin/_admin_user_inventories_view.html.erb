@@ -18,8 +18,8 @@
         <% else %>    
             <% @user.inventories.each do |inventory| %>
                 <tr>
-                    <td><%= inventory.book_detail.book_name %></td>
-                    <td><%= inventory.book_detail.author %></td>
+                    <td><%= inventory.book.book_name %></td>
+                    <td><%= inventory.book.author %></td>
                     <td><%= inventory.rental_price %></td>
                     <td><%= inventory.current_status %></td>
                 </tr>

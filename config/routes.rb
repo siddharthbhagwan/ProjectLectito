@@ -28,15 +28,15 @@ ProjectLectito::Application.routes.draw do
   match "home_page/barred" => "home_page#user_barred"
 
 
-  get "bookdb/new" => "book_detail#new"
-  get "bookdb/view" => "book_detail#view"
-  post  "bookdb/create" => "book_detail#create"  
-  match "bookdb/edit" => "book_detail#edit"
-  match "bookdb/delete" => "book_detail#delete"
-  match "bookdb/update/:bookdetail_id" => "book_detail#update"
-  match "book_detail/book_status" => "book_detail#book_status"
-  match "book_detail/available_book_stats" => "book_detail#available_book_stats"
-  match "book_detail/borrowed_book_stats" => "book_detail#borrowed_book_stats"
+  get "bookdb/new" => "book#new"
+  get "bookdb/view" => "book#view"
+  post  "bookdb/create" => "book#create"  
+  match "bookdb/edit" => "book#edit"
+  match "bookdb/delete" => "book#delete"
+  match "bookdb/update/:book_id" => "book#update"
+  match "book/book_status" => "book#book_status"
+  match "book/available_book_stats" => "book#available_book_stats"
+  match "book/borrowed_book_stats" => "book#borrowed_book_stats"
 
 
 
@@ -62,6 +62,6 @@ ProjectLectito::Application.routes.draw do
   
   root :to => "inventory#search"
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
-  resources :profile, :address, :home_page, :admin, :book_detail, :inventory, :transaction
+  resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction
 
 end
