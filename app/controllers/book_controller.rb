@@ -9,31 +9,31 @@ class BookController < ApplicationController
 	def create
 		@book = Book.new(params[:book])
 		if @book.save
-			redirect_to bookdb_view_path
+			redirect_to book_index_path
 		else
 			render 'new'
 		end
 	end
 
-	def view
+	def index
 		@book = Book.all
 	end
 
 	def edit
-		@book = Book.find(params[:book_id])
+		@book = Book.find(params[:id])
 	end
 
-	def delete
-		@book = Book.find(params[:book_id])
+	def destroy
+		@book = Book.find(params[:id])
 		@book.destroy
-		redirect_to bookdb_view_path
+		redirect_to book_index_path
 		flash[:info] = "The Book has been deleted"
 	end
 
 	def update
-		@book = Book.find(params[:book_id])
+		@book = Book.find(params[:id])
 		@book.update_attributes(params[:book])
-		redirect_to bookdb_view_path
+		redirect_to book_index_path
 	end
 
 	def book_status

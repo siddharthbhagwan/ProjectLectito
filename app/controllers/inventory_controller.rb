@@ -1,6 +1,5 @@
 class InventoryController < ApplicationController
-	before_filter :require_profile
-	before_filter :require_address
+	before_filter :require_profile, :require_address
 
 
 	def view
@@ -90,7 +89,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_author
-		@authors_books = Book.where("author like ?", "%#{params[:author]}%").pluck(:author).uniq
+		@authors_books = Book.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%").pluck(:author).uniq
 
 		if @authors_books.empty?
 			@authors_books = ["No Matching Results Found"]
@@ -146,7 +145,7 @@ class InventoryController < ApplicationController
   	def require_address
     	if current_user.addresses.empty?
     		flash[:notice] = "Please Enter at least one Address"
-    		redirect_to address_view_path
+    		redirect_to new_addres_path
     	else
     		return false
     	end

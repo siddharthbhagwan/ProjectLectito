@@ -7,7 +7,7 @@ class Address < ActiveRecord::Base
   belongs_to :user
 
   def address_summary
-  	address_line1 + "/" + locality + "/" + city
+ 	locality + "/" + city
   end
 
 end

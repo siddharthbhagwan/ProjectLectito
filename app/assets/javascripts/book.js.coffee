@@ -7,11 +7,12 @@ jQuery ->
     if $(this).attr("data-general_stats") is "closed"
       $(this).attr "data-general_stats", "open"
       $.ajax
-        url: "/book/book_status.js?row_number=" + row_number
+        url: "/book/book_status.js"
         type: "get"
         dataType: "script"
         data:
           book_id: book_id
+          row_number: row_number
 
         success: (msg) ->
 

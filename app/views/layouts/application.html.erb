@@ -16,20 +16,20 @@
 				<% if user_signed_in? %>
 				<div class="accordion" id="menu_accordion">  
 					<% if current_user.has_role? :admin %>
-					<div class="accordion-group">  
-						<div class="accordion-heading">  
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseThree">  
-								Admin  
-							</a>  
-						</div>  
-						<div id="collapseThree" class="accordion-body collapse">  
-							<div class="accordion-inner">  
-								<%= link_to "User Management", admin_view_path, class: "accordian" %>
-								<%= link_to "Book Management", bookdb_view_path, class: "accordian" %>
-								<%= link_to "Transaction Management", admin_view_path, class: "accordian" %>
+						<div class="accordion-group">  
+							<div class="accordion-heading">  
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseThree">  
+									Admin  
+								</a>  
 							</div>  
-						</div>  
-					</div>
+							<div id="collapseThree" class="accordion-body collapse">  
+								<div class="accordion-inner">  
+									<%= link_to "User Management", admin_index_path, class: "accordian" %>
+									<%= link_to "Book Management", book_index_path, class: "accordian" %>
+									<%= link_to "Transaction Management", admin_index_path, class: "accordian" %>
+								</div>  
+							</div>  
+						</div>
 					<% end %>
 					<div class="accordion-group">  
 						<div class="accordion-heading">  
@@ -51,8 +51,8 @@
 						</div>  
 						<div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">  
 							<div class="accordion-inner">								
-								<%= link_to "Personal", profile_edit_path, class: "accordian" %></br>
-								<%= link_to "Addresses", address_view_path, class: "accordian" %>								
+								<%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></br>
+								<%= link_to "Addresses", address_path, class: "accordian" %>								
 							</div>  
 						</div>  
 					</div>   

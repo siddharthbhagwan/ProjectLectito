@@ -1,5 +1,5 @@
 <h1>Edit a book</h1></br>
-<%= form_for @book, :url => "update/#{@book.id}" do |f| %>
+<%= form_for @book, :url => book_path do |f| %>
 
 <%= render 'error_messages' %>
 
@@ -26,6 +26,6 @@
 </br></br>
 
 <%= f.submit "Update", class: "btn btn-small" %>
-<%= link_to "Back", bookdb_view_path, class: "btn btn-small" %>
+<%= link_to "Back", book_index_path, class: "btn btn-small" %>
 
 <% end %>

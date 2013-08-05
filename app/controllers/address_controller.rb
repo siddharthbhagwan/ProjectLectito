@@ -9,23 +9,23 @@ class AddressController < ApplicationController
   end
 
   def update
-    @address = Address.find(params[:address_id])
+    @address = Address.find(params[:id])
     if @address.update_attributes(params[:address])
       flash[:notice] = "The address has been updated"
-      redirect_to address_view_path
+      redirect_to address_path
     end
   end
 
   def edit
-    @address = Address.find(params[:address_id])
+    @address = Address.find(params[:id])
     if  @address.user_id != current_user.id
-      redirect_to address_view_path
+      redirect_to address_path
       flash[:alert] = "You are not authorized to view that address"
     end 
   end
 
   # List all addresses
-  def view
+  def index
     @address = User.find(current_user.id).addresses
 
     respond_to do |format|
@@ -40,21 +40,21 @@ end
     @address.user_id = current_user.id
     if @address.save
       flash[:notice] = "The address has been added"
-      redirect_to address_view_path
+      redirect_to address_path
     else
       render 'new'
     end
   end
 
   # Delete the address of the passed Id
-  def delete
-    @address = Address.find(params[:address_id])
+  def destroy
+    @address = Address.find(params[:id])
     if  @address.user_id != current_user.id
-      redirect_to address_view_path
+      redirect_to address_path
       flash[:alert] = "You are not authorized to delete that address"
     else
       @address.destroy
-      redirect_to address_view_path
+      redirect_to address_path
       flash[:info] = "The Address has been deleted"
     end
   end
@@ -74,7 +74,7 @@ end
   def require_profile
       if current_user.profile.nil?
         flash[:notice] = "Please complete your profile"
-        redirect_to profile_edit_path
+        redirect_to edit_profile_path
       else
         return false
       end

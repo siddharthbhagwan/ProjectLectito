@@ -1,6 +1,5 @@
 class TransactionController < ApplicationController
-	before_filter :require_profile
-	before_filter :require_address
+	before_filter :require_profile, :require_address
 
 	def create
 		@transaction = Transaction.new
@@ -68,7 +67,7 @@ class TransactionController < ApplicationController
 	def require_address
     	if current_user.addresses.empty?
     		flash[:notice] = "Please Enter at least one Address"
-    		redirect_to address_view_path
+    		redirect_to new_addres_path
     	else
     		return false
     	end

@@ -1,5 +1,5 @@
 <h3>Add a book</h3></br>
-<%= form_for @book, :url => "create" do |f| %>
+<%= form_for @book, :url => book_index_path do |f| %>
 
 <%= render 'error_messages' %>
 
@@ -26,6 +26,6 @@
 </br>
 
 <%= f.submit "Add", class: "btn btn-small" %>
-<%= link_to "Back", bookdb_view_path, class: "btn btn-small" %>
+<%= link_to "Back", book_index_path, class: "btn btn-small" %>
 
 <% end %>

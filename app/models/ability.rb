@@ -12,6 +12,8 @@ class Ability
     if user.user?
     	can :manage, Profile
     	can :manage, Address
+      can :manage, Transaction
+      can :manage, Inventory
     end
   end
 end

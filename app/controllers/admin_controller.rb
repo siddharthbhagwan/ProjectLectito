@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
 	load_and_authorize_resource :class => User
 
-	def view
+	def index
 		@user = User.all
 	end
 

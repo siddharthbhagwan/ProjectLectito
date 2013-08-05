@@ -2,6 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+jQuery.fn.capitalize = ->
+  $(this[0]).keyup (event) ->
+    box = event.target
+    txt = $(this).val()
+    start = box.selectionStart
+    end = box.selectionEnd
+    $(this).val txt.replace(/^(.)|(\s|\-)(.)/g, ($1) ->
+      $1.toUpperCase()
+    )
+    box.setSelectionRange start, end
+
+  this
+
 jQuery ->
   $("#search_books").on "click", ->
     search_city = $("#city").val()
@@ -32,7 +45,7 @@ jQuery ->
       if search_by_author.length or search_by_book_name.length
         fetch_search_data()
       else
-        $("#author_book_validation").html("<h5>Please Select either a Book Name, or an Author, or Both</h5>").hide()
+        $("#author_book_validation").html("<h5>Please Enter either a Book Name, or an Author, or Both</h5>").hide()
         $("#author_book_validation").fadeIn(500)
     else
       $("#city_validation").html("<h5>Please Select your city</h5>").hide()
@@ -55,13 +68,14 @@ jQuery ->
       sub_table_id_s = "#" + sub_table_id
       $(sub_table_id_s).remove()
       $.ajax
-        url: "/inventory/search_books_city.js?book_id=" + book_id + "&row_number=" + row_number
+        url: "/inventory/search_books_city.js"
         type: "get"
         context: "this"
         dataType: "script"
         data:
           book_id: book_id
           city: city
+          row_number: row_number
 
         success: (msg) ->
          
@@ -70,11 +84,16 @@ jQuery ->
 
 
     #TODO Check Why && not working
-    if book_id != undefined
-      if book_id != "sub_search"
-        if book_id != "sub_search_results_table_header"
-          if book_id.indexOf("city_") is -1
-            fetch_sub_search_data()
+    if $(this).attr("data-status") == "closed"
+      if book_id != undefined
+        if book_id != "sub_search"
+          if book_id != "sub_search_results_table_header"
+            if book_id.indexOf("city_") is -1
+              $(this).attr("data-status", "open")
+              fetch_sub_search_data()
+    else
+      $(this).attr("data-status", "closed")
+      $("#city_" + book_id).hide()      
 
 
 jQuery ->
@@ -117,7 +136,6 @@ jQuery ->
 
 
 
-
 jQuery ->
   $("#book_name").autocomplete 
     source: (request, response) ->
@@ -126,6 +144,7 @@ jQuery ->
         dataType: "json"
         data:
           book_name: $("#book_name").val()
+          author: $("#search_by_author").val()
           
         success: (data) ->
           response $.map(data, (item) ->
@@ -179,3 +198,8 @@ jQuery ->
   $("#publisher").hide()
   $("#pages").hide() 
   $("#mrp").hide() 
+
+
+jQuery ->
+   #$('#search_by_author').css("text-transform","capitalize")
+   #$('#search_by_book_name').css("text-transform","capitalize")

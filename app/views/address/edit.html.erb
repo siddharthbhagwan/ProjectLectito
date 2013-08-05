@@ -1,10 +1,10 @@
 <h3>Edit your Address</h3>
-<%= form_for @address, :url => "update/#{@address.id}" do |f| %>
+<%= form_for @address, :url => addres_path do |f| %>
 <%= render 'error_messages' %>
 
-<%= f.text_area :address_line1, :size => "20 x 5", :resize => :none, :placeholder => "Address Line 1" %></br>
+<%= f.text_area :address_line1, :size => "20 x 5", :resize => :none, :placeholder => "Address Line 1", :required => :true %></br>
 	
-<%= f.text_field :locality, :placeholder => :Locality %></br>
+<%= f.text_field :locality, :placeholder => :Locality, :required => :true %></br>
 
 <%= f.text_field :city ,:readonly => true, :placeholder => :City %></br>
 
@@ -17,5 +17,6 @@
 </br></br>
 
 <%= f.submit "Update", class: "btn btn-small" %>
+<%= link_to "Back", address_path, class: "btn btn-small" %>
 
 <% end %>

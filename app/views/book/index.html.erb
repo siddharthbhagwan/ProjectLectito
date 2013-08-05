@@ -15,12 +15,12 @@
         <td><%= book.book_name %></td>
         <td><%= book.author %></td>
         <td><%= Inventory.count(:conditions => "book_id = #{book.id}") %></td>
-        <td><%= link_to "Edit", bookdb_edit_path(:book_id => book.id), :action => "edit", class: "btn btn-small "%></td>
-        <td><%= link_to "Delete", bookdb_delete_path(:book_id => book.id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
+        <td><%= link_to "Edit", edit_book_path(book.id), class: "btn btn-small "%></td>
+        <td><%= link_to "Delete", book_path(book.id), :method => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br />
 
-<%= link_to 'Add a Book', bookdb_new_path, class: "btn btn-small" %>
+<%= link_to 'Add a Book', new_book_path, class: "btn btn-small" %>

@@ -24,3 +24,21 @@ jQuery ->
       $("#address_state").val(ui.item.state)
       $("#address_city").val(ui.item.city)
       $("#address_pin").val(ui.item.pin)
+
+
+jQuery ->
+  $("#delete_buttonn").click ->
+    $("#delete_confirm").dialog "open"
+
+
+jQuery ->
+  $("#delete_confirm").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+
+      Cancel: ->
+        $(this).dialog "close"
+

@@ -1,4 +1,4 @@
-<h3 id="address_view_idd">Current addresses</h3>
+<h3>Current addresses</h3>
 
 <% if !@address.empty? %>
 <table class="custom-table">
@@ -19,8 +19,10 @@
               </td>
             </tr>
             <tr>
-              <td><%= link_to "Edit", address_edit_path(:address_id => @address[i].id), :action => "edit", class: "btn btn-small "%></td>
-              <td><%= link_to "Delete", address_delete_path(:address_id => @address[i].id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
+              <td><%= link_to "Edit", edit_addres_path(@address[i].id), class: "btn btn-small "%></td>
+              <td><%= link_to "Delete", addres_path(@address[i].id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%>
+              </td>
+                
             </tr>
           </tbody>
         </table>
@@ -39,8 +41,8 @@
                 </td>
               </tr>
               <tr>
-                <td><%= link_to "Edit", address_edit_path(:address_id => @address[i+1].id), :action => "edit", class: "btn btn-small "%></td>
-                <td><%= link_to "Delete", address_delete_path(:address_id => @address[i+1].id), :action => "delete", :confirm => "Are You Sure? ",class: "btn btn-small "%></td>
+                <td><%= link_to "Edit", edit_addres_path(@address[i].id), class: "btn btn-small "%></td>
+                <td><%= link_to "Delete", addres_path(@address[i+1].id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%></td>
               </tr>
             </tbody>
           </table>
@@ -54,4 +56,8 @@
 <% end %>
 <br />
 
-<%= link_to 'Add an address', address_new_path, class: "btn btn-small" %>
+<%= link_to 'Add an address', new_addres_path, class: "btn btn-small" %>
+
+<div id="delete_confirm" title="Confirm Address Deletion">
+  <p>You are about to delete this address</p>
+</div>
