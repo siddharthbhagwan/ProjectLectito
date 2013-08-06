@@ -1,7 +1,7 @@
 <h3>Add a book</h3>
-<%= form_tag  inventory_create_path, :action => "create", :method => "post" do %>
+<%= form_tag  inventory_index_path do %>
 
-<%= text_field_tag :book_name, nil, :placeholder => "Book Name" %></br>
+<%= text_field_tag :book_name, nil, :placeholder => "Book Name", :required => :true %></br>
 
 <%= text_field_tag :isbn, nil, :disabled => true, :placeholder => :ISBN  %>
 
@@ -23,7 +23,7 @@
 
 <%= collection_select :inventory, :available_in_city, @address, :id, :address_summary %></br>
 
-<%= text_field_tag :rental_price, nil, :placeholder => "Rental Price" %></br>
+<%= text_field_tag :rental_price, nil, :placeholder => "Rental Price", :required => :true %></br>
 
 <%= select_tag :current_status, options_for_select(['Available','Unavailable'], 'Available'), :placeholder => "Current Status" %>
 </br></br>
@@ -31,7 +31,7 @@
 <%= hidden_field_tag :book_id %>
 
 <%= submit_tag 'Add Book', :id => :add_book %></br></br>
-<%= link_to "Back", mybooks_view_path, class: "btn btn-small" %>
+<%= link_to "Back", inventory_index_path, class: "btn btn-small" %>
 
 
 <% end %>

@@ -2,7 +2,7 @@ class InventoryController < ApplicationController
 	before_filter :require_profile, :require_address
 
 
-	def view
+	def index
 		@inventory = User.find(current_user.id).inventories
 	end
 
@@ -19,7 +19,8 @@ class InventoryController < ApplicationController
 		@inventory.rental_price = params[:rental_price]
 		@inventory.current_status = params[:current_status]
  		if @inventory.save
-			redirect_to mybooks_view_path
+			redirect_to inventory_index_path
+			flash[:notice] = "The book has been added to your inventory"
 		else
 			render 'new'
 		end
@@ -33,13 +34,14 @@ class InventoryController < ApplicationController
 	def update
 		@inventory = Inventory.find(params[:id])
    		@inventory.update_attributes(params[:inventory])
-    	redirect_to mybooks_view_path
+    	redirect_to inventory_index_path
 	end
 
-	def delete
-		@inventory = Inventory.find(params[:inventory_id])
+	def destroy
+		@inventory = Inventory.find(params[:id])
 		@inventory.destroy
-		redirect_to mybooks_view_path
+		redirect_to inventory_index_path
+		flash[:notice] = "The book has been deleted from your inventory"
 	end
 
 	def search_books

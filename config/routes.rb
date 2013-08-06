@@ -10,30 +10,23 @@ ProjectLectito::Application.routes.draw do
 
 
   get "devise/User"
-  match "home" => "inventory#search"
-  match "home_page/barred" => "home_page#user_barred"
+  get "home" => "inventory#search"
+  get "home_page/barred" => "home_page#user_barred"
 
   
-  match "book/book_status" => "book#book_status"
-  match "book/available_book_stats" => "book#available_book_stats"
-  match "book/borrowed_book_stats" => "book#borrowed_book_stats"
+  get "book/book_status" => "book#book_status"
+  get "book/available_book_stats" => "book#available_book_stats"
+  get "book/borrowed_book_stats" => "book#borrowed_book_stats"
 
 
-  get "inventory/delete"
-  get "mybooks/view" => "inventory#view"
-  get "inventory/edit" => "inventory#edit"
   get "inventory/search" => "inventory#search"
+  get "inventory/search_books" => "inventory#search_books"
+  get "inventory/search_books_city" => "inventory#search_books_city"
   get "inventory/autocomplete_author" => "inventory#autocomplete_author"
   get "inventory/autocomplete_book_name" => "inventory#autocomplete_book_name"
   get "inventory/autocomplete_book_details" => "inventory#autocomplete_book_details"
   get "inventory/check_inventory_duplication" => "inventory#check_inventory_duplication"
   post "inventory/update/:inventory_id" => "inventory#update"
-
-
-  post "create" => "transaction#create"
-  match "inventory/create" => "inventory#create"
-  match "inventory/search_books" => "inventory#search_books"
-  match "inventory/search_books_city" => "inventory#search_books_city"
 
 
   get "transaction/get_latest_lent" => "transaction#get_latest_lent" 
