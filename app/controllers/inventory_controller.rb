@@ -46,13 +46,41 @@ class InventoryController < ApplicationController
 
 	def search_books
 		if params[:search_by_book_name] == ""
-			@book = Book.where("author LIKE ?", "%#{params[:search_by_author]}%")
+			@books = Book.where("author LIKE ?", "%#{params[:search_by_author]}%")
 		elsif params[:search_by_author] == ""
-			@book = Book.where("book_name LIKE ?", "%#{params[:search_by_book_name]}%")
+			@books = Book.where("book_name LIKE ?", "%#{params[:search_by_book_name]}%")
 		else
-			@book = Book.where("book_name LIKE ? AND author LIKE ? ", "%#{params[:search_by_book_name]}%", "%#{params[:search_by_author]}%")
+			@books = Book.where("book_name LIKE ? AND author LIKE ? ", "%#{params[:search_by_book_name]}%", "%#{params[:search_by_author]}%")
 		end
 
+		@book_array = []
+
+		@books.each do |book|
+			@users_with_book = Inventory.where("book_id = ? AND user_id != ?", book, current_user.id)
+			Rails.logger.debug "There are " + @users_with_book.length.to_s + " copies of " + book.book_name
+
+			if !@users_with_book.empty?
+
+				@users_with_book = Inventory.where("book_id = ? AND user_id != ?", book, current_user.id)
+				@delivery_uwb
+
+				# Of all Users who have the book, check who all are in the city as selected by user
+				# Merge this list with the address of each user who meets the criteria.
+				@users_with_book.each do |u_wb|
+					@address_uwb_in_city = u_wb.user.addresses.find(u_wb.available_in_city)
+					@delivery_uwb = u_wb.user.user_delivery
+
+		 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.user_delivery == @delivery_uwb))
+						@book_array << book
+					end
+				end
+
+			end
+
+		end
+
+		Rails.logger.debug "Finally its " + @book_array.to_s	
+			
 		respond_to do |format|
     		format.html  
     		format.js
@@ -122,7 +150,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_book_details
-		@books = Book.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%")
+		@books = Book.where("book_name like ?", "%#{params[:book_name]}%")
 		
 		if @books.empty?
 			@books = ["No Matching Results Found"]

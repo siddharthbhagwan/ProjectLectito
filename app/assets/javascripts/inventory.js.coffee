@@ -2,19 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-jQuery.fn.capitalize = ->
-  $(this[0]).keyup (event) ->
-    box = event.target
-    txt = $(this).val()
-    start = box.selectionStart
-    end = box.selectionEnd
-    $(this).val txt.replace(/^(.)|(\s|\-)(.)/g, ($1) ->
-      $1.toUpperCase()
-    )
-    box.setSelectionRange start, end
-
-  this
-
 jQuery ->
   $("#search_books").on "click", ->
     search_city = $("#city").val()
@@ -97,7 +84,7 @@ jQuery ->
 
 
 jQuery ->
-  $("#search_by_author").autocomplete 
+  $("#search_by_author").autocomplete(
     source: (request, response) ->
       $.ajax
         url: "inventory/autocomplete_author"
@@ -107,6 +94,18 @@ jQuery ->
           
         success: (data) ->
           response(data)
+
+    select: (e, ui) ->
+      $("#search_by_author").data("selected_item", ui.item.label)
+
+  ).blur ->
+    value_typed = $("#search_by_author").val()
+    value_selected = $("#search_by_author").data("selected_item")
+    if value_typed != value_selected
+      $("#search_by_author").val("")
+
+    if value_selected == "No Matching Results Found"
+      $("#search_by_author").val("")       
 
 
 jQuery ->
@@ -137,14 +136,13 @@ jQuery ->
 
 
 jQuery ->
-  $("#book_name").autocomplete 
+  $("#book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
         url: "autocomplete_book_details"
         dataType: "json"
         data:
           book_name: $("#book_name").val()
-          author: $("#search_by_author").val()
           
         success: (data) ->
           response $.map(data, (item) ->
@@ -173,6 +171,15 @@ jQuery ->
       $("#edition").val(ui.item.edition).fadeIn(500)
       $("#book_id").val(ui.item.id)
 
+  ).blur ->
+    value_typed = $("#search_by_book_name").val()
+    value_selected = $("#search_by_book_name").data("selected_item")
+    if value_typed != value_selected
+      $("#search_by_book_name").val("")
+
+    if value_selected == "No Matching Results Found"
+      $("#search_by_book_name").val("")      
+
 
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->
@@ -198,7 +205,6 @@ jQuery ->
   $("#publisher").hide()
   $("#pages").hide() 
   $("#mrp").hide() 
-
 
 jQuery ->
    #$('#search_by_author').css("text-transform","capitalize")

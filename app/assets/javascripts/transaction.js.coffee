@@ -29,10 +29,10 @@ $(document).ready ->
     jQuery ->
       $(document).on "click", ".borrow_button" ,->
         $("#borrow_confirm").data "inventory_id", $(this).attr("data-ubid")
+        $("#borrow_confirm").data "city_id", $(this).attr("data-cityid")
         $("#borrow_confirm").data "user_id", $(this).attr("data-uid")
         $("#borrow_confirm").data "button_id", $(this).attr("id")
         $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
-        $("#borrow_confirm").data
         $("#borrow_confirm").dialog "open"
 
 
@@ -50,6 +50,7 @@ $(document).ready ->
             row_number = $("#borrow_confirm").data("row_number")
             button_id = $("#borrow_confirm").data("button_id")
             user_id = $("#borrow_confirm").data("user_id")
+            city_id = $("#borrow_confirm").data("city_id")
             if $("#borrow_requests_table tr").length == 1
               after_b = "0"
             else
@@ -81,6 +82,7 @@ $(document).ready ->
                 complete: ->
                   $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
                   setTimeout $.unblockUI
+                  $("#city_" + city_id).hide()
 
                 error: ->
                   setTimeout $.unblockUI
@@ -138,6 +140,14 @@ $(document).ready ->
         tr_id_s = "#" + tr_id
         $("#accept_request_confirm").data "trid", tr_id
         $("#accept_request_confirm").data "trids", tr_id_s
+        arr = []
+        arr = $(tr_id_s).find("td").map(->
+          @innerHTML
+        ).get()
+        html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
+        $("#accept_info").html(html_data)
+        $("#date_test").datepicker()
+        $("#dispatch_date").focus()
         $("#accept_request_confirm").dialog "open"
 
 
@@ -178,7 +188,7 @@ $(document).ready ->
             else
               after = "0"
             $.getScript("/transaction/get_latest_lent.js?after=" + after)
-            setTimeout updateLendRequests, 60000
+            setTimeout updateLendRequests, 10000000
         $ ->
-            setTimeout updateLendRequests, 60000  #if $("#lend_requests_table").length > 0  
+            setTimeout updateLendRequests, 10000000  #if $("#lend_requests_table").length > 0  
 

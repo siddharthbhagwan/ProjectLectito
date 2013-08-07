@@ -5,7 +5,8 @@
 		td_address_summary = "<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>"
 		td_rental_price = "<td><%= Inventory.find(b.inventory_id).rental_price %></td>"
 		td_status = "<td><%= b.status %></td></tr>"
-		table_row_data = tr_id + td_book_name + td_address_summary + td_rental_price + td_status
+		td_request_date = "<td><%= b.request_date.to_s(:long) %></td>"
+		table_row_data = tr_id + td_book_name + td_address_summary + td_request_date + td_status
 		$("#borrow_requests_table > tbody:last").append(table_row_data);
 	<% end %>
 	$("#borrow_requests_div").show(500);

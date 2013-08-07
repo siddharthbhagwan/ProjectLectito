@@ -27,7 +27,6 @@
 <% end %>
 
 <%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
-<%= tag "input", :type => "button", :id => "test", :class => "btn" , :value => "test" %></br></br>
 
 <div id="search_text">
 
@@ -35,7 +34,11 @@
 
 
 <div id="accept_request_confirm" title="Accept Request">
-  <p>You are about to accept this request to borrow - </p>
+  <p id="accept_info"></p>
+  <p id="dispatch_date">Please choose a date you are available </p>
+  <div id="accept_datepicker">
+	<%= text_field_tag :date_test, nil, :placeholder => "Select Date" %></br>
+  </div>
 </div>
 
 <div id="error_message" title="Error">

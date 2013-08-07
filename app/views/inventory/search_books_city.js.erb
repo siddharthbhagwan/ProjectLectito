@@ -28,7 +28,7 @@ if (<%= @users_and_address.length %> === 0) {
       button_element = "<td><input type='button' value='Request Sent' disabled = 'true' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
     }
     else {
-      button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
+      button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-cityid ='<%= params[:book_id] %>' /></td>";
     }
     delivery_charges = "<td>60</td>"
     rental_available_at = "<td>" + "<%= @users_and_address[j].locality %>" + "/" + "<%= @users_and_address[j].city %>" + "</td>";
