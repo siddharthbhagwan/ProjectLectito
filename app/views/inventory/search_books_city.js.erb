@@ -1,4 +1,4 @@
-var $tbody, button_element, rental_available_at, $rental_data ="<tbody>", table_row_id, row_number;
+var $tbody, button_element, rental_available_at, $rental_data ="<tbody>", table_row_id, row_number, delivery_charges;
 
 
 city = $("#city").val()
@@ -12,7 +12,7 @@ $(sub_table_id_s).remove()
 
 $final_table ="<tr id='city_<%= params[:book_id] %>'><td colspan='2'><table id='sub_search_results_table_<%= params[:book_id] %>' class='table table-hover table-condensed table-bordered'>"
 $table_ending = "</tbody></table></td></tr>"
-$table_header = "<thead><tr id='sub_search_results_table_header'><th>Price</th><th>Avail@</th><th>Borrow</th></tr></thead>"
+$table_header = "<thead><tr id='sub_search_results_table_header'><th>Avail@</th><th>Delivery Charges ( &#8377; )</th><th>Borrow</th></tr></thead>"
 $final_table = $final_table + $table_header
 
 if (<%= @users_and_address.length %> === 0) {
@@ -30,8 +30,9 @@ if (<%= @users_and_address.length %> === 0) {
     else {
       button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
     }
+    delivery_charges = "<td>60</td>"
     rental_available_at = "<td>" + "<%= @users_and_address[j].locality %>" + "/" + "<%= @users_and_address[j].city %>" + "</td>";
-    $rental_data += "<tr id='sub_search'><td>" + <%= @users_and_address[i].rental_price %> + "</td>" + rental_available_at + button_element + "</tr>";
+    $rental_data += "<tr id='sub_search'>" + rental_available_at + delivery_charges + button_element + "</tr>";
     <%= i = i + 2 %>
   <% end %>
   

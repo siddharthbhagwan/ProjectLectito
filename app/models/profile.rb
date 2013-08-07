@@ -1,11 +1,11 @@
 class Profile < ActiveRecord::Base
   before_save :default_current_status
 
-  attr_accessible :DoB, :user_first_name, :gender, :user_last_name, :user_phone_no, :last_update, :contact_via_sms
+  attr_accessible :DoB, :user_first_name, :gender, :user_last_name, :user_phone_no, :last_update, :contact_via_sms, :delivery
 
   belongs_to :user
 
-  validates :user_first_name, :user_last_name, :gender, :user_phone_no, :presence => true
+  validates :user_first_name, :user_last_name, :gender, :user_phone_no,:presence => true
   validates :DoB, :presence => { :message => "Please Select a value" }
   validates :user_phone_no, :numericality => true, length: {minimum: 10, maximum: 10}
 

@@ -50,7 +50,7 @@ class InventoryController < ApplicationController
 		elsif params[:search_by_author] == ""
 			@book = Book.where("book_name LIKE ?", "%#{params[:search_by_book_name]}%")
 		else
-			@book = Book.where("book_name LIKE ? AND author LIKE ? ", "%#{params[:search_by_book_name]}%"	, "%#{params[:search_by_author]}%")
+			@book = Book.where("book_name LIKE ? AND author LIKE ? ", "%#{params[:search_by_book_name]}%", "%#{params[:search_by_author]}%")
 		end
 
 		respond_to do |format|
@@ -60,15 +60,20 @@ class InventoryController < ApplicationController
 	end
 
 	def search_books_city
-		@users_with_book = Inventory.where("book_id = ? AND user_id != ? ", params[:book_id], current_user.id)
+		# Find all users apart from self, who have the book
+		@users_with_book = Inventory.where("book_id = ? AND user_id != ?", params[:book_id], current_user.id)
+		
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
 		@users_and_address = []
 		@transactions_requested = []
 
+		# Of all Users who have the book, check who all are in the city as selected by user
+		# Merge this list with the address of each user who meets the criteria.
 		@users_with_book.each do |u_wb|
 			@address_uwb_in_city = u_wb.user.addresses.find(u_wb.available_in_city)
- 			if @address_uwb_in_city.city == params[:city]
+			@delivery_uwb = u_wb.user.user_delivery
+ 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.user_delivery == @delivery_uwb))
 				@users_and_address << u_wb.clone	
 				@users_and_address << @address_uwb_in_city
 				@transactions_requested << Transaction.where("borrower_id = ? AND status = ? AND inventory_id = ? ", current_user.id, "Pending", u_wb.id).pluck(:lender_id)

@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
       self.profile.user_first_name + " " + self.profile.user_last_name
     end
   end
+
+  def user_delivery
+    self.profile.delivery
+  end
   
 
   def self.from_omniauth(auth)

@@ -7,13 +7,16 @@
 
 <%= f.text_field :user_phone_no, :placeholder => "10 Digit Phone Number", :maxlength => "10", :required => :true, numericality: true %></br>
 
-Gender </br>	
-<%= f.radio_button :gender, "M", :checked => 'checked' %>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<%= f.radio_button :gender, "F" %></br>
-Male &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Female </br></br>
+Gender &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+<%= f.radio_button :gender, "M", :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Male &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<%= f.radio_button :gender, "F" %>&nbsp; &nbsp; Female</br></br>
+
+Mode of Delivery &nbsp; &nbsp;
+<%= f.radio_button :delivery, "true", :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Delivery &nbsp; &nbsp;
+<%= f.radio_button :delivery, "false" %>&nbsp; &nbsp; Self Pick/Drop</br></br>
 
 <%= f.label "Date", "Date Of Birth" %>
-<%= f.text_field :DoB, :placeholder => "Select Date of Birth", :required => :true, :size => "15"%>
+<%= f.text_field :DoB, :placeholder => "Select Date of Birth", :required => :true, :class => "dob_class"%>
 
 </br></br>
 <%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br>

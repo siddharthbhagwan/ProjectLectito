@@ -6,8 +6,8 @@ class TransactionController < ApplicationController
 		@transaction.borrower_id = current_user.id
 		@transaction.lender_id = params[:user_id] 
 		@transaction.inventory_id = params[:inventory_id]
+		@transaction.request_date = Date.today
 		@transaction.status = "Pending"
-		mail_to_id = params[:user_id]
 
 		if !@transaction.save
 			raise "error"
@@ -37,6 +37,7 @@ class TransactionController < ApplicationController
 	def update_request_status_accept
 		@latest_accepted = Transaction.find(params[:tr_id])
 		@latest_accepted.status = "Accepted"
+		@latest_accepted.acceptance_date = Date.today
 		
 		if @latest_accepted.save
 			#MailWorker.perform_borrow_accept_async(@latest_accepted.borrower_id)

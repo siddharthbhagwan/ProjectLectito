@@ -11,7 +11,10 @@
           <tbody>
             <tr>
               <td colspan='2'>
-                <%= @address[i].address_line1 %></br>      
+                <%= @address[i].address_line1 %></br>
+                <% if @address[i].landmark? %>
+                  Landmark: <%= @address[i].landmark %>
+                <% end %>   
                 <%= @address[i].locality %></br>
                 <%= @address[i].city %></br>
                 <%= @address[i].state %></br>
@@ -33,7 +36,10 @@
             <tbody>
               <tr>
                 <td colspan='2'>
-                  <%= @address[i+1].address_line1 %></br>      
+                  <%= @address[i+1].address_line1 %></br>
+                  <% if @address[i+1].landmark? %>
+                    Landmark: <%= @address[i+1].landmark %>
+                  <% end %>   
                   <%= @address[i+1].locality %></br>
                   <%= @address[i+1].city %></br>
                   <%= @address[i+1].state %></br>
@@ -41,7 +47,7 @@
                 </td>
               </tr>
               <tr>
-                <td><%= link_to "Edit", edit_addres_path(@address[i].id), class: "btn btn-small "%></td>
+                <td><%= link_to "Edit", edit_addres_path(@address[i+1].id), class: "btn btn-small "%></td>
                 <td><%= link_to "Delete", addres_path(@address[i+1].id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%></td>
               </tr>
             </tbody>
