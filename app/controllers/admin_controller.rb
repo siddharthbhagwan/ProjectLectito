@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+	class Error < RuntimeError; end
+
 	load_and_authorize_resource :class => User
 
 	def index
@@ -18,11 +20,12 @@ class AdminController < ApplicationController
 	end
 
 	def bar_user
-		if current_user.id == params[:bar_user_id].to_i
-			raise "Admin cannot block itself"
-		else
-			@bar_user = User.find(params[:bar_user_id])
+		@bar_user = User.find(params[:bar_user_id])
 
+		if current_user.id == params[:bar_user_id].to_i
+			@bar_user.errors[:base]<< "Admin cannot block itself"
+			@bar_user.save
+		else
 			if @bar_user.profile.current_status != "Locked"
 				@bar_user.profile.current_status  = "Locked"
 
@@ -30,9 +33,15 @@ class AdminController < ApplicationController
 					raise "error"
 				end
 			else
-				raise "User Already Blocked"	
+				@bar_user.profile.errors[:base]<< "User already Locked"
+				@bar_user.save	
 			end
 		end
+
+		respond_to do |format|
+    		format.html  
+    		format.json { render :json => @bar_user.errors.full_messages.to_json }
+  		end
 	end
 
 	def unbar_user

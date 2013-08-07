@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805075505) do
+ActiveRecord::Schema.define(:version => 20130807053637) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20130805075505) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "user_id"
+    t.string   "landmark"
   end
 
   create_table "books", :force => true do |t|
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130805075505) do
     t.string   "current_status"
     t.datetime "last_update"
     t.boolean  "contact_via_sms"
+    t.boolean  "delivery"
   end
 
   create_table "transactions", :force => true do |t|
@@ -85,8 +87,19 @@ ActiveRecord::Schema.define(:version => 20130805075505) do
     t.integer  "lender_id"
     t.integer  "inventory_id"
     t.string   "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.date     "request_date"
+    t.date     "acceptance_date"
+    t.date     "dispatch_date"
+    t.date     "received_date"
+    t.integer  "borrow_duration"
+    t.integer  "renewal_count"
+    t.date     "returned_date"
+    t.date     "return_pickup_date"
+    t.date     "return_received_date"
+    t.date     "book_condition"
+    t.float    "total_commission"
   end
 
   create_table "users", :force => true do |t|

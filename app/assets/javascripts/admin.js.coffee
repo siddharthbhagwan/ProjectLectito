@@ -45,10 +45,10 @@ jQuery ->
       "Bar": ->
         $(this).dialog "close"
         $.ajax
-          url: "bar_user.js"
-          type: "post"
+          url: "bar_user"
+          type: "POST"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             bar_user_id: $("#bar_user").attr("data-uid")
 
@@ -58,13 +58,15 @@ jQuery ->
               title:    'Please Wait', 
               message:  '<p>Your request is being processed</p>'
             
-          success: (msg) ->
+          success: (data, textStatus, XHR) ->
+            console.log(data)
             $("#bar_user_success").dialog "open"
-            $("#bar_user").val("Un Bar User").attr("id","unbar_user")
+            #$("#bar_user").val("Un Bar User").attr("id","unbar_user")
             $("#user_current_status").text("Locked").fadeIn(500)
           complete: -> 
             setTimeout $.unblockUI            
-          error: (msg) ->
+          error: (XHR, textStatus, errorThrown) ->
+            console.log(XHR)
             setTimeout $.unblockUI
             $("#custom_error").html("Admin Cannot Block Itself")
             $("#error_message").dialog "open"

@@ -178,7 +178,7 @@ $(document).ready ->
             else
               after = "0"
             $.getScript("/transaction/get_latest_lent.js?after=" + after)
-            setTimeout updateLendRequests, 1000
+            setTimeout updateLendRequests, 60000
         $ ->
-            setTimeout updateLendRequests, 1000  #if $("#lend_requests_table").length > 0  
+            setTimeout updateLendRequests, 60000  #if $("#lend_requests_table").length > 0  
 

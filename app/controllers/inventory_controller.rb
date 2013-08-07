@@ -27,7 +27,7 @@ class InventoryController < ApplicationController
 	end
 
 	def edit
-		@inventory = Inventory.find(params[:inventory_id])
+		@inventory = Inventory.find(params[:id])
 		@address = User.find(current_user.id).addresses
 	end
 

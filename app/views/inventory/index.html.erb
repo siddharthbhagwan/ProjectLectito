@@ -21,7 +21,7 @@
           <td><%= inventory.user.addresses.find(inventory.available_in_city).address_summary %></td>
           <td><%= inventory.rental_price %></td>
           <td><%= inventory.current_status %></td>
-          <!--<td><%= link_to "Edit", inventory_edit_path(:inventory_id => inventory.id), :action => "edit" ,class: "btn btn-small "%></td> -->
+          <!--<td><%= link_to "Edit", edit_inventory_path(inventory.id), class: "btn btn-small "%></td> -->
           <td><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%></td>
         </tr>
       <% end %>
