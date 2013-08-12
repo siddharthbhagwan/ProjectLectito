@@ -6,7 +6,7 @@ class TransactionController < ApplicationController
 		@transaction.borrower_id = current_user.id
 		@transaction.lender_id = params[:user_id] 
 		@transaction.inventory_id = params[:inventory_id]
-		@transaction.request_date = Date.today
+		@transaction.request_date = DateTime.now
 		@transaction.status = "Pending"
 
 		if !@transaction.save
@@ -31,13 +31,14 @@ class TransactionController < ApplicationController
 
 	def get_latest_lent
 		@latest_lent = Transaction.where("lender_id = ? AND status = ? AND updated_at > ?", current_user.id, "Pending", Time.at(params[:after].to_i + 1))	
+		#@latest_lent = Transaction.where(:lender_id =>)
 	end
 
 
 	def update_request_status_accept
 		@latest_accepted = Transaction.find(params[:tr_id])
 		@latest_accepted.status = "Accepted"
-		@latest_accepted.acceptance_date = Date.today
+		@latest_accepted.acceptance_date = DateTime.now
 		
 		if @latest_accepted.save
 			#MailWorker.perform_borrow_accept_async(@latest_accepted.borrower_id)

@@ -1,14 +1,13 @@
 ProjectLectito::Application.routes.draw do
   
   # Address Routes
-  match "address/autocomplete_area" => "address#autocomplete_area"
-  
+  get "address/autocomplete_area" => "address#autocomplete_area"
+  get "address/:id/autocomplete_area" => "address#autocomplete_area"
 
   # Admin routes
   get "admin/user_details" => "admin#user_details"
   post "admin/bar_user" => "admin#bar_user"
   post "admin/unbar_user" => "admin#unbar_user"
-
 
   get "devise/User"
   get "home" => "inventory#search"

@@ -74,9 +74,7 @@ class InventoryController < ApplicationController
 						@book_array << book
 					end
 				end
-
 			end
-
 		end
 
 		Rails.logger.debug "Finally its " + @book_array.to_s	

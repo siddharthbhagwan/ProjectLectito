@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'role_model'
 class User < ActiveRecord::Base
   

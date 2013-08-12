@@ -7,9 +7,11 @@
 
 <%= f.text_field :user_phone_no, :placeholder => "10 Digit Phone Number", :maxlength => "10", :required => :true, numericality: true %></br>
 
-Gender &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-<%= f.radio_button :gender, "M", :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Male &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<%= f.radio_button :gender, "F" %>&nbsp; &nbsp; Female</br></br>
+<div>
+<span>Gender </span>
+<%= f.radio_button :gender, "M", :checked => 'checked' %><span style="margin:10px 10px; vertical-align:middle; padding-">Male </span>
+<%= f.radio_button :gender, "F" %><span style="margin:10px 10px; vertical-align:middle;">Female</span></br></br>
+</div>
 
 Mode of Delivery &nbsp; &nbsp;
 <%= f.radio_button :delivery, "true", :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Delivery &nbsp; &nbsp;

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807053637) do
+ActiveRecord::Schema.define(:version => 20130810082332) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -89,15 +89,15 @@ ActiveRecord::Schema.define(:version => 20130807053637) do
     t.string   "status"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
-    t.date     "request_date"
-    t.date     "acceptance_date"
-    t.date     "dispatch_date"
-    t.date     "received_date"
+    t.datetime "request_date"
+    t.datetime "acceptance_date"
+    t.datetime "dispatch_date"
+    t.datetime "received_date"
     t.integer  "borrow_duration"
     t.integer  "renewal_count"
-    t.date     "returned_date"
-    t.date     "return_pickup_date"
-    t.date     "return_received_date"
+    t.datetime "returned_date"
+    t.datetime "return_pickup_date"
+    t.datetime "return_received_date"
     t.date     "book_condition"
     t.float    "total_commission"
   end
