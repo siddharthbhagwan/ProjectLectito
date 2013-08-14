@@ -83,6 +83,7 @@ $(document).ready ->
                   $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
                   setTimeout $.unblockUI
                   $("#city_" + city_id).hide()
+                  $("#" + city_id).attr("data-status","closed")
 
                 error: ->
                   setTimeout $.unblockUI
@@ -137,7 +138,7 @@ $(document).ready ->
     jQuery ->
       $(document).on "click", "#accept", ->
         tr_id = $(this).attr("data-trid")
-        tr_id_s = "#" + tr_id
+        tr_id_s = "#lend_" + tr_id
         $("#accept_request_confirm").data "trid", tr_id
         $("#accept_request_confirm").data "trids", tr_id_s
         arr = []
@@ -187,8 +188,8 @@ $(document).ready ->
               after = $("#lend_requests_table tbody tr:last-child").attr("data-time")
             else
               after = "0"
-            $.getScript("/transaction/get_latest_lent.js?after=" + after)
-            setTimeout updateLendRequests, 10000000
+            $.getScript("/transaction/latest_lent.js?after=" + after)
+            setTimeout updateLendRequests, 5000
         $ ->
-            setTimeout updateLendRequests, 10000000  #if $("#lend_requests_table").length > 0  
+            setTimeout updateLendRequests, 5000  #if $("#lend_requests_table").length > 0  
 

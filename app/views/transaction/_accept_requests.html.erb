@@ -9,7 +9,7 @@
 	<tbody>
 		<% unless @accept.nil? %>
 			<% @accept.each do |a| %>
-				<tr data-time = <%= a.updated_at.to_i %> id=<%= a.id %> >
+				<tr data-time = <%= a.updated_at.to_i %> id='accept_<%= a.id %>' >
 					<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
 					<td><%= a.acceptance_date %></td>
 				</tr>
