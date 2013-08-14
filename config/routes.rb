@@ -29,7 +29,8 @@ ProjectLectito::Application.routes.draw do
   post "inventory/update/:inventory_id" => "inventory#update"
 
   # Transaction Routes
-  get "transaction/get_latest_lent" => "transaction#get_latest_lent" 
+  get "transaction/latest_lent" => "transaction#latest_lent"
+  get "transaction/latest_borrowed" => "transaction#latest_borrowed"
   get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   get "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
    

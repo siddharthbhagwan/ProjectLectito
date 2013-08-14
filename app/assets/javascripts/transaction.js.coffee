@@ -5,13 +5,13 @@
 $(document).ready ->
     empty_table_checks = ->
       if $("#borrow_requests_table tr").length == 1
-        $("#borrow_requests_div").remove()
+        $("#borrow_requests_div").hide()
 
       if $("#lend_requests_table tr").length == 1
-        $("#lend_requests_div").hide().remove()
+        $("#lend_requests_div").hide().hide()
 
       if $("#accept_requests_table tr").length == 1
-        $("#accept_requests_div").hide().remove()      
+        $("#accept_requests_div").hide().hide()      
 
 
     jQuery ->

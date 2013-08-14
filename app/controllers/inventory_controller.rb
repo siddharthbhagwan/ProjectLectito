@@ -57,27 +57,25 @@ class InventoryController < ApplicationController
 
 		@books.each do |book|
 			@users_with_book = Inventory.where("book_id = ? AND user_id != ?", book, current_user.id)
-			Rails.logger.debug "There are " + @users_with_book.length.to_s + " copies of " + book.book_name
 
 			if !@users_with_book.empty?
-
-				@users_with_book = Inventory.where("book_id = ? AND user_id != ?", book, current_user.id)
-				@delivery_uwb
 
 				# Of all Users who have the book, check who all are in the city as selected by user
 				# Merge this list with the address of each user who meets the criteria.
 				@users_with_book.each do |u_wb|
 					@address_uwb_in_city = u_wb.user.addresses.find(u_wb.available_in_city)
-					@delivery_uwb = u_wb.user.user_delivery
+					@delivery_uwb = u_wb.user.is_delivery
 
-		 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.user_delivery == @delivery_uwb))
+					if current_user.is_delivery
+			 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+							@book_array << book
+						end
+					else
 						@book_array << book
 					end
 				end
 			end
-		end
-
-		Rails.logger.debug "Finally its " + @book_array.to_s	
+		end	
 			
 		respond_to do |format|
     		format.html  
@@ -87,7 +85,7 @@ class InventoryController < ApplicationController
 
 	def search_books_city
 		# Find all users apart from self, who have the book
-		@users_with_book = Inventory.where("book_id = ? AND user_id != ?", params[:book_id], current_user.id)
+		@users_with_book = Inventory.where("book_id = ? AND user_id != ? ", params[:book_id], current_user.id)
 		
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
@@ -98,11 +96,21 @@ class InventoryController < ApplicationController
 		# Merge this list with the address of each user who meets the criteria.
 		@users_with_book.each do |u_wb|
 			@address_uwb_in_city = u_wb.user.addresses.find(u_wb.available_in_city)
-			@delivery_uwb = u_wb.user.user_delivery
- 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.user_delivery == @delivery_uwb))
-				@users_and_address << u_wb.clone	
-				@users_and_address << @address_uwb_in_city
-				@transactions_requested << Transaction.where("borrower_id = ? AND status = ? AND inventory_id = ? ", current_user.id, "Pending", u_wb.id).pluck(:lender_id)
+			@delivery_uwb = u_wb.user.is_delivery
+
+			#TODO make the if more efficient
+			if current_user.is_delivery
+	 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+					@users_and_address << u_wb.clone	
+					@users_and_address << @address_uwb_in_city
+					@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:lender_id)
+				end
+			else
+				if @address_uwb_in_city.city == params[:city]
+					@users_and_address << u_wb.clone	
+					@users_and_address << @address_uwb_in_city
+					@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:lender_id)
+				end
 			end
 		end
 
@@ -116,9 +124,9 @@ class InventoryController < ApplicationController
 	end
 
 	def search
-		@borrow = Transaction.where("borrower_id = ? ", current_user.id).last(5)
-		@lend = Transaction.where("lender_id = ? AND status = ? ", current_user.id, "Pending")
-		@accept = Transaction.where("lender_id = ? AND status = ?", current_user.id, "Accepted")
+		@borrow = Transaction.where(:borrower_id => current_user.id).last(5)
+		@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
+		@accept = Transaction.where(:lender_id => current_user.id, :status => "Accepted")
 	end
 
 	def autocomplete_author
@@ -161,7 +169,7 @@ class InventoryController < ApplicationController
 	end
 
 	def check_inventory_duplication
-		@duplicate_books = Inventory.where("user_id = ? AND books_id = ?", current_user.id, params[:book_id])
+		@duplicate_books = Inventory.where(:user_id => current_user.id, books_id => params[:book_id])
 	end
 
 	private

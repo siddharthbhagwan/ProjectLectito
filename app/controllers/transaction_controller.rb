@@ -24,12 +24,12 @@ class TransactionController < ApplicationController
 	end
 
 
-	def get_latest_borrowed
+	def latest_borrowed
 		@latest_borrowed = Transaction.where("borrower_id = ? AND status = ? AND updated_at > ?", current_user.id, "Pending", Time.at(params[:after].to_i + 1))
 	end
 
 
-	def get_latest_lent
+	def latest_lent
 		@latest_lent = Transaction.where("lender_id = ? AND status = ? AND updated_at > ?", current_user.id, "Pending", Time.at(params[:after].to_i + 1))	
 		#@latest_lent = Transaction.where(:lender_id =>)
 	end

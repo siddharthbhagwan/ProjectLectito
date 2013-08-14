@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130810082332) do
+ActiveRecord::Schema.define(:version => 20130814084549) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(:version => 20130810082332) do
     t.datetime "return_received_date"
     t.date     "book_condition"
     t.float    "total_commission"
+    t.datetime "rejection_date"
+    t.string   "rejection_reason"
   end
 
   create_table "users", :force => true do |t|

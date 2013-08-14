@@ -209,3 +209,4 @@ jQuery ->
 jQuery ->
    #$('#search_by_author').css("text-transform","capitalize")
    #$('#search_by_book_name').css("text-transform","capitalize")
+ 

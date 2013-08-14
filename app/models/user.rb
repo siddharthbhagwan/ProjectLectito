@@ -24,16 +24,18 @@ class User < ActiveRecord::Base
   has_many :inventories ,:dependent => :destroy
   has_many :books, :through => :inventories
 
+  # Returns Full name, or Email, which ever is available
   def welcome_name
-    if self.profile.nil? or (self.profile.user_first_name.nil? and self.prodile.user_last_name.nil?)
+    if profile.nil? or (profile.user_first_name.nil? and profile.user_last_name.nil?)
       email 
     else
-      self.profile.user_first_name + " " + self.profile.user_last_name
+      profile.user_first_name + " " + profile.user_last_name
     end
   end
 
-  def user_delivery
-    self.profile.delivery
+  # Returns delivery option of user
+  def is_delivery
+    profile.delivery
   end
   
 
