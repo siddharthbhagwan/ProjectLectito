@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130814084549) do
+ActiveRecord::Schema.define(:version => 20130816111509) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_line1"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(:version => 20130814084549) do
     t.integer  "user_id"
     t.string   "profile_status"
     t.string   "user_phone_no"
-    t.string   "current_status"
     t.datetime "last_update"
     t.boolean  "contact_via_sms"
     t.boolean  "delivery"
@@ -128,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20130814084549) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "roles_mask",             :default => 4,  :null => false
+    t.string   "current_status"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

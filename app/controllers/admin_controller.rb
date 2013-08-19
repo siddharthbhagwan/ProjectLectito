@@ -14,7 +14,7 @@ class AdminController < ApplicationController
 	def user_details
 		@user = User.find(params[:user_id])
 
-		if !@user.profile.nil? and @user.profile.current_status == "Locked"
+		if @user.current_status == "Locked"
 			@locked = true
 		end
 	end
@@ -23,32 +23,34 @@ class AdminController < ApplicationController
 		@bar_user = User.find(params[:bar_user_id])
 
 		if current_user.id == params[:bar_user_id].to_i
-			@bar_user.errors[:base]<< "Admin cannot block itself"
-			@bar_user.save
-		else
-			if @bar_user.profile.current_status != "Locked"
-				@bar_user.profile.current_status  = "Locked"
 
-				if !@bar_user.profile.save
+			respond_to do |format|
+	    		format.html  
+	    		format.json { render :json => "Admin cant Lock itself" }
+	  		end
+
+		else
+			if @bar_user.current_status != "Locked"
+				@bar_user.current_status  = "Locked"
+
+				if !@bar_user.save
 					raise "error"
 				end
 			else
-				@bar_user.profile.errors[:base]<< "User already Locked"
-				@bar_user.save	
+				respond_to do |format|
+    				format.html  
+    				format.json { render :json => "User is already locked" }
+  				end	
 			end
 		end
 
-		respond_to do |format|
-    		format.html  
-    		format.json { render :json => @bar_user.errors.full_messages.to_json }
-  		end
 	end
 
 	def unbar_user
 		@unbar_user = User.find(params[:unbar_user_id])
-		@unbar_user.profile.current_status  = "Active"
+		@unbar_user.current_status  = "Active"
 
-		if !@unbar_user.profile.save
+		if !@unbar_user.save
 			raise "error"
 		end
 	end

@@ -15,7 +15,7 @@ class TransactionController < ApplicationController
 			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
 		end
 
-		@borrow = Transaction.where("borrower_id = ? AND updated_at > ?", current_user.id, Time.at(params[:after_b].to_i + 1))
+		@borrow = Transaction.where("borrower_id = ? AND updated_at > ? AND status =?", current_user.id, Time.at(params[:after_b].to_i + 1), "Pending")
 
 		respond_to do |format|
     		format.html  
@@ -47,11 +47,16 @@ class TransactionController < ApplicationController
 		end
 	end
 
-
 	def update_request_status_reject
 		@latest_rejected = Transaction.find(params[:tr_id])
 		@latest_rejected.status = params[:reject_reason]
 		@latest_rejected.save
+	end
+
+	def update_request_status_cancel
+		@cancel_transaction = Transaction.find(params[:tr_id])
+		@cancel_transaction.status = "Cancelled"
+		@cancel_transaction.save
 	end
 
 	private

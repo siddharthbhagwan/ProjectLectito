@@ -5,7 +5,7 @@
 			<th>Book Name</th>
 			<th>Available @</th>
 			<th>Request Date</th>
-			<th>Status</th>	    
+			<th colspan='2'>Status</th>   
 		</tr>
 	</thead>
 	<tbody>
@@ -16,6 +16,7 @@
 					<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
 					<td><%= b.request_date.to_s(:long) %></td>
 					<td><%= b.status %></td>
+					<td><%= tag "input", :type => "button", "data-trid" => b.id.to_s, :class => "btn btn-small cancel_trans" , :value => "Cancel" %></td>
 				</tr>
 			<% end %>
 		<% end %>

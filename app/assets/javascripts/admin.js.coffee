@@ -30,6 +30,7 @@ $(document).ready ->
       @className = "search_init"
       @value = asInitVals[$("tfoot input").index(this)]
    
+#--------------------------------------------------------------------------------------------------------------------
 
 
 jQuery ->
@@ -59,16 +60,16 @@ jQuery ->
               message:  '<p>Your request is being processed</p>'
             
           success: (data, textStatus, XHR) ->
-            console.log(data)
+            alert (data.responseText)
             $("#bar_user_success").dialog "open"
-            #$("#bar_user").val("Un Bar User").attr("id","unbar_user")
+            $("#bar_user").val("Un Bar User").attr("id","unbar_user")
             $("#user_current_status").text("Locked").fadeIn(500)
           complete: -> 
             setTimeout $.unblockUI            
           error: (XHR, textStatus, errorThrown) ->
-            console.log(XHR)
+            console.log(XHR.responseText)
             setTimeout $.unblockUI
-            $("#custom_error").html("Admin Cannot Block Itself")
+            $("#custom_error").html(XHR.responseText)
             $("#error_message").dialog "open"
       Cancel: ->
         $(this).dialog "close"  
@@ -83,15 +84,8 @@ jQuery ->
         $(this).dialog "close" 
 
 
-jQuery ->
-  $("#error_message").dialog
-    autoOpen: false
-    modal: true
-    buttons:
-      "Ok": ->
-        $(this).dialog "close"   
-
-
+#--------------------------------------------------------------------------------------------------------------------
+# Un bar User
 jQuery ->
   $(document).on "click", "#unbar_user", ->
     $("#unbar_user_confirm").dialog "open"
@@ -139,4 +133,14 @@ jQuery ->
     buttons:
       "Ok": ->
         $(this).dialog "close"
+
+#--------------------------------------------------------------------------------------------------------------------
+# Error Message
+jQuery ->
+  $("#error_message").dialog
+    autoOpen: false
+    modal: true
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"           
          

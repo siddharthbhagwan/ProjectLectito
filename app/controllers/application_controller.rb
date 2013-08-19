@@ -9,10 +9,8 @@ class ApplicationController < ActionController::Base
 
   def is_user_barred
     if user_signed_in? 
-      if !current_user.profile.nil?
-        if current_user.profile.current_status == "Locked"
-          redirect_to profile_barred_path
-        end
+      if current_user.current_status == "Locked"
+         redirect_to profile_barred_path
       end
     end
   end

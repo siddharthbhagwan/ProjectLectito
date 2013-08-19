@@ -13,7 +13,7 @@ class Profile < ActiveRecord::Base
 
   # Set Users Current Status as active by default
   def default_current_status
-  	self.current_status ||= "Active"
+  	current_status ||= "Active"
   end
 
   def sms_updates

@@ -124,7 +124,7 @@ class InventoryController < ApplicationController
 	end
 
 	def search
-		@borrow = Transaction.where(:borrower_id => current_user.id).last(5)
+		@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
 		@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
 		@accept = Transaction.where(:lender_id => current_user.id, :status => "Accepted")
 	end

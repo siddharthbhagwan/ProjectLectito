@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+# Code to auto complete and populate remainder address/locality fields
 jQuery ->
   $("#address_locality").autocomplete 
     source: (request, response) ->
@@ -25,7 +26,8 @@ jQuery ->
       $("#address_city").val(ui.item.city)
       $("#address_pin").val(ui.item.pin)
 
-
+#--------------------------------------------------------------------------------------------------------------------
+# TODO Check how to propagate modal confirm accept/reject
 jQuery ->
   $("#delete_buttonn").click ->
     $("#delete_confirm").dialog "open"

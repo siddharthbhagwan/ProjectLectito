@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+# Search by book/author
 jQuery ->
   $("#search_books").on "click", ->
     search_city = $("#city").val()
@@ -39,6 +40,8 @@ jQuery ->
       $("#city_validation").fadeIn(500)
 
 
+#--------------------------------------------------------------------------------------------------------------------
+# Search for book within the city
 jQuery ->
   $(document).on "click", "#search_results_table tbody tr", (event) ->
     book_id = undefined
@@ -83,6 +86,9 @@ jQuery ->
       $("#city_" + book_id).hide()      
 
 
+#--------------------------------------------------------------------------------------------------------------------
+# Autocomplete for Author
+
 jQuery ->
   $("#search_by_author").autocomplete(
     source: (request, response) ->
@@ -107,6 +113,9 @@ jQuery ->
     if value_selected == "No Matching Results Found"
       $("#search_by_author").val("")       
 
+
+#--------------------------------------------------------------------------------------------------------------------
+# Autocomplete for Book Name
 
 jQuery ->
   $("#search_by_book_name").autocomplete( 
@@ -134,6 +143,8 @@ jQuery ->
       $("#search_by_book_name").val("")  
 
 
+#--------------------------------------------------------------------------------------------------------------------
+# Autocomplete for Adding Inventory
 
 jQuery ->
   $("#book_name").autocomplete( 
@@ -178,8 +189,11 @@ jQuery ->
       $("#search_by_book_name").val("")
 
     if value_selected == "No Matching Results Found"
-      $("#search_by_book_name").val("")      
+      $("#search_by_book_name").val("")     
 
+
+#--------------------------------------------------------------------------------------------------------------------
+# Highlight rows and make pointer clickable
 
 jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->
@@ -194,6 +208,7 @@ jQuery ->
     $(this).css('textDecoration', 'none')
     $(this).css('font-size', '14px')
 
+#--------------------------------------------------------------------------------------------------------------------
 
 jQuery ->
   $("#isbn").hide() 

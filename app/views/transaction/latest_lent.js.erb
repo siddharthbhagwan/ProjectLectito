@@ -4,12 +4,14 @@
 		td_book_name = "<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>"
 		td_rental_price = "<td><%= Inventory.find(l.inventory_id).rental_price %></td>"
 		td_requested_from = "<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>"
-		td_requested_date = "<td><%= l.request_date %></td>"
+		td_requested_date = "<td><%= l.request_date.to_s(:long) %></td>"
 		td_status = "<td><%= l.status %></td>"
 		td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=<%= l.id %> /></td>"
 		td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=<%= l.id %> /></td></tr>"	
-		table_row_data = tr_id + td_book_name + td_requested_date + td_requested_from + td_status + td_accept + td_reject
+		table_row_data = tr_id + td_book_name + td_requested_from + td_requested_date + td_status + td_accept + td_reject
 		$("#lend_requests_table > tbody:last").append(table_row_data);
 	<% end %>
-	$("#lend_requests_div").fadeIn(700);
+	if (!$("#lend_requests_div").is(":visible")){
+		$("#lend_requests_div").show(500);
+	}
 <% end %>

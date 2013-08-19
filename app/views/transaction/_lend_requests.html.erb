@@ -14,7 +14,7 @@
 			<tr data-time=<%= l.updated_at.to_i %> id='lend_<%= l.id %>'>
 				<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>
 				<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>
-				<td><%= l.request_date %></td>
+				<td><%= l.request_date.to_s(:long) %></td>
 				<td><%= l.status %></td>
 				<td><input class="btn btn-small" type="button" value="Accept" id="accept" data-trid=<%= l.id %> /></td>
 				<td><input class="btn btn-small" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>

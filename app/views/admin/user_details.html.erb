@@ -1,8 +1,11 @@
-<% if @locked %>
-	<%= tag "input", :type => "button", :id => "unbar_user", :class => "btn btn-danger" , "data-uid" =>@user.id, :value => "Un Bar User" %>
-<% else %>
-	<%= tag "input", :type => "button", :id => "bar_user", :class => "btn btn-danger" , "data-uid" =>@user.id, :value => "Bar User" %>
+<% if current_user.id !=  @user.id %>
+	<% if @locked %>
+		<%= tag "input", :type => "button", :id => "unbar_user", :class => "btn btn-danger" , "data-uid" =>@user.id, :value => "Un Bar User" %>
+	<% else %>
+		<%= tag "input", :type => "button", :id => "bar_user", :class => "btn btn-danger" , "data-uid" =>@user.id, :value => "Bar User" %>
+	<% end %>
 <% end %>
+
 <%= link_to "Back", admin_index_path, class:"btn btn-small" %></br></br>
 <%= render 'admin_user_credentials_view' %>
 <%= render 'admin_user_profile_view' %>

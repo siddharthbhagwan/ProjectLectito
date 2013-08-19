@@ -1,13 +1,16 @@
 <% unless @latest_borrowed.empty? %>
 	<% @latest_borrowed.each do |b| %>
-		tr_id = "<tr id='borrow_<%= b.id %>' data-time='<%= b.updated_at.to_i %>'>"
+		tr_id = "<tr data-trid='<%= b.id %>'' data-time='<%= b.updated_at.to_i %>'>"
 		td_book_name = "<td><%= Book.find(Inventory.find(b.inventory_id).book.id).book_name %></td>"
 		td_address_summary = "<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>"
 		td_rental_price = "<td><%= Inventory.find(b.inventory_id).rental_price %></td>"
-		td_status = "<td><%= b.status %></td></tr>"
+		td_status = "<td><%= b.status %></td>"
+		td_cancel = "<td><%= tag 'input',type ='button', data-trid=b.id.to_s, class='btn btn-small cancel_trans', value='Cancel' %></td></tr>"
 		td_request_date = "<td><%= b.request_date.to_s(:long) %></td>"
-		table_row_data = tr_id + td_book_name + td_address_summary + td_request_date + td_status
+		table_row_data = tr_id + td_book_name + td_address_summary + td_request_date + td_status + td_cancel
 		$("#borrow_requests_table > tbody:last").append(table_row_data);
 	<% end %>
+	if (!$("#borrow_requests_div").is(":visible")){
 	$("#borrow_requests_div").show(500);
+	}
 <% end %>

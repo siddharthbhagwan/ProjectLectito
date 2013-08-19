@@ -18,7 +18,7 @@
 				<td><%= @user.welcome_name %></td>
 				<td><%= @user.profile.DoB.to_formatted_s(:long) %></td>    
 				<td><%= @user.profile.gender %></td>
-				<td id='user_current_status'><%= @user.profile.current_status %></td>
+				<td id='user_current_status'><%= @user.current_status %></td>
 				<td><%= @user.profile.user_phone_no %></td>
 				<td><%= @user.profile.sms_updates %></td>
 			<% end %>

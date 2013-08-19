@@ -3,7 +3,7 @@
 	td_address_summary = "<td><%= Address.find(Inventory.find(@latest_accepted.inventory_id).available_in_city).address_summary %></td>"
 	td_rental_price = "<td><%= Inventory.find(@latest_accepted.inventory_id).rental_price %></td>"
 	td_status = "<td><%= @latest_accepted.status %></td></tr>"
-	td_acceptance_date = "<td><%= @latest_accepted.acceptance_date %></td>"
+	td_acceptance_date = "<td><%= @latest_accepted.acceptance_date.to_s(:long) %></td>"
 	table_row_data = tr_id + td_book_name + td_acceptance_date 
 	$("#accept_requests_table > tbody:last").append(table_row_data);
 	if (!$("#accept_requests_div").is(":visible")){

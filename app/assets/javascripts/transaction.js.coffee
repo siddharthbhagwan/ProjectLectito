@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
+
+  # Hide tables if no data
     empty_table_checks = ->
       if $("#borrow_requests_table tr").length == 1
         $("#borrow_requests_div").hide()
@@ -17,7 +19,8 @@ $(document).ready ->
     jQuery ->
       empty_table_checks()
 
-
+#--------------------------------------------------------------------------------------------------------------------
+  # Modal Dialog for Errors
     jQuery ->
       $("#error_message").dialog
         autoOpen: false
@@ -26,6 +29,9 @@ $(document).ready ->
           "Ok": ->
             $(this).dialog "close"
 
+
+#--------------------------------------------------------------------------------------------------------------------
+  # Create a Transaction on borrowing a book
     jQuery ->
       $(document).on "click", ".borrow_button" ,->
         $("#borrow_confirm").data "inventory_id", $(this).attr("data-ubid")
@@ -92,49 +98,9 @@ $(document).ready ->
           Cancel: ->
             $(this).dialog "close"              
 
-
-
-    jQuery ->
-      $(document).on "click", "#reject", ->
-        tr_id = $(this).attr("data-trid")
-        tr_id_s = "#" + tr_id
-        $("#reject_request_confirm").data "trid", tr_id
-        $("#reject_request_confirm").data "trids", tr_id_s
-        $("#reject_request_confirm").dialog "open"
-
-
-    jQuery ->
-      $("#reject_request_confirm").dialog
-        autoOpen: false
-        modal: true
-        buttons:
-          "Ok": ->
-            $(this).dialog "close"
-            tr_id = $("#reject_request_confirm").data("trid")
-            tr_id_s = $("#reject_request_confirm").data("trids")
-            reject_reason = $('input[name=rejectReason]:radio:checked').val()
-            $.ajax
-              url: "/transaction/update_request_status_reject.js?"
-              type: "get"
-              context: "this"
-              dataType: "script"
-              data:
-                tr_id: tr_id
-                reject_reason: reject_reason
-
-              success: (msg) ->
-
-              complete: (msg) ->
-                $(tr_id_s).fadeOut(500).remove()
-                empty_table_checks()
-              error: ->
-                setTimeout $.unblockUI
-                $("#error_message").dialog "open"         
-
-          Cancel: ->
-            $(this).dialog "close"   
-
-
+ 
+#--------------------------------------------------------------------------------------------------------------------
+  # Update a transaction on request being Accepted
     jQuery ->
       $(document).on "click", "#accept", ->
         tr_id = $(this).attr("data-trid")
@@ -182,6 +148,93 @@ $(document).ready ->
             $(this).dialog "close"          
 
 
+
+#--------------------------------------------------------------------------------------------------------------------
+  # Update a transaction on request being rejected
+    jQuery ->
+      $(document).on "click", "#reject", ->
+        tr_id = $(this).attr("data-trid")
+        tr_id_s = "#lend_" + tr_id
+        $("#reject_request_confirm").data "trid", tr_id
+        $("#reject_request_confirm").data "trids", tr_id_s
+        $("#reject_request_confirm").dialog "open"
+
+
+    jQuery ->
+      $("#reject_request_confirm").dialog
+        autoOpen: false
+        modal: true
+        buttons:
+          "Ok": ->
+            $(this).dialog "close"
+            tr_id = $("#reject_request_confirm").data("trid")
+            tr_id_s = $("#reject_request_confirm").data("trids")
+            reject_reason = $('input[name=rejectReason]:radio:checked').val()
+            $.ajax
+              url: "/transaction/update_request_status_reject.js?"
+              type: "get"
+              context: "this"
+              dataType: "script"
+              data:
+                tr_id: tr_id
+                reject_reason: reject_reason
+
+              success: (msg) ->
+
+              complete: (msg) ->
+                $(tr_id_s).fadeOut(500).remove()
+                empty_table_checks()
+              error: ->
+                setTimeout $.unblockUI
+                $("#error_message").dialog "open"         
+
+          Cancel: ->
+            $(this).dialog "close"   
+
+
+
+#--------------------------------------------------------------------------------------------------------------------
+  # Update  transaction on request being cancelled
+    jQuery ->
+      $(document).on "click", ".cancel_trans", ->
+        $("#cancel_transaction").data "tr_id", $(this).attr "data-trid"
+        $("#cancel_transaction").dialog "open"        
+
+
+
+    jQuery ->
+      $("#cancel_transaction").dialog
+        autoOpen: false
+        modal: true
+        buttons:
+          "Ok": ->
+            $(this).dialog "close"
+            tr_id = $("#cancel_transaction").data("tr_id")
+            $.ajax
+              url: "/transaction/update_request_status_cancel.js"
+              type: "post"
+              context: "this"
+              dataType: "script"
+              data:
+                tr_id: tr_id
+
+              success: (msg) ->
+
+              complete: (msg) ->
+                $("#borrow_" + tr_id).fadeOut(500).remove()
+                empty_table_checks()
+              error: ->
+                setTimeout $.unblockUI
+                $("#error_message").dialog "open"       
+
+                 
+
+          Cancel: ->
+            $(this).dialog "close"    
+
+
+#--------------------------------------------------------------------------------------------------------------------
+  # Poll to check for new requests
     jQuery ->
         updateLendRequests = ->
             if $("#lend_requests_table tr").length > 1
@@ -189,7 +242,7 @@ $(document).ready ->
             else
               after = "0"
             $.getScript("/transaction/latest_lent.js?after=" + after)
-            setTimeout updateLendRequests, 5000
+            setTimeout updateLendRequests, 500000
         $ ->
-            setTimeout updateLendRequests, 5000  #if $("#lend_requests_table").length > 0  
+            setTimeout updateLendRequests, 500000  #if $("#lend_requests_table").length > 0  
 

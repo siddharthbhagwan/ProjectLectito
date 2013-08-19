@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
   def is_delivery
     profile.delivery
   end
+
+  def default_current_status
+    self.current_status ||= "Active"
+  end
   
 
   def self.from_omniauth(auth)
