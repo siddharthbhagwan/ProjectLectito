@@ -10,6 +10,7 @@ include ActionController::Live
 		@transaction.lender_id = params[:user_id] 
 		@transaction.inventory_id = params[:inventory_id]
 		@transaction.request_date = DateTime.now.to_time
+		@transaction.renewal_count = 0
 		@transaction.status = "Pending"
 
 		@borrow = Transaction.where("borrower_id = ? AND updated_at > ? AND status =?", current_user.id, Time.at(params[:after_b].to_i + 1), "Pending")
