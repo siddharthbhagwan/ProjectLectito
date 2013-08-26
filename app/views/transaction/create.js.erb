@@ -1,6 +1,6 @@
 <% unless @borrow.empty? %>
 	<% @borrow.each do |b| %>
-		$("#borrow_requests_table > tbody:last").append("raw(<tr data-time='<%= b.updated_at.to_i %>' id='borrow_<%= b.id %>'><td><%= Book.find(Inventory.find(b.inventory_id).book.id).book_name %></td><td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td><td><%= b.request_date %></td><td><%= b.status %></td><td><input type='button' value='Cancel' class='btn btn-small cancel_trans'  data-trid='<%= b.id %>'/></td></tr>)");
+		$("#borrow_requests_table > tbody:last").append("raw(<tr data-time='<%= b.updated_at.to_i %>' id='borrow_<%= b.id %>'><td><%= Book.find(Inventory.where(:id => b.inventory_id).take.book.id).book_name %></td><td><%= Address.where(:id => Inventory.where(:id => b.inventory_id).take.available_in_city).take.address_summary %></td><td><%= b.request_date %></td><td><%= b.status %></td><td><input type='button' value='Cancel' class='btn btn-small cancel_trans'  data-trid='<%= b.id %>'/></td></tr>)");
 	<% end %>
 	$("#borrow_requests_div").show(500);
 <% end %>

@@ -1,5 +1,5 @@
 class AddressController < ApplicationController
-  before_filter :require_profile
+  before_action :require_profile
 
   # CanCan for authorization on controller actions
   load_and_authorize_resource :class => Address
@@ -9,15 +9,15 @@ class AddressController < ApplicationController
   end
 
   def update
-    @address = Address.find(params[:id])
+    @address = Address.where(:id => params[:id]).first
     if @address.update_attributes(params[:address])
       flash[:notice] = "The address has been updated"
-      redirect_to address_path
+      redirect_to address_index_path
     end
   end
 
   def edit
-    @address = Address.find(params[:id])
+    @address = Address.where(:id => params[:id]).first
     if  @address.user_id != current_user.id
       redirect_to address_path
       flash[:alert] = "You are not authorized to view that address"
@@ -26,7 +26,7 @@ class AddressController < ApplicationController
 
   # List all addresses
   def index
-    @address = User.find(current_user.id).addresses
+    @address = User.where(:id => current_user.id).first.addresses
 
     respond_to do |format|
       format.html  # index.html.erb
@@ -40,7 +40,7 @@ end
     @address.user_id = current_user.id
     if @address.save
       flash[:notice] = "The address has been added"
-      redirect_to address_path
+      redirect_to address_index_path
     else
       render 'new'
     end
@@ -48,13 +48,13 @@ end
 
   # Delete the address of the passed Id
   def destroy
-    @address = Address.find(params[:id])
+    @address = Address.where(:id => params[:id]).first
     if  @address.user_id != current_user.id
-      redirect_to address_path
+      redirect_to address_index_path
       flash[:alert] = "You are not authorized to delete that address"
     else
       @address.destroy
-      redirect_to address_path
+      redirect_to address_index_path
       flash[:info] = "The Address has been deleted"
     end
   end

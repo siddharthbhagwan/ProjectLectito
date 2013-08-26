@@ -2,7 +2,7 @@ class ProfileController < ApplicationController
   load_and_authorize_resource :class => Profile
 
   def update
-    @profile = Profile.find_by_user_id(current_user.id)
+    @profile = Profile.where(:user_id => current_user.id).take
     if !@profile
       @profile = Profile.new
       @profile.user_id = current_user.id
@@ -23,7 +23,8 @@ class ProfileController < ApplicationController
   end
 
   def edit
-    @profile = Profile.find_by_user_id(current_user.id)
+    #TODO Check Why First?
+    @profile = Profile.where(:user_id => current_user.id.to_i).take
     if !@profile
         @profile = Profile.new
     end

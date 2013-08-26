@@ -33,6 +33,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Set Users Current Status as active by default
+  def default_current_status
+    current_status ||= "Active"
+  end
+
   # Returns delivery option of user
   def is_delivery
     profile.delivery

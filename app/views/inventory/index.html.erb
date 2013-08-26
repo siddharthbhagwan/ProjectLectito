@@ -22,7 +22,7 @@
           <td><%= inventory.rental_price %></td>
           <td><%= inventory.current_status %></td>
           <!--<td><%= link_to "Edit", edit_inventory_path(inventory.id), class: "btn btn-small "%></td> -->
-          <td><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%></td>
+          <td><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You sure?' }%></td>
         </tr>
       <% end %>
     </tbody>

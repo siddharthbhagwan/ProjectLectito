@@ -1,5 +1,5 @@
 <h1>Build your profile</h1></br>
-<%= form_for @address, :url => address_path do |f| %>
+<%= form_for @address, :url => address_index_path do |f| %>
 
 <%= render 'error_messages' %>
 
@@ -21,6 +21,6 @@
 
 <%= f.submit "Add", class: "btn btn-small" %> </br></br>
 
-<%= link_to "Back", address_path, class: "btn btn-small" %>
+<%= link_to "Back", address_index_path, class: "btn btn-small" %>
 
 <% end %>

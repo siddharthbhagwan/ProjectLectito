@@ -1,14 +1,13 @@
 class InventoryController < ApplicationController
-	before_filter :require_profile, :require_address
-
+	before_action :require_profile, :require_address
 
 	def index
-		@inventory = User.find(current_user.id).inventories
+		@inventory = User.where(:id => current_user.id).take.inventories
 	end
 
 	def new
 		@book = Book.new
-		@address = User.find(current_user.id).addresses
+		@address = User.where(:id => current_user.id).take.addresses
 	end
 
 	def create
@@ -27,18 +26,18 @@ class InventoryController < ApplicationController
 	end
 
 	def edit
-		@inventory = Inventory.find(params[:id])
-		@address = User.find(current_user.id).addresses
+		@inventory = Inventory.where(:id => params[:id]).take
+		@address = User.where(:id => current_user.id).take.addresses
 	end
 
 	def update
-		@inventory = Inventory.find(params[:id])
+		@inventory = Inventory.where(:id => params[:id]).take
    		@inventory.update_attributes(params[:inventory])
     	redirect_to inventory_index_path
 	end
 
 	def destroy
-		@inventory = Inventory.find(params[:id])
+		@inventory = Inventory.where(:id => params[:id]).take
 		@inventory.destroy
 		redirect_to inventory_index_path
 		flash[:notice] = "The book has been deleted from your inventory"
@@ -63,7 +62,7 @@ class InventoryController < ApplicationController
 				# Of all Users who have the book, check who all are in the city as selected by user
 				# Merge this list with the address of each user who meets the criteria.
 				@users_with_book.each do |u_wb|
-					@address_uwb_in_city = u_wb.user.addresses.find(u_wb.available_in_city)
+					@address_uwb_in_city = u_wb.user.addresses.where(:id => u_wb.available_in_city).take
 					@delivery_uwb = u_wb.user.is_delivery
 
 					if current_user.is_delivery
@@ -95,7 +94,7 @@ class InventoryController < ApplicationController
 		# Of all Users who have the book, check who all are in the city as selected by user
 		# Merge this list with the address of each user who meets the criteria.
 		@users_with_book.each do |u_wb|
-			@address_uwb_in_city = u_wb.user.addresses.find(u_wb.available_in_city)
+			@address_uwb_in_city = u_wb.user.addresses.where(:id => u_wb.available_in_city).take
 			@delivery_uwb = u_wb.user.is_delivery
 
 			#TODO make the if more efficient
@@ -186,7 +185,7 @@ class InventoryController < ApplicationController
   	def require_address
     	if current_user.addresses.empty?
     		flash[:notice] = "Please Enter at least one Address"
-    		redirect_to new_addres_path
+    		redirect_to new_address_path
     	else
     		return false
     	end

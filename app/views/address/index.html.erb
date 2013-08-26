@@ -22,8 +22,8 @@
               </td>
             </tr>
             <tr>
-              <td><%= link_to "Edit", edit_addres_path(@address[i].id), class: "btn btn-small "%></td>
-              <td><%= link_to "Delete", addres_path(@address[i].id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%>
+              <td><%= link_to "Edit", edit_address_path(@address[i].id), class: "btn btn-small "%></td>
+              <td><%= link_to "Delete", address_path(@address[i].id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You Sure' }%>
               </td>
                 
             </tr>
@@ -47,8 +47,8 @@
                 </td>
               </tr>
               <tr>
-                <td><%= link_to "Edit", edit_addres_path(@address[i+1].id), class: "btn btn-small "%></td>
-                <td><%= link_to "Delete", addres_path(@address[i+1].id), :method => "delete", class: "btn btn-small ", :confirm => "Are you sure? "%></td>
+                <td><%= link_to "Edit", edit_address_path(@address[i+1].id), class: "btn btn-small "%></td>
+                <td><%= link_to "Delete", address_path(@address[i+1].id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You Sure' }%></td>
               </tr>
             </tbody>
           </table>
@@ -62,4 +62,4 @@
 <% end %>
 <br />
 
-<%= link_to 'Add an address', new_addres_path, class: "btn btn-small" %>
+<%= link_to 'Add an address', new_address_path, class: "btn btn-small" %>

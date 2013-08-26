@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :authenticate_user!#, :except => [:search, :sub_search]
-  before_filter :is_user_barred, :except => [:barred, :destroy]
+  before_action :authenticate_user!#, :except => [:search, :sub_search]
+  before_action :is_user_barred, :except => [:barred, :destroy]
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
