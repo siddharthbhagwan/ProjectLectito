@@ -26,8 +26,7 @@ ProjectLectito::Application.routes.draw do
   get "inventory/autocomplete_book_name" => "inventory#autocomplete_book_name"
   get "inventory/autocomplete_book_details" => "inventory#autocomplete_book_details"
   get "inventory/check_inventory_duplication" => "inventory#check_inventory_duplication"
-  post "inventory/update/:inventory_id" => "inventory#update"
-
+  
   # Transaction Routes
   get "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   get "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
@@ -36,6 +35,7 @@ ProjectLectito::Application.routes.draw do
   ##SSE
   get "transaction/latest_lent" => "transaction#latest_lent"   
   get "transaction/latest_cancelled" => "transaction#latest_cancelled"
+  get "transaction/latest_rejected" => "transaction#latest_rejected"
 
   root :to => "inventory#search"
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}

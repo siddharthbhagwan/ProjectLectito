@@ -1,48 +1,31 @@
 <h3>Edit book</h3>
-<%= form_tag  url_for(:controller => "inventory", :action => "update/#{@inventory.id}"), :method => "post" do %>
+<%= form_tag  "/inventory/#{@inventory.id}", :method => "put" do %>
 
-<%= label_tag :isbn %>
-<%= text_field_tag :isbn, nil, :disabled => true  %>
+<div id="edit_inventory">
+<%= text_field_tag :book_name, Book.where(:id => @inventory.book_id).take.book_name, :placeholder => "Book Name", :required => :true,:width => "10", :disabled => :true %></br>
 
-<%= label_tag :book_name %>
-<%= text_field_tag :book_name %>
-<!-- <%= autocomplete_field_tag :book_name, nil, inventory_autocomplete_book_detail_book_name_path, :id_element => '', :update_elements => {:id => '#id', :isbn => '#isbn', :author => '#author',:language => '#language', :genre => '#genre', :version => '#version', :edition => '#edition', :publisher => '#publisher', :pages => '#pages', :mrp => '#mrp' } %> -->
+<div style=" position:absolute; margin-left:220px; top:120px;">
+	<ul style="list-style-type: none">
+		<li><%= text_field_tag :isbn, Book.where(:id => @inventory.book_id).take.isbn, :disabled => true, :placeholder => :ISBN , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :author , Book.where(:id => @inventory.book_id).take.author, :disabled => true, :placeholder => :Author , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :language, Book.where(:id => @inventory.book_id).take.language, :disabled => true, :placeholder => :Language , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :genre, Book.where(:id => @inventory.book_id).take.genre, :disabled => true, :placeholder => :Genre , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :version, Book.where(:id => @inventory.book_id).take.version, :disabled => true, :placeholder => :Version , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :edition, Book.where(:id => @inventory.book_id).take.edition, :disabled => true, :placeholder => :Edition , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :publisher, Book.where(:id => @inventory.book_id).take.publisher, :disabled => true, :placeholder => :Publisher , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :pages, Book.where(:id => @inventory.book_id).take.pages, :disabled => true, :placeholder => :Pages , :class => :edit_inventory %></li>
+		<li><%= text_field_tag :mrp, Book.where(:id => @inventory.book_id).take.mrp, :disabled => true, :placeholder => :MRP , :class => :edit_inventory %></li>
+	</ul>
+</div>
 
-<%= label_tag :author %>
-<%= text_field_tag :author , nil, :disabled => true %></br>
-	
-<%= label_tag :language %>
-<%= text_field_tag :language, nil, :disabled => true %>
+<%= collection_select :inventory, :available_in_city, @address, :id, :address_summary %></br>
 
-<%= label_tag :genre %>
-<%= text_field_tag :genre, nil, :disabled => true %></br>
+<%= text_field_tag :rental_price, @inventory.rental_price , :placeholder => "Rental Price", :required => :true %></br>
 
-<%= label_tag :version %>
-<%= text_field_tag :version, nil, :disabled => true %></br>
+<%= select_tag :current_status, options_for_select(['Available','Unavailable'], @inventory.current_status), :placeholder => "Current Status" %>
+</br></br>
 
-<%= label_tag :edition %>
-<%= text_field_tag :edition, nil, :disabled => true %>
-
-<%= label_tag :publisher %>
-<%= text_field_tag :publisher, nil, :disabled => true %>
-
-<%= label_tag :pages %>
-<%= text_field_tag :pages, nil, :disabled => true %>
-
-<%= label_tag :mrp %>
-<%= text_field_tag :mrp, nil, :disabled => true %>
-
-<%= label_tag :available_in_city , "Available from Address"%>
-<%= collection_select :inventory, :available_in_city, @address, :id, :address_summary  %>
-
-<%= label_tag :rental_price %>
-<%= text_field_tag :rental_price %></br>
-
-<%= label_tag :current_status %>
-<%= text_field_tag :current_status %></br></br>
-
-<%= hidden_field_tag :id %>
-
+</div>
 <%= submit_tag 'Update' %>
 
 <% end %>

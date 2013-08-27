@@ -31,9 +31,15 @@ class InventoryController < ApplicationController
 	end
 
 	def update
+		#FIXME Update_attributes needs to be done individually :S
 		@inventory = Inventory.where(:id => params[:id]).take
    		@inventory.update_attributes(params[:inventory])
-    	redirect_to inventory_index_path
+   		@inventory.update_attributes(:rental_price => params[:rental_price])
+   		@inventory.update_attributes(:current_status => params[:current_status])
+   		if @inventory.save
+   			flash[:notice] = "The inventory has been updated"
+    		redirect_to inventory_index_path
+    	end
 	end
 
 	def destroy
@@ -131,6 +137,7 @@ class InventoryController < ApplicationController
 		@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
 		@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
 		@accept = Transaction.where(:lender_id => current_user.id, :status => "Accepted")
+		@current = Transaction.where(:borrower_id => current_user.id, :status => "Accepted")
 	end
 
 	def autocomplete_author

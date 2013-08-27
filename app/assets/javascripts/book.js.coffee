@@ -22,7 +22,7 @@ jQuery ->
       $("#book_count_status_" + book_id).hide()
       $(this).attr "data-general_stats", "closed"
 
-
+#----------------------------------------------------------------------------------------------------------------------
 
 jQuery ->
   $(document).on "mouseenter", "#bookdetail_table tbody tr", ->

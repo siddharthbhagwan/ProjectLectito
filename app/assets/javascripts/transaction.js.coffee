@@ -10,10 +10,13 @@ $(document).ready ->
         $("#borrow_requests_div").hide()
 
       if $("#lend_requests_table tr").length == 1
-        $("#lend_requests_div").hide().hide()
+        $("#lend_requests_div").hide()
 
       if $("#accept_requests_table tr").length == 1
-        $("#accept_requests_div").hide().hide()      
+        $("#accept_requests_div").hide()
+
+      if $("#current_books_table tr").length == 1
+        $("#current_books_div").hide()   
 
 
     jQuery ->
@@ -113,9 +116,12 @@ $(document).ready ->
         ).get()
         html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
         $("#accept_info").html(html_data)
-        $("#date_test").datepicker()
-        $("#dispatch_date").focus()
+        $("#dispatch_date").datepicker
+          showOn: "button"
+          buttonImageOnly: true
         $("#accept_request_confirm").dialog "open"
+        $("#accept_request_confirm").data "dispatch_date", $("#dispatch_date").val()
+        $("#accept_request_confirm").data "dispatch_time", $("input[type='radio'][name='dispatchTime']:checked").val()
 
 
     jQuery ->
@@ -134,6 +140,8 @@ $(document).ready ->
               dataType: "script"
               data:
                 tr_id: tr_id
+                dispatch_date: $("#accept_request_confirm").data "dispatch_date"
+                dispatch_time: $("#accept_request_confirm").data "dispatch_time"
 
               success: (msg) ->
 
@@ -198,8 +206,7 @@ $(document).ready ->
     jQuery ->
       $(document).on "click", ".cancel_trans", ->
         $("#cancel_transaction").data "tr_id", $(this).attr "data-trid"
-        $("#cancel_transaction").dialog "open"
-        console.log("Cancelling Tranaction with id " + $(this).attr "data-trid")      
+        $("#cancel_transaction").dialog "open"      
 
 
 
@@ -229,24 +236,11 @@ $(document).ready ->
                 $("#error_message").dialog "open"                        
 
           Cancel: ->
-            $(this).dialog "close"    
-
-
-#--------------------------------------------------------------------------------------------------------------------
-  # Poll to check for new requests
-    jQuery ->
-        updateLendRequests = ->
-            if $("#lend_requests_table tr").length > 1
-              after = $("#lend_requests_table tbody tr:last-child").attr("data-time")
-            else
-              after = "0"
-            $.getScript("/transaction/latest_lent.js?after=" + after)
-            #setTimeout updateLendRequests, 500000
-        $ ->
-            #setTimeout updateLendRequests, 500000  #if $("#lend_requests_table").length > 0  
+            $(this).dialog "close"
 
 #--------------------------------------------------------------------------------------------------------------------
-  #SSE Listener  #TODO Remove bracket element so its no more an element
+  #SSE Listener for creating a transaction
+  #TODO Remove bracket element so its no more an element
     jQuery ->
       id = $(".testxyz").attr("id")
       source = new EventSource('transaction/latest_lent')
@@ -265,12 +259,11 @@ $(document).ready ->
           $("#lend_requests_div").show(500)
 
 #--------------------------------------------------------------------------------------------------------------------
-  #SSE Listener  
+  #SSE Listener for cancelling a request
     jQuery ->
       id = $(".testxyz").attr("id")
       source = new EventSource('transaction/latest_cancelled')
       source.addEventListener 'transaction_cancelled_' + id, (e) ->
-        console.log $("#lend_requests_table tr").length
         if $("#lend_requests_table tr").length == 2
           $("#lend_requests_div").hide()
           $("#lend_" + e.data).remove()
@@ -279,17 +272,12 @@ $(document).ready ->
 
 
 #--------------------------------------------------------------------------------------------------------------------
-  #SSE Listener  
+  #SSE Listener for cancelling a request
     jQuery ->
       id = $(".testxyz").attr("id")
-      source = new EventSource('transaction/latest_cancelled')
-      source.addEventListener 'transaction_cancelled_' + id, (e) ->
-        console.log $("#lend_requests_table tr").length
-        if $("#lend_requests_table tr").length == 2
-          $("#lend_requests_div").hide()
-          $("#lend_" + e.data).remove()
-        else
-          $("#lend_" + e.data).remove() 
-
+      source = new EventSource('transaction/latest_rejected')
+      source.addEventListener 'transaction_rejected_' + id, (e) ->
+        $("#borrow_" + e.data).remove()
+        empty_table_checks()
 
            

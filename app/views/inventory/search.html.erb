@@ -9,9 +9,14 @@
 </div>
 
 <div id="accept_requests_div">
-	<%= render "transaction/accept_requests" %>
+	<%= render "transaction/accepted_requests" %>
 </div>
-<h5 id="ddd">Search for a book that you'd like to borrow in your city!</h5>
+
+<div id="current_books_div">
+  <%= render "transaction/current_books" %>
+</div>
+
+<h5>Search for a book that you'd like to borrow in your city!</h5>
 
 <%= form_tag() do %>
 <div id="city_validation"></div>
@@ -34,10 +39,12 @@
 
 <div id="accept_request_confirm" title="Accept Request">
   <p id="accept_info"></p>
-  <p id="dispatch_date">Please choose a date you are available </p>
+  <p id="user_dispatch_date">Please specify a good time to pick up the book for delivery </p>
   <div id="accept_datepicker">
-	<%= text_field_tag :date_test, nil, :placeholder => "Select Date" %></br>
+	<%= text_field_tag :dispatch_date, Date.tomorrow, :placeholder => "Select Date" %></br>
   </div>
+  <input type="radio" name="dispatchTime" value="Before 1 PM" checked="true"> Before 1 PM <br>
+  <input type="radio" name="dispatchTime" value="After 1 PM">  After 1 PM
 </div>
 
 <div id="error_message" title="Error">
@@ -50,8 +57,8 @@
 
 <div id="reject_request_confirm" title="Reject Request">
   <p>You are about to Reject this request</p>
-  <input type="radio" name="rejectReason" value="Rejected - Unavailable" checked="true"> I am currently Unavailable <br>
-  <input type="radio" name="rejectReason" value="Reason 2"> I do not wish to lend this book as of now
+  <input type="radio" name="rejectReason" value="Unavailable" checked="true"> I am currently Unavailable <br>
+  <input type="radio" name="rejectReason" value="Do Not Wish To Lend"> I do not wish to lend this book as of now
 </div>
 
 <div id="cancel_transaction" title="Cancel Transaction">

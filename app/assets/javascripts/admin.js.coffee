@@ -67,7 +67,6 @@ jQuery ->
           complete: -> 
             setTimeout $.unblockUI            
           error: (XHR, textStatus, errorThrown) ->
-            console.log(XHR.responseText)
             setTimeout $.unblockUI
             $("#custom_error").html(XHR.responseText)
             $("#error_message").dialog "open"

@@ -64,7 +64,9 @@ include ActionController::Live
 		@latest_accepted = Transaction.find(params[:tr_id])
 		@latest_accepted.status = "Accepted"
 		@latest_accepted.acceptance_date = DateTime.now.to_time
-		
+		@latest_accepted.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
+		@latest_accepted.returned_date = 15.days.from_now
+
 		if @latest_accepted.save
 			#MailWorker.perform_borrow_accept_async(@latest_accepted.borrower_id)
 		else
@@ -73,10 +75,37 @@ include ActionController::Live
 	end
 
 	def update_request_status_reject
+		response.headers["Content-Type"] = 'text/javascript'
 		@latest_rejected = Transaction.where(:id => params[:tr_id]).take	
-		@latest_rejected.status = params[:reject_reason]
-		@latest_rejected.save
+		@latest_rejected.status = "Rejected"
+		@latest_rejected.rejection_date = DateTime.now.to_time
+		@latest_rejected.rejection_reason = params[:reject_reason]
+
+
+		if @latest_rejected.save
+			publish_channel = "transaction_rejected_" + @latest_rejected.borrower_id.to_s
+			$redis.publish(publish_channel, @latest_rejected.id)
+		end
+	ensure
+		$redis.quit
 	end
+
+	def latest_rejected
+		response.headers["Content-Type"] = "text/event-stream"
+		subscribe_channel = "transaction_rejected_" + current_user.id.to_s
+		redis_subscribe = Redis.new
+		redis_subscribe.subscribe(subscribe_channel) do |on|
+			on.message do |event, data|
+		        response.stream.write("event: #{event}\n")
+		        response.stream.write("data: #{data}\n\n")
+		  	end
+		end
+	rescue IOError
+		logger.info "Stream Closed"
+	ensure
+		redis_subscribe.quit
+		response.stream.close
+	end	
 
 	def update_request_status_cancel
 		response.headers["Content-Type"] = 'text/javascript'
