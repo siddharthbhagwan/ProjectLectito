@@ -22,12 +22,11 @@ include ActionController::Live
 			transaction_details = Array.new 
 			transaction_details << "create"
 			transaction_details << {
-			:id => @transaction.id,
-			:updated_at => @transaction.updated_at.to_i,
-			:book_name => Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
-			:requested_from => Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
-			:requested_date => @transaction.request_date.to_s(:long),
-			:status => @transaction.status
+				:id => @transaction.id,
+				:book_name => Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
+				:requested_from => Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
+				:requested_date => @transaction.request_date.to_s(:long),
+				:status => @transaction.status
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
@@ -43,23 +42,6 @@ include ActionController::Live
   		end
 	end
 
-	def transaction_status
-		response.headers["Content-Type"] = "text/event-stream"
-		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		redis_subscribe = Redis.new
-		redis_subscribe.subscribe(subscribe_channel) do |on|
-			on.message do |event, data|
-		        response.stream.write("event: #{event}\n")
-		        response.stream.write("data: #{data}\n\n")
-		  	end
-		end
-	rescue IOError
-		logger.info "Stream Closed"
-	ensure
-		redis_subscribe.quit
-		response.stream.close
-	end
-
 
 	def update_request_status_accept
 		@latest_accepted = Transaction.find(params[:tr_id])
@@ -68,8 +50,30 @@ include ActionController::Live
 		@latest_accepted.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
 		@latest_accepted.returned_date = 15.days.from_now
 
+		transaction_accepted_lender = Array.new
+		transaction_accepted_lender << "accepted_borrower"
+		transaction_accepted_lender << {			
+			:id => @latest_accepted.id,
+			:book_name => Book.find(Inventory.find(@latest_accepted.inventory_id).book_id).book_name,
+			:acceptance_date => @latest_accepted.acceptance_date.to_s(:long)
+		}
+
+		transaction_accepted_borrower = Array.new
+		transaction_accepted_borrower << "accepted_lender"
+		transaction_accepted_borrower << {
+			:id => @latest_accepted.id,
+			:book_name => Book.find(Inventory.find(@latest_accepted.inventory_id).book_id).book_name,
+			:acceptance_date => @latest_accepted.acceptance_date.to_s(:long)
+		}
+
 		if @latest_accepted.save
 			#MailWorker.perform_borrow_accept_async(@latest_accepted.borrower_id)
+			publish_channel_lender = "transaction_listener_" + @latest_accepted.lender_id.to_s
+			$redis.publish(publish_channel_lender, transaction_accepted_lender.to_json)
+
+			publish_channel_borrower = "transaction_listener_" + @latest_accepted.borrower_id.to_s
+			$redis.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
+
 		else
 			raise "error"
 		end
@@ -109,6 +113,23 @@ include ActionController::Live
 		end
 	ensure
 		$redis.quit
+	end
+
+	def transaction_status
+		response.headers["Content-Type"] = "text/event-stream"
+		subscribe_channel = "transaction_listener_" + current_user.id.to_s
+		redis_subscribe = Redis.new
+		redis_subscribe.subscribe(subscribe_channel) do |on|
+			on.message do |event, data|
+		        response.stream.write("event: #{event}\n")
+		        response.stream.write("data: #{data}\n\n")
+		  	end
+		end
+	rescue IOError
+		logger.info "Stream Closed"
+	ensure
+		redis_subscribe.quit
+		response.stream.close
 	end
 
 	private
