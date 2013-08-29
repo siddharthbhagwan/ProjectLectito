@@ -33,9 +33,8 @@ ProjectLectito::Application.routes.draw do
   post "transaction/update_request_status_cancel" => "transaction#update_request_status_cancel"
 
   ##SSE
-  get "transaction/latest_lent" => "transaction#latest_lent"   
-  get "transaction/latest_cancelled" => "transaction#latest_cancelled"
-  get "transaction/latest_rejected" => "transaction#latest_rejected"
+  get "transaction/transaction_status" => "transaction#transaction_status"   
+
 
   root :to => "inventory#search"
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}

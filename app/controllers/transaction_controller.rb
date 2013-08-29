@@ -20,6 +20,7 @@ include ActionController::Live
 		else
 			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
 			transaction_details = Array.new 
+			transaction_details << "create"
 			transaction_details << {
 			:id => @transaction.id,
 			:updated_at => @transaction.updated_at.to_i,
@@ -29,7 +30,7 @@ include ActionController::Live
 			:status => @transaction.status
 			}
 
-			publish_channel = "transaction_created_" + @transaction.lender_id.to_s
+			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
 
 			$redis.publish(publish_channel, transaction_details.to_json)
 		end	
@@ -42,9 +43,9 @@ include ActionController::Live
   		end
 	end
 
-	def latest_lent
+	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
-		subscribe_channel = "transaction_created_" + current_user.id.to_s
+		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		redis_subscribe = Redis.new
 		redis_subscribe.subscribe(subscribe_channel) do |on|
 			on.message do |event, data|
@@ -81,60 +82,33 @@ include ActionController::Live
 		@latest_rejected.rejection_date = DateTime.now.to_time
 		@latest_rejected.rejection_reason = params[:reject_reason]
 
+		transaction_rejected = Array.new
+		transaction_rejected << "rejected"
+		transaction_rejected << @latest_rejected.id.to_s
 
 		if @latest_rejected.save
-			publish_channel = "transaction_rejected_" + @latest_rejected.borrower_id.to_s
-			$redis.publish(publish_channel, @latest_rejected.id)
+			publish_channel = "transaction_listener_" + @latest_rejected.borrower_id.to_s
+			$redis.publish(publish_channel, transaction_rejected.to_json)
 		end
 	ensure
 		$redis.quit
 	end
-
-	def latest_rejected
-		response.headers["Content-Type"] = "text/event-stream"
-		subscribe_channel = "transaction_rejected_" + current_user.id.to_s
-		redis_subscribe = Redis.new
-		redis_subscribe.subscribe(subscribe_channel) do |on|
-			on.message do |event, data|
-		        response.stream.write("event: #{event}\n")
-		        response.stream.write("data: #{data}\n\n")
-		  	end
-		end
-	rescue IOError
-		logger.info "Stream Closed"
-	ensure
-		redis_subscribe.quit
-		response.stream.close
-	end	
 
 	def update_request_status_cancel
 		response.headers["Content-Type"] = 'text/javascript'
 		@cancel_transaction = Transaction.where(:id => params[:tr_id]).take
 		@cancel_transaction.status = "Cancelled"
+
+		cancelled_transaction = Array.new
+		cancelled_transaction << "cancelled"
+		cancelled_transaction << @cancel_transaction.id.to_s
 		
 		if @cancel_transaction.save
-			publish_channel = "transaction_cancelled_" + @cancel_transaction.lender_id.to_s
-			$redis.publish(publish_channel, @cancel_transaction.id)
+			publish_channel = "transaction_listener_" + @cancel_transaction.lender_id.to_s
+			$redis.publish(publish_channel, cancelled_transaction.to_json)
 		end
 	ensure
 		$redis.quit
-	end
-
-	def latest_cancelled
-		response.headers["Content-Type"] = "text/event-stream"
-		subscribe_channel = "transaction_cancelled_" + current_user.id.to_s
-		redis_subscribe = Redis.new
-		redis_subscribe.subscribe(subscribe_channel) do |on|
-			on.message do |event, data|
-		        response.stream.write("event: #{event}\n")
-		        response.stream.write("data: #{data}\n\n")
-		  	end
-		end
-	rescue IOError
-		logger.info "Stream Closed"
-	ensure
-		redis_subscribe.quit
-		response.stream.close
 	end
 
 	private

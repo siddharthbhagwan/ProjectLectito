@@ -243,41 +243,28 @@ $(document).ready ->
   #TODO Remove bracket element so its no more an element
     jQuery ->
       id = $(".testxyz").attr("id")
-      source = new EventSource('transaction/latest_lent')
-      source.addEventListener 'transaction_created_' + id, (e) ->
+      source = new EventSource('transaction/transaction_status')
+      source.addEventListener 'transaction_listener_' + id, (e) ->
         pData = $.parseJSON(e.data)
-        tr_id = "<tr id= 'lend_'" + pData[0].ID + "' data-time='" + pData[0].updated_at  + "'>"
-        td_book_name = "<td>" + pData[0].book_name + "</td>"
-        td_requested_from = "<td>" + pData[0].requested_from + "</td>"
-        td_requested_date = "<td>" + pData[0].requested_date + "</td>"
-        td_status = "<td>" + pData[0].status + "</td>"
-        td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=" + pData[0].id + "/></td>"
-        td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[0].id + "/></td></tr>"  
-        table_row_data = tr_id + td_book_name + td_requested_from + td_requested_date + td_status + td_accept + td_reject
-        $("#lend_requests_table > tbody:last").append(table_row_data);
-        if (!$("#lend_requests_div").is(":visible"))
-          $("#lend_requests_div").show(500)
+        if pData[0] == "create"
+          tr_id = "<tr id= 'lend_'" + pData[1].id + "' data-time='" + pData[1].updated_at  + "'>"
+          td_book_name = "<td>" + pData[1].book_name + "</td>"
+          td_requested_from = "<td>" + pData[1].requested_from + "</td>"
+          td_requested_date = "<td>" + pData[1].requested_date + "</td>"
+          td_status = "<td>" + pData[1].status + "</td>"
+          td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=" + pData[1].id + "/></td>"
+          td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "/></td></tr>"  
+          table_row_data = tr_id + td_book_name + td_requested_from + td_requested_date + td_status + td_accept + td_reject
+          $("#lend_requests_table > tbody:last").append(table_row_data);
+          if (!$("#lend_requests_div").is(":visible"))
+            $("#lend_requests_div").show(500)
 
-#--------------------------------------------------------------------------------------------------------------------
-  #SSE Listener for cancelling a request
-    jQuery ->
-      id = $(".testxyz").attr("id")
-      source = new EventSource('transaction/latest_cancelled')
-      source.addEventListener 'transaction_cancelled_' + id, (e) ->
-        if $("#lend_requests_table tr").length == 2
-          $("#lend_requests_div").hide()
-          $("#lend_" + e.data).remove()
-        else
-          $("#lend_" + e.data).remove() 
+        else if pData[0] == "cancelled"
+          $("#lend_" + pData[1]).remove()
+          empty_table_checks()
 
-
-#--------------------------------------------------------------------------------------------------------------------
-  #SSE Listener for cancelling a request
-    jQuery ->
-      id = $(".testxyz").attr("id")
-      source = new EventSource('transaction/latest_rejected')
-      source.addEventListener 'transaction_rejected_' + id, (e) ->
-        $("#borrow_" + e.data).remove()
-        empty_table_checks()
+        else if pData[0] == "rejected"
+          $("#borrow_" + pData[1]).remove()
+          empty_table_checks()    
 
            
