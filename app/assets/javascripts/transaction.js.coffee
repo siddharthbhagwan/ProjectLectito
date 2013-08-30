@@ -282,12 +282,15 @@ $(document).ready ->
           if (!$("#current_books_div").is(":visible"))
             $("#current_books_div").show(500)
 
+        else if pData[0] == "rejected_lender"
+          $("#lend_" + pData[1]).remove()
+          empty_table_checks()      
+
         else if pData[0] == "cancelled"
           $("#lend_" + pData[1]).remove()
           empty_table_checks()
 
-        else if pData[0] == "rejected"
+        else if pData[0] == "rejected_borrower"
           $("#borrow_" + pData[1]).remove()
-          empty_table_checks()    
-
+          empty_table_checks()
            

@@ -3,6 +3,8 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
+	redis_subscribe = Redis.new
+
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new
@@ -44,39 +46,78 @@ include ActionController::Live
 
 
 	def update_request_status_accept
-		@latest_accepted = Transaction.find(params[:tr_id])
-		@latest_accepted.status = "Accepted"
-		@latest_accepted.acceptance_date = DateTime.now.to_time
-		@latest_accepted.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
-		@latest_accepted.returned_date = 15.days.from_now
+		@accept_request = Transaction.find(params[:tr_id])
+		@accept_request.status = "Accepted"
+		@accept_request.acceptance_date = DateTime.now.to_time
+		@accept_request.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
+		@accept_request.returned_date = 15.days.from_now
+
+		lender_id_s = @accept_request.lender_id.to_s
+		borrower_id_s = @accept_request.borrower_id.to_s
+
+		@remaining_requests = Transaction.where(:inventory_id => @accept_request.inventory_id, :lender_id => @accept_request.lender_id, :status => "Pending")
+
+
+		if !@remaining_requests.nil?
+			@remaining_requests.each do |reject_each|
+				if reject_each.id != @accept_request.id
+					reject_each.rejection_date = DateTime.now.to_time
+					reject_each.rejection_reason = "Book Lent Out"
+					reject_each.status = "Rejected"
+
+					reject_update_lender = Array.new
+					reject_update_lender << "rejected_lender"
+					reject_update_lender << reject_each.id
+
+					reject_update_borrower = Array.new
+					reject_update_borrower << "rejected_borrower"
+					reject_update_borrower << reject_each.id
+
+					if reject_each.save
+						logger.debug "Publisher to remove " + reject_each.id.to_s + " from " + reject_each.lender_id.to_s 
+						publish_channel_remaining_lender = "transaction_listener_" + reject_each.lender_id.to_s
+						$redis.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
+
+						logger.debug "Publisher to remove " + reject_each.id.to_s + " from " + reject_each.borrower_id.to_s
+						publish_channel_remaining_borrower = "transaction_listener_" + reject_each.borrower_id.to_s
+						$redis.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
+					end
+				end
+			end
+		end
+
 
 		transaction_accepted_lender = Array.new
 		transaction_accepted_lender << "accepted_borrower"
 		transaction_accepted_lender << {			
-			:id => @latest_accepted.id,
-			:book_name => Book.find(Inventory.find(@latest_accepted.inventory_id).book_id).book_name,
-			:acceptance_date => @latest_accepted.acceptance_date.to_s(:long)
+			:id => @accept_request.id,
+			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
+			:acceptance_date => @accept_request.acceptance_date.to_s(:long)
 		}
 
 		transaction_accepted_borrower = Array.new
 		transaction_accepted_borrower << "accepted_lender"
 		transaction_accepted_borrower << {
-			:id => @latest_accepted.id,
-			:book_name => Book.find(Inventory.find(@latest_accepted.inventory_id).book_id).book_name,
-			:acceptance_date => @latest_accepted.acceptance_date.to_s(:long)
+			:id => @accept_request.id,
+			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
+			:acceptance_date => @accept_request.acceptance_date.to_s(:long)
 		}
 
-		if @latest_accepted.save
-			#MailWorker.perform_borrow_accept_async(@latest_accepted.borrower_id)
-			publish_channel_lender = "transaction_listener_" + @latest_accepted.lender_id.to_s
+		if @accept_request.save
+			#MailWorker.perform_borrow_accept_async(@accept_request.borrower_id)
+			logger.debug "Publisher to remove "+  @accept_request.id.to_s + " from " + lender_id_s 
+			publish_channel_lender = "transaction_listener_" + lender_id_s
 			$redis.publish(publish_channel_lender, transaction_accepted_lender.to_json)
 
-			publish_channel_borrower = "transaction_listener_" + @latest_accepted.borrower_id.to_s
+			logger.debug "Publisher to remove " + @accept_request.id.to_s + " from " + borrower_id_s 
+			publish_channel_borrower = "transaction_listener_" + borrower_id_s
 			$redis.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
 
 		else
 			raise "error"
 		end
+	ensure
+		$redis.quit
 	end
 
 	def update_request_status_reject
@@ -118,7 +159,6 @@ include ActionController::Live
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		redis_subscribe = Redis.new
 		redis_subscribe.subscribe(subscribe_channel) do |on|
 			on.message do |event, data|
 		        response.stream.write("event: #{event}\n")

@@ -24,6 +24,7 @@ gem 'sidekiq'
 gem 'jquery-ui-rails'
 gem 'unicorn-rails'
 gem 'redis'
+gem 'rspec'
 
 
 # add these gems to help with the transition:
