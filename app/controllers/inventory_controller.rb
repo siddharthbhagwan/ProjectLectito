@@ -142,7 +142,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_author
-		@authors_books = Book.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%").pluck(:author).uniq
+		@authors_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:author).uniq
 
 		if @authors_books.empty?
 			@authors_books = ["No Matching Results Found"]
@@ -155,7 +155,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_book_name
-		@book_name_books = Book.where("author like ? AND book_name like ?", "%#{params[:author]}%", "%#{params[:book_name]}%").pluck(:book_name)
+		@book_name_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:book_name)
 		
 		if @book_name_books.empty?
 			@book_name_books = ["No Matching Results Found"]
@@ -168,7 +168,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_book_details
-		@books = Book.where("book_name like ?", "%#{params[:book_name]}%")
+		@books = Book.where("lower(book_name) like ?", "%#{params[:book_name].downcase}%")
 		
 		if @books.empty?
 			@books = ["No Matching Results Found"]
