@@ -21,7 +21,7 @@
 
 <%= text_field_tag :rental_price, nil, :placeholder => "Rental Price", :required => :true %></br>
 
-<%= select_tag :current_status, options_for_select(['Available','Unavailable'], 'Available'), :placeholder => "Current Status" %>
+<%= select_tag :status, options_for_select(['Available','Unavailable'], 'Available'), :placeholder => "Current Status" %>
 </br></br>
 
 <%= hidden_field_tag :book_id %>

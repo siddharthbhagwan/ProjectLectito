@@ -7,6 +7,7 @@
 			<th>Received Date</th>
 			<th>Borrow Durtaion</th>
 			<th>Return Date</th> 
+			<th>Return</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,8 +17,9 @@
 					<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
 					<td><%= c.acceptance_date.to_s(:long) %></td>
 					<td><%= c.received_date.to_s(:long) unless c.received_date.nil? %></td>
-					<td></td>
-					<td></td>
+					<td>Pending</td>
+					<td>Pending</td>
+					<td><input class="btn btn-small" type="button" value="Return" id="return" data-trid=<%= c.id %> /></td>
 				</tr>
 			<% end %>
 		<% end %>	

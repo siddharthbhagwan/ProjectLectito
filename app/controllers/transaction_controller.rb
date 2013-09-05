@@ -46,11 +46,11 @@ include ActionController::Live
 
 
 	def update_request_status_accept
-		@accept_request = Transaction.find(params[:tr_id])
+		@accept_request = Transaction.where(:id => params[:tr_id]).take	
 		@accept_request.status = "Accepted"
 		@accept_request.acceptance_date = DateTime.now.to_time
 		@accept_request.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
-		@accept_request.returned_date = 15.days.from_now
+		#@accept_request.returned_date = 15.days.from_now
 
 		lender_id_s = @accept_request.lender_id.to_s
 		borrower_id_s = @accept_request.borrower_id.to_s
@@ -74,11 +74,10 @@ include ActionController::Live
 					reject_update_borrower << reject_each.id
 
 					if reject_each.save
-						logger.debug "Publisher to remove " + reject_each.id.to_s + " from " + reject_each.lender_id.to_s 
 						publish_channel_remaining_lender = "transaction_listener_" + reject_each.lender_id.to_s
 						$redis.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
 
-						logger.debug "Publisher to remove " + reject_each.id.to_s + " from " + reject_each.borrower_id.to_s
+
 						publish_channel_remaining_borrower = "transaction_listener_" + reject_each.borrower_id.to_s
 						$redis.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
 					end
@@ -105,11 +104,9 @@ include ActionController::Live
 
 		if @accept_request.save
 			#MailWorker.perform_borrow_accept_async(@accept_request.borrower_id)
-			logger.debug "Publisher to remove "+  @accept_request.id.to_s + " from " + lender_id_s 
 			publish_channel_lender = "transaction_listener_" + lender_id_s
 			$redis.publish(publish_channel_lender, transaction_accepted_lender.to_json)
 
-			logger.debug "Publisher to remove " + @accept_request.id.to_s + " from " + borrower_id_s 
 			publish_channel_borrower = "transaction_listener_" + borrower_id_s
 			$redis.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
 
@@ -156,8 +153,48 @@ include ActionController::Live
 		$redis.quit
 	end
 
+	def update_request_status_return
+		@return_transaction = Transaction.where(:id => params[:tr_id]).take
+		@return_transaction.status = "Returned"
+		@return_transaction.returned_date = DateTime.now.to_time
+		@return_transaction.return_pickup_date = params[:return_date] + ", " + params[:return_time]
+		
+		returned_transaction = Array.new
+		returned_transaction << "returned"
+		returned_transaction << {
+			:id => @return_transaction.id,
+			:returned_date => @return_transaction.returned_date.to_s(:long)
+		}
+
+		if @return_transaction.save
+			publish_channel = "transaction_listener_" + @return_transaction.lender_id.to_s
+			$redis.publish(publish_channel, returned_transaction.to_json)
+		else
+			raise 'error'
+		end
+
+	ensure
+		$redis.quit
+
+	end
+
+	def update_request_status_receive
+		@return_transaction = Transaction.where(:id => params[:tr_id]).take
+		@return_transaction.return_received_date = DateTime.now.to_time
+		@return_transaction.lender_feedback = params[:lender_feedback] 
+		@return_transaction.lender_comments = params[:lender_comments]
+		@return_transaction.status = "Complete"
+
+		@return_transaction.save
+
+		@returned_inventory = Inventory.where(:id => @return_transaction.inventory_id).take
+		@returned_inventory.status = "Available"
+		@returned_inventory.save
+	end
+
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
+		redis_subscribe = Redis.new
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		redis_subscribe.subscribe(subscribe_channel) do |on|
 			on.message do |event, data|

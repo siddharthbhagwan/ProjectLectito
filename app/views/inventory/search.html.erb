@@ -41,10 +41,30 @@
   <p id="accept_info"></p>
   <p id="user_dispatch_date">Please specify a good time to pick up the book for delivery </p>
   <div id="accept_datepicker">
-	<%= text_field_tag :dispatch_date, Date.tomorrow, :placeholder => "Select Date" %></br>
+	  <%= text_field_tag :dispatch_date, Date.tomorrow, :placeholder => "Select Date" %></br>
   </div>
   <input type="radio" name="dispatchTime" value="Before 1 PM" checked="true"> Before 1 PM <br>
   <input type="radio" name="dispatchTime" value="After 1 PM">  After 1 PM
+</div>
+
+<div id="return_request_confirm" title="Return Request">
+  <p id="return_info"></p>
+  <p id="return_dispatch_date">Please specify a good time to pick up the book for delivery </p>
+  <div id="return_info_datepicker">
+    <%= text_field_tag :return_pickup_date, Date.tomorrow, :placeholder => "Select Date" %></br>
+  </div>
+  <input type="radio" name="return_time" value="Before 1 PM" checked="true"> Before 1 PM <br>
+  <input type="radio" name="return_time" value="After 1 PM">  After 1 PM
+</div>
+
+<div id="received_book_confirm" title="Return Request">
+  <p>Please rate your experience to complete this transaction </p>
+  <input type="radio" name="lender_feedback" value="good" checked="true"> Good <br>
+  <input type="radio" name="lender_feedback" value="neutral">  Neutral <br>
+  <input type="radio" name="lender_feedback" value="bad">  Bad <br>
+  <div id="lender_comments_div">
+    <%= text_field_tag :lender_comments, nil, :placeholder => "Comments" %></br>
+  </div>
 </div>
 
 <div id="error_message" title="Error">

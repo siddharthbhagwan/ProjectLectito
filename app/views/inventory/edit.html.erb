@@ -22,7 +22,7 @@
 
 <%= text_field_tag :rental_price, @inventory.rental_price , :placeholder => "Rental Price", :required => :true %></br>
 
-<%= select_tag :current_status, options_for_select(['Available','Unavailable'], @inventory.current_status), :placeholder => "Current Status" %>
+<%= select_tag :status, options_for_select(['Available','Unavailable'], @inventory.status), :placeholder => "Current Status" %>
 </br></br>
 
 </div>

@@ -16,7 +16,7 @@ class InventoryController < ApplicationController
 		@inventory.book_id = params[:book_id]
 		@inventory.available_in_city = params[:inventory][:available_in_city]
 		@inventory.rental_price = params[:rental_price]
-		@inventory.current_status = params[:current_status]
+		@inventory.status = params[:current_status]
  		if @inventory.save
 			redirect_to inventory_index_path
 			flash[:notice] = "The book has been added to your inventory"
@@ -35,7 +35,7 @@ class InventoryController < ApplicationController
 		@inventory = Inventory.where(:id => params[:id]).take
    		@inventory.update_attributes(params[:inventory])
    		@inventory.update_attributes(:rental_price => params[:rental_price])
-   		@inventory.update_attributes(:current_status => params[:current_status])
+   		@inventory.update_attributes(:status => params[:current_status])
    		if @inventory.save
    			flash[:notice] = "The inventory has been updated"
     		redirect_to inventory_index_path
@@ -61,7 +61,7 @@ class InventoryController < ApplicationController
 		@book_array = []
 
 		@books.each do |book|
-			@users_with_book = Inventory.where("book_id = ? AND user_id != ?", book, current_user.id).take
+			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ?", book, current_user.id, "Available").take
 
 			if !@users_with_book.nil?
 
@@ -89,7 +89,7 @@ class InventoryController < ApplicationController
 
 	def search_books_city
 		# Find all users apart from self, who have the book
-		@users_with_book = Inventory.where("book_id = ? AND user_id != ? ", params[:book_id], current_user.id)
+		@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? ", params[:book_id], current_user.id, "Available")
 
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
@@ -136,8 +136,9 @@ class InventoryController < ApplicationController
 	def search
 		@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
 		@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
-		@accept = Transaction.where(:lender_id => current_user.id, :status => "Accepted")
+		@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Returned" )
 		@current = Transaction.where(:borrower_id => current_user.id, :status => "Accepted")
+		@received = Transaction.where(:lender_id => current_user.id, :status => "Returned")
 	end
 
 	def autocomplete_author

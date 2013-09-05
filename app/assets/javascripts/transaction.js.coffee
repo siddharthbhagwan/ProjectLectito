@@ -16,8 +16,7 @@ $(document).ready ->
         $("#accepted_requests_div").hide()
 
       if $("#current_books_table tr").length == 1
-        $("#current_books_div").hide()   
-
+        $("#current_books_div").hide()
 
     jQuery ->
       empty_table_checks()
@@ -135,7 +134,7 @@ $(document).ready ->
             tr_id_s = $("#accept_request_confirm").data("trids")
             $.ajax
               url: "/transaction/update_request_status_accept.js"
-              type: "get"
+              type: "post"
               context: "this"
               dataType: "script"
               data:
@@ -263,7 +262,10 @@ $(document).ready ->
           tr_id = "<tr id='accepted_" + pData[1].id + "'>"
           td_book_name = "<td>" + pData[1].book_name + "</td>"
           td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-          table_row_data = tr_id + td_book_name + td_acceptance_date 
+          td_returned_date = "<td>Pending</td>"
+          td_received_date = "<td>Pending</td>"
+          td_status = "<td><input class='btn btn-small' type='button' value='Received' disabled='true' id='received' data-trid=" + pData[1].id + "></td></tr>"
+          table_row_data = tr_id + td_book_name + td_acceptance_date + td_returned_date + td_received_date + td_status
           $("#accepted_requests_table > tbody:last").append(table_row_data)
           if (!$("#accepted_requests_div").is(":visible"))
             $("#accepted_requests_div").show(500)
@@ -274,13 +276,19 @@ $(document).ready ->
           tr_id = "<tr id='accepted_" + pData[1].id + "'>"
           td_book_name = "<td>" + pData[1].book_name + "</td>"
           td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-          td_received_date = "<td></td>"
-          td_borrowed_duration = "<td></td>"
-          td_return_date = "<td></td>"
-          table_row_data = tr_id + td_book_name + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date         
+          td_received_date = "<td>Pending</td>"
+          td_borrowed_duration = "<td>Pending</td>"
+          td_return_date = "<td>Pending</td>"
+          td_return = "<td><input class='btn btn-small' type='button' value='Return' id='return' data-trid='" +  pData[1].id + "'/></td></tr>"
+          table_row_data = tr_id + td_book_name + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_return        
           $("#current_books_table > tbody:last").append(table_row_data)
           if (!$("#current_books_div").is(":visible"))
             $("#current_books_div").show(500)
+
+        else if pData[0] == "returned"
+          alert "called"
+          $("#accept_" + pData[1].id + " td:last #received").removeAttr("disabled") 
+          $("#accept_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
 
         else if pData[0] == "rejected_lender"
           $("#lend_" + pData[1]).remove()
@@ -294,3 +302,104 @@ $(document).ready ->
           $("#borrow_" + pData[1]).remove()
           empty_table_checks()
            
+#--------------------------------------------------------------------------------------------------------------------
+  # Initiate Return from borrowers side
+  $(document).on "click", "#return", ->
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#current_" + tr_id
+    $("#return_request_confirm").data "trid", tr_id
+    $("#return_request_confirm").data "trids", tr_id_s
+    # arr = []
+    # arr = $(tr_id_s).find("td").map(->
+    #   @innerHTML
+    # ).get()
+    # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
+    # $("#accept_info").html(html_data)
+    $("#return_date").datepicker
+      showOn: "button"
+      buttonImageOnly: true
+    $("#return_request_confirm").dialog "open"
+    $("#return_request_confirm").data "return_date", $("#dispatch_date").val()
+    $("#return_request_confirm").data "return_time", $("input[type='radio'][name='return_time']:checked").val()
+
+
+  jQuery ->
+    $("#return_request_confirm").dialog
+      autoOpen: false
+      modal: true
+      buttons:
+        "Ok": ->
+          $(this).dialog "close"
+          tr_id = $("#return_request_confirm").data("trid")
+          tr_id_s = $("#return_request_confirm").data("trids")
+          $.ajax
+            url: "/transaction/update_request_status_return.js"
+            type: "post"
+            context: "this"
+            dataType: "script"
+            data:
+              tr_id: tr_id
+              return_date: $("#return_request_confirm").data "return_date"
+              return_time: $("#return_request_confirm").data "return_time"
+
+            success: (msg) ->
+
+            complete: (msg) ->
+              $(tr_id_s).fadeOut(500).remove()
+              if $("#current_books_table tr").length == 1
+                $("#current_books_div").hide()
+            error: ->
+              setTimeout $.unblockUI
+              $("#error_message").dialog "open"       
+
+        Cancel: ->
+          $(this).dialog "close"
+
+#--------------------------------------------------------------------------------------------------------------------
+  # Initiate Compelte transaction from lender side
+
+  $(document).on "click", "#received", ->
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#accept_" + tr_id
+    $("#received_book_confirm").data "trid", tr_id
+    $("#received_book_confirm").data "trids", tr_id_s
+    # arr = []
+    # arr = $(tr_id_s).find("td").map(->
+    #   @innerHTML
+    # ).get()
+    # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
+    # $("#accept_info").html(html_data)
+    $("#received_book_confirm").dialog "open"
+    
+
+  jQuery ->
+    $("#received_book_confirm").dialog
+      autoOpen: false
+      modal: true
+      buttons:
+        "Ok": ->
+          $(this).dialog "close"
+          tr_id = $("#received_book_confirm").data("trid")
+          tr_id_s = $("#received_book_confirm").data("trids")
+          $.ajax
+            url: "/transaction/update_request_status_receive.js"
+            type: "post"
+            context: "this"
+            dataType: "script"
+            data:
+              tr_id: tr_id
+              lender_feedback: $("input[type='radio'][name='lender_feedback']:checked").val()
+              lender_comments: $("#lender_comments").val()
+
+            success: (msg) ->
+
+            complete: (msg) ->
+              $(tr_id_s).remove()
+              if $("#accepted_requests_table tr").length == 1
+                $("#accepted_requests_div").hide()
+            error: ->
+              setTimeout $.unblockUI
+              $("#error_message").dialog "open"       
+
+        Cancel: ->
+          $(this).dialog "close"

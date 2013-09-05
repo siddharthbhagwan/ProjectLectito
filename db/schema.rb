@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130827140151) do
+ActiveRecord::Schema.define(version: 20130905101931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20130827140151) do
     t.integer  "book_id"
     t.float    "rental_price"
     t.integer  "available_in_city"
-    t.string   "current_status"
+    t.string   "status"
     t.float    "commission"
     t.integer  "no_of_borrows"
     t.datetime "upload_date"
@@ -98,13 +98,17 @@ ActiveRecord::Schema.define(version: 20130827140151) do
     t.integer  "borrow_duration"
     t.integer  "renewal_count"
     t.datetime "returned_date"
-    t.datetime "return_pickup_date"
+    t.string   "return_pickup_date"
     t.datetime "return_received_date"
     t.date     "book_condition"
     t.float    "total_commission"
     t.datetime "rejection_date"
     t.string   "rejection_reason"
     t.string   "accept_pickup_date"
+    t.string   "lender_feedback"
+    t.string   "lender_comments"
+    t.string   "borrower_feedback"
+    t.string   "borrower_comments"
   end
 
   create_table "users", force: true do |t|

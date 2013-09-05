@@ -3,7 +3,10 @@
 	<thead>
 		<tr>
 			<th>Book Name</th>
-			<th>Acceptance Date</th>    
+			<th>Acceptance Date</th>
+			<th>Returned Date</th>  
+			<th>Received Date</th>
+			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -12,6 +15,21 @@
 				<tr id='accept_<%= a.id %>' >
 					<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
 					<td><%= a.acceptance_date.to_s(:long) %></td>
+					<% if a.returned_date.nil? %>
+						<td>Pending</td>
+					<% else %>
+						<td><%= a.returned_date.to_s(:long) %></td>
+					<% end %>
+					<% if a.return_received_date.nil? %>
+						<td>Pending</td>
+					<% else %>
+						<td><%= a.return_received_date.to_s(:long) %></td>
+					<% end %>
+					<% if a.returned_date.nil? %>
+						<td><input class="btn btn-small" type="button" value="Received" id="received" disabled='true' data-trid=<%= a.id %> /></td>
+					<% else %>
+						<td><input class="btn btn-small" type="button" value="Received" id="received" data-trid=<%= a.id %> /></td>
+					<% end %>
 				</tr>
 			<% end %>
 		<% end %>	
