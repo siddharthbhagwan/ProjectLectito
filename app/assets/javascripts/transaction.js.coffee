@@ -286,9 +286,8 @@ $(document).ready ->
             $("#current_books_div").show(500)
 
         else if pData[0] == "returned"
-          alert "called"
-          $("#accept_" + pData[1].id + " td:last #received").removeAttr("disabled") 
-          $("#accept_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
+          $("#accepted_" + pData[1].id + " td:last #received").removeAttr("disabled") 
+          $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
 
         else if pData[0] == "rejected_lender"
           $("#lend_" + pData[1]).remove()
@@ -306,7 +305,7 @@ $(document).ready ->
   # Initiate Return from borrowers side
   $(document).on "click", "#return", ->
     tr_id = $(this).attr("data-trid")
-    tr_id_s = "#current_" + tr_id
+    tr_id_s = "#accepted_" + tr_id
     $("#return_request_confirm").data "trid", tr_id
     $("#return_request_confirm").data "trids", tr_id_s
     # arr = []
@@ -345,7 +344,7 @@ $(document).ready ->
             success: (msg) ->
 
             complete: (msg) ->
-              $(tr_id_s).fadeOut(500).remove()
+              $(tr_id_s).remove()
               if $("#current_books_table tr").length == 1
                 $("#current_books_div").hide()
             error: ->
@@ -360,7 +359,7 @@ $(document).ready ->
 
   $(document).on "click", "#received", ->
     tr_id = $(this).attr("data-trid")
-    tr_id_s = "#accept_" + tr_id
+    tr_id_s = "#accepted_" + tr_id
     $("#received_book_confirm").data "trid", tr_id
     $("#received_book_confirm").data "trids", tr_id_s
     # arr = []
@@ -403,3 +402,8 @@ $(document).ready ->
 
         Cancel: ->
           $(this).dialog "close"
+
+#--------------------------------------------------------------------------------------------------------------------
+# jQuery ->
+#   window.onbeforeunload = ->
+#    "Are you sure you want to navigate away?"      

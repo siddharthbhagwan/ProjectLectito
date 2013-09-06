@@ -142,7 +142,11 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_author
-		@authors_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:author).uniq
+		if params[:book_name].nil?
+			@authors_books = Book.where("lower(author) like ? ", "%#{params[:author].downcase}%").pluck(:author).uniq
+		else
+			@authors_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name]}%").pluck(:author).uniq
+		end
 
 		if @authors_books.empty?
 			@authors_books = ["No Matching Results Found"]
