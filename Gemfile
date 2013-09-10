@@ -29,13 +29,11 @@ gem 'redis'
 gem 'rspec'
 gem 'socket.io-rails'
 
-
 # add these gems to help with the transition:
 gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
-
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -46,7 +44,6 @@ gem 'actionpack-action_caching'
   gem 'therubyracer', platforms: :ruby
   gem 'turbolinks'
 
-
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -54,7 +51,7 @@ group :development do
   gem 'debugger'
 end
 
-
+gem 'rails_12factor', group: :production
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
