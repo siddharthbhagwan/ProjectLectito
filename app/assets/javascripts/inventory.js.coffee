@@ -25,7 +25,7 @@ jQuery ->
         success: (msg) ->
           $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
           $("#search_text").fadeIn(500)
-        error: ->
+        error: (jqXHR, textStatus, errorThrown) ->
           $("#error_message").dialog "open"  
           
 
@@ -69,7 +69,7 @@ jQuery ->
 
         success: (msg) ->
          
-        error: ->
+        error: (jqXHR, textStatus, errorThrown) ->
           $("#error_message").dialog "open"
 
 

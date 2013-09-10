@@ -87,7 +87,7 @@ $(document).ready ->
 
                 success: (msg) ->
             
-                complete: ->
+                complete: (jqXHR, textStatus) ->
                   $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
                   setTimeout $.unblockUI
                   $("#city_" + city_id).hide()
@@ -144,10 +144,10 @@ $(document).ready ->
 
               success: (msg) ->
 
-              complete: (msg) ->
+              complete: (jqXHR, textStatus) ->
                 $(tr_id_s).fadeOut(500).remove()
                 empty_table_checks()
-              error: ->
+              error: (jqXHR, textStatus, errorThrown) ->
                 setTimeout $.unblockUI
                 $("#error_message").dialog "open"       
 
@@ -188,10 +188,10 @@ $(document).ready ->
 
               success: (msg) ->
 
-              complete: (msg) ->
+              complete: (jqXHR, textStatus) ->
                 $(tr_id_s).fadeOut(500).remove()
                 empty_table_checks()
-              error: ->
+              error: (jqXHR, textStatus, errorThrown) ->
                 setTimeout $.unblockUI
                 $("#error_message").dialog "open"         
 
@@ -227,10 +227,10 @@ $(document).ready ->
 
               success: (msg) ->
 
-              complete: (msg) ->
+              complete: (jqXHR, textStatus) ->
                 $("#borrow_" + tr_id).fadeOut(500).remove()
                 empty_table_checks()
-              error: ->
+              error: (jqXHR, textStatus, errorThrown) ->
                 setTimeout $.unblockUI
                 $("#error_message").dialog "open"                        
 
@@ -241,65 +241,79 @@ $(document).ready ->
   #SSE Listener for creating a transaction
   #TODO Remove bracket element so its no more an element
     jQuery ->
-      id = $(".testxyz").attr("id")
-      source = new EventSource('transaction/transaction_status')
-      source.addEventListener 'transaction_listener_' + id, (e) ->
-        pData = $.parseJSON(e.data)
-        if pData[0] == "create"
-          tr_id = "<tr id='lend_" + pData[1].id + "'>"
-          td_book_name = "<td>" + pData[1].book_name + "</td>"
-          td_requested_from = "<td>" + pData[1].requested_from + "</td>"
-          td_requested_date = "<td>" + pData[1].requested_date + "</td>"
-          td_status = "<td>" + pData[1].status + "</td>"
-          td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=" + pData[1].id + "></td>"
-          td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
-          table_row_data = tr_id + td_book_name + td_requested_from + td_requested_date + td_status + td_accept + td_reject
-          $("#lend_requests_table > tbody:last").append(table_row_data);
-          if (!$("#lend_requests_div").is(":visible"))
-            $("#lend_requests_div").show(500)
+      $.ajax
+        url: "/transaction/user_id"
+        type: "get"
+        context: "this"
+        dataType: "json"
 
-        else if pData[0] == "accepted_borrower"
-          tr_id = "<tr id='accepted_" + pData[1].id + "'>"
-          td_book_name = "<td>" + pData[1].book_name + "</td>"
-          td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-          td_returned_date = "<td>Pending</td>"
-          td_received_date = "<td>Pending</td>"
-          td_status = "<td><input class='btn btn-small' type='button' value='Received' disabled='true' id='received' data-trid=" + pData[1].id + "></td></tr>"
-          table_row_data = tr_id + td_book_name + td_acceptance_date + td_returned_date + td_received_date + td_status
-          $("#accepted_requests_table > tbody:last").append(table_row_data)
-          if (!$("#accepted_requests_div").is(":visible"))
-            $("#accepted_requests_div").show(500)
-        
-        else if pData[0] == "accepted_lender"
-          $("#borrow_" + pData[1].id).remove()
-          empty_table_checks()
-          tr_id = "<tr id='accepted_" + pData[1].id + "'>"
-          td_book_name = "<td>" + pData[1].book_name + "</td>"
-          td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-          td_received_date = "<td>Pending</td>"
-          td_borrowed_duration = "<td>Pending</td>"
-          td_return_date = "<td>Pending</td>"
-          td_return = "<td><input class='btn btn-small' type='button' value='Return' id='return' data-trid='" +  pData[1].id + "'/></td></tr>"
-          table_row_data = tr_id + td_book_name + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_return        
-          $("#current_books_table > tbody:last").append(table_row_data)
-          if (!$("#current_books_div").is(":visible"))
-            $("#current_books_div").show(500)
+        success: (msg) ->
+            id = msg
+            source = new EventSource('transaction/transaction_status')
+            source.addEventListener 'transaction_listener_' + id, (e) ->
+              pData = $.parseJSON(e.data)
+              if pData[0] == "create"
+                tr_id = "<tr id='lend_" + pData[1].id + "'>"
+                td_book_name = "<td>" + pData[1].book_name + "</td>"
+                td_requested_from = "<td>" + pData[1].requested_from + "</td>"
+                td_requested_date = "<td>" + pData[1].requested_date + "</td>"
+                td_status = "<td>" + pData[1].status + "</td>"
+                td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=" + pData[1].id + "></td>"
+                td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
+                table_row_data = tr_id + td_book_name + td_requested_from + td_requested_date + td_status + td_accept + td_reject
+                $("#lend_requests_table > tbody:last").append(table_row_data);
+                if (!$("#lend_requests_div").is(":visible"))
+                  $("#lend_requests_div").show(500)
 
-        else if pData[0] == "returned"
-          $("#accepted_" + pData[1].id + " td:last #received").removeAttr("disabled") 
-          $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
+              else if pData[0] == "accepted_borrower"
+                tr_id = "<tr id='accepted_" + pData[1].id + "'>"
+                td_book_name = "<td>" + pData[1].book_name + "</td>"
+                td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
+                td_returned_date = "<td>Pending</td>"
+                td_received_date = "<td>Pending</td>"
+                td_status = "<td><input class='btn btn-small' type='button' value='Received' disabled='true' id='received' data-trid=" + pData[1].id + "></td></tr>"
+                table_row_data = tr_id + td_book_name + td_acceptance_date + td_returned_date + td_received_date + td_status
+                $("#accepted_requests_table > tbody:last").append(table_row_data)
+                if (!$("#accepted_requests_div").is(":visible"))
+                  $("#accepted_requests_div").show(500)
+              
+              else if pData[0] == "accepted_lender"
+                $("#borrow_" + pData[1].id).remove()
+                empty_table_checks()
+                tr_id = "<tr id='accepted_" + pData[1].id + "'>"
+                td_book_name = "<td>" + pData[1].book_name + "</td>"
+                td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
+                td_received_date = "<td>Pending</td>"
+                td_borrowed_duration = "<td>Pending</td>"
+                td_return_date = "<td>Pending</td>"
+                td_return = "<td><input class='btn btn-small' type='button' value='Return' id='return' data-trid='" +  pData[1].id + "'/></td></tr>"
+                table_row_data = tr_id + td_book_name + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_return        
+                $("#current_books_table > tbody:last").append(table_row_data)
+                if (!$("#current_books_div").is(":visible"))
+                  $("#current_books_div").show(500)
 
-        else if pData[0] == "rejected_lender"
-          $("#lend_" + pData[1].id).remove()
-          empty_table_checks()      
+              else if pData[0] == "returned"
+                $("#accepted_" + pData[1].id + " td:last #received").removeAttr("disabled") 
+                $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
 
-        else if pData[0] == "cancelled"
-          $("#lend_" + pData[1].id).remove()
-          empty_table_checks()
+              else if pData[0] == "rejected_lender"
+                $("#lend_" + pData[1].id).remove()
+                empty_table_checks()      
 
-        else if pData[0] == "rejected_borrower"
-          $("#borrow_" + pData[1].id).remove()
-          empty_table_checks()
+              else if pData[0] == "cancelled"
+                $("#lend_" + pData[1].id).remove()
+                empty_table_checks()
+
+              else if pData[0] == "rejected_borrower"
+                $("#borrow_" + pData[1].id).remove()
+                empty_table_checks()
+
+        complete: (jqXHR, textStatus) ->
+
+        error: (jqXHR, textStatus, errorThrown) ->
+          setTimeout $.unblockUI
+          $("#error_message").dialog "open" 
+
            
 #--------------------------------------------------------------------------------------------------------------------
   # Initiate Return from borrowers side
@@ -343,11 +357,11 @@ $(document).ready ->
 
             success: (msg) ->
 
-            complete: (msg) ->
+            complete: (jqXHR, textStatus) ->
               $(tr_id_s).remove()
               if $("#current_books_table tr").length == 1
                 $("#current_books_div").hide()
-            error: ->
+            error:  (jqXHR, textStatus, errorThrown) ->
               setTimeout $.unblockUI
               $("#error_message").dialog "open"       
 
@@ -392,11 +406,11 @@ $(document).ready ->
 
             success: (msg) ->
 
-            complete: (msg) ->
+            complete: (jqXHR, textStatus) ->
               $(tr_id_s).remove()
               if $("#accepted_requests_table tr").length == 1
                 $("#accepted_requests_div").hide()
-            error: ->
+            error: (jqXHR, textStatus, errorThrown) ->
               setTimeout $.unblockUI
               $("#error_message").dialog "open"       
 

@@ -217,6 +217,14 @@ include ActionController::Live
 		response.stream.close
 	end
 
+	def user_id
+
+		respond_to do |format|
+			format.html  
+    		format.json { render :json => current_user.id}
+		end
+	end
+
 	private
 
 	def require_profile

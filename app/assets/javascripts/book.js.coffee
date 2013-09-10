@@ -16,7 +16,7 @@ jQuery ->
 
         success: (msg) ->
 
-        error: ->
+        error: (jqXHR, textStatus, errorThrown) ->
 
     else
       $("#book_count_status_" + book_id).hide()

@@ -28,6 +28,7 @@ ProjectLectito::Application.routes.draw do
   get "inventory/check_inventory_duplication" => "inventory#check_inventory_duplication"
   
   # Transaction Routes
+  get "transaction/user_id" => "transaction#user_id"
   post "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   post "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
   post "transaction/update_request_status_cancel" => "transaction#update_request_status_cancel"

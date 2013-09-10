@@ -64,7 +64,7 @@ jQuery ->
             $("#bar_user_success").dialog "open"
             $("#bar_user").val("Un Bar User").attr("id","unbar_user")
             $("#user_current_status").text("Locked").fadeIn(500)
-          complete: -> 
+          complete: (jqXHR, textStatus) -> 
             setTimeout $.unblockUI            
           error: (XHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -115,9 +115,9 @@ jQuery ->
             $("#unbar_user_success").dialog "open"
             $("#unbar_user").val("Bar User").attr("id","bar_user")
             $("#user_current_status").text("Active").fadeIn(500)
-          complete: -> 
+          complete: (jqXHR, textStatus) -> 
             setTimeout $.unblockUI         
-          error: (msg) ->
+          error: (jqXHR, textStatus, errorThrown)  ->
             setTimeout $.unblockUI
             $("#custom_error").html("Unblocking Unsuccessful. Please contact admin")
             $("#error_message").dialog "open"
