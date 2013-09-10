@@ -13,6 +13,7 @@
 //= require jquery
 //= require twitter/bootstrap
 //= require address
+//= require socket.io
 //= require book
 //= require devise
 //= require home_page

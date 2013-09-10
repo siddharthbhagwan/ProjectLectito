@@ -36,7 +36,10 @@ ProjectLectito::Application.routes.draw do
 
 
   ##SSE
-  get "transaction/transaction_status" => "transaction#transaction_status"   
+  get "transaction/transaction_status" => "transaction#transaction_status"  
+
+  #Node Test
+  #get "transaction/node_test" => "transaction#node_test" 
 
 
   root :to => "inventory#search"

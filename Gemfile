@@ -27,6 +27,7 @@ gem 'jquery-ui-rails'
 gem 'unicorn-rails'
 gem 'redis'
 gem 'rspec'
+gem 'socket.io-rails'
 
 
 # add these gems to help with the transition:

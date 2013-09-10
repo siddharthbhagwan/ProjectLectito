@@ -1,3 +1,5 @@
+require 'socket'      # Sockets are in standard library
+
 class TransactionController < ApplicationController
 include ActionController::Live
 
@@ -192,21 +194,36 @@ include ActionController::Live
 		@returned_inventory.save
 	end
 
-	def transaction_status
-		response.headers["Content-Type"] = "text/event-stream"
-		redis_subscribe = Redis.new
-		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		redis_subscribe.subscribe(subscribe_channel) do |on|
-			on.message do |event, data|
-		        response.stream.write("event: #{event}\n")
-		        response.stream.write("data: #{data}\n\n")
-		  	end
-		end
-	rescue IOError
-		logger.info "Stream Closed"
-	ensure
-		redis_subscribe.quit
-		response.stream.close
+	# def transaction_status
+	# 	response.headers["Content-Type"] = "text/event-stream"
+	# 	redis_subscribe = Redis.new
+	# 	subscribe_channel = "transaction_listener_" + current_user.id.to_s
+	# 	redis_subscribe.subscribe(subscribe_channel) do |on|
+	# 		on.message do |event, data|
+	# 	        response.stream.write("event: #{event}\n")
+	# 	        response.stream.write("data: #{data}\n\n")
+	# 	  	end
+	# 	end
+	# rescue IOError
+	# 	logger.info "Stream Closed"
+	# ensure
+	# 	redis_subscribe.quit
+	# 	response.stream.close
+	# end
+
+	def node_test		
+
+		hostname = 'localhost'
+		port = 8000
+
+		s = TCPSocket.open(hostname, port)
+		line = s.gets   # Read lines from the socket
+		s.close  
+
+		respond_to do |format|
+    		format.html  
+    		format.json { render :json => line.to_json }
+  		end
 	end
 
 	private
