@@ -68,7 +68,7 @@ ProjectLectito::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   #Default Url
-  config.action_mailer.default_url_options = { :host => stormy-spire-3896.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'stormy-spire-3896.herokuapp.com' }
 
   ActionMailer::Base.smtp_settings = {
   :address        => 'smtp.sendgrid.net',
