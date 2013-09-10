@@ -67,16 +67,19 @@ include ActionController::Live
 
 					reject_update_lender = Array.new
 					reject_update_lender << "rejected_lender"
-					reject_update_lender << reject_each.id
+					reject_update_lender << {
+						:id => reject_each.id.to_s
+					}
 
 					reject_update_borrower = Array.new
 					reject_update_borrower << "rejected_borrower"
-					reject_update_borrower << reject_each.id
+					reject_update_borrower << {
+						:id => reject_each.id.to_s
+					}
 
 					if reject_each.save
 						publish_channel_remaining_lender = "transaction_listener_" + reject_each.lender_id.to_s
 						$redis.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
-
 
 						publish_channel_remaining_borrower = "transaction_listener_" + reject_each.borrower_id.to_s
 						$redis.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
@@ -117,6 +120,7 @@ include ActionController::Live
 		$redis.quit
 	end
 
+	#TODO , check pattern mapping of rejected vs rejected lender and rejected borrower
 	def update_request_status_reject
 		response.headers["Content-Type"] = 'text/javascript'
 		@latest_rejected = Transaction.where(:id => params[:tr_id]).take	
@@ -126,7 +130,9 @@ include ActionController::Live
 
 		transaction_rejected = Array.new
 		transaction_rejected << "rejected"
-		transaction_rejected << @latest_rejected.id.to_s
+		transaction_rejected << {
+			:id => @latest_rejected.id.to_s
+		}
 
 		if @latest_rejected.save
 			publish_channel = "transaction_listener_" + @latest_rejected.borrower_id.to_s
@@ -143,7 +149,9 @@ include ActionController::Live
 
 		cancelled_transaction = Array.new
 		cancelled_transaction << "cancelled"
-		cancelled_transaction << @cancel_transaction.id.to_s
+		cancelled_transaction << {
+			:id => @cancel_transaction.id.to_s
+		}
 		
 		if @cancel_transaction.save
 			publish_channel = "transaction_listener_" + @cancel_transaction.lender_id.to_s

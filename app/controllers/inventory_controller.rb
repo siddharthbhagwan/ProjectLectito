@@ -175,7 +175,7 @@ class InventoryController < ApplicationController
 		@books = Book.where("lower(book_name) like ?", "%#{params[:book_name].downcase}%")
 		
 		if @books.empty?
-			@books = ["No Matching Results Found"]
+			@books = [{"book_name"=>"No Matching Results Found"}]
 		end
 
 		respond_to do |format|

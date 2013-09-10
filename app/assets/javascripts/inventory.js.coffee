@@ -171,25 +171,28 @@ jQuery ->
             ) 
 
     select: (e, ui) ->
-      $("#mrp").val(ui.item.mrp).fadeIn(500)
-      $("#isbn").val(ui.item.isbn).fadeIn(500)
-      $("#author").val(ui.item.author).fadeIn(500)
-      $("#language").val(ui.item.language).fadeIn(500)
-      $("#genre").val(ui.item.genre).fadeIn(500)
-      $("#version").val(ui.item.version).fadeIn(500)
-      $("#pages").val(ui.item.pages).fadeIn(500)
-      $("#publisher").val(ui.item.publisher).fadeIn(500)
-      $("#edition").val(ui.item.edition).fadeIn(500)
-      $("#book_id").val(ui.item.id)
+      if ui.item.label == "No Matching Results Found"
+        #TODO clear book name field
+      else
+        $("#mrp").val(ui.item.mrp).fadeIn(500)
+        $("#isbn").val(ui.item.isbn).fadeIn(500)
+        $("#author").val(ui.item.author).fadeIn(500)
+        $("#language").val(ui.item.language).fadeIn(500)
+        $("#genre").val(ui.item.genre).fadeIn(500)
+        $("#version").val(ui.item.version).fadeIn(500)
+        $("#pages").val(ui.item.pages).fadeIn(500)
+        $("#publisher").val(ui.item.publisher).fadeIn(500)
+        $("#edition").val(ui.item.edition).fadeIn(500)
+        $("#book_id").val(ui.item.id)
 
   ).blur ->
-    value_typed = $("#search_by_book_name").val()
-    value_selected = $("#search_by_book_name").data("selected_item")
+    value_typed = $("#book_name").val()
+    value_selected = $("#book_name").data("selected_item")
     if value_typed != value_selected
-      $("#search_by_book_name").val("")
+      $("#book_name").val("")
 
     if value_selected == "No Matching Results Found"
-      $("#search_by_book_name").val("")     
+      $("#book_name").val("")     
 
 
 #--------------------------------------------------------------------------------------------------------------------

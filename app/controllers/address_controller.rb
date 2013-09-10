@@ -60,7 +60,11 @@ end
   end
 
   def autocomplete_area
-    @locations = Location.where("area LIKE ? ", "%#{params[:area]}%")
+    @locations = Location.where("lower(area) LIKE ? ", "%#{params[:area].downcase}%")
+
+    if @locations.empty?
+      @locations = [:area => "No Matching Results Found"]
+    end
 
     respond_to do |format|
       format.html  
