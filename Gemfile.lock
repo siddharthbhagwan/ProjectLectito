@@ -252,7 +252,7 @@ DEPENDENCIES
   binding_of_caller
   blockuijs-rails!
   cancan (= 1.6.7)
-  coffee-rails (~> 4.0.0.rc2)
+  coffee-rails (~> 4.0.0)
   debugger
   devise (= 3.0.0.rc)
   jquery-datatables-rails!
@@ -273,7 +273,7 @@ DEPENDENCIES
   redis
   role_model
   rspec
-  sass-rails (~> 4.0.0.rc2)
+  sass-rails (~> 4.0.0)
   sidekiq
   socket.io-rails
   therubyracer
