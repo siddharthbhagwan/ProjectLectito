@@ -27,6 +27,8 @@ $(document).ready ->
       $("#error_message").dialog
         autoOpen: false
         modal: true
+        resizeable: false
+        draggable: false
         buttons:
           "Ok": ->
             $(this).dialog "close"
@@ -48,6 +50,8 @@ $(document).ready ->
       $("#borrow_confirm").dialog
         autoOpen: false
         modal: true
+        resizeable: false
+        draggable: false
         buttons:
           "Ok": ->
             $(this).dialog "close"
@@ -127,6 +131,8 @@ $(document).ready ->
       $("#accept_request_confirm").dialog
         autoOpen: false
         modal: true
+        resizeable: false
+        draggable: false
         buttons:
           "Ok": ->
             $(this).dialog "close"
@@ -171,6 +177,8 @@ $(document).ready ->
       $("#reject_request_confirm").dialog
         autoOpen: false
         modal: true
+        resizeable: false
+        draggable: false
         buttons:
           "Ok": ->
             $(this).dialog "close"
@@ -213,6 +221,8 @@ $(document).ready ->
       $("#cancel_transaction").dialog
         autoOpen: false
         modal: true
+        resizeable: false
+        draggable: false
         buttons:
           "Ok": ->
             $(this).dialog "close"
@@ -340,6 +350,8 @@ $(document).ready ->
     $("#return_request_confirm").dialog
       autoOpen: false
       modal: true
+      resizeable: false
+      draggable: false
       buttons:
         "Ok": ->
           $(this).dialog "close"
@@ -389,6 +401,8 @@ $(document).ready ->
     $("#received_book_confirm").dialog
       autoOpen: false
       modal: true
+      resizeable: false
+      draggable: false
       buttons:
         "Ok": ->
           $(this).dialog "close"

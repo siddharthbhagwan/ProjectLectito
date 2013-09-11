@@ -46,6 +46,8 @@ jQuery ->
   $("#delete_confirm").dialog
     autoOpen: false
     modal: true
+    resizeable: false
+    draggable: false
     buttons:
       "Ok": ->
         $(this).dialog "close"

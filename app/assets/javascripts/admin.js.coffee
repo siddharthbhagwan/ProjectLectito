@@ -42,6 +42,8 @@ jQuery ->
   $("#bar_user_confirm").dialog
     autoOpen: false
     modal: true
+    resizeable: false
+    draggable: false
     buttons:
       "Bar": ->
         $(this).dialog "close"
@@ -78,6 +80,8 @@ jQuery ->
   $("#bar_user_success").dialog
     autoOpen: false
     modal: true
+    resizeable: false
+    draggable: false
     buttons:
       "Ok": ->
         $(this).dialog "close" 
@@ -94,6 +98,8 @@ jQuery ->
   $("#unbar_user_confirm").dialog
     autoOpen: false
     modal: true
+    resizeable: false
+    draggable: false
     buttons:
       "Un-Bar": ->
         $(this).dialog "close"
@@ -129,6 +135,8 @@ jQuery ->
   $("#unbar_user_success").dialog
     autoOpen: false
     modal: true
+    resizeable: false
+    draggable: false
     buttons:
       "Ok": ->
         $(this).dialog "close"
@@ -139,6 +147,8 @@ jQuery ->
   $("#error_message").dialog
     autoOpen: false
     modal: true
+    resizeable: false
+    draggable: false
     buttons:
       "Ok": ->
         $(this).dialog "close"           
