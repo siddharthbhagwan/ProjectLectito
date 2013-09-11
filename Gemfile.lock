@@ -102,11 +102,11 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.0)
-    less (2.4.0)
-      commonjs (~> 0.2.7)
-    less-rails (2.4.0)
+    less (2.3.3)
+      commonjs (~> 0.2.6)
+    less-rails (2.3.3)
       actionpack (>= 3.1)
-      less (~> 2.4.0)
+      less (~> 2.3.1)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -245,14 +245,14 @@ DEPENDENCIES
   binding_of_caller
   blockuijs-rails!
   cancan (= 1.6.7)
-  coffee-rails (~> 4.0.0)
+  coffee-rails (= 4.0.0)
   debugger
   devise
   jquery-datatables-rails!
   jquery-rails
   jquery-ui-rails
   kaminari
-  less-rails
+  less-rails (= 2.3.3)
   meta_request
   omniauth-facebook
   omniauth-google-oauth2
@@ -265,7 +265,7 @@ DEPENDENCIES
   redis
   role_model
   rspec
-  sass-rails (~> 4.0.0)
+  sass-rails (= 4.0.0)
   sidekiq
   therubyracer
   turbolinks
