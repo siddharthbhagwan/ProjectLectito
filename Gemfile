@@ -27,7 +27,6 @@ gem 'jquery-ui-rails'
 gem 'unicorn-rails'
 gem 'redis'
 gem 'rspec'
-gem 'taps'
 
 
 # add these gems to help with the transition:
