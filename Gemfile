@@ -38,8 +38,8 @@ gem 'actionpack-action_caching'
 # Gems used only for assets and not required
 # in production environments by default.
 
-  gem 'sass-rails',   '~> 4.0.0'
-  gem 'coffee-rails', '~> 4.0.0'
+  gem 'sass-rails',   '~> 4.0.0.rc2'
+  gem 'coffee-rails', '~> 4.0.0.rc2'
   gem 'uglifier', '>= 1.3.0'
   gem 'therubyracer', platforms: :ruby
   gem 'turbolinks'
