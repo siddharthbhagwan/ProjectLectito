@@ -19,7 +19,7 @@ gem 'rack'
 gem 'kaminari'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'twitter-bootstrap-rails', '= 2.2.6'
-gem 'less-rails'
+gem 'less-rails','2.3.3'
 gem 'jquery-rails'
 gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'sidekiq'
@@ -39,8 +39,8 @@ gem 'actionpack-action_caching'
 # Gems used only for assets and not required
 # in production environments by default.
 
-  gem 'sass-rails',   '~> 4.0.0'
-  gem 'coffee-rails', '~> 4.0.0'
+  gem 'sass-rails',   '4.0.0'
+  gem 'coffee-rails', '4.0.0'
   gem 'uglifier', '>= 1.3.0'
   gem 'therubyracer', platforms: :ruby
   gem 'turbolinks'
