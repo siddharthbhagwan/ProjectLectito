@@ -396,7 +396,7 @@ $(document).ready ->
     # $("#accept_info").html(html_data)
     $("#received_book_confirm").dialog "open"
     
-
+  #TODO write a fn for ajax call
   jQuery ->
     $("#received_book_confirm").dialog
       autoOpen: false
@@ -427,6 +427,30 @@ $(document).ready ->
             error: (jqXHR, textStatus, errorThrown) ->
               setTimeout $.unblockUI
               $("#error_message").dialog "open"       
+
+        "Skip": ->
+          $(this).dialog "close"
+          tr_id = $("#received_book_confirm").data("trid")
+          tr_id_s = $("#received_book_confirm").data("trids")
+          $.ajax
+            url: "/transaction/update_request_status_receive.js"
+            type: "post"
+            context: "this"
+            dataType: "script"
+            data:
+              tr_id: tr_id
+              lender_feedback: ""
+              lender_comments: ""
+              
+            success: (msg) ->
+
+            complete: (jqXHR, textStatus) ->
+              $(tr_id_s).remove()
+              if $("#accepted_requests_table tr").length == 1
+                $("#accepted_requests_div").hide()
+            error: (jqXHR, textStatus, errorThrown) ->
+              setTimeout $.unblockUI
+              $("#error_message").dialog "open"
 
         Cancel: ->
           $(this).dialog "close"
