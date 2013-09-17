@@ -318,6 +318,9 @@ $(document).ready ->
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
 
+              else if pData[0] == "chat"
+                $("#chat_box").val($("#chat_box").val().trim() + '\n' + pData[1].text)
+
         complete: (jqXHR, textStatus) ->
 
         error: (jqXHR, textStatus, errorThrown) ->

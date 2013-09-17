@@ -200,6 +200,34 @@ include ActionController::Live
 		@returned_inventory.save
 	end
 
+	def new_chat
+		chat = Chat.new
+	    chat.transaction_id = params[:ref].sub("/chat/","")
+	    chat.body = params[:chat] + "\n"
+	    chat.from_user = current_user.id
+	    if chat.save
+	      transaction = Transaction.where(:id => params[:ref].sub("/chat/","")).take
+	      if current_user.id == transaction.lender_id	  
+	        publish_from_channel = "transaction_listener_" + transaction.lender_id.to_s
+	        publish_to_channel = "transaction_listener_" + transaction.borrower_id.to_s
+	      else
+	        publish_from_channel = "transaction_listener_" + transaction.borrower_id.to_s
+	        publish_to_channel = "transaction_listener_" + transaction.lender_id.to_s
+	      end
+
+	      chat_data = Array.new
+	      chat_data << "chat"
+	      chat_data << {
+	        :text => params[:chat]
+	      }
+
+	      $redis.publish(publish_from_channel, chat_data.to_json)
+	      $redis.publish(publish_to_channel, chat_data.to_json)
+	    else
+      		raise 'error'
+    	end
+	end
+
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
 		redis_subscribe = Redis.new
