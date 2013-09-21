@@ -5,6 +5,7 @@
     <tr>
       <th>Book Name</th>
       <th>Chat</th>
+      <th>Chat</th>
     </tr>
   </thead>
   <tbody>
@@ -12,8 +13,12 @@
       <tr id=<%= t.id %> >
         <td><%= Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.author %></td>
         <td><%= link_to "Chat", chat_path(t.id), class: "btn btn-small "%></td>
+        <!-- #TODO Check for alternative to double querying, or is it cached? -->
+        <td><%= tag "input", :type => "button", :id => "chat_#{t.id}", :class => "btn" , :value => "Chat ", "data-trid" => t.id , "data-title" => Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<div id="chat_div">
+</div>
 <br/>

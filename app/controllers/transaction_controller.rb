@@ -202,26 +202,29 @@ include ActionController::Live
 
 	def new_chat
 		chat = Chat.new
-	    chat.transaction_id = params[:ref].sub("/chat/","")
+	    chat.transaction_id = params[:ref]
 	    chat.body = params[:chat] + "\n"
 	    chat.from_user = current_user.id
+	    logger.debug "Adsadasda da " + params[:ref].to_s
 	    if chat.save
-	      transaction = Transaction.where(:id => params[:ref].sub("/chat/","")).take
+	      transaction = Transaction.where(:id => params[:ref]).take
 	      if current_user.id == transaction.lender_id	  
-	        publish_from_channel = "transaction_listener_" + transaction.lender_id.to_s
+	        #publish_from_channel = "transaction_listener_" + transaction.lender_id.to_s
 	        publish_to_channel = "transaction_listener_" + transaction.borrower_id.to_s
 	      else
-	        publish_from_channel = "transaction_listener_" + transaction.borrower_id.to_s
+	        #publish_from_channel = "transaction_listener_" + transaction.borrower_id.to_s
 	        publish_to_channel = "transaction_listener_" + transaction.lender_id.to_s
 	      end
 
 	      chat_data = Array.new
 	      chat_data << "chat"
 	      chat_data << {
-	        :text => params[:chat]
+	        :text => params[:chat],
+	        :trid => params[:ref],
+	        :title => params[:title]
 	      }
 
-	      $redis.publish(publish_from_channel, chat_data.to_json)
+	      #$redis.publish(publish_from_channel, chat_data.to_json)
 	      $redis.publish(publish_to_channel, chat_data.to_json)
 	    else
       		raise 'error'

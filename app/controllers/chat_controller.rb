@@ -11,6 +11,16 @@ class ChatController < ApplicationController
     @history.join()
   end
 
+  def show_popup
+    @transaction = Transaction.where(:id => params[:id]).take
+    chat = Chat.where(:transaction_id => params[:id]).last(5)
+    @history = Array.new
+    chat.each do |c|
+      @history << c.body
+    end
+    @history.join()
+  end
+
   def new
     # chat = Chat.new
     # chat.transaction_id = params[:ref]

@@ -319,7 +319,30 @@ $(document).ready ->
                 empty_table_checks()
 
               else if pData[0] == "chat"
-                $("#chat_box").val($("#chat_box").val().trim() + '\n' + pData[1].text)
+                box = $("#chat_div").chatbox(
+                  id: "You"
+                  user:
+                    key: "value"
+
+                  title: "Chat - " + pData[1].title
+                  messageSent: (id, user, msg) ->
+                    $.ajax
+                      url: "/transaction/new_chat"
+                      type: "post"
+                      context: "this"
+                      dataType: "json"
+                      data:
+                        chat: msg
+                        ref: pData[1].trid
+
+                      success: (msg) ->
+                        
+                      error: (jqXHR, textStatus, errorThrown) ->
+
+                    $("#chat_div").chatbox("option", "boxManager").addMsg id, msg        
+                  )
+                $("#chat_div").chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
+                #$("#chat_box").val($("#chat_box").val().trim() + '\n' + pData[1].text)
 
         complete: (jqXHR, textStatus) ->
 
