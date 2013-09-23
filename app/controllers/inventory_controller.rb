@@ -1,5 +1,7 @@
 class InventoryController < ApplicationController
-	before_action :require_profile, :require_address
+	if :authenticate_user!
+		before_action :require_profile, :require_address
+	end
 
 	def index
 		@inventory = User.where(:id => current_user.id).take.inventories
@@ -61,7 +63,11 @@ class InventoryController < ApplicationController
 		@book_array = []
 
 		@books.each do |book|
-			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ?", book, current_user.id, "Available").take
+			if !current_user.nil? && current_user.signed_in
+				@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ?", book, current_user.id, "Available").take
+			else
+				@users_with_book = Inventory.where("book_id = ? AND status = ?", book, "Available").take
+			end
 
 			if !@users_with_book.nil?
 
@@ -71,13 +77,19 @@ class InventoryController < ApplicationController
 				@address_uwb_in_city = @users_with_book.user.addresses.where(:id => @users_with_book.available_in_city).take
 				@delivery_uwb = @users_with_book.user.is_delivery
 
-				if current_user.is_delivery
-		 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+				if !current_user.nil? && current_user.signed_in
+					if current_user.is_delivery
+			 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+							@book_array << book
+						end
+					else
 						@book_array << book
 					end
 				else
-					@book_array << book
-				end				
+					if @address_uwb_in_city.city == params[:city]
+						@book_array << book
+					end
+				end					
 			end
 		end	
 
@@ -89,8 +101,12 @@ class InventoryController < ApplicationController
 
 	def search_books_city
 		# Find all users apart from self, who have the book
-		@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? ", params[:book_id], current_user.id, "Available")
-
+	 	if !current_user.nil? && current_user.signed_in
+			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? ", params[:book_id], current_user.id, "Available")
+		else
+			@users_with_book = Inventory.where("book_id = ? AND status = ? ", params[:book_id], "Available")
+		end
+		
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
 		@users_and_address = []
@@ -108,18 +124,26 @@ class InventoryController < ApplicationController
 			#If current User's Delivery mode is delivery only, look for lenders with delivery only
 			#If current user's Delivery mode is pickup, look for both, delivery and pick up
 			#TODO make the if more efficient
-			if current_user.is_delivery
-	 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
-	 				# If criteria matches, store Inventory Details woth corresponding Address in an array
-					@users_and_address << u_wb.clone	
-					@users_and_address << @address_uwb_in_city
-					@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+			if !current_user.nil? && current_user.signed_in
+				if current_user.is_delivery
+		 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+		 				# If criteria matches, store Inventory Details woth corresponding Address in an array
+						@users_and_address << u_wb.clone	
+						@users_and_address << @address_uwb_in_city
+						@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+					end
+				else
+					if @address_uwb_in_city.city == params[:city]
+						@users_and_address << u_wb.clone	
+						@users_and_address << @address_uwb_in_city
+						@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+					end
 				end
 			else
 				if @address_uwb_in_city.city == params[:city]
 					@users_and_address << u_wb.clone	
 					@users_and_address << @address_uwb_in_city
-					@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+					@transactions_requested << Transaction.where(:status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
 				end
 			end
 		end
@@ -134,11 +158,19 @@ class InventoryController < ApplicationController
 	end
 
 	def search
-		@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
-		@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
-		@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Returned" )
-		@current = Transaction.where(:borrower_id => current_user.id, :status => "Accepted")
-		@received = Transaction.where(:lender_id => current_user.id, :status => "Returned")
+		if !current_user.nil?# && current_user.signed_in
+			@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
+			@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
+			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Returned" )
+			@current = Transaction.where(:borrower_id => current_user.id, :status => "Accepted")
+			@received = Transaction.where(:lender_id => current_user.id, :status => "Returned")
+		else	
+			@borrow = nil
+			@lend = nil
+			@accept = nil
+			@current = nil
+			@received = nil
+		end
 	end
 
 	def autocomplete_author
@@ -191,20 +223,24 @@ class InventoryController < ApplicationController
 	private
 
 	def require_profile
-    	if current_user.profile.nil?
-    		flash[:notice] = "Please complete your profile"
-    		redirect_to profile_edit_path
-    	else
-    		return false
-    	end
+		if !current_user.nil? #&& current_user.signed_in?
+	    	if current_user.profile.nil?
+	    		flash[:notice] = "Please complete your profile"
+	    		redirect_to profile_edit_path
+	    	else
+	    		return false
+	    	end
+	    end
   	end
 
   	def require_address
-    	if current_user.addresses.empty?
-    		flash[:notice] = "Please Enter at least one Address"
-    		redirect_to new_address_path
-    	else
-    		return false
-    	end
+  		if !current_user.nil? #&& current_user.signed_in
+	    	if current_user.addresses.empty?
+	    		flash[:notice] = "Please Enter at least one Address"
+	    		redirect_to new_address_path
+	    	else
+	    		return false
+	    	end
+	    end
   	end	
 end

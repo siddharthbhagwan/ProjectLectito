@@ -1,9 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-
 # Code to auto complete and populate remainder address/locality fields
-jQuery ->
+$(document).ready ->
+
   $("#address_locality").autocomplete(
     source: (request, response) ->
       $.ajax
@@ -36,13 +33,13 @@ jQuery ->
           $("#address_locality").val("") 
 
 #--------------------------------------------------------------------------------------------------------------------
-# TODO Check how to propagate modal confirm accept/reject
-jQuery ->
+# TODO Check how to propagate modal confirm accept/reject into html comfirm
+
   $("#delete_buttonn").click ->
     $("#delete_confirm").dialog "open"
 
 
-jQuery ->
+
   $("#delete_confirm").dialog
     autoOpen: false
     modal: true

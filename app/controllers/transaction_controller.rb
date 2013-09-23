@@ -6,42 +6,46 @@ include ActionController::Live
 	redis_subscribe = Redis.new
 
 	def create
-		response.headers["Content-Type"] = 'text/javascript'
-		@transaction = Transaction.new
-		@transaction.borrower_id = current_user.id
-		@transaction.lender_id = params[:user_id] 
-		@transaction.inventory_id = params[:inventory_id]
-		@transaction.request_date = DateTime.now.to_time
-		@transaction.renewal_count = 0
-		@transaction.status = "Pending"
+		if !current_user.nil? && current_user.signed_in
+			response.headers["Content-Type"] = 'text/javascript'
+			@transaction = Transaction.new
+			@transaction.borrower_id = current_user.id
+			@transaction.lender_id = params[:user_id] 
+			@transaction.inventory_id = params[:inventory_id]
+			@transaction.request_date = DateTime.now.to_time
+			@transaction.renewal_count = 0
+			@transaction.status = "Pending"
 
-		@borrow = Transaction.where("borrower_id = ? AND updated_at > ? AND status =?", current_user.id, Time.at(params[:after_b].to_i + 1), "Pending")
+			@borrow = Transaction.where("borrower_id = ? AND updated_at > ? AND status =?", current_user.id, Time.at(params[:after_b].to_i + 1), "Pending")
 
-		if !@transaction.save
-			raise "error"
-		else
-			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
-			transaction_details = Array.new 
-			transaction_details << "create"
-			transaction_details << {
-				:id => @transaction.id,
-				:book_name => Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
-				:requested_from => Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
-				:requested_date => @transaction.request_date.to_s(:long),
-				:status => @transaction.status
-			}
+			if !@transaction.save
+				raise "error"
+			else
+				#MailWorker.perform_borrow_request_async(@transaction.lender_id)
+				transaction_details = Array.new 
+				transaction_details << "create"
+				transaction_details << {
+					:id => @transaction.id,
+					:book_name => Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
+					:requested_from => Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
+					:requested_date => @transaction.request_date.to_s(:long),
+					:status => @transaction.status
+				}
 
-			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
+				publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
 
-			$redis.publish(publish_channel, transaction_details.to_json)
-		end	
-		ensure
-			$redis.quit
-
-		respond_to do |format|
-    		format.html  
-    		format.js
-  		end
+				$redis.publish(publish_channel, transaction_details.to_json)
+			end	
+		
+			respond_to do |format|
+	    		format.html  
+	    		format.js
+	  		end
+	  	else
+	  		redirect_to new_user_session_path
+	  	end
+	ensure
+		$redis.quit
 	end
 
 

@@ -1,9 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$(document).ready ->
 
 # Search by book/author
-jQuery ->
   $("#search_books").on "click", ->
     search_city = $("#city").val()
     search_by_author = $("#search_by_author").val()
@@ -42,7 +39,6 @@ jQuery ->
 
 #--------------------------------------------------------------------------------------------------------------------
 # Search for book within the city
-jQuery ->
   $(document).on "click", "#search_results_table tbody tr", (event) ->
     book_id = undefined
     fetch_sub_search_data = undefined
@@ -89,7 +85,6 @@ jQuery ->
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Author
 
-jQuery ->
   $("#search_by_author").autocomplete(
     source: (request, response) ->
       $.ajax
@@ -117,7 +112,6 @@ jQuery ->
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Book Name
 
-jQuery ->
   $("#search_by_book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
@@ -146,7 +140,6 @@ jQuery ->
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Adding Inventory
 
-jQuery ->
   $("#book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
@@ -198,7 +191,6 @@ jQuery ->
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
 
-jQuery ->
   $(document).on "mouseenter", "#search_results_table tbody tr", ->
     if ($(this).attr("id") != undefined && $(this).attr("id") != 'sub_search_results_table_header')
       if ($(this).attr("id").indexOf("city_") == -1 )
@@ -206,14 +198,13 @@ jQuery ->
         $(this).css('font-size', '14.5px')
 
 
-jQuery ->
   $(document).on "mouseleave", "#search_results_table tbody tr", ->
     $(this).css('textDecoration', 'none')
     $(this).css('font-size', '14px')
 
 #--------------------------------------------------------------------------------------------------------------------
+# Hide Book Details by default till book name is selected
 
-jQuery ->
   $("#isbn").hide() 
   $("#author").hide()  
   $("#language").hide() 
@@ -226,12 +217,5 @@ jQuery ->
 
 #--------------------------------------------------------------------------------------------------------------------
 
-jQuery ->
   $(".edit_inventory").show() 
 
-#--------------------------------------------------------------------------------------------------------------------
-
-jQuery ->
-   #$('#search_by_author').css("text-transform","capitalize")
-   #$('#search_by_book_name').css("text-transform","capitalize")
- 
