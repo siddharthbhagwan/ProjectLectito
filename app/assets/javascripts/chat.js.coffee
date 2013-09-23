@@ -2,7 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-jQuery ->
+$(document).ready ->
+  chat_boxes = new Array()
+  chkkkk = "ok"
+
+
   $("#chat_send").click ->
     chat_text = $("#chat_text").val()
     $("#chat_text").val("")
@@ -19,8 +23,8 @@ jQuery ->
       
       error: (jqXHR, textStatus, errorThrown) ->
 
+#--------------------------------------------------------------------------------------------------------------------- 
 
-jQuery ->
   $("#chat_text").keydown (e) ->
     if e.keyCode is 13
       chat_text = $("#chat_text").val()
@@ -38,9 +42,8 @@ jQuery ->
         
         error: (jqXHR, textStatus, errorThrown) ->
 
+#--------------------------------------------------------------------------------------------------------------------- 
 
-$(document).ready ->
-  box = null
   $("input[id^='chat_']").click (event, ui) ->
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
@@ -48,11 +51,14 @@ $(document).ready ->
     else
       title = $(this).attr("data-title")
 
-    if box
-      box.chatbox("option", "boxManager").toggleBox()
+    if jQuery.inArray(trid, chat_boxes) != -1
+      $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
-      box = $("#chat_div").chatbox(
-        id: "You"
+      offset = chat_boxes.length * 315
+      chat_boxes.push(trid)
+      $("#chat_div_" + trid).chatbox(
+        id: "chatbox_" + trid
+        offset: offset
         user:
           key: "value"
 
@@ -71,9 +77,71 @@ $(document).ready ->
             success: (msg) ->
               
             error: (jqXHR, textStatus, errorThrown) ->
-
-          $("#chat_div").chatbox("option", "boxManager").addMsg id, msg    
-          
+          alert chat_boxes.length + " - sender"
+          $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg "You", msg
+              
+        boxClosed: ->
+          alert "closed"
+          chat_boxes = jQuery.grep(chat_boxes, (value) ->
+            value isnt trid
+          )
+          i = 0
+          while i < chat_boxes.length
+            $("#chat_div_" + chat_boxes[i]).chatbox("option", "offset", 0)
+            i++            
       )
 
-#-------------------------------------------------------------------------------------------------------------------- 
+  #-------------------------------------------------------------------------------------------------------------------- 
+  
+  $.ajax
+    url: "/transaction/user_id"
+    type: "get"
+    context: "this"
+    dataType: "json"
+
+    success: (msg) ->
+        id = msg
+        source = new EventSource('transaction/transaction_status')
+        source.addEventListener 'transaction_listener_' + id, (e) ->
+          pData = $.parseJSON(e.data)
+          if pData[0] == "chat"
+            alert chat_boxes.length + " - rcvr "
+            $("#chat_div_" + pData[1].trid).chatbox(
+              id: "chatbox_" + pData[1].trid
+              user:
+                key: "value"
+
+              title: "Chat - " + pData[1].title
+              messageSent: (id, user, msg) ->
+                $.ajax
+                  url: "/transaction/new_chat"
+                  type: "post"
+                  context: "this"
+                  dataType: "json"
+                  data:
+                    chat: msg
+                    ref: pData[1].trid
+
+                  success: (msg) ->
+                    
+                  error: (jqXHR, textStatus, errorThrown) ->
+
+                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "You", msg
+
+              boxClosed: ->
+                alert "ok"
+                chat_boxes = jQuery.grep(chat_boxes, (value) ->
+                value isnt trid
+                )   
+                i = 0
+                while i < chat_boxes.length
+                  $("#chat_div_" + chat_boxes[i]).chatbox("option", "offset", 0)
+                  i++            
+            )
+            $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
+
+    complete: (jqXHR, textStatus) ->
+
+    error: (jqXHR, textStatus, errorThrown) ->
+      setTimeout $.unblockUI
+      $("#error_message").dialog "open" 
