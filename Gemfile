@@ -28,7 +28,6 @@ gem 'jquery-ui-rails'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
-gem 'refinerycms-inquiries',    '~> 0.9'
 
 
 # add these gems to help with the transition:
