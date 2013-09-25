@@ -145,7 +145,6 @@ jQuery ->
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Adding Inventory
-
 jQuery ->
   $("#book_name").autocomplete( 
     source: (request, response) ->
@@ -172,7 +171,19 @@ jQuery ->
 
     select: (e, ui) ->
       if ui.item.label == "No Matching Results Found"
-        #TODO clear book name field
+        #TODO Clear No matching results text
+        $("#book_name").data("selected_item",ui.item.label)
+        $("#mrp").hide()
+        $("#isbn").hide()
+        $("#author").hide()
+        $("#language").hide()
+        $("#genre").hide()
+        $("#version").hide()
+        $("#pages").hide()
+        $("#publisher").hide()
+        $("#edition").hide()
+        $("#book_id").hide()
+        $("#book_name").val("")
       else
         $("#mrp").val(ui.item.mrp).fadeIn(500)
         $("#isbn").val(ui.item.isbn).fadeIn(500)
@@ -184,6 +195,7 @@ jQuery ->
         $("#publisher").val(ui.item.publisher).fadeIn(500)
         $("#edition").val(ui.item.edition).fadeIn(500)
         $("#book_id").val(ui.item.id)
+        $("#book_name").data("selected_item",ui.item.label)
 
   ).blur ->
     value_typed = $("#book_name").val()

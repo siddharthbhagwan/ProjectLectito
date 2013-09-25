@@ -35,7 +35,6 @@ ProjectLectito::Application.routes.draw do
   post "transaction/update_request_status_return" => "transaction#update_request_status_return"
   post "transaction/update_request_status_receive" => "transaction#update_request_status_receive"
 
-
   ##SSE
   get "transaction/transaction_status" => "transaction#transaction_status"   
 

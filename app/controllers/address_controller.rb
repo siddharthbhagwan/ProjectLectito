@@ -32,7 +32,7 @@ class AddressController < ApplicationController
       format.html  # index.html.erb
       format.json  { render :json => @address }
     end
-end
+  end
 
   # Create a New Address
   def create

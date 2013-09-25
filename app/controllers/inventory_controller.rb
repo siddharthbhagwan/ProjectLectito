@@ -16,8 +16,8 @@ class InventoryController < ApplicationController
 		@inventory.book_id = params[:book_id]
 		@inventory.available_in_city = params[:inventory][:available_in_city]
 		@inventory.rental_price = params[:rental_price]
-		@inventory.status = params[:current_status]
- 		if @inventory.save
+		@inventory.status = params[:status]
+ 		if @inventory.save!
 			redirect_to inventory_index_path
 			flash[:notice] = "The book has been added to your inventory"
 		else
@@ -33,12 +33,13 @@ class InventoryController < ApplicationController
 	def update
 		#FIXME Update_attributes needs to be done individually :S
 		@inventory = Inventory.where(:id => params[:id]).take
-   		@inventory.update_attributes(params[:inventory])
-   		@inventory.update_attributes(:rental_price => params[:rental_price])
-   		@inventory.update_attributes(:status => params[:current_status])
-   		if @inventory.save
-   			flash[:notice] = "The inventory has been updated"
+   		@inventory.available_in_city = params[:inventory][:available_in_city]
+   		@inventory.rental_price = params[:rental_price]
+   		@inventory.status = params[:status]
+   		
+   		if @inventory.save!
     		redirect_to inventory_index_path
+    		flash[:notice] = "The inventory has been updated"
     	end
 	end
 
