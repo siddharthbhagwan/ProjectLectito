@@ -73,10 +73,9 @@ ProjectLectito::Application.configure do
   ActionMailer::Base.smtp_settings = {
   :address        => 'smtp.mandrillapp.com',
   :port           => '587',
-  :authentication => :plain,
   :user_name      => 'app18038025@heroku.com',
   :password       => 'KBsklW7rxORpBV91ASDGXw',
-  :domain         => 'projectlectitio.com',
+  :domain         => 'heroku.com',
   :enable_starttls_auto => true
 }
 
