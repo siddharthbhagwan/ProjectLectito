@@ -71,13 +71,12 @@ ProjectLectito::Application.configure do
   config.action_mailer.default_url_options = { :host => 'http://stormy-spire-3896.herokuapp.com/' }
 
   ActionMailer::Base.smtp_settings = {
-  :address        => "smtp.sendgrid.net",
-  :port           => "587",
+  :address        => 'smtp.sendgrid.net',
+  :port           => '587',
   :authentication => :plain,
   :user_name      => ENV['SENDGRID_USERNAME'],
   :password       => ENV['SENDGRID_PASSWORD'],
-  :domain         => 'heroku.com',
-  :enable_starttls_auto => true
+  :domain         => 'heroku.com'
 }
 
 end
