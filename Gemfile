@@ -24,9 +24,10 @@ gem 'jquery-rails'
 gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'sidekiq'
 gem 'jquery-ui-rails'
-gem 'unicorn-rails'
+#gem 'unicorn-rails'
 gem 'redis'
 gem 'rspec'
+gem 'puma'
 
 
 # add these gems to help with the transition:

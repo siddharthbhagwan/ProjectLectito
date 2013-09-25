@@ -263,6 +263,7 @@ $(document).ready ->
             source.addEventListener 'transaction_listener_' + id, (e) ->
               pData = $.parseJSON(e.data)
               if pData[0] == "create"
+                alert "called"
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
                 td_requested_from = "<td>" + pData[1].requested_from + "</td>"
