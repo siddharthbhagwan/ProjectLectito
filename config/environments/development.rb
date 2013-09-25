@@ -1,4 +1,5 @@
 ProjectLectito::Application.configure do
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -32,13 +33,19 @@ ProjectLectito::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => 'localhost:3006',
-    :user_name            => 'sidunderscoresss@gmail.com',
-    :password             => 'uberweiss',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = {
+    :enable_starttls_auto => true,  
+    :address            => 'smtp.gmail.com',
+    :port               => 587,
+    :domain             => 'gmail.com', #you can also use google.com
+    :authentication     => :plain,
+    :user_name          => 'sidunderscoresss@gmail.com',
+    :password           => 'Mangalia0!'
+  }
 
 end
