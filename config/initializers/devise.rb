@@ -6,7 +6,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
   config.mailer_sender = "ProjectLectito"
 
-  #config.secret_key = 'cc29cc7bb3836b737994af16bbb9ad86ca19b829c9faaa20ed2a4eeda6fe334adcb397b8e2d998e15365be8da64af038bce8c5a5a01dbc9a20a836e2ccee4f34'
+  config.secret_key = '228935430ae7aa450e020bac6cfa76b2b3540cd4ca67cc0390190e6a7bf4ae5b9ab6fe39301ec1819478e608d85cf3ebbd5bd358216d70e9d5dbd07535f8201b'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
