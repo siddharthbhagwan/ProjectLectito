@@ -205,7 +205,7 @@ include ActionController::Live
 		Thread.new do 
 			$redis_sub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
-			        response.stream.write("event: #{event}\n")
+			        #response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
 			  	end
 			end
@@ -218,10 +218,9 @@ include ActionController::Live
 	end
 
 	def user_id
-
 		respond_to do |format|
 			format.html  
-    		format.json { render :json => current_user.id}
+	    	format.json { render :json => current_user.id}
 		end
 	end
 
