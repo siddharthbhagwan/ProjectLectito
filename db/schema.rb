@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905101931) do
+ActiveRecord::Schema.define(version: 20130925172422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,20 @@ ActiveRecord::Schema.define(version: 20130905101931) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "chats", force: true do |t|
+    t.integer  "transaction_id"
+    t.integer  "from_user"
+    t.string   "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "conversations", force: true do |t|
+    t.string   "subject",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "inventories", force: true do |t|
     t.integer  "user_id"
     t.integer  "book_id"
@@ -69,6 +83,26 @@ ActiveRecord::Schema.define(version: 20130905101931) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "notifications", force: true do |t|
+    t.string   "type"
+    t.text     "body"
+    t.string   "subject",              default: ""
+    t.integer  "sender_id"
+    t.string   "sender_type"
+    t.integer  "conversation_id"
+    t.boolean  "draft",                default: false
+    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                           null: false
+    t.integer  "notified_object_id"
+    t.string   "notified_object_type"
+    t.string   "notification_code"
+    t.string   "attachment"
+    t.boolean  "global",               default: false
+    t.datetime "expires"
+  end
+
+  add_index "notifications", ["conversation_id"], name: "index_notifications_on_conversation_id", using: :btree
+
   create_table "profiles", force: true do |t|
     t.string   "user_first_name"
     t.string   "user_last_name"
@@ -83,6 +117,20 @@ ActiveRecord::Schema.define(version: 20130905101931) do
     t.boolean  "contact_via_sms"
     t.boolean  "delivery"
   end
+
+  create_table "receipts", force: true do |t|
+    t.integer  "receiver_id"
+    t.string   "receiver_type"
+    t.integer  "notification_id",                            null: false
+    t.boolean  "is_read",                    default: false
+    t.boolean  "trashed",                    default: false
+    t.boolean  "deleted",                    default: false
+    t.string   "mailbox_type",    limit: 25
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "receipts", ["notification_id"], name: "index_receipts_on_notification_id", using: :btree
 
   create_table "transactions", force: true do |t|
     t.integer  "borrower_id"
@@ -116,7 +164,6 @@ ActiveRecord::Schema.define(version: 20130905101931) do
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
     t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -129,16 +176,16 @@ ActiveRecord::Schema.define(version: 20130905101931) do
     t.integer  "failed_attempts",        default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.string   "authentication_token"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "provider"
     t.string   "uid"
     t.integer  "roles_mask",             default: 4,  null: false
     t.string   "current_status"
+    t.string   "authentication_token"
+    t.datetime "remember_created_at"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

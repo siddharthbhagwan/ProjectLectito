@@ -8,8 +8,6 @@ Devise.setup do |config|
 
   config.secret_key = '228935430ae7aa450e020bac6cfa76b2b3540cd4ca67cc0390190e6a7bf4ae5b9ab6fe39301ec1819478e608d85cf3ebbd5bd358216d70e9d5dbd07535f8201b'
 
-  config.allow_insecure_token_lookup = true
-
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
 
