@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.0.0'
+#ruby '2.0.0'
 
 gem 'rails', '4.0'
 gem 'activesupport', '~> 4.0.0'
@@ -17,7 +17,7 @@ gem 'cancan', '1.6.7'
 gem 'role_model'
 gem 'rack'
 gem 'kaminari'
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-datatables-rails'
 gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails','2.3.3'
 gem 'jquery-rails'
@@ -28,6 +28,9 @@ gem 'jquery-ui-rails'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
+
+gem 'taps'
+gem 'sqlite3'
 
 
 # add these gems to help with the transition:
@@ -43,7 +46,7 @@ gem 'actionpack-action_caching'
   gem 'sass-rails',   '4.0.0'
   gem 'coffee-rails', '4.0.0'
   gem 'uglifier', '>= 1.3.0'
-  gem 'therubyracer', platforms: :ruby
+  gem 'therubyracer'
   gem 'turbolinks'
 
 
@@ -55,8 +58,8 @@ group :development do
 end
 
 group :production do
-  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
-  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
+  gem 'rails_log_stdout',           :github => 'heroku/rails_log_stdout'
+  gem 'rails3_serve_static_assets', :github => 'heroku/rails3_serve_static_assets'
 end
 
 
