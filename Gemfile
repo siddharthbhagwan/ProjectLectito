@@ -29,10 +29,6 @@ gem 'redis'
 gem 'rspec'
 gem 'puma'
 
-gem 'taps'
-gem 'sqlite3'
-
-
 # add these gems to help with the transition:
 gem 'protected_attributes'
 gem 'rails-observers'
