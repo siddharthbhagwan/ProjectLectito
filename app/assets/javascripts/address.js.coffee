@@ -26,14 +26,15 @@ jQuery ->
       $("#address_city").val(ui.item.city)
       $("#address_pin").val(ui.item.pin)
       
-      ).blur ->
-        value_typed = $("#address_locality").val()
-        value_selected = $("#address_locality").data("selected_item")
-        if value_typed != value_selected
-          $("#address_locality").val("")
+  ).blur ->
+  # ).blur ->
+  #   value_typed = $("#address_locality").val()
+  #   value_selected = $("#address_locality").data("selected_item")
+  #   if value_typed != value_selected
+  #     $("#address_locality").val("")
 
-        if value_selected == "No Matching Results Found"
-          $("#address_locality").val("") 
+  #   if value_selected == "No Matching Results Found"
+  #     $("#address_locality").val("") 
 
 #--------------------------------------------------------------------------------------------------------------------
 # TODO Check how to propagate modal confirm accept/reject

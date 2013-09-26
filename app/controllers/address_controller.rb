@@ -75,13 +75,13 @@ class AddressController < ApplicationController
 
   private
   
-  def require_profile
+   def require_profile
       if current_user.profile.nil?
         flash[:notice] = "Please complete your profile"
-        redirect_to edit_profile_path
+        redirect_to new_profile_path
       else
         return false
       end
-    end
+     end
 
 end
