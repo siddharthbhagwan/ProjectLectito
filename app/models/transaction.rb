@@ -4,6 +4,7 @@ class Transaction < ActiveRecord::Base
 
   validates :borrower_id, :lender_id, :status, :inventory_id , :presence => true
 
+  has_many :chats
   belongs_to :borrower, class_name: "User"
   belongs_to :lender, class_name: "User"
 

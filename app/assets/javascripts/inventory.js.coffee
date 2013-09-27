@@ -197,14 +197,14 @@ jQuery ->
         $("#book_id").val(ui.item.id)
         $("#book_name").data("selected_item",ui.item.label)
 
-  ).blur ->
-    value_typed = $("#book_name").val()
-    value_selected = $("#book_name").data("selected_item")
-    if value_typed != value_selected
-      $("#book_name").val("")
+  )# ).blur ->
+  #   value_typed = $("#book_name").val()
+  #   value_selected = $("#book_name").data("selected_item")
+  #   if value_typed != value_selected
+  #     $("#book_name").val("")
 
-    if value_selected == "No Matching Results Found"
-      $("#book_name").val("")     
+  #   if value_selected == "No Matching Results Found"
+  #     $("#book_name").val("")     
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -242,8 +242,3 @@ jQuery ->
   $(".edit_inventory").show() 
 
 #--------------------------------------------------------------------------------------------------------------------
-
-jQuery ->
-   #$('#search_by_author').css("text-transform","capitalize")
-   #$('#search_by_book_name').css("text-transform","capitalize")
- 

@@ -29,6 +29,7 @@ ProjectLectito::Application.routes.draw do
   
   # Transaction Routes
   get "transaction/user_id" => "transaction#user_id"
+  post "transaction/new_chat" => "transaction#new_chat"
   post "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   post "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
   post "transaction/update_request_status_cancel" => "transaction#update_request_status_cancel"
@@ -36,11 +37,10 @@ ProjectLectito::Application.routes.draw do
   post "transaction/update_request_status_receive" => "transaction#update_request_status_receive"
 
   ##SSE
-  get "transaction/transaction_status" => "transaction#transaction_status"   
-
+  get "chat/transaction/transaction_status" => "transaction#transaction_status"
 
   root :to => "inventory#search"
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
-  resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction
+  resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction, :chat
 
 end

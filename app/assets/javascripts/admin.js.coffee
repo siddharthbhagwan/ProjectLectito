@@ -62,7 +62,6 @@ jQuery ->
               message:  '<p>Your request is being processed</p>'
             
           success: (data, textStatus, XHR) ->
-            alert (data.responseText)
             $("#bar_user_success").dialog "open"
             $("#bar_user").val("Un Bar User").attr("id","unbar_user")
             $("#user_current_status").text("Locked").fadeIn(500)
