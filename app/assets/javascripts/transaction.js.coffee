@@ -318,39 +318,39 @@ $(document).ready ->
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
 
-              if pData[0] == "chat"
-                $("#chat_div_" + pData[1].trid).chatbox(
-                  id: "chatbox_" + pData[1].trid
-                  user:
-                    key: "value"
+              # if pData[0] == "chat"
+              #   $("#chat_div_" + pData[1].trid).chatbox(
+              #     id: "chatbox_" + pData[1].trid
+              #     user:
+              #       key: "value"
 
-                  title: "Chat - " + pData[1].title
-                  messageSent: (id, user, msg) ->
-                    $.ajax
-                      url: "/transaction/new_chat"
-                      type: "post"
-                      context: "this"
-                      dataType: "json"
-                      data:
-                        chat: msg
-                        ref: pData[1].trid
+              #     title: "Chat - " + pData[1].title
+              #     messageSent: (id, user, msg) ->
+              #       $.ajax
+              #         url: "/transaction/new_chat"
+              #         type: "post"
+              #         context: "this"
+              #         dataType: "json"
+              #         data:
+              #           chat: msg
+              #           ref: pData[1].trid
 
-                      success: (msg) ->
+              #         success: (msg) ->
                         
-                      error: (jqXHR, textStatus, errorThrown) ->
+              #         error: (jqXHR, textStatus, errorThrown) ->
 
-                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "You", msg
+              #       $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "You", msg
 
-                  boxClosed: ->
-                    chat_boxes = jQuery.grep(chat_boxes, (value) ->
-                    value isnt trid
-                    )   
-                    i = 0
-                    while i < chat_boxes.length
-                      $("#chat_div_" + chat_boxes[i]).chatbox("option", "offset", 0)
-                      i++            
-                )
-                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
+              #     boxClosed: ->
+              #       chat_boxes = jQuery.grep(chat_boxes, (value) ->
+              #       value isnt trid
+              #       )   
+              #       i = 0
+              #       while i < chat_boxes.length
+              #         $("#chat_div_" + chat_boxes[i]).chatbox("option", "offset", 0)
+              #         i++            
+              #   )
+              #   $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
 
       
 

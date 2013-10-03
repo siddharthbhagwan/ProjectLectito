@@ -3,9 +3,9 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
-  exports = this
-  exports.MyVariable = "foo-bar"
   chat_boxes = new Array()
+  exports = this
+  exports.chat_boxes = chat_boxes 
 
 
   $("#chat_send").click ->
@@ -45,18 +45,18 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
 
-  $("input[id^='chat_']").click (event, ui) ->
+  $(document).on "click", "input[id^='chat_']", ->
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
       title = $(this).attr("data-title").substring(0,20) + "..."
     else
       title = $(this).attr("data-title")
 
-    if jQuery.inArray(trid, chat_boxes) != -1
+    if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
-      offset = chat_boxes.length * 315
-      chat_boxes.push(trid)
+      offset = exports.chat_boxes.length * 315
+      exports.chat_boxes.push(trid)
       $("#chat_div_" + trid).chatbox(
         id: "chatbox_" + trid
         offset: offset
@@ -81,13 +81,16 @@ $(document).ready ->
           $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg "You", msg
               
         boxClosed: ->
-          chat_boxes = jQuery.grep(chat_boxes, (value) ->
+          closed_offset = $("#chat_div_" + trid).chatbox("option", "offset")       
+          exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
             value isnt trid
           )
           i = 0
-          while i < chat_boxes.length
-            $("#chat_div_" + chat_boxes[i]).chatbox("option", "offset", 0)
-            i++            
+          while i < exports.chat_boxes.length
+            current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
+            if current_offset > closed
+              $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
+            i++
       )
 
   #-------------------------------------------------------------------------------------------------------------------- 
@@ -99,7 +102,6 @@ $(document).ready ->
     dataType: "json"
 
     success: (msg) ->
-        alert exports.MyVariable
         id = msg
         source = new EventSource('transaction/transaction_status')
         source.addEventListener 'transaction_listener_' + id, (e) ->
@@ -107,6 +109,7 @@ $(document).ready ->
           if pData[0] == "chat"
             $("#chat_div_" + pData[1].trid).chatbox(
               id: "chatbox_" + pData[1].trid
+              offset: $(".ui-chatbox").length * 315
               user:
                 key: "value"
 

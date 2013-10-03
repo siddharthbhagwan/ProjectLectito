@@ -12,6 +12,10 @@ ProjectLectito::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  #SSE 
+  config.preload_frameworks = true
+  config.allow_concurrency = true
+
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 

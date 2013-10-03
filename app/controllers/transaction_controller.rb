@@ -3,8 +3,6 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
-	redis_subscribe = Redis.new
-
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new
@@ -32,7 +30,6 @@ include ActionController::Live
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
-
 			$redis.publish(publish_channel, transaction_details.to_json)
 		end	
 		ensure
@@ -205,14 +202,14 @@ include ActionController::Live
 	    chat.transaction_id = params[:ref]
 	    chat.body = params[:chat] + "\n"
 	    chat.from_user = current_user.id
-	    logger.debug "Adsadasda da " + params[:ref].to_s
+
 	    if chat.save
 	      transaction = Transaction.where(:id => params[:ref]).take
 	      if current_user.id == transaction.lender_id	  
-	        #publish_from_channel = "transaction_listener_" + transaction.lender_id.to_s
+	        publish_from_channel = "transaction_listener_" + transaction.lender_id.to_s
 	        publish_to_channel = "transaction_listener_" + transaction.borrower_id.to_s
 	      else
-	        #publish_from_channel = "transaction_listener_" + transaction.borrower_id.to_s
+	        publish_from_channel = "transaction_listener_" + transaction.borrower_id.to_s
 	        publish_to_channel = "transaction_listener_" + transaction.lender_id.to_s
 	      end
 
@@ -229,22 +226,27 @@ include ActionController::Live
 	    else
       		raise 'error'
     	end
+
+    ensure
+		$redis.quit
 	end
 
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
-		redis_subscribe = Redis.new
+		redis_sub = Redis.new
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		redis_subscribe.subscribe(subscribe_channel) do |on|
-			on.message do |event, data|
-		        response.stream.write("event: #{event}\n")
-		        response.stream.write("data: #{data}\n\n")
-		  	end
-		end
+		#Thread.new do 
+			redis_sub.subscribe(subscribe_channel) do |on|
+				on.message do |event, data|
+					response.stream.write("event: #{event}\n")
+			        response.stream.write("data: #{data}\n\n")
+			  	end
+			end
+		#end
 	rescue IOError
 		logger.info "Stream Closed"
 	ensure
-		redis_subscribe.quit
+		redis_sub.quit
 		response.stream.close
 	end
 
