@@ -24,10 +24,17 @@ gem 'jquery-rails'
 gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'sidekiq'
 gem 'jquery-ui-rails'
+<<<<<<< HEAD
 #gem 'unicorn-rails'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
+=======
+gem 'redis'
+gem 'rspec'
+gem 'puma'
+
+>>>>>>> chat
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

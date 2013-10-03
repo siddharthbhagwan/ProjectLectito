@@ -7,7 +7,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: postgres
-  pool: 5
+  pool: 25
   username: siddharthbhagwan
   password:
 
