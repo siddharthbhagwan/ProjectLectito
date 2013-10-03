@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-#ruby '2.0.0'
+ruby '2.0.0'
 
 gem 'rails', '4.0'
 gem 'activesupport', '~> 4.0.0'
@@ -24,17 +24,9 @@ gem 'jquery-rails'
 gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'sidekiq'
 gem 'jquery-ui-rails'
-<<<<<<< HEAD
-#gem 'unicorn-rails'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
-=======
-gem 'redis'
-gem 'rspec'
-gem 'puma'
-
->>>>>>> chat
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
