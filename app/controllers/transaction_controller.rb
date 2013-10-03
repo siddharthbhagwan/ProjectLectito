@@ -238,14 +238,14 @@ include ActionController::Live
 		response.headers["Content-Type"] = "text/event-stream"
 		redis_sub = Redis.new
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		#Thread.new do 
+		Thread.new do 
 			redis_sub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
 					response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
 			  	end
 			end
-		#end
+		end
 	rescue IOError
 		logger.info "Stream Closed"
 	ensure

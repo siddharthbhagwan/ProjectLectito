@@ -52,7 +52,6 @@ $(document).ready ->
     else
       title = $(this).attr("data-title")
 
-    alert title
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
