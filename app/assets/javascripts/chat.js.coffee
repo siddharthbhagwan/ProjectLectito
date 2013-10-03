@@ -52,6 +52,7 @@ $(document).ready ->
     else
       title = $(this).attr("data-title")
 
+    alert title
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
@@ -125,6 +126,7 @@ $(document).ready ->
                     data:
                       chat: msg
                       ref: pData[1].trid
+                      title: pData[1].title
 
                     success: (msg) ->
                       
@@ -134,14 +136,12 @@ $(document).ready ->
 
                 boxClosed: ->
                   closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
-                  alert closed_offset
                   exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
                     value isnt pData[1].trid
                   )
                   i = 0
                   while i < exports.chat_boxes.length
                     current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
-                    alert current_offset
                     if current_offset > closed_offset
                       $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                     i++
@@ -172,7 +172,6 @@ $(document).ready ->
                   $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "You", msg
 
                 boxClosed: ->
-                  alert "called"
                   closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
                   exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
                     value isnt pData[1].trid
