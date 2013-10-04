@@ -9,6 +9,9 @@ include ActionController::Live
 	logger.info " YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY " + $redis_pub.inspect
 	logger.debug " YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY " + $redis_pub.inspect
 
+	logger.info " YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY " + $redis_sub.inspect
+	logger.debug " YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY " + $redis_sub.inspect
+
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new
