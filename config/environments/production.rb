@@ -38,10 +38,6 @@
   # See everything in the log (default is :info)
    config.log_level = :debug
 
-  #SSE 
-  config.preload_frameworks = true
-  config.allow_concurrency = true
-
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
 
