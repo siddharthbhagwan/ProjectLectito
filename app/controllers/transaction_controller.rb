@@ -3,7 +3,7 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
-	$redis_pub = Redis.new
+	$redis_pub = Redis.new()
 
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
@@ -28,7 +28,9 @@ include ActionController::Live
 				:book_name => Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
 				:requested_from => Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
 				:requested_date => @transaction.request_date.to_s(:long),
-				:status => @transaction.status
+				:status => @transaction.status,
+				:borrower => User.find(@transaction.borrower_id).full_name,
+				:delivery_mode => User.find(@transaction.borrower_id).is_delivery
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
@@ -94,7 +96,9 @@ include ActionController::Live
 		transaction_accepted_lender << {			
 			:id => @accept_request.id,
 			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
-			:acceptance_date => @accept_request.acceptance_date.to_s(:long)
+			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
+			:borrower => User.find(@accept_request.borrower_id).full_name,
+			:delivery_mode => User.find(@accept_request.borrower_id).is_delivery
 		}
 
 		transaction_accepted_borrower = Array.new
@@ -102,7 +106,9 @@ include ActionController::Live
 		transaction_accepted_borrower << {
 			:id => @accept_request.id,
 			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
-			:acceptance_date => @accept_request.acceptance_date.to_s(:long)
+			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
+			:lender => User.find(@accept_request.lender_id).full_name,
+			:delivery_mode => User.find(@accept_request.borrower_id).is_delivery
 		}
 
 		if @accept_request.save
@@ -236,20 +242,20 @@ include ActionController::Live
 
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
-		$redis_sub = Redis.new
+		redis_sub = Redis.new
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		Thread.new do 
-			$redis_sub.subscribe(subscribe_channel) do |on|
+		#Thread.new do 
+			redis_sub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
 					response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
 			  	end
 			end
-		end
+		#end
 	rescue IOError
 		logger.info "Stream Closed"
 	ensure
-		$redis_sub.quit
+		redis_sub.quit
 		response.stream.close
 	end
 

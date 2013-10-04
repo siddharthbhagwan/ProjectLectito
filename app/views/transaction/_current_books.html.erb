@@ -3,6 +3,8 @@
 	<thead>
 		<tr>
 			<th>Book Name</th>
+			<th>Lender</th>
+			<th>Delivery Mode</th>
 			<th>Acceptance Date</th> 
 			<th>Received Date</th>
 			<th>Borrow Durtaion</th>
@@ -15,6 +17,12 @@
 			<% @current.each do |c| %>
 				<tr id='current_<%= c.id %>' >
 					<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
+					<td><%= User.find(c.lender_id).full_name %></td>
+					<% if User.find(c.lender_id).is_delivery %>
+						<td>Delivery</td>
+					<% else %>
+						<td>Self Pick/Drop</td>
+					<% end %>
 					<td><%= c.acceptance_date.to_s(:long) %></td>
 					<td><%= c.received_date.to_s(:long) unless c.received_date.nil? %></td>
 					<td>Pending</td>

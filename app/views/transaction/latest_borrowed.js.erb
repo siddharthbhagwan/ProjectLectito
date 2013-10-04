@@ -9,7 +9,7 @@
 		td_status = "<td><%= b.status %></td>"
 		td_cancel = "<td><%= tag 'input',type ='button', data-trid=b.id.to_s, class='btn btn-small cancel_trans', value='Cancel' %></td></tr>"
 		td_request_date = "<td><%= b.request_date.to_s(:long) %></td>"
-		table_row_data = tr_id + td_book_name + td_address_summary + td_request_date + td_status + td_cancel
+		table_row_data = tr_id + td_book_name + td_lender_name + td_address_summary + td_delivery_mode + td_request_date + td_status + td_cancel
 		$("#borrow_requests_table > tbody:last").append(table_row_data);
 	<% end %>
 	if (!$("#borrow_requests_div").is(":visible")){
