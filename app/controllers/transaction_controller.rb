@@ -239,7 +239,7 @@ include ActionController::Live
 		$redis_sub = Redis.new
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		Thread.new do 
-			redis_sub.subscribe(subscribe_channel) do |on|
+			$redis_sub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
 					response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
@@ -249,7 +249,7 @@ include ActionController::Live
 	rescue IOError
 		logger.info "Stream Closed"
 	ensure
-		redis_sub.quit
+		$redis_sub.quit
 		response.stream.close
 	end
 
