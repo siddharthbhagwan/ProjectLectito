@@ -3,7 +3,7 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
-	$redis_pub = Redis.new()
+	$redis_pub = Redis.new
 
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
