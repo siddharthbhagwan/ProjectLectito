@@ -19,7 +19,7 @@
 
 <%= collection_select :inventory, :available_in_city, @address, :id, :address_summary %></br>
 
-<%= text_field_tag :rental_price, nil, :placeholder => "Rental Price", :required => :true %></br>
+<!-- <%= text_field_tag :rental_price, nil, :placeholder => "Rental Price", :required => :true %></br> -->
 
 <%= select_tag :status, options_for_select(['Available','Unavailable'], 'Available'), :placeholder => "Current Status" %>
 </br></br>

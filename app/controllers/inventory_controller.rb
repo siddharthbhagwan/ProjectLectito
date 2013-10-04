@@ -15,7 +15,7 @@ class InventoryController < ApplicationController
 		@inventory.user_id = current_user.id
 		@inventory.book_id = params[:book_id]
 		@inventory.available_in_city = params[:inventory][:available_in_city]
-		@inventory.rental_price = params[:rental_price]
+		#@inventory.rental_price = params[:rental_price]
 		@inventory.status = params[:status]
  		if @inventory.save!
 			redirect_to inventory_index_path
@@ -34,7 +34,7 @@ class InventoryController < ApplicationController
 		#FIXME Update_attributes needs to be done individually :S
 		@inventory = Inventory.where(:id => params[:id]).take
    		@inventory.available_in_city = params[:inventory][:available_in_city]
-   		@inventory.rental_price = params[:rental_price]
+   		#@inventory.rental_price = params[:rental_price]
    		@inventory.status = params[:status]
    		
    		if @inventory.save!
