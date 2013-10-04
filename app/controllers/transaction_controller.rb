@@ -3,7 +3,9 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
-	$redis_pub = Redis.new()
+	uri = URI.parse(ENV["REDISTOGO_URL"])
+	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+	$redis_sub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
