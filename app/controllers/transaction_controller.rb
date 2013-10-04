@@ -3,7 +3,7 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
-	uri = URI.parse(ENV["REDISTOGO_URL"])
+	uri = URI.parse(ENV["REDISCLOUD_URL"])
 	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 	$redis_sub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
