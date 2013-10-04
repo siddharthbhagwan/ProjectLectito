@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def full_name
+    profile.user_first_name + " " + profile.user_last_name
+  end
+
   # Set Users Current Status as active by default
   def default_current_status
     current_status ||= "Active"
@@ -42,11 +46,6 @@ class User < ActiveRecord::Base
   def is_delivery
     profile.delivery
   end
-
-  def default_current_status
-    self.current_status ||= "Active"
-  end
-  
 
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid, :email)).first_or_create do |user|
@@ -79,7 +78,6 @@ class User < ActiveRecord::Base
       super
     end
   end
-
 
   # Function to return the role assigned
   def checkrole

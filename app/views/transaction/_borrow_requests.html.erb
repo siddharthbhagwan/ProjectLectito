@@ -3,7 +3,9 @@
 	<thead>
 		<tr>
 			<th>Book Name</th>
+			<th>Lender</th>
 			<th>Available @</th>
+			<th>Delivery Mode</th>
 			<th>Request Date</th>
 			<th colspan='2'>Status</th>   
 		</tr>
@@ -13,7 +15,15 @@
 			<% @borrow.each do |b| %>
 				<tr id='borrow_<%= b.id %>'>
 					<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
+					<td><%= User.find(b.lender_id).full_name %></td>
 					<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
+					<td>
+						<% if User.find(b.lender_id).is_delivery %>
+							Delivery
+						<% else %>
+							Self Pick/Drop
+						<% end %>
+					</td>
 					<td><%= b.request_date.to_s(:long) %></td>
 					<td><%= b.status %></td>
 					<td><%= tag "input", :type => "button", "data-trid" => b.id.to_s, :class => "btn btn-small cancel_trans" , :value => "Cancel" %></td>
