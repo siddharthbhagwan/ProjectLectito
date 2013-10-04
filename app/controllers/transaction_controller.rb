@@ -6,9 +6,10 @@ include ActionController::Live
 	uri = URI.parse(ENV["REDISTOGO_URL"])
 	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 	$redis_sub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-	
+	logger.info " YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY " + $redis_pub.inspect
 	logger.debug " YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY " + $redis_pub.inspect
 
+	logger.info " SSSSSSSSSSSSS " + $redis_sub.inspect
 	logger.debug " SSSSSSSSSSSSS " + $redis_sub.inspect
 
 	def create
