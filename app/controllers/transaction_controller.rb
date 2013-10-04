@@ -3,7 +3,7 @@ include ActionController::Live
 
 	before_action :require_profile, :require_address
 
-	redis_pub = Redis.new()
+	$redis_pub = Redis.new
 
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
@@ -32,11 +32,11 @@ include ActionController::Live
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
-			redis_pub.publish(publish_channel, transaction_details.to_json)
+			$redis_pub.publish(publish_channel, transaction_details.to_json)
 
 		end	
 		ensure
-			redis_pub.quit
+			$redis_pub.quit
 
 		respond_to do |format|
     		format.html  
@@ -79,10 +79,10 @@ include ActionController::Live
 
 					if reject_each.save
 						publish_channel_remaining_lender = "transaction_listener_" + reject_each.lender_id.to_s
-						redis_pub.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
+						$redis_pub.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
 
 						publish_channel_remaining_borrower = "transaction_listener_" + reject_each.borrower_id.to_s
-						redis_pub.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
+						$redis_pub.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
 					end
 				end
 			end
@@ -108,16 +108,16 @@ include ActionController::Live
 		if @accept_request.save
 			#MailWorker.perform_borrow_accept_async(@accept_request.borrower_id)
 			publish_channel_lender = "transaction_listener_" + lender_id_s
-			redis_pub.publish(publish_channel_lender, transaction_accepted_lender.to_json)
+			$redis_pub.publish(publish_channel_lender, transaction_accepted_lender.to_json)
 
 			publish_channel_borrower = "transaction_listener_" + borrower_id_s
-			redis_pub.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
+			$redis_pub.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
 
 		else
 			raise "error"
 		end
 	ensure
-		redis_pub.quit
+		$redis_pub.quit
 	end
 
 	#TODO , check pattern mapping of rejected vs rejected lender and rejected borrower
@@ -136,10 +136,10 @@ include ActionController::Live
 
 		if @latest_rejected.save
 			publish_channel = "transaction_listener_" + @latest_rejected.borrower_id.to_s
-			redis_pub.publish(publish_channel, transaction_rejected.to_json)
+			$redis_pub.publish(publish_channel, transaction_rejected.to_json)
 		end
 	ensure
-		redis_pub.quit
+		$redis_pub.quit
 	end
 
 	def update_request_status_cancel
@@ -155,7 +155,7 @@ include ActionController::Live
 		
 		if @cancel_transaction.save
 			publish_channel = "transaction_listener_" + @cancel_transaction.lender_id.to_s
-			redis_pub.publish(publish_channel, cancelled_transaction.to_json)
+			$redis_pub.publish(publish_channel, cancelled_transaction.to_json)
 		end
 	ensure
 		$redis_pub.quit
@@ -176,7 +176,7 @@ include ActionController::Live
 
 		if @return_transaction.save
 			publish_channel = "transaction_listener_" + @return_transaction.lender_id.to_s
-			redis_pub.publish(publish_channel, returned_transaction.to_json)
+			$redis_pub.publish(publish_channel, returned_transaction.to_json)
 		else
 			raise 'error'
 		end
@@ -224,19 +224,19 @@ include ActionController::Live
 	        :title => params[:title]
 	      }
 
-	      #redis_pub.publish(publish_from_channel, chat_data.to_json)
-	      redis_pub.publish(publish_to_channel, chat_data.to_json)
+	      #$redis_pub.publish(publish_from_channel, chat_data.to_json)
+	      $redis_pub.publish(publish_to_channel, chat_data.to_json)
 	    else
       		raise 'error'
     	end
 
     ensure
-		redis_pub.quit
+		$redis_pub.quit
 	end
 
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
-		redis_sub = Redis.new
+		$redis_sub = Redis.new
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		Thread.new do 
 			redis_sub.subscribe(subscribe_channel) do |on|
