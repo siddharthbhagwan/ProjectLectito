@@ -512,7 +512,3 @@ $(document).ready ->
           $(this).dialog "close"
 
 #--------------------------------------------------------------------------------------------------------------------
- jQuery ->
-  source = new EventSource('transaction/testsse')
-  source.addEventListener 'test', (e) ->
-    alert "ok"
