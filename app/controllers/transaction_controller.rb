@@ -6,8 +6,6 @@ include ActionController::Live
 	uri = URI.parse(ENV["REDISTOGO_URL"])
 	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 	logger.warn " Publish Connection " + $redis_pub.inspect
-	# $redis_sub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-	# logger.warn " Subscribe Connection " + $redis_sub.inspect
 
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
@@ -253,6 +251,8 @@ include ActionController::Live
 		#Thread.new do 
 			$redis_sub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
+					logger.debug "Event is " + event.inspect
+					logger.debug "Data is " + data.inspect
 					response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
 			  	end
@@ -267,7 +267,7 @@ include ActionController::Live
 
 	def testsse
 		response.headers["Content-Type"] = "text/event-stream"
-		10.times{
+		0.times{
 			response.stream.write("event: test\n")
 	        response.stream.write("data: 123\n\n")
 	    }
