@@ -246,7 +246,7 @@ include ActionController::Live
 		response.headers["Content-Type"] = "text/event-stream"
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		#Thread.new do 
-			$redis_sub.subscribe(subscribe_channel) do |on|
+			$redis_pub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
 					response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
@@ -256,7 +256,7 @@ include ActionController::Live
 	rescue IOError
 		logger.info "Stream Closed"
 	ensure
-		$redis_sub.quit
+		$redis_pub.quit
 		response.stream.close
 	end
 
