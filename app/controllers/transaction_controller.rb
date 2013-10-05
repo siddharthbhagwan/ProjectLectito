@@ -4,8 +4,8 @@ include ActionController::Live
 	before_action :require_profile, :require_address
 
 	uri = URI.parse(ENV["REDISTOGO_URL"])
-	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 	$redis_sub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
@@ -246,7 +246,7 @@ include ActionController::Live
 		response.headers["Content-Type"] = "text/event-stream"
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		#Thread.new do 
-			$redis_pub.subscribe(subscribe_channel) do |on|
+			$redis_sub.subscribe(subscribe_channel) do |on|
 				on.message do |event, data|
 					response.stream.write("event: #{event}\n")
 			        response.stream.write("data: #{data}\n\n")
@@ -256,7 +256,7 @@ include ActionController::Live
 	rescue IOError
 		logger.info "Stream Closed"
 	ensure
-		$redis_pub.quit
+		$redis_sub.quit
 		response.stream.close
 	end
 
