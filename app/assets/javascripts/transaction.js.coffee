@@ -258,11 +258,11 @@ $(document).ready ->
         dataType: "json"
 
         success: (msg) ->
-            alert "succeeded"
             id = msg
             source = new EventSource('transaction/transaction_status')
             source.addEventListener 'transaction_listener_' + id, (e) ->
               pData = $.parseJSON(e.data)
+              alert "data rcvd"
               if pData[0] == "create"
                 alert "created"
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
