@@ -243,7 +243,8 @@ include ActionController::Live
 	end
 
 	def transaction_status
-		# response.headers["Content-Type"] = "text/event-stream"
+		response.headers["Content-Type"] = "text/event-stream"
+		response.headers["Content-Type"] = "text/event-stream"
 		uri2 = URI.parse(ENV["REDISTOGO_URL"])
 		$redis_sub = Redis.new(:host => uri2.host, :port => uri2.port, :password => uri2.password)
 		logger.warn " Subscribe Connection " + $redis_sub.inspect
