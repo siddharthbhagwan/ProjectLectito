@@ -243,8 +243,8 @@ include ActionController::Live
 	end
 
 	def transaction_status
-		uri2 = URI.parse(ENV["REDISTOGO_URL"])
 		response.headers["Content-Type"] = "text/event-stream"
+		uri2 = URI.parse(ENV["REDISTOGO_URL"])
 		$redis_sub = Redis.new(:host => uri2.host, :port => uri2.port, :password => uri2.password)
 		logger.warn " Subscribe Connection " + $redis_sub.inspect
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
@@ -263,8 +263,8 @@ include ActionController::Live
 		response.stream.close
 	end
 
-	def testsse
-		response.headers["Content-Type"] = "text/event-stream"
+	# def testsse
+	# 	response.headers["Content-Type"] = "text/event-stream"
 	# 	0.times{
 	# 		response.stream.write("event: test\n")
 	#         response.stream.write("data: 123\n\n")
@@ -273,7 +273,7 @@ include ActionController::Live
 	# 	logger.info "Stream Closed"
 	# ensure
 	# 	response.stream.close
-	end
+	# end
 
 	def user_id
 		respond_to do |format|
