@@ -6,6 +6,9 @@ include ActionController::Live
 	uri = URI.parse(ENV["REDISTOGO_URL"])
 	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 	logger.warn " Publish Connection " + $redis_pub.inspect
+	# $redis_sub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+	# logger.warn " Subscribe Connection " + $redis_sub.inspect
+
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new

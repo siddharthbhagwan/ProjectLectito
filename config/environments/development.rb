@@ -36,6 +36,9 @@ ProjectLectito::Application.configure do
   #Redis Config
   ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/' 
 
+  #DB Pool
+  ENV["DB_POOL"] = '20'
+
   #Default Url
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }
 
