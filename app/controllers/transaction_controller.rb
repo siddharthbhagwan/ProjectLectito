@@ -4,10 +4,8 @@ include ActionController::Live
 	before_action :require_profile, :require_address
 
 	uri = URI.parse(ENV["REDISTOGO_URL"])
-	$redis_pub = Redis.new
-	logger.debug "sdadsadasd " + $redis_sub.inspect
-
-
+	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+	
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new
@@ -245,7 +243,9 @@ include ActionController::Live
 
 	def transaction_status
 		response.headers["Content-Type"] = "text/event-stream"
-		$redis_sub = Redis.new
+		uri2 = URI.parse(ENV["REDISTOGO_URL"])
+		$redis_sub = Redis.new(:host => uri2.host, :port => uri2.port, :password => uri2.password)
+		logger.debug "WITH PARAMS" + $redis_sub.inspect
 		subscribe_channel = "transaction_listener_" + current_user.id.to_s
 		#Thread.new do 
 			$redis_sub.subscribe(subscribe_channel) do |on|
