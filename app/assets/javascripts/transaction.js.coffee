@@ -262,9 +262,9 @@ $(document).ready ->
             source = new EventSource('transaction/transaction_status')
             source.addEventListener 'transaction_listener_' + id, (e) ->
               pData = $.parseJSON(e.data)
-              alert "data rcvd"
+              # alert "data rcvd"
               if pData[0] == "create"
-                alert "create"
+                # alert "create"
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
                 td_borrower = "<td>" + pData[1].borrower + "</td>"
@@ -512,6 +512,7 @@ $(document).ready ->
           $(this).dialog "close"
 
 #--------------------------------------------------------------------------------------------------------------------
-# jQuery ->
-#   window.onbeforeunload = ->
-#    "Are you sure you want to navigate away?"      
+ jQuery ->
+  source = new EventSource('transaction/testsse')
+  source.addEventListener 'test', (e) ->
+    alert "ok"

@@ -265,6 +265,18 @@ include ActionController::Live
 		response.stream.close
 	end
 
+	def testsse
+		response.headers["Content-Type"] = "text/event-stream"
+		10.times{
+			response.stream.write("event: test\n")
+	        response.stream.write("data: 123\n\n")
+	    }
+	rescue IOError
+		logger.info "Stream Closed"
+	ensure
+		response.stream.close
+	end
+
 	def user_id
 		respond_to do |format|
 			format.html  

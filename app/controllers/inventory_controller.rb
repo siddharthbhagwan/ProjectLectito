@@ -1,4 +1,5 @@
 class InventoryController < ApplicationController
+
 	before_action :require_profile, :require_address
 
 	def index
