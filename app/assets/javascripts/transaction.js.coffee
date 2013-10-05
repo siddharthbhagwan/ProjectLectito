@@ -262,9 +262,7 @@ $(document).ready ->
             source = new EventSource('transaction/transaction_status')
             source.addEventListener 'transaction_listener_' + id, (e) ->
               pData = $.parseJSON(e.data)
-              alert "data rcvd"
               if pData[0] == "create"
-                alert "created"
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
                 td_borrower = "<td>" + pData[1].borrower + "</td>"
