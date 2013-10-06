@@ -36,10 +36,6 @@ ProjectLectito::Application.routes.draw do
   post "transaction/update_request_status_return" => "transaction#update_request_status_return"
   post "transaction/update_request_status_receive" => "transaction#update_request_status_receive"
 
-  ##SSE
-  get "chat/transaction/transaction_status" => "transaction#transaction_status"
-  get "transaction/transaction_status" => "transaction#transaction_status"
-  get "transaction/testsse" => "transaction#testsse"
 
   root :to => "inventory#search"
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
