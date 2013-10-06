@@ -7,6 +7,8 @@ include ActionController::Live
 	$redis_pub = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 	logger.warn " Publish Connection " + $redis_pub.inspect
 
+	Firebase.base_uri = "https://projectlectito.firebaseio.com/"
+
 	def create
 		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new
@@ -36,11 +38,10 @@ include ActionController::Live
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
-			$redis_pub.publish(publish_channel, transaction_details.to_json)
+			#$redis_pub.publish(publish_channel, transaction_details.to_json)
+			Firebase.push(publish_channel, transaction_details.to_json)
 
-		end	
-		ensure
-			$redis_pub.quit
+		end
 
 		respond_to do |format|
     		format.html  
@@ -83,10 +84,12 @@ include ActionController::Live
 
 					if reject_each.save
 						publish_channel_remaining_lender = "transaction_listener_" + reject_each.lender_id.to_s
-						$redis_pub.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
+						#$redis_pub.publish(publish_channel_remaining_lender, reject_update_lender.to_json)
+						Firebase.push(publish_channel_remaining_lender, reject_update_lender.to_json)
 
 						publish_channel_remaining_borrower = "transaction_listener_" + reject_each.borrower_id.to_s
-						$redis_pub.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
+						#$redis_pub.publish(publish_channel_remaining_borrower, reject_update_borrower.to_json)
+						Firebase.push(publish_channel_remaining_borrower, reject_update_borrower.to_json)
 					end
 				end
 			end
@@ -116,10 +119,12 @@ include ActionController::Live
 		if @accept_request.save
 			#MailWorker.perform_borrow_accept_async(@accept_request.borrower_id)
 			publish_channel_lender = "transaction_listener_" + lender_id_s
-			$redis_pub.publish(publish_channel_lender, transaction_accepted_lender.to_json)
+			#$redis_pub.publish(publish_channel_lender, transaction_accepted_lender.to_json)
+			Firebase.push(publish_channel_lender, transaction_accepted_lender.to_json)
 
 			publish_channel_borrower = "transaction_listener_" + borrower_id_s
-			$redis_pub.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
+			#$redis_pub.publish(publish_channel_borrower, transaction_accepted_borrower.to_json)
+			Firebase.push(publish_channel_borrower, transaction_accepted_borrower.to_json)
 
 		else
 			raise "error"
@@ -144,7 +149,8 @@ include ActionController::Live
 
 		if @latest_rejected.save
 			publish_channel = "transaction_listener_" + @latest_rejected.borrower_id.to_s
-			$redis_pub.publish(publish_channel, transaction_rejected.to_json)
+			#$redis_pub.publish(publish_channel, transaction_rejected.to_json)
+			Firebase.push(publish_channel, transaction_rejected.to_json)
 		end
 	ensure
 		$redis_pub.quit
@@ -163,7 +169,8 @@ include ActionController::Live
 		
 		if @cancel_transaction.save
 			publish_channel = "transaction_listener_" + @cancel_transaction.lender_id.to_s
-			$redis_pub.publish(publish_channel, cancelled_transaction.to_json)
+			#$redis_pub.publish(publish_channel, cancelled_transaction.to_json)
+			Firebase.push(publish_channel, cancelled_transaction.to_json)
 		end
 	ensure
 		$redis_pub.quit
@@ -184,7 +191,8 @@ include ActionController::Live
 
 		if @return_transaction.save
 			publish_channel = "transaction_listener_" + @return_transaction.lender_id.to_s
-			$redis_pub.publish(publish_channel, returned_transaction.to_json)
+			#$redis_pub.publish(publish_channel, returned_transaction.to_json)
+			Firebase.push(publish_channel, returned_transaction.to_json)
 		else
 			raise 'error'
 		end
@@ -233,7 +241,8 @@ include ActionController::Live
 	      }
 
 	      #$redis_pub.publish(publish_from_channel, chat_data.to_json)
-	      $redis_pub.publish(publish_to_channel, chat_data.to_json)
+	      #$redis_pub.publish(publish_to_channel, chat_data.to_json)
+	      Firebase.push(publish_to_channel, chat_data.to_json)
 	    else
       		raise 'error'
     	end
@@ -243,23 +252,23 @@ include ActionController::Live
 	end
 
 	def transaction_status
-		response.headers["Content-Type"] = "text/event-stream"
-		uri2 = URI.parse(ENV["REDISTOGO_URL"])
-		$redis_sub = Redis.new(:host => uri2.host, :port => uri2.port, :password => uri2.password)
-		subscribe_channel = "transaction_listener_" + current_user.id.to_s
-		#Thread.new do 
-			$redis_sub.subscribe(subscribe_channel) do |on|
-				on.message do |event, data|
-					response.stream.write("event: #{event}\n")
-			        response.stream.write("data: #{data}\n\n")
-			  	end
-			end
-		#end
-	rescue IOError
-		logger.info "Stream Closed"
-	ensure
-		#$redis_sub.quit
-		response.stream.close
+	# 	response.headers["Content-Type"] = "text/event-stream"
+	# 	uri2 = URI.parse(ENV["REDISTOGO_URL"])
+	# 	$redis_sub = Redis.new(:host => uri2.host, :port => uri2.port, :password => uri2.password)
+	# 	subscribe_channel = "transaction_listener_" + current_user.id.to_s
+	# 	#Thread.new do 
+	# 		$redis_sub.subscribe(subscribe_channel) do |on|
+	# 			on.message do |event, data|
+	# 				response.stream.write("event: #{event}\n")
+	# 		        response.stream.write("data: #{data}\n\n")
+	# 		  	end
+	# 		end
+	# 	#end
+	# rescue IOError
+	# 	logger.info "Stream Closed"
+	# ensure
+	# 	#$redis_sub.quit
+	# 	response.stream.close
 	end
 
 	# def testsse

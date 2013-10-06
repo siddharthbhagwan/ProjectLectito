@@ -103,9 +103,10 @@ $(document).ready ->
 
     success: (msg) ->
         id = msg
-        source = new EventSource('transaction/transaction_status')
-        source.addEventListener 'transaction_listener_' + id, (e) ->
-          pData = $.parseJSON(e.data)
+        myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
+        myChild = myFirebase.child("transaction_listener_" + id)
+        myChild.on "child_added", (childSnapshot, prevChildName) ->
+          pData = $.parseJSON(childSnapshot.val())
           if pData[0] == "chat"
             if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1    
               exports.chat_boxes.push(pData[1].trid)
@@ -183,6 +184,9 @@ $(document).ready ->
                     i++
               )
               $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
+              
+          myChild.remove()
+              
     complete: (jqXHR, textStatus) ->
 
     error: (jqXHR, textStatus, errorThrown) ->

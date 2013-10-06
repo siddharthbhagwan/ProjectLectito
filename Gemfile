@@ -27,6 +27,7 @@ gem 'jquery-ui-rails'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
+gem 'firebase'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

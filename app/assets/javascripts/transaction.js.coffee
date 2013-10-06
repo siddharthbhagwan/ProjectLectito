@@ -259,12 +259,11 @@ $(document).ready ->
 
         success: (msg) ->
             id = msg
-            source = new EventSource('transaction/transaction_status')
-            source.addEventListener 'transaction_listener_' + id, (e) ->
-              pData = $.parseJSON(e.data)
-              # alert "data rcvd"
+            myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
+            myChild = myFirebase.child("transaction_listener_" + id)
+            myChild.on "child_added", (childSnapshot, prevChildName) ->
+              pData = $.parseJSON(childSnapshot.val())
               if pData[0] == "create"
-                # alert "create"
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
                 td_borrower = "<td>" + pData[1].borrower + "</td>"
@@ -281,7 +280,7 @@ $(document).ready ->
                 table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_delivery_mode + td_requested_date + td_status + td_accept + td_reject
                 $("#lend_requests_table > tbody:last").append(table_row_data);
                 if (!$("#lend_requests_div").is(":visible"))
-                  $("#lend_requests_div").show(500)
+                  $("#lend_requests_div").show(500)  
 
               else if pData[0] == "accepted_borrower"
                 tr_id = "<tr id='accepted_" + pData[1].id + "'>"
@@ -337,6 +336,8 @@ $(document).ready ->
               else if pData[0] == "rejected_borrower"
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
+
+              myChild.remove()  
 
               # if pData[0] == "chat"
               #   $("#chat_div_" + pData[1].trid).chatbox(
