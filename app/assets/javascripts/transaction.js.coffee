@@ -186,8 +186,8 @@ $(document).ready ->
             tr_id_s = $("#reject_request_confirm").data("trids")
             reject_reason = $('input[name=rejectReason]:radio:checked').val()
             $.ajax
-              url: "/transaction/update_request_status_reject.js?"
-              type: "get"
+              url: "/transaction/update_request_status_reject"
+              type: "post"
               context: "this"
               dataType: "script"
               data:
@@ -325,15 +325,15 @@ $(document).ready ->
                 $("#accepted_" + pData[1].id + " td:last #received").removeAttr("disabled") 
                 $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
 
-              else if pData[0] == "rejected_lender"
-                $("#lend_" + pData[1].id).remove()
-                empty_table_checks()      
+              # else if pData[0] == "rejected_lender"
+              #   $("#lend_" + pData[1].id).remove()
+              #   empty_table_checks()      
 
               else if pData[0] == "cancelled"
                 $("#lend_" + pData[1].id).remove()
                 empty_table_checks()
 
-              else if pData[0] == "rejected_borrower"
+              else if pData[0] == "rejected"
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
 

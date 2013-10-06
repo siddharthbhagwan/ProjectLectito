@@ -1,12 +1,10 @@
 class TransactionController < ApplicationController
-include ActionController::Live
 
 	before_action :require_profile, :require_address
 
 	Firebase.base_uri = "https://projectlectito.firebaseio.com/"
 
 	def create
-		response.headers["Content-Type"] = 'text/javascript'
 		@transaction = Transaction.new
 		@transaction.borrower_id = current_user.id
 		@transaction.lender_id = params[:user_id] 
@@ -124,7 +122,6 @@ include ActionController::Live
 
 	#TODO , check pattern mapping of rejected vs rejected lender and rejected borrower
 	def update_request_status_reject
-		response.headers["Content-Type"] = 'text/javascript'
 		@latest_rejected = Transaction.where(:id => params[:tr_id]).take	
 		@latest_rejected.status = "Rejected"
 		@latest_rejected.rejection_date = DateTime.now.to_time
@@ -143,7 +140,6 @@ include ActionController::Live
 	end
 
 	def update_request_status_cancel
-		response.headers["Content-Type"] = 'text/javascript'
 		@cancel_transaction = Transaction.where(:id => params[:tr_id]).take
 		@cancel_transaction.status = "Cancelled"
 
