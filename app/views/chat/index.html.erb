@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Book Name</th>
+      <th>Lender/Borrower</th>
       <th>Chat</th>
       <th>Chat</th>
     </tr>
@@ -11,12 +12,13 @@
   <tbody>
     <% if @current_transactions.empty? %>
       <tr>
-        <td colspan='3'>You have no active transactions as of now</td>
+        <td colspan='4'>You have no active transactions as of now</td>
       </tr>
     <% else %>
       <% @current_transactions.each do |t| %>
-        <tr id=<%= t.id %> >
+        <tr id='<%= t.id %>' >
           <td><%= Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name %></td>
+          <td></td>
           <td><%= link_to "Chat", chat_path(t.id), class: "btn btn-small "%></td>
           <!-- #TODO Check for alternative to double querying, or is it cached? -->
           <td><%= tag "input", :type => "button", :id => "chat_#{t.id}", :class => "btn" , :value => "Chat ", "data-trid" => t.id , "data-title" => Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name ,"data-chatidlist" => @current_transactions_id, "data-currentcn" => User.find(current_user.id).profile.chat_name,  "data-lendercn" => User.find(t.lender_id).profile.chat_name,  "data-borrowercn" => User.find(t.borrower_id).profile.chat_name %></td>

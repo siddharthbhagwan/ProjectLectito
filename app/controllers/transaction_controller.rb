@@ -39,9 +39,7 @@ class TransactionController < ApplicationController
 		respond_to do |format|
     		format.html  
     		format.js
-  		end
-	ensure
-		$redis.quit
+		end
 	end
 
 
@@ -227,7 +225,10 @@ class TransactionController < ApplicationController
 	end
 
 	def user_id
-		current_user.id
+		respond_to do |format|
+			format.html  
+			format.json { render :json => { :user_id => current_user.id.to_json} }
+		end	
 	end
 
 	private

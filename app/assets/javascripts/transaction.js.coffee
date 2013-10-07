@@ -283,13 +283,14 @@ $(document).ready ->
   #TODO Remove bracket element so its no more an element
     jQuery ->
       $.ajax
-        url: "/transaction/user_id"
+        url: "/transaction/user_id.json"
         type: "get"
         context: "this"
         dataType: "json"
 
         success: (msg) ->
-            id = msg
+            id = msg.user_id
+            alert
             myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
             myChild = myFirebase.child("transaction_listener_" + id)
             myChild.on "child_added", (childSnapshot, prevChildName) ->
