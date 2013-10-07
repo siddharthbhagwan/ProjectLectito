@@ -52,6 +52,16 @@ $(document).ready ->
     else
       title = $(this).attr("data-title")
 
+    ccn = $(this).attr("data-currentcn")
+    bcn = $(this).attr("data-lendercn")
+    lcn = $(this).attr("data-borrowercn")
+
+    you = ccn
+    if ccn == bcn
+      othercn = lcn
+    else
+      othercn = bcn
+
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
@@ -74,11 +84,13 @@ $(document).ready ->
               chat: msg
               ref: trid
               title: title
+              you: ccn
+              other: othercn
 
             success: (msg) ->
               
             error: (jqXHR, textStatus, errorThrown) ->
-          $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg "You", msg
+          $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg you, msg
               
         boxClosed: ->
           closed_offset = $("#chat_div_" + trid).chatbox("option", "offset")
@@ -132,7 +144,7 @@ $(document).ready ->
                       
                     error: (jqXHR, textStatus, errorThrown) ->
 
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "You", msg
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
 
                 boxClosed: ->
                   closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
@@ -146,7 +158,7 @@ $(document).ready ->
                       $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                     i++
               )
-              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
+              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
 
             else
               $("#chat_div_" + pData[1].trid).chatbox(
@@ -164,12 +176,15 @@ $(document).ready ->
                     data:
                       chat: msg
                       ref: pData[1].trid
+                      title: pData[1].title
+                      you: pData[1].other
+                      other: pData[1].you
 
                     success: (msg) ->
                       
                     error: (jqXHR, textStatus, errorThrown) ->
 
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "You", msg
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
 
                 boxClosed: ->
                   closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
@@ -183,7 +198,7 @@ $(document).ready ->
                       $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                     i++
               )
-              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg "Other Person", pData[1].text
+              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
               
           myChild.remove()
               

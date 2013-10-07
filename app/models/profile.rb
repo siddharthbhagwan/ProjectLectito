@@ -11,11 +11,14 @@ class Profile < ActiveRecord::Base
   validates_inclusion_of :gender, :in => %w( M F ), :message => " can only be 'M' or 'F'"
 
   def sms_updates
-    if self.contact_via_sms?
+    if contact_via_sms?
       "Yes"
     else
       "No"
     end
   end
 
+  def chat_name
+    user_first_name[0,1] + user_last_name[0,1]
+  end
 end

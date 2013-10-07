@@ -212,7 +212,9 @@ class TransactionController < ApplicationController
 	      chat_data << {
 	        :text => params[:chat],
 	        :trid => params[:ref],
-	        :title => params[:title]
+	        :title => params[:title],
+	        :you => params[:you],
+	        :other => params[:other]
 	      }
 
 				#Firebase.push(publish_from_channel, chat_data.to_json)
