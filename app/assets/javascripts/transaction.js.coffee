@@ -409,8 +409,8 @@ $(document).ready ->
         complete: (jqXHR, textStatus) ->
 
         error: (jqXHR, textStatus, errorThrown) ->
-          setTimeout $.unblockUI
-          $("#error_message").dialog "open" 
+          # setTimeout $.unblockUI
+          # $("#error_message").dialog "open" 
 
            
 #--------------------------------------------------------------------------------------------------------------------

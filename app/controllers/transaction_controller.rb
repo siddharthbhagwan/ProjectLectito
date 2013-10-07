@@ -227,10 +227,7 @@ class TransactionController < ApplicationController
 	end
 
 	def user_id
-		respond_to do |format|
-			format.html  
-	    	format.json { render :json => current_user.id}
-		end
+		current_user.id
 	end
 
 	private

@@ -18,7 +18,7 @@ $table_header3 = "<th>Delivery Mode</th>"
 $table_header4 = "<th>Delivery Charges ( &#8377; )</th>"
 $table_header5 = "<th>Borrow</th></tr></thead>"
 
-<% if current_user.is_delivery || @delivery_uwb %>
+<% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
   $table_header = $table_header1 + $table_header2 + $table_header3 + $table_header4 + $table_header5;
 <% else %>
   $table_header = $table_header1 + $table_header2 + $table_header3 + $table_header5;
@@ -54,7 +54,7 @@ if (<%= @users_and_address.length %> === 0) {
       delivery_mode = "<td>Self Pick/Drop</td>";
     }
     <% end %>
-    <% if current_user.is_delivery || @delivery_uwb %>
+    <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
       $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + delivery_charges + button_element + "</tr>";
     <% else %>
       $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + button_element + "</tr>";

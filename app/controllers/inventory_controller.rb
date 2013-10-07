@@ -167,7 +167,7 @@ class InventoryController < ApplicationController
 			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Returned" )
 			@current = Transaction.where(:borrower_id => current_user.id, :status => "Accepted")
 			@received = Transaction.where(:lender_id => current_user.id, :status => "Returned")
-		else	
+		else
 			@borrow = nil
 			@lend = nil
 			@accept = nil
