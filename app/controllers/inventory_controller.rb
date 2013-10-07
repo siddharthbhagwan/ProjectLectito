@@ -63,7 +63,7 @@ class InventoryController < ApplicationController
 		@book_array = []
 
 		@books.each do |book|
-			if !current_user.nil? && current_user.signed_in
+			if user_signed_in?
 				@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ?", book, current_user.id, "Available").take
 			else
 				@users_with_book = Inventory.where("book_id = ? AND status = ?", book, "Available").take
@@ -77,7 +77,7 @@ class InventoryController < ApplicationController
 				@address_uwb_in_city = @users_with_book.user.addresses.where(:id => @users_with_book.available_in_city).take
 				@delivery_uwb = @users_with_book.user.is_delivery
 
-				if !current_user.nil? && current_user.signed_in
+				if user_signed_in?
 					if current_user.is_delivery
 			 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
 							@book_array << book
@@ -101,7 +101,7 @@ class InventoryController < ApplicationController
 
 	def search_books_city
 		# Find all users apart from self, who have the book
-	 	if !current_user.nil? && current_user.signed_in
+	 	if user_signed_in?
 			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? ", params[:book_id], current_user.id, "Available")
 		else
 			@users_with_book = Inventory.where("book_id = ? AND status = ? ", params[:book_id], "Available")
@@ -124,7 +124,7 @@ class InventoryController < ApplicationController
 			#If current User's Delivery mode is delivery only, look for lenders with delivery only
 			#If current user's Delivery mode is pickup, look for both, delivery and pick up
 			#TODO make the if more efficient
-			if !current_user.nil? && current_user.signed_in
+			if user_signed_in?
 				if current_user.is_delivery
 		 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
 		 				# If criteria matches, store Inventory Details woth corresponding Address in an array
@@ -158,7 +158,7 @@ class InventoryController < ApplicationController
 	end
 
 	def search
-		if !current_user.nil?# && current_user.signed_in
+		if user_signed_in?
 			@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
 			@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
 			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Returned" )
@@ -223,15 +223,15 @@ class InventoryController < ApplicationController
 	private
 
 	def require_profile
-		if !current_user.nil? #&& current_user.signed_in?
-	    	if current_user.profile.nil?
-	    		flash[:notice] = "Please complete your profile"
-	    		redirect_to profile_edit_path
-	    	else
-	    		return false
-	    	end
-	    end
+		if user_signed_in?
+    	if current_user.profile.nil?
+    		flash[:notice] = "Please complete your profile"
+    		redirect_to profile_edit_path
+    	else
+    		return false
+    	end
   	end
+  end	
 
   	def require_address
   		if !current_user.nil? #&& current_user.signed_in
