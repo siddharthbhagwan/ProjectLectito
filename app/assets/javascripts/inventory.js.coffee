@@ -139,11 +139,6 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Adding Inventory
-<<<<<<< HEAD
-jQuery ->
-=======
-
->>>>>>> searchwl
   $("#book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
