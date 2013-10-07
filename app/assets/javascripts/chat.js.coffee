@@ -84,7 +84,7 @@ $(document).ready ->
               chat: msg
               ref: trid
               title: title
-              you: ccn
+              you: you
               other: othercn
 
             success: (msg) ->
@@ -139,6 +139,8 @@ $(document).ready ->
                       chat: msg
                       ref: pData[1].trid
                       title: pData[1].title
+                      you: pData[1].other
+                      other: pData[1].you
 
                     success: (msg) ->
                       
