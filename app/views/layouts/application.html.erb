@@ -84,8 +84,8 @@
 
 			<div class="span2">
 				<% if !user_signed_in? %>
-					<%= yield :sign_in %>
-				<% end %>	
+					<%= render 'devise/sessions/sign_in' %>
+				<% end %>
 			</div>
 		</div>		
 	</div>

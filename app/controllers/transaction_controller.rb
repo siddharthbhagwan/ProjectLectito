@@ -40,6 +40,8 @@ class TransactionController < ApplicationController
     		format.html  
     		format.js
   		end
+	ensure
+		$redis.quit
 	end
 
 

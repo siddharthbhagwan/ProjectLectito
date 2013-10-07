@@ -8,7 +8,7 @@ sub_table_id_s = "#" + sub_table_id
 row_number = <%= params[:row_number] %>
 $(sub_table_id_s).remove()
 
-<% #TODO: add table expand retract (toggle) %>
+<% #TODO: add table expand retract (toggle)%>
 
 $final_table ="<tr id='city_<%= params[:book_id] %>'><td colspan='2'><table id='sub_search_results_table_<%= params[:book_id] %>' class='table table-hover table-condensed table-bordered'>"
 $table_ending = "</tbody></table></td></tr>"
@@ -34,13 +34,16 @@ if (<%= @users_and_address.length %> === 0) {
   <%= i = 0 %>
   <% while i < @users_and_address.length %>
     <%= j = i + 1 %>
-    if (<%= @transactions_requested.include?@users_and_address[i].id.to_s %>){
-      button_element = "<td><input type='button' value='Request Sent' disabled = 'true' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
-    }
-    else {
-      button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-cityid ='<%= params[:book_id] %>' /></td>";
-    }
-
+    <% if !user_signed_in? %>
+      button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button_offline' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
+    <% else %>
+      if (<%= @transactions_requested.include?@users_and_address[i].id.to_s %>){
+        button_element = "<td><input type='button' value='Request Sent' disabled = 'true' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
+      }
+      else {
+        button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-cityid ='<%= params[:book_id] %>' /></td>";
+      }
+    <% end %>
     delivery_charges = "<td>60</td>"
     rental_available_at = "<td>" + "<%= @users_and_address[j].locality %>" + "/" + "<%= @users_and_address[j].city %>" + "</td>";
     lender_name = "<td>" + "<%= @users_and_address[i].user.full_name %>"  + "</td>";

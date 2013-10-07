@@ -1,4 +1,5 @@
-jQuery ->
+$(document).ready ->
+
   $("#bookdetail_table tbody tr").click ->
     book_id = undefined
     row_number = undefined
@@ -24,13 +25,12 @@ jQuery ->
 
 #----------------------------------------------------------------------------------------------------------------------
 
-jQuery ->
   $(document).on "mouseenter", "#bookdetail_table tbody tr", ->
     if ($(this).attr("id") != undefined && $(this).attr("id") != 'sub_search_results_table_header')
       $(this).css('cursor', 'pointer')
 
+#----------------------------------------------------------------------------------------------------------------------      
 
-jQuery ->
   $(document).on "click", "td[id^='available_']", ->
     id = $(this).attr('id').substring(10).toString()
     if  $(this).parent("tr").attr("data-specific_stats") is "closed"
@@ -49,8 +49,8 @@ jQuery ->
       $("#sub_borrowed_list_" + id).hide()
       $(this).parent("tr").attr("data-specific_stats", "closed")
 
+#----------------------------------------------------------------------------------------------------------------------
 
-jQuery ->
   $(document).on "click", "td[id^='borrowed_']", ->
     id = $(this).attr('id').substring(9).toString()
     if  $(this).parent("tr").attr("data-specific_stats") is "closed"
