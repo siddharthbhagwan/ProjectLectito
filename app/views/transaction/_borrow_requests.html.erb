@@ -13,7 +13,7 @@
 	<tbody>
 		<% unless @borrow.nil? %>
 			<% @borrow.each do |b| %>
-				<tr id='borrow_<%= b.id %>'>
+				<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>
 					<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
 					<td><%= User.find(b.lender_id).full_name %></td>
 					<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
