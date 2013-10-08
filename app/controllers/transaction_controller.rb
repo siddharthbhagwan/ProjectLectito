@@ -219,11 +219,11 @@ class TransactionController < ApplicationController
 	      }
 
 				#Firebase.push(publish_from_channel, chat_data.to_json)
-	      Firebase.push(publish_to_channel, chat_data.to_json)
+	      response = Firebase.push(publish_to_channel, chat_data.to_json)
+	      render nothing: true
 	    else
       		raise 'error'
     	end
-    	render nothing: true
 	end
 
 	def user_id
