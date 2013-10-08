@@ -16,7 +16,7 @@
 //= require book
 //= require devise
 //= require home_page
-//= require noty/jquery.noty
+//= require noty/jquery.noty.js
 //= require noty/layouts/topRight
 //= require noty/themes/default
 //= require profile
