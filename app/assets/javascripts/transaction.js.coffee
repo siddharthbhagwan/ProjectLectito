@@ -295,6 +295,10 @@ $(document).ready ->
             myChild.on "child_added", (childSnapshot, prevChildName) ->
               pData = $.parseJSON(childSnapshot.val())
               if pData[0] == "create"
+                noty
+                  text: "You have a received a request to lend out '" + pData[1].book_name + "'"
+                  layout: "topRight"
+
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
                 td_borrower = "<td>" + pData[1].borrower + "</td>"
@@ -332,6 +336,10 @@ $(document).ready ->
                   $("#accepted_requests_div").show(500)
               
               else if pData[0] == "accepted_lender"
+                noty
+                  text: "Your request to borrow '" + pData[1].book_name + "' has been accepted"
+                  layout: "topRight"
+
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
                 tr_id = "<tr id='accepted_" + pData[1].id + "'>"
@@ -353,6 +361,10 @@ $(document).ready ->
                   $("#current_books_div").show(500)
 
               else if pData[0] == "returned"
+                noty
+                    text: "Return of '" + pData[1].book_name + "' has been inititated"
+                    layout: "topRight"
+
                 $("#accepted_" + pData[1].id + " td:last #received").removeAttr("disabled") 
                 $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
 
@@ -361,10 +373,18 @@ $(document).ready ->
               #   empty_table_checks()      
 
               else if pData[0] == "cancelled"
+                noty
+                  text: "A request to borrow '" + pData[1].book_name + "' from you has been cancelled"
+                  layout: "topRight"
+
                 $("#lend_" + pData[1].id).remove()
                 empty_table_checks()
 
               else if pData[0] == "rejected"
+                noty
+                  text: "Your request to borrow '" + pData[1].book_name + "' has been rejected"
+                  layout: "topRight"
+
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
 
@@ -518,3 +538,10 @@ $(document).ready ->
     buttons:
       "Ok": ->
         $(this).dialog "close"
+
+#-------------------------------------------------------------------------------------------------------------------- 
+
+  $("#gritter").click ->
+    noty
+      text: "noty - a jquery notification library!"
+      layout: "topRight"

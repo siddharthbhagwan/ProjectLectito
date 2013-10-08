@@ -130,7 +130,8 @@ class TransactionController < ApplicationController
 		transaction_rejected = Array.new
 		transaction_rejected << "rejected"
 		transaction_rejected << {
-			:id => @latest_rejected.id.to_s
+			:id => @latest_rejected.id.to_s,
+			:book_name => Book.find(Inventory.find(@latest_rejected.inventory_id).book_id).book_name,
 		}
 
 		if @latest_rejected.save
@@ -146,7 +147,8 @@ class TransactionController < ApplicationController
 		cancelled_transaction = Array.new
 		cancelled_transaction << "cancelled"
 		cancelled_transaction << {
-			:id => @cancel_transaction.id.to_s
+			:id => @cancel_transaction.id.to_s,
+			:book_name => Book.find(Inventory.find(@cancel_transaction.inventory_id).book_id).book_name,
 		}
 		
 		if @cancel_transaction.save
@@ -165,7 +167,8 @@ class TransactionController < ApplicationController
 		returned_transaction << "returned"
 		returned_transaction << {
 			:id => @return_transaction.id,
-			:returned_date => @return_transaction.returned_date.to_s(:long)
+			:returned_date => @return_transaction.returned_date.to_s(:long),
+			:book_name => Book.find(Inventory.find(@return_transaction.inventory_id).book_id).book_name
 		}
 
 		if @return_transaction.save
