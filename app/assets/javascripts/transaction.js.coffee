@@ -290,7 +290,6 @@ $(document).ready ->
 
         success: (msg) ->
             id = msg.user_id
-            alert
             myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
             myChild = myFirebase.child("transaction_listener_" + id)
             myChild.on "child_added", (childSnapshot, prevChildName) ->

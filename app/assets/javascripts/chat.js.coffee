@@ -9,10 +9,12 @@ exports.chat_boxes = chat_boxes
 $(document).ready ->
   
   $("#chat_send").click ->
-    you = $("#chat_send").attr("data-you")
+    you = $("#chat_text").attr("data-you")
     chat_text = $("#chat_text").val()
     $("#chat_text").val("")
-    $('#chat_box').val($('#chat_box').val() +  '\n' + you + " : " + chat_text)
+    $("#chat_box").val($('#chat_box').val() +  '\n' + you + " : " + chat_text)
+    psconsole = $("#chat_box")
+    psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
     $.ajax
       url: "/transaction/new_chat"
       type: "post"
@@ -22,7 +24,7 @@ $(document).ready ->
         chat: chat_text
         ref: window.location.pathname.replace('/chat/','')
         type: 'page'
-        initials: you
+        you: you
 
       success: (msg) ->
                 
@@ -32,10 +34,12 @@ $(document).ready ->
 
   $("#chat_text").keydown (e) ->
     if e.keyCode is 13
-      you = $("#chat_send").attr("data-you")
+      you = $("#chat_text").attr("data-you")
       chat_text = $("#chat_text").val()
       $("#chat_text").val("")
       $('#chat_box').val($('#chat_box').val() +  '\n' + you + " : " + chat_text)
+      psconsole = $("#chat_box")
+      psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
       $.ajax
         url: "/transaction/new_chat"
         type: "post"
@@ -45,7 +49,7 @@ $(document).ready ->
           chat: chat_text
           ref: window.location.pathname.replace('/chat/','')
           type: 'page'
-          initials: you
+          you: you
 
         success: (msg) ->          
           
@@ -215,7 +219,9 @@ $(document).ready ->
                 $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
 
             else #if pData[1].type == 'page'
-              $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].initials + " : " + pData[1].text); 
+              $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text);
+              psconsole = $("#chat_box")
+              psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
 
             myChild.remove()  
               
