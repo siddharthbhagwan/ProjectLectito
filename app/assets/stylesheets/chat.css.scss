@@ -3,6 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .chat_box {
-	height: 6em;
-  	width: 25em;
+	height: 16em;
+  width: 25em;
+  resize: none;
+}
+
+.chat_text {
+  width: 25em;
 }

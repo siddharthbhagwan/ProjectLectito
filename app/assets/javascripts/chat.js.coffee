@@ -9,8 +9,10 @@ exports.chat_boxes = chat_boxes
 $(document).ready ->
   
   $("#chat_send").click ->
+    you = $("#chat_send").attr("data-you")
     chat_text = $("#chat_text").val()
     $("#chat_text").val("")
+    $('#chat_box').val($('#chat_box').val() +  '\n' + you + " : " + chat_text)
     $.ajax
       url: "/transaction/new_chat"
       type: "post"
@@ -18,18 +20,22 @@ $(document).ready ->
       dataType: "json"
       data:
         chat: chat_text
-        ref: window.location.pathname
+        ref: window.location.pathname.replace('/chat/','')
+        type: 'page'
+        initials: you
 
       success: (msg) ->
-      
+                
       error: (jqXHR, textStatus, errorThrown) ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
 
   $("#chat_text").keydown (e) ->
     if e.keyCode is 13
+      you = $("#chat_send").attr("data-you")
       chat_text = $("#chat_text").val()
       $("#chat_text").val("")
+      $('#chat_box').val($('#chat_box').val() +  '\n' + you + " : " + chat_text)
       $.ajax
         url: "/transaction/new_chat"
         type: "post"
@@ -37,15 +43,17 @@ $(document).ready ->
         dataType: "json"
         data:
           chat: chat_text
-          ref: window.location.pathname
+          ref: window.location.pathname.replace('/chat/','')
+          type: 'page'
+          initials: you
 
-        success: (msg) ->
-        
+        success: (msg) ->          
+          
         error: (jqXHR, textStatus, errorThrown) ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
 
-  $(document).on "click", "input[id^='chat_']", ->
+  $(document).on "click", "input[id^='chatbox_']", ->
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
       title = $(this).attr("data-title").substring(0,20) + "..."
@@ -86,6 +94,7 @@ $(document).ready ->
               title: title
               you: you
               other: othercn
+              type: 'box'
 
             success: (msg) ->
               
@@ -120,89 +129,95 @@ $(document).ready ->
         myChild.on "child_added", (childSnapshot, prevChildName) ->
           pData = $.parseJSON(childSnapshot.val())
           if pData[0] == "chat"
-            if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1    
-              exports.chat_boxes.push(pData[1].trid)
-              $("#chat_div_" + pData[1].trid).chatbox(
-                id: "chatbox_" + pData[1].trid
-                offset: (exports.chat_boxes.length-1) * 315
-                user:
-                  key: "value"
+            if pData[1].type == 'box'
+              if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1    
+                exports.chat_boxes.push(pData[1].trid)
+                $("#chat_div_" + pData[1].trid).chatbox(
+                  id: "chatbox_" + pData[1].trid
+                  offset: (exports.chat_boxes.length-1) * 315
+                  user:
+                    key: "value"
 
-                title: "Chat - " + pData[1].title
-                messageSent: (id, user, msg) ->
-                  $.ajax
-                    url: "/transaction/new_chat"
-                    type: "post"
-                    context: "this"
-                    dataType: "json"
-                    data:
-                      chat: msg
-                      ref: pData[1].trid
-                      title: pData[1].title
-                      you: pData[1].other
-                      other: pData[1].you
+                  title: "Chat - " + pData[1].title
+                  messageSent: (id, user, msg) ->
+                    $.ajax
+                      url: "/transaction/new_chat"
+                      type: "post"
+                      context: "this"
+                      dataType: "json"
+                      data:
+                        chat: msg
+                        ref: pData[1].trid
+                        title: pData[1].title
+                        you: pData[1].other
+                        other: pData[1].you
+                        type: 'box'
 
-                    success: (msg) ->
-                      
-                    error: (jqXHR, textStatus, errorThrown) ->
+                      success: (msg) ->
+                        
+                      error: (jqXHR, textStatus, errorThrown) ->
 
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
+                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
 
-                boxClosed: ->
-                  closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
-                  exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
-                    value isnt pData[1].trid
-                  )
-                  i = 0
-                  while i < exports.chat_boxes.length
-                    current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
-                    if current_offset > closed_offset
-                      $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
-                    i++
-              )
-              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+                  boxClosed: ->
+                    closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
+                    exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
+                      value isnt pData[1].trid
+                    )
+                    i = 0
+                    while i < exports.chat_boxes.length
+                      current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
+                      if current_offset > closed_offset
+                        $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
+                      i++
+                )
+                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
 
-            else
-              $("#chat_div_" + pData[1].trid).chatbox(
-                id: "chatbox_" + pData[1].trid
-                user:
-                  key: "value"
+              else
+                $("#chat_div_" + pData[1].trid).chatbox(
+                  id: "chatbox_" + pData[1].trid
+                  user:
+                    key: "value"
 
-                title: "Chat - " + pData[1].title
-                messageSent: (id, user, msg) ->
-                  $.ajax
-                    url: "/transaction/new_chat"
-                    type: "post"
-                    context: "this"
-                    dataType: "json"
-                    data:
-                      chat: msg
-                      ref: pData[1].trid
-                      title: pData[1].title
-                      you: pData[1].other
-                      other: pData[1].you
+                  title: "Chat - " + pData[1].title
+                  messageSent: (id, user, msg) ->
+                    $.ajax
+                      url: "/transaction/new_chat"
+                      type: "post"
+                      context: "this"
+                      dataType: "json"
+                      data:
+                        chat: msg
+                        ref: pData[1].trid
+                        title: pData[1].title
+                        you: pData[1].other
+                        other: pData[1].you
+                        type: 'box'
 
-                    success: (msg) ->
-                      
-                    error: (jqXHR, textStatus, errorThrown) ->
+                      success: (msg) ->
+                        
+                      error: (jqXHR, textStatus, errorThrown) ->
 
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
+                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
 
-                boxClosed: ->
-                  closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
-                  exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
-                    value isnt pData[1].trid
-                  )
-                  i = 0
-                  while i < exports.chat_boxes.length
-                    current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
-                    if current_offset > closed
-                      $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
-                    i++
-              )
-              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
-              
-          myChild.remove()
+                  boxClosed: ->
+                    closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
+                    exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
+                      value isnt pData[1].trid
+                    )
+                    i = 0
+                    while i < exports.chat_boxes.length
+                      current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
+                      if current_offset > closed
+                        $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
+                      i++
+                )
+                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+
+            else #if pData[1].type == 'page'
+              $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].initials + " : " + pData[1].text); 
+
+            myChild.remove()  
               
     complete: (jqXHR, textStatus) ->
 

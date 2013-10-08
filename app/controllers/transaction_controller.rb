@@ -214,10 +214,13 @@ class TransactionController < ApplicationController
 	        :trid => params[:ref],
 	        :title => params[:title],
 	        :you => params[:you],
-	        :other => params[:other]
+	        :other => params[:other],
+	        :type => params[:type],
+	        :initials => params[:initials]
 	      }
 
 				#Firebase.push(publish_from_channel, chat_data.to_json)
+				logger.debug "uidafnudkfnudenwfjewnf "
 	      Firebase.push(publish_to_channel, chat_data.to_json)
 	    else
       		raise 'error'
