@@ -9,6 +9,9 @@ ProjectLectito::Application.configure do
 
   config.eager_load = false
 
+  #To Avoid Circular dependency error
+  config.middleware.delete Rack::Lock
+
   # Config to handle multiple SSE Requests
   config.preload_frameworks = true
   config.allow_concurrency = true

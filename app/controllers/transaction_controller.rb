@@ -181,17 +181,28 @@ class TransactionController < ApplicationController
 	end
 
 	def update_request_status_receive
-		@return_transaction = Transaction.where(:id => params[:tr_id]).take
-		@return_transaction.return_received_date = DateTime.now.to_time
-		@return_transaction.lender_feedback = params[:lender_feedback] 
-		@return_transaction.lender_comments = params[:lender_comments]
-		@return_transaction.status = "Complete"
+		@received_transaction = Transaction.where(:id => params[:tr_id]).take
+		@received_transaction.return_received_date = DateTime.now.to_time
+		@received_transaction.lender_feedback = params[:lender_feedback] 
+		@received_transaction.lender_comments = params[:lender_comments]
+		@received_transaction.status = "Complete"
 
-		@return_transaction.save
+		if @received_transaction.save
+			@received_inventory = Inventory.where(:id => @received_transaction.inventory_id).take
+			@received_inventory.status = "Available"
+			@received_inventory.save
 
-		@returned_inventory = Inventory.where(:id => @return_transaction.inventory_id).take
-		@returned_inventory.status = "Available"
-		@returned_inventory.save
+			transaction_received = Array.new
+			transaction_received << "received"
+			transaction_received << {
+				:id => @received_transaction.id,
+				:book_name => Book.find(Inventory.find(@received_transaction.inventory_id).book_id).book_name
+			}
+
+			publish_channel = "transaction_listener_" + @received_transaction.borrower_id.to_s
+			Firebase.push(publish_channel, transaction_received.to_json)
+
+		end
 	end
 
 	def new_chat

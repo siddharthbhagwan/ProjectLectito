@@ -294,6 +294,7 @@ $(document).ready ->
             myChild = myFirebase.child("transaction_listener_" + id)
             myChild.on "child_added", (childSnapshot, prevChildName) ->
               pData = $.parseJSON(childSnapshot.val())
+              # Summary of Requests for Books users want to borrow from you (borrower)
               if pData[0] == "create"
                 noty
                   text: "You have a received a request to lend out '" + pData[1].book_name + "'"
@@ -317,6 +318,7 @@ $(document).ready ->
                 if (!$("#lend_requests_div").is(":visible"))
                   $("#lend_requests_div").show(500)  
 
+              # Summary of Requests for Books you've lent out (lender)
               else if pData[0] == "accepted_borrower"
                 tr_id = "<tr id='accepted_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
@@ -329,12 +331,14 @@ $(document).ready ->
                 td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
                 td_returned_date = "<td>Pending</td>"
                 td_received_date = "<td>Pending</td>"
+                td_borrow_duration = "<td>Pending</td>"
                 td_status = "<td><input class='btn btn-small' type='button' value='Received' disabled='true' id='received' data-trid=" + pData[1].id + "></td></tr>"
-                table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_returned_date + td_received_date + td_status
+                table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_returned_date + td_received_date + td_borrow_duration + td_status
                 $("#accepted_requests_table > tbody:last").append(table_row_data)
                 if (!$("#accepted_requests_div").is(":visible"))
                   $("#accepted_requests_div").show(500)
               
+              # Summary of Books currently with you (borrower)
               else if pData[0] == "accepted_lender"
                 noty
                   text: "Your request to borrow '" + pData[1].book_name + "' has been accepted"
@@ -360,6 +364,7 @@ $(document).ready ->
                 if (!$("#current_books_div").is(":visible"))
                   $("#current_books_div").show(500)
 
+              # Summary of Requests for Books you've lent out ( recvd button activates )
               else if pData[0] == "returned"
                 noty
                     text: "Return of '" + pData[1].book_name + "' has been inititated"
@@ -387,6 +392,11 @@ $(document).ready ->
 
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
+
+              else if pData[0] == "received"
+                noty
+                  text: "'" + pData[1].book_name + "' has been returned successfully"
+                  layout: "topRight"
 
               myChild.remove()  
 

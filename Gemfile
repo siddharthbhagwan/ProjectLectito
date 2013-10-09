@@ -2,13 +2,12 @@ source 'http://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '4.0'
+gem 'rails', '4.0.0'
 gem 'activesupport', '~> 4.0.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
@@ -27,7 +26,6 @@ gem 'jquery-ui-rails'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
-gem 'firebase'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
@@ -58,7 +56,8 @@ group :production do
   gem 'rails3_serve_static_assets', :github => 'heroku/rails3_serve_static_assets'
 end
 
-
+gem 'pg'
+gem 'firebase'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

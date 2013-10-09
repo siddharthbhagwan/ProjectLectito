@@ -8,6 +8,7 @@
 			<th>Acceptance Date</th>
 			<th>Returned Date</th>  
 			<th>Received Date</th>
+			<th>Borrow Duration</th>
 			<th>Status</th>
 		</tr>
 	</thead>
@@ -35,6 +36,7 @@
 					<% else %>
 						<td><%= a.return_received_date.to_s(:long) %></td>
 					<% end %>
+					<td>Pending</td>
 					<% if a.returned_date.nil? %>
 						<td><input class="btn btn-small" type="button" value="Received" id="received" disabled='true' data-trid=<%= a.id %> /></td>
 					<% else %>
