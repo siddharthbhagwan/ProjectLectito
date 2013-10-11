@@ -593,7 +593,7 @@ $(document).ready ->
       complete: (jqXHR, textStatus) ->
         $("#handed_over_" + tr_id).attr("value","Received")
         $("#handed_over_" + tr_id).attr("disabled","true")
-        $("#handed_over_" + tr_id).attr("id","received_lender")
+        $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
       error: (jqXHR, textStatus, errorThrown) ->
         setTimeout $.unblockUI
         $("#error_message").dialog "open"        
