@@ -82,9 +82,6 @@ $(document).ready ->
       $("#chat_div_" + trid).chatbox(
         id: "chatbox_" + trid
         offset: offset
-        user:
-          key: "value"
-
         title: "Chat - " + title
         messageSent: (id, user, msg) ->
           $.ajax
@@ -139,9 +136,6 @@ $(document).ready ->
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
                   offset: (exports.chat_boxes.length-1) * 315
-                  user:
-                    key: "value"
-
                   title: "Chat - " + pData[1].title
                   messageSent: (id, user, msg) ->
                     $.ajax
@@ -180,9 +174,6 @@ $(document).ready ->
               else
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
-                  user:
-                    key: "value"
-
                   title: "Chat - " + pData[1].title
                   messageSent: (id, user, msg) ->
                     $.ajax
