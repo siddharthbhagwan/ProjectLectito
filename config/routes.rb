@@ -34,7 +34,8 @@ ProjectLectito::Application.routes.draw do
   post "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
   post "transaction/update_request_status_cancel" => "transaction#update_request_status_cancel"
   post "transaction/update_request_status_return" => "transaction#update_request_status_return"
-  post "transaction/update_request_status_receive" => "transaction#update_request_status_receive"
+  post "transaction/update_request_status_receive_lender" => "transaction#update_request_status_receive_lender"
+  post "transaction/update_request_status_receive_borrower" => "transaction#update_request_status_receive_borrower"
 
 
   root :to => "inventory#search"

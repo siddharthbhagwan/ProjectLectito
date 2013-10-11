@@ -14,8 +14,8 @@
 	</thead>
 	<tbody>
 		<% unless @accept.nil? %>
-			<% @accept.each do |a| %>
-				<tr id='accept_<%= a.id %>' >
+			<% @accept.each do |a| #CHECKID %>
+				<tr id='accepted_<%= a.id %>' >
 					<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
 					<td><%= User.find(a.borrower_id).full_name %></td>
 					<td>
@@ -37,11 +37,15 @@
 						<td><%= a.return_received_date.to_s(:long) %></td>
 					<% end %>
 					<td>Pending</td>
-					<% if a.returned_date.nil? %>
-						<td><input class="btn btn-small" type="button" value="Received" id="received" disabled='true' data-trid=<%= a.id %> /></td>
+					<% if a.status == 'Accepted' %>
+						<td><input class="btn btn-small" type="button" value="Handed Over" id="handed_over_<%= a.id %>" data-trid=<%= a.id %> /></td>
 					<% else %>
-						<td><input class="btn btn-small" type="button" value="Received" id="received" data-trid=<%= a.id %> /></td>
-					<% end %>
+						<% if a.returned_date.nil? %>
+							<td><input class="btn btn-small" type="button" value="Received" id="received_lender" disabled='true' data-trid=<%= a.id %> /></td>
+						<% else %>
+							<td><input class="btn btn-small" type="button" value="Received" id="received_lender" data-trid=<%= a.id %> /></td>
+						<% end %>
+					<% end %>	
 				</tr>
 			<% end %>
 		<% end %>	

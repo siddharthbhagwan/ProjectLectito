@@ -2,7 +2,7 @@ class TransactionController < ApplicationController
 
 	before_action :require_profile, :require_address
 
-	Firebase.base_uri = "https://projectlectito.firebaseio.com/"
+	Firebase.base_uri = "https://projectlectito.Firebaseio.com/"
 
 	def create
 		@transaction = Transaction.new
@@ -94,7 +94,8 @@ class TransactionController < ApplicationController
 			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
 			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
 			:borrower => User.find(@accept_request.borrower_id).full_name,
-			:delivery_mode => User.find(@accept_request.borrower_id).is_delivery
+			:delivery_mode => User.find(@accept_request.lender_id).is_delivery,
+			:borrower_id => @accept_request.borrower_id
 		}
 
 		transaction_accepted_borrower = Array.new
@@ -180,7 +181,7 @@ class TransactionController < ApplicationController
 
 	end
 
-	def update_request_status_receive
+	def update_request_status_receive_lender
 		@received_transaction = Transaction.where(:id => params[:tr_id]).take
 		@received_transaction.return_received_date = DateTime.now.to_time
 		@received_transaction.lender_feedback = params[:lender_feedback] 
@@ -192,16 +193,51 @@ class TransactionController < ApplicationController
 			@received_inventory.status = "Available"
 			@received_inventory.save
 
-			transaction_received = Array.new
-			transaction_received << "received"
-			transaction_received << {
+			transaction_received_lender = Array.new
+			transaction_received_lender << "received_lender"
+			transaction_received_lender << {
 				:id => @received_transaction.id,
 				:book_name => Book.find(Inventory.find(@received_transaction.inventory_id).book_id).book_name
 			}
 
 			publish_channel = "transaction_listener_" + @received_transaction.borrower_id.to_s
-			Firebase.push(publish_channel, transaction_received.to_json)
+			Firebase.push(publish_channel, transaction_received_lender.to_json)
 
+		end
+	end
+
+	def update_request_status_receive_borrower
+		@borrower_received_transaction = Transaction.where(:id => params[:tr_id]).take
+		@borrower_received_transaction.received_date = DateTime.now.to_time
+		@borrower_received_transaction.status = "Received Borrower"
+
+		if @borrower_received_transaction.save
+			logger.debug "Action is " + params[:action].to_s
+			# If action initiated by borrower, push notification to lender, and vice versa
+			if params[:called_by] == 'borrower'
+
+				transaction_received_borrower = Array.new
+				transaction_received_borrower << "received_borrower_by_borrower"
+				transaction_received_borrower << {
+					:id => @borrower_received_transaction.id,
+					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
+					:delivery => User.find(@borrower_received_transaction.lender_id).is_delivery
+				}
+
+				publish_channel = "transaction_listener_" + @borrower_received_transaction.lender_id.to_s
+				logger.debug "publish Channel is " + publish_channel.to_s
+				Firebase.push(publish_channel, transaction_received_borrower.to_json)
+			elsif params[:called_by] == 'lender'
+				transaction_received_borrower = Array.new
+				transaction_received_borrower << "received_borrower_by_lender"
+				transaction_received_borrower << {
+					:id => @borrower_received_transaction.id,
+					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name
+				}
+
+				publish_channel = "transaction_listener_" + @borrower_received_transaction.borrower_id.to_s
+				Firebase.push(publish_channel, transaction_received_borrower.to_json)
+			end
 		end
 	end
 

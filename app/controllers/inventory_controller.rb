@@ -164,8 +164,8 @@ class InventoryController < ApplicationController
 		if user_signed_in?
 			@borrow = Transaction.where(:borrower_id => current_user.id, :status => "Pending").last(5)
 			@lend = Transaction.where(:lender_id => current_user.id, :status => "Pending")
-			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Returned" )
-			@current = Transaction.where(:borrower_id => current_user.id, :status => "Accepted")
+			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ? OR status = ?)", current_user.id, "Accepted", "Returned", "Received Borrower" )
+			@current = Transaction.where("borrower_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Received Borrower" )
 			@received = Transaction.where(:lender_id => current_user.id, :status => "Returned")
 		else
 			@borrow = nil
