@@ -30,20 +30,22 @@ class ProfileController < ApplicationController
 
   def rating
 
-    @good_lender = Transaction.where(:lender_id => params[:id], :borrower_feedback => 'good').count
-    @good_borrower = Transaction.where(:borower_id => params[:id], :lender_feedback => 'good').count
+    @name = User.find(current_user.id).full_name
+
+    @good_lender = Transaction.where(:lender_id => current_user.id, :borrower_feedback => 'good').count
+    @good_borrower = Transaction.where(:borrower_id => params[:id], :lender_feedback => 'good').count
     @good = @good_borrower + @good_lender
 
-    @bad_lender = Transaction.where(:lender_id => params[:id], :borrower_feedback => 'bad').count
-    @bad_borrower = Transaction.where(:borrower_id => params[:id], :lender_feedback => 'bad').count 
+    @bad_lender = Transaction.where(:lender_id => current_user.id, :borrower_feedback => 'bad').count
+    @bad_borrower = Transaction.where(:borrower_id => current_user.id, :lender_feedback => 'bad').count 
     @bad = @bad_lender + @bad_borrower
 
-    @neutral_lender = Transaction.where(:lender_id => params[:id], :borrower_feedback => 'neutral').count
-    @neutral_borrower = Transaction.where(:borrower_id => params[:id], :lender_feedback => 'neutral').count
+    @neutral_lender = Transaction.where(:lender_id => current_user.id, :borrower_feedback => 'neutral').count
+    @neutral_borrower = Transaction.where(:borrower_id => current_user.id, :lender_feedback => 'neutral').count
     @neutral = @neutral_lender + @neutral_borrower
 
-    @total_books = Inventory.where(:user_id => pr.borrower_id).count
-    @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' )
+    @total_books = Inventory.where(:user_id => current_user.id).count
+    @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", current_user.id, current_user.id, 'Rejected', 'Cancelled' )
 
     @total_transactions = @transactions.count 
 
@@ -54,7 +56,10 @@ class ProfileController < ApplicationController
     id = current_user.id
 
 
-    if pr.lender_id == current_user.id       
+    if pr.lender_id == current_user.id   
+
+      @name = User.find(pr.borrower_id).full_name
+
       @good_lender = Transaction.where(:lender_id => pr.borrower_id, :borrower_feedback => 'good').count
       @good_borrower = Transaction.where(:borrower_id => pr.borrower_id, :lender_feedback => 'good').count
       @good = @good_borrower + @good_lender
@@ -76,6 +81,8 @@ class ProfileController < ApplicationController
 
       render :rating
     elsif  pr.borrower_id == current_user.id
+
+      @name = User.find(pr.lender_id).full_name
 
       @good_lender = Transaction.where(:lender_id => pr.lender_id, :borrower_feedback => 'good').count
       @good_borrower = Transaction.where(:borrower_id => pr.lender_id, :lender_feedback => 'good').count 
