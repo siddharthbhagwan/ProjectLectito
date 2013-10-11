@@ -302,7 +302,7 @@ $(document).ready ->
 
                 tr_id = "<tr id='lend_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
-                td_borrower = "<td>" + pData[1].borrower + "</td>"
+                td_borrower = "<td><a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
                 if pData[1].delivery_mode
                   td_delivery_mode = "<td>Delivery</td>"
                 else
@@ -322,7 +322,7 @@ $(document).ready ->
               else if pData[0] == "accepted_borrower"
                 tr_id = "<tr id='accepted_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
-                td_borrower = "<td>" + pData[1].borrower + "</td>"
+                td_borrower = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
                 if pData[1].delivery_mode
                   td_delivery_mode = "<td>Delivery</td>"
                 else
@@ -484,7 +484,7 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Compelte transaction from lender side
 
-  $(document).on "click", "#received_lender", ->
+  $(document).on "click", "input[id^='received_lender_']", ->
     tr_id = $(this).attr("data-trid")
     tr_id_s = "#accepted_" + tr_id
     $("#received_book_confirm").data "trid", tr_id

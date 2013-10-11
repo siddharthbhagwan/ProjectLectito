@@ -1,5 +1,9 @@
 ProjectLectito::Application.routes.draw do
   
+  #Profile Routes
+  get "profile/rating" => "profile#rating"
+  get "profile/public_rating/:tr_id" => "profile#public_rating"
+
   # Address Routes
   get "address/autocomplete_area" => "address#autocomplete_area"
   get "address/:id/autocomplete_area" => "address#autocomplete_area"

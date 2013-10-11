@@ -2,7 +2,7 @@
 	<% @borrow.each do |b| %>
 		td_id = "raw(<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>"
 		td_book_name = "<td><%= Book.find(Inventory.where(:id => b.inventory_id).take.book.id).book_name %></td>"
-		td_lender_name = "<td><%= User.find(b.lender_id).full_name %></td>"
+		td_lender_name = "<td><a target='_blank' href=/profile/public_rating/<%= b.id %> ><%= User.find(b.lender_id).full_name %></td>"
 		td_address = "<td><%= Address.where(:id => Inventory.where(:id => b.inventory_id).take.available_in_city).take.address_summary %></td>"
 		td_delivery_mode = "<td><% if User.find(b.lender_id).is_delivery %>Delivery<% else %>Self Pick/Drop<% end %></td>"
 		td_request_date = "<td><%= b.request_date.to_s(:long) %></td>"

@@ -17,7 +17,7 @@
 			<% @accept.each do |a| #CHECKID %>
 				<tr id='accepted_<%= a.id %>' >
 					<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
-					<td><%= User.find(a.borrower_id).full_name %></td>
+					<td><%= link_to User.find(a.borrower_id).full_name, "/profile/public_rating/#{a.id}", :target => "_blank" %></td>
 					<td>
 						<% if User.find(a.borrower_id).is_delivery %>
 							Delivery
@@ -41,9 +41,9 @@
 						<td><input class="btn btn-small" type="button" value="Handed Over" id="handed_over_<%= a.id %>" data-trid=<%= a.id %> /></td>
 					<% else %>
 						<% if a.returned_date.nil? %>
-							<td><input class="btn btn-small" type="button" value="Received" id="received_lender" disabled='true' data-trid=<%= a.id %> /></td>
+							<td><input class="btn btn-small" type="button" value="Received" id="received_lender_<%= a.id %>" disabled='true' data-trid=<%= a.id %> /></td>
 						<% else %>
-							<td><input class="btn btn-small" type="button" value="Received" id="received_lender" data-trid=<%= a.id %> /></td>
+							<td><input class="btn btn-small" type="button" value="Received" id="received_lender_<%= a.id %>" data-trid=<%= a.id %> /></td>
 						<% end %>
 					<% end %>	
 				</tr>

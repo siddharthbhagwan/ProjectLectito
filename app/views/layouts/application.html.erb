@@ -56,7 +56,8 @@
 								<% if !current_user.profile.nil? %>							
 									<%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></br>
 								<% end %>	
-								<%= link_to "Addresses", address_index_path, class: "accordian" %>								
+								<%= link_to "Addresses", address_index_path, class: "accordian" %></br>
+								<%= link_to "Rating", profile_rating_path, class: "accordian" %>	
 							</div>  
 						</div>  
 					</div>   

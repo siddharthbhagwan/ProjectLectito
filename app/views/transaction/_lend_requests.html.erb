@@ -15,7 +15,7 @@
 		  <% @lend.each do |l| %>
 			<tr id='lend_<%= l.id %>'>
 				<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>
-				<td><%= User.find(l.borrower_id).full_name %></td>
+				<td><%= link_to User.find(l.borrower_id).full_name, "/profile/public_rating/#{l.id}", :target => "_blank" %></td>
 				<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>
 				<% if User.find(l.lender_id).is_delivery %>
 					<td>Delivery</td>
