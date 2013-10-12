@@ -79,6 +79,14 @@
 				<p class="alert alert-error"><%= alert %></p>
 				<% end %>
 				<%= yield %>
+				<% if user_signed_in? %>
+					<% if !@current_transactions.nil? %>
+					  <% @current_transactions.each do |t| %>
+					    <div id="chat_div_<%= t.id %>">
+					    </div>
+					  <% end %>
+					<% end %>
+				<% end %>  
 			</div>
 
 
