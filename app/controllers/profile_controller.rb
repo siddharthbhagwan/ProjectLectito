@@ -1,4 +1,5 @@
 class ProfileController < ApplicationController
+  include ApplicationHelper
   load_and_authorize_resource :class => Profile
 
   def new
@@ -26,6 +27,7 @@ class ProfileController < ApplicationController
 
   def edit
     @profile = Profile.where(:id => params[:id]).take
+    chatbox()
   end
 
   def rating

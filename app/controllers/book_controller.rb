@@ -1,9 +1,10 @@
 class BookController < ApplicationController
-
+	include ApplicationHelper
 	load_and_authorize_resource :class => Book
 
 	def new
 		@book = Book.new
+		chatbox()
 	end
 
 	def create
@@ -17,10 +18,12 @@ class BookController < ApplicationController
 
 	def index
 		@book = Book.all
+		chatbox()
 	end
 
 	def edit
 		@book = Book.find(params[:id])
+		chatbox()
 	end
 
 	def destroy

@@ -1,4 +1,5 @@
 class AddressController < ApplicationController
+  include ApplicationHelper
   before_action :require_profile
 
   # CanCan for authorization on controller actions
@@ -6,10 +7,12 @@ class AddressController < ApplicationController
 
   def new
   	@address = Address.new
+    chatbox()
   end
 
   def update
     @address = Address.where(:id => params[:id]).first
+    chatbox()
     if @address.update_attributes(params[:address])
       flash[:notice] = "The address has been updated"
       redirect_to address_index_path
@@ -18,6 +21,7 @@ class AddressController < ApplicationController
 
   def edit
     @address = Address.where(:id => params[:id]).first
+    chatbox()
     if  @address.user_id != current_user.id
       redirect_to address_path
       flash[:alert] = "You are not authorized to view that address"
@@ -27,6 +31,7 @@ class AddressController < ApplicationController
   # List all addresses
   def index
     @address = User.where(:id => current_user.id).first.addresses
+    chatbox()
 
     respond_to do |format|
       format.html  # index.html.erb

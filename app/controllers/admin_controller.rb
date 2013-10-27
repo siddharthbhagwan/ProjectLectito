@@ -1,18 +1,22 @@
 class AdminController < ApplicationController
+	include ApplicationHelper
 	class Error < RuntimeError; end
 
 	load_and_authorize_resource :class => User
 
 	def index
 		@user = User.all
+		chatbox()
 	end
 
 	def edit
 		@profile = Profile.all
+		chatbox()
 	end
 
 	def user_details
 		@user = User.find(params[:user_id])
+		chatbox()
 
 		if @user.current_status == "Locked"
 			@locked = true

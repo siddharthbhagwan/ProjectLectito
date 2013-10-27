@@ -114,6 +114,7 @@ $(document).ready ->
               $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
             i++
       )
+      #$("#chat_div_" + trid).chatbox("option", "boxManager").addMsg you, "sfads \n dasdasda \n adasdas "
 
   #-------------------------------------------------------------------------------------------------------------------- 
   

@@ -1,5 +1,5 @@
 class InventoryController < ApplicationController
-
+	include ApplicationHelper
 	#before_action :require_profile, :require_address
 	if :authenticate_user!
 		before_action :require_profile, :require_address
@@ -7,11 +7,13 @@ class InventoryController < ApplicationController
 
 	def index
 		@inventory = User.where(:id => current_user.id).take.inventories
+		chatbox()
 	end
 
 	def new
 		@book = Book.new
 		@address = User.where(:id => current_user.id).take.addresses
+		chatbox()
 	end
 
 	def create
@@ -27,11 +29,13 @@ class InventoryController < ApplicationController
 		else
 			render 'new'
 		end
+		chatbox()
 	end
 
 	def edit
 		@inventory = Inventory.where(:id => params[:id]).take
 		@address = User.where(:id => current_user.id).take.addresses
+		chatbox()
 	end
 
 	def update
@@ -94,7 +98,7 @@ class InventoryController < ApplicationController
 					end
 				end					
 			end
-		end	
+		end
 
 		respond_to do |format|
     		format.html  
@@ -167,6 +171,8 @@ class InventoryController < ApplicationController
 			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ? OR status = ?)", current_user.id, "Accepted", "Returned", "Received Borrower" )
 			@current = Transaction.where("borrower_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Received Borrower" )
 			@received = Transaction.where(:lender_id => current_user.id, :status => "Returned")
+
+			chatbox()	    
 		else
 			@borrow = nil
 			@lend = nil
