@@ -132,7 +132,7 @@ $(document).ready ->
           pData = $.parseJSON(childSnapshot.val())
           if pData[0] == "chat"
             if pData[1].type == 'box'
-              if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1    
+              if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
                 exports.chat_boxes.push(pData[1].trid)
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
