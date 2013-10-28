@@ -24,7 +24,11 @@
 				<% end %>				
 				<td><%= l.request_date.to_s(:long) %></td>
 				<td><%= l.status %></td>
-				<td><input class="btn btn-small" type="button" value="Accept" id="accept" data-trid=<%= l.id %> /></td>
+				<% if User.find(l.lender_id).is_delivery %>
+					<td><input class="btn btn-small" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
+				<% else %>
+					<td><input class="btn btn-small" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
+				<% end %>
 				<td><input class="btn btn-small" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>
 				</tr>
 			<% end %>

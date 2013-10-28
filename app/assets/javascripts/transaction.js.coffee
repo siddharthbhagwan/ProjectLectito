@@ -148,8 +148,8 @@ $(document).ready ->
             $(this).dialog "close"   
 
 #----------------------------------------------------------------------------------------------------------------------
-# Update a transaction on request being Accepted
-  $(document).on "click", "#accept", ->
+# Update a transaction on request being Accepted in delivery mode
+  $(document).on "click", "#accept_delivery", ->
     tr_id = $(this).attr("data-trid")
     tr_id_s = "#lend_" + tr_id
     $("#accept_request_confirm").data "trid", tr_id
@@ -199,6 +199,29 @@ $(document).ready ->
 
       Cancel: ->
         $(this).dialog "close"          
+
+#--------------------------------------------------------------------------------------------------------------------
+
+# Update a transaction on request being Accepted in self pick/drop mode
+  $(document).on "click", "#accept_self", ->
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#lend_" + tr_id
+    $.ajax
+      url: "/transaction/update_request_status_accept.js"
+      type: "post"
+      context: "this"
+      dataType: "script"
+      data:
+        tr_id: tr_id
+
+      success: (msg) ->
+
+      complete: (jqXHR, textStatus) ->
+        $(tr_id_s).fadeOut(500).remove()
+        empty_table_checks()
+      error: (jqXHR, textStatus, errorThrown) ->
+        setTimeout $.unblockUI
+        $("#error_message").dialog "open"        
 
 #--------------------------------------------------------------------------------------------------------------------
 # Update a transaction on request being rejected
@@ -294,7 +317,7 @@ $(document).ready ->
             myChild = myFirebase.child("transaction_listener_" + id)
             myChild.on "child_added", (childSnapshot, prevChildName) ->
               pData = $.parseJSON(childSnapshot.val())
-              # Summary of Requests for Books users want to borrow from you (borrower)
+              # Summary of Requests for Books users want to borrow from you (lender)
               if pData[0] == "create"
                 noty
                   text: "You have a received a request to lend out '" + pData[1].book_name + "'"
@@ -305,13 +328,14 @@ $(document).ready ->
                 td_borrower = "<td><a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
                 if pData[1].delivery_mode
                   td_delivery_mode = "<td>Delivery</td>"
+                  td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
                 else
                   td_delivery_mode = "<td>Self Pick/Drop</td>"
+                  td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
                 td_requested_from = "<td>" + pData[1].requested_from + "</td>"
                 td_requested_date = "<td>" + pData[1].requested_date + "</td>"
                 td_status = "<td>" + pData[1].status + "</td>"
-                td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept' data-trid=" + pData[1].id + "></td>"
                 td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
                 table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_delivery_mode + td_requested_date + td_status + td_accept + td_reject
                 $("#lend_requests_table > tbody:last").append(table_row_data);
@@ -325,14 +349,15 @@ $(document).ready ->
                 td_borrower = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
                 if pData[1].delivery_mode
                   td_delivery_mode = "<td>Delivery</td>"
+                  td_status = "<td><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
                 else
                   td_delivery_mode = "<td>Self Pick/Drop</td>"
+                  td_status = "<td><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
                 td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
                 td_returned_date = "<td>Pending</td>"
                 td_received_date = "<td>Pending</td>"
                 td_borrow_duration = "<td>Pending</td>"
-                td_status = "<td><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
                 table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_returned_date + td_received_date + td_borrow_duration + td_status
                 $("#accepted_requests_table > tbody:last").append(table_row_data)
                 if (!$("#accepted_requests_div").is(":visible"))
@@ -346,7 +371,7 @@ $(document).ready ->
 
                 $("#borrow_" + pData[1].id).remove()
                 empty_table_checks()
-                tr_id = "<tr id='accepted_" + pData[1].id + "'>"
+                tr_id = "<tr id='current_" + pData[1].id + "'>"
                 td_book_name = "<td>" + pData[1].book_name + "</td>"
                 td_lender = "<td>" + pData[1].lender + "</td>"
                 if pData[1].delivery_mode
@@ -404,8 +429,14 @@ $(document).ready ->
                   text: "The borrower has handed over '" + pData[1].book_name + "'"
                   layout: "topRight"
 
-                  $("#received_borrower_" + pData[1].id).attr("value", "Return")
-                  $("#received_borrower_" + pData[1].id).attr("id", "return")
+                  if pData[1].delivery_mode
+                    $("#received_borrower_" + pData[1].id).attr("value", "Return")
+                    $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
+
+                  else
+                    $("#received_borrower_" + pData[1].id).attr("value", "Return")
+                    $("#received_borrower_" + pData[1].id).attr("id", "return_self")
+
 
               # Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
               else if pData[0] == "received_borrower_by_borrower"
@@ -413,7 +444,7 @@ $(document).ready ->
                   text: "The borrower has successfully received '" + pData[1].book_name + "'"
                   layout: "topRight"
 
-                  if !pData[1].delivery
+                  if !pData[1].delivery_mode
                     $("#handed_over_" + pData[1].id).attr("value", "Received")
                     $("#handed_over_" + pData[1].id).attr("disabled", "true")
                     $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
@@ -428,10 +459,10 @@ $(document).ready ->
 
            
 #--------------------------------------------------------------------------------------------------------------------
-# Initiate Return from borrowers side
-  $(document).on "click", "#return", ->
+# Initiate Return from borrowers side with pickup time
+  $(document).on "click", "#return_delivery", ->
     tr_id = $(this).attr("data-trid")
-    tr_id_s = "#accepted_" + tr_id
+    tr_id_s = "#current_" + tr_id
     $("#return_request_confirm").data "trid", tr_id
     $("#return_request_confirm").data "trids", tr_id_s
     # arr = []
@@ -440,7 +471,10 @@ $(document).ready ->
     # ).get()
     # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
     # $("#accept_info").html(html_data)
-    $("#return_date").datepicker
+    $("#borrower_returned_book_confirm").data "trid", tr_id
+    $("#borrower_returned_book_confirm").data "trids", tr_id_s
+    $("#borrower_returned_book_confirm").dialog "open"
+    $("#return_pickup_date").datepicker
       showOn: "button"
       buttonImageOnly: true
     $("#return_request_confirm").dialog "open"
@@ -459,21 +493,19 @@ $(document).ready ->
         tr_id = $("#return_request_confirm").data("trid")
         tr_id_s = $("#return_request_confirm").data("trids")
         $.ajax
-          url: "/transaction/update_request_status_return.js"
+          url: "/transaction/update_request_status_return.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
             return_date: $("#return_request_confirm").data "return_date"
             return_time: $("#return_request_confirm").data "return_time"
 
           success: (msg) ->
-
+            
           complete: (jqXHR, textStatus) ->
-            $(tr_id_s).remove()
-            if $("#current_books_table tr").length == 1
-              $("#current_books_div").hide()
+
           error:  (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
@@ -482,23 +514,16 @@ $(document).ready ->
         $(this).dialog "close"
 
 #--------------------------------------------------------------------------------------------------------------------
-# Initiate Compelte transaction from lender side
-
-  $(document).on "click", "input[id^='received_lender_']", ->
+# Initiate Return from borrowers side in self delivery mode
+  $(document).on "click", "#return_self", ->  
     tr_id = $(this).attr("data-trid")
-    tr_id_s = "#accepted_" + tr_id
-    $("#received_book_confirm").data "trid", tr_id
-    $("#received_book_confirm").data "trids", tr_id_s
-    # arr = []
-    # arr = $(tr_id_s).find("td").map(->
-    #   @innerHTML
-    # ).get()
-    # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
-    # $("#accept_info").html(html_data)
-    $("#received_book_confirm").dialog "open"
+    tr_id_s = "#current_" + tr_id
+    $("#borrower_returned_book_confirm").data "trid", tr_id
+    $("#borrower_returned_book_confirm").data "trids", tr_id_s
+    $("#borrower_returned_book_confirm").dialog "open"
 
-#TODO write a fn for ajax call
-  $("#received_book_confirm").dialog
+
+  $("#borrower_returned_book_confirm").dialog
     autoOpen: false
     modal: true
     resizeable: false
@@ -506,8 +531,82 @@ $(document).ready ->
     buttons:
       "Ok": ->
         $(this).dialog "close"
-        tr_id = $("#received_book_confirm").data("trid")
-        tr_id_s = $("#received_book_confirm").data("trids")
+        tr_id = $("#borrower_returned_book_confirm").data("trid")
+        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+        $.ajax
+          url: "/transaction/update_request_status_return.json"
+          type: "post"
+          context: "this"
+          dataType: "json"
+          data:
+            tr_id: tr_id
+            borrower_feedback: $("input[type='radio'][name='borrower_feedback']:checked").val()
+            borrower_comments: $("#borrower_comments").val()
+
+          success: (msg) ->
+
+          complete: (jqXHR, textStatus) ->
+            $(tr_id_s).remove()
+            if $("#current_books_table tr").length == 1
+              $("#current_books_div").hide()
+          error: (jqXHR, textStatus, errorThrown) ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"       
+
+      "Skip": ->
+        $(this).dialog "close"
+        tr_id = $("#lender_received_book_confirm").data("trid")
+        tr_id_s = $("#lender_received_book_confirm").data("trids")
+        $.ajax
+          url: "/transaction/update_request_status_return.js"
+          type: "post"
+          context: "this"
+          dataType: "script"
+          data:
+            tr_id: tr_id
+            borrower_feedback: ""
+            borrower_comments: ""
+            
+          success: (msg) ->
+
+          complete: (jqXHR, textStatus) ->
+            $(tr_id_s).remove()
+            if $("#current_books_table tr").length == 1
+              $("#current_books_div").hide()
+          error: (jqXHR, textStatus, errorThrown) ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"
+
+      Cancel: ->
+        $(this).dialog "close"         
+
+#--------------------------------------------------------------------------------------------------------------------
+# Initiate Compelte transaction from lender side
+
+  $(document).on "click", "input[id^='received_lender_']", ->
+    tr_id = $(this).attr("data-trid")
+    tr_id_s = "#accepted_" + tr_id
+    $("#lender_received_book_confirm").data "trid", tr_id
+    $("#lender_received_book_confirm").data "trids", tr_id_s
+    # arr = []
+    # arr = $(tr_id_s).find("td").map(->
+    #   @innerHTML
+    # ).get()
+    # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
+    # $("#accept_info").html(html_data)
+    $("#lender_received_book_confirm").dialog "open"
+
+#TODO write a fn for ajax call
+  $("#lender_received_book_confirm").dialog
+    autoOpen: false
+    modal: true
+    resizeable: false
+    draggable: false
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+        tr_id = $("#lender_received_book_confirm").data("trid")
+        tr_id_s = $("#lender_received_book_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_receive_lender.js"
           type: "post"
@@ -530,8 +629,8 @@ $(document).ready ->
 
       "Skip": ->
         $(this).dialog "close"
-        tr_id = $("#received_book_confirm").data("trid")
-        tr_id_s = $("#received_book_confirm").data("trids")
+        tr_id = $("#lender_received_book_confirm").data("trid")
+        tr_id_s = $("#lender_received_book_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_receive_lender.js"
           type: "post"
@@ -559,19 +658,24 @@ $(document).ready ->
   $(document).on "click", "input[id^='received_borrower_']", ->
     tr_id = $(this).attr("data-trid")
     $.ajax
-      url: "/transaction/update_request_status_receive_borrower.js"
+      url: "/transaction/update_request_status_receive_borrower.json"
       type: "post"
       context: "this"
-      dataType: "script"
+      dataType: "json"
       data:
         tr_id: tr_id
         called_by: 'borrower'
         
       success: (msg) ->
+        if msg
+          $("#received_borrower_" + tr_id).attr("value","Return")
+          $("#received_borrower_" + tr_id).attr("id","return_delivery")
 
+        else
+          $("#received_borrower_" + tr_id).attr("value","Return")
+          $("#received_borrower_" + tr_id).attr("id","return_self")
       complete: (jqXHR, textStatus) ->
-        $("#received_borrower_" + tr_id).attr("value","Return")
-        $("#received_borrower_" + tr_id).attr("id","return")
+
       error: (jqXHR, textStatus, errorThrown) ->
         setTimeout $.unblockUI
         $("#error_message").dialog "open"
@@ -580,10 +684,10 @@ $(document).ready ->
   $(document).on "click", "input[id^='handed_over_']", ->
     tr_id = $(this).attr("data-trid")
     $.ajax
-      url: "/transaction/update_request_status_receive_borrower.js"
+      url: "/transaction/update_request_status_receive_borrower.json"
       type: "post"
       context: "this"
-      dataType: "script"
+      dataType: "json"
       data:
         tr_id: tr_id
         called_by: 'lender'
@@ -614,8 +718,3 @@ $(document).ready ->
         $(this).dialog "close"
 
 #-------------------------------------------------------------------------------------------------------------------- 
-
-  $("#gritter").click ->
-    noty
-      text: "noty - a jquery notification library!"
-      layout: "topRight"

@@ -47,7 +47,9 @@ class TransactionController < ApplicationController
 		@accept_request = Transaction.where(:id => params[:tr_id]).take	
 		@accept_request.status = "Accepted"
 		@accept_request.acceptance_date = DateTime.now.to_time
-		@accept_request.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
+		if (!params[:dispatch_date].nil? and !params[:dispatch_time].nil?)
+			@accept_request.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
+		end
 		#@accept_request.returned_date = 15.days.from_now
 
 		lender_id_s = @accept_request.lender_id.to_s
@@ -162,7 +164,11 @@ class TransactionController < ApplicationController
 		@return_transaction = Transaction.where(:id => params[:tr_id]).take
 		@return_transaction.status = "Returned"
 		@return_transaction.returned_date = DateTime.now.to_time
-		@return_transaction.return_pickup_date = params[:return_date] + ", " + params[:return_time]
+		@return_transaction.borrower_feedback = params[:borrower_feedback]
+		@return_transaction.borrower_comments = params[:borrower_comments]
+		if (!params[:returned_date].nil? and !params[:return_time].nil? )
+			@return_transaction.return_pickup_date = params[:return_date] + ", " + params[:return_time]
+		end
 		
 		returned_transaction = Array.new
 		returned_transaction << "returned"
@@ -175,6 +181,11 @@ class TransactionController < ApplicationController
 		if @return_transaction.save
 			publish_channel = "transaction_listener_" + @return_transaction.lender_id.to_s
 			Firebase.push(publish_channel, returned_transaction.to_json)
+
+			respond_to do |format|
+    		format.json  { render :json => "Yo".to_json }
+			end
+
 		else
 			raise 'error'
 		end
@@ -212,32 +223,35 @@ class TransactionController < ApplicationController
 		@borrower_received_transaction.status = "Received Borrower"
 
 		if @borrower_received_transaction.save
-			logger.debug "Action is " + params[:action].to_s
 			# If action initiated by borrower, push notification to lender, and vice versa
 			if params[:called_by] == 'borrower'
-
 				transaction_received_borrower = Array.new
 				transaction_received_borrower << "received_borrower_by_borrower"
 				transaction_received_borrower << {
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
-					:delivery => User.find(@borrower_received_transaction.lender_id).is_delivery
+					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery
 				}
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.lender_id.to_s
-				logger.debug "publish Channel is " + publish_channel.to_s
 				Firebase.push(publish_channel, transaction_received_borrower.to_json)
+
 			elsif params[:called_by] == 'lender'
 				transaction_received_borrower = Array.new
 				transaction_received_borrower << "received_borrower_by_lender"
 				transaction_received_borrower << {
 					:id => @borrower_received_transaction.id,
-					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name
+					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
+					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery
 				}
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.borrower_id.to_s
 				Firebase.push(publish_channel, transaction_received_borrower.to_json)
 			end
+		end
+
+		respond_to do |format|
+    		format.json  { render :json => User.find(@borrower_received_transaction.lender_id).is_delivery.to_json }
 		end
 	end
 
