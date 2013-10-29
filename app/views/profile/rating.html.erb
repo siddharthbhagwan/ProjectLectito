@@ -1,8 +1,7 @@
-<h3>Profile Overview</h3></br>
+<h3><%= @name %></h3></br>
 
 <div style=" position:absolute; margin-left:0px; top:140px;" class="bold_list">
   <ul style="list-style-type: none" class="padded_list">
-    <li class="padded_list">Name</li>
     <li class="padded_list">Total Books</li>
     <li class="padded_list">Total Transactions</li>
     <li class="padded_list">Feedback</li>
@@ -14,12 +13,24 @@
 
 <div style=" position:absolute; margin-left:220px; top:155px;" class="bold_list">
   <ul style="list-style-type: none">
-    <li class="padded_list"><%= @name %></li>
     <li class="padded_list"><%= @total_books %></li>
     <li class="padded_list"><%= @total_transactions %></li>
     <li class="padded_list"></br></li>
     <li class="padded_list"><%= @good %></li>
     <li class="padded_list"><%= @neutral %></li>
     <li class="padded_list"><%= @bad %></li>
+  </ul>
+</div>
+
+<div style=" position:absolute; margin-left:400px; top:170px;" class="bold_list">
+  <ul style="list-style-type: none">
+    <li> Recent Comments </li></br>
+    <% @comment_history.each do |ch| %>
+      <% if ch.lender_id == current_user.id %>
+        <li class="padded_list well "><%= ch.borrower_comments +  " ~ " + User.find(ch.borrower_id).full_name %></li>
+      <% else %>
+        <li class="padded_list well"><%= ch.lender_comments +  " ~ " + User.find(ch.lender_id).full_name %></li>
+      <% end %>  
+    <% end %>  
   </ul>
 </div>

@@ -57,7 +57,6 @@ class ProfileController < ApplicationController
     pr = Transaction.find(params[:tr_id])
     id = current_user.id
 
-
     if pr.lender_id == current_user.id   
 
       @name = User.find(pr.borrower_id).full_name
@@ -79,7 +78,7 @@ class ProfileController < ApplicationController
 
       @total_transactions = @transactions.count
 
-      @comment_history = @transactions.order("created_at desc").limit(5)
+      @comment_history = @transactions.where.not(:lender_comments => "").order("created_at desc").limit(3)
 
       render :rating
     elsif  pr.borrower_id == current_user.id
@@ -102,6 +101,8 @@ class ProfileController < ApplicationController
       @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' )
 
       @total_transactions = @transactions.count
+
+      @comment_history = @transactions.where.not(:borrower_comments => "").order("created_at desc").limit(5)
 
       render :rating
     else
