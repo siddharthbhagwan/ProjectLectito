@@ -149,6 +149,7 @@ $(document).ready ->
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).fadeOut(500).remove()
             empty_table_checks()
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
@@ -178,6 +179,7 @@ $(document).ready ->
       complete: (jqXHR, textStatus) ->
         $(tr_id_s).fadeOut(500).remove()
         empty_table_checks()
+
       error: (jqXHR, textStatus, errorThrown) ->
         setTimeout $.unblockUI
         $("#error_message").dialog "open"        
@@ -217,6 +219,7 @@ $(document).ready ->
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).fadeOut(500).remove()
             empty_table_checks()
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"         
@@ -357,7 +360,7 @@ $(document).ready ->
                   layout: "topRight"
 
               $("#received_lender_" + pData[1].id).removeAttr("disabled") 
-              $("#received_lender_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].returned_date).fadeIn(300) 
+              $("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
 
             # else if pData[0] == "rejected_lender"
             #   $("#lend_" + pData[1].id).remove()
@@ -435,6 +438,7 @@ $(document).ready ->
     # $("#accept_info").html(html_data)
     $("#borrower_returned_book_confirm").data "trid", tr_id
     $("#borrower_returned_book_confirm").data "trids", tr_id_s
+    $("#borrower_returned_book_confirm").data "mode", "delivery"
     $("#borrower_returned_book_confirm").dialog "open"
     $("#return_pickup_date").datepicker
       showOn: "button"
@@ -482,6 +486,7 @@ $(document).ready ->
     tr_id_s = "#current_" + tr_id
     $("#borrower_returned_book_confirm").data "trid", tr_id
     $("#borrower_returned_book_confirm").data "trids", tr_id_s
+    $("#borrower_returned_book_confirm").data "mode", "self"
     $("#borrower_returned_book_confirm").dialog "open"
 
 
@@ -511,36 +516,37 @@ $(document).ready ->
             $(tr_id_s).remove()
             if $("#current_books_table tr").length == 1
               $("#current_books_div").hide()
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
 
       "Skip": ->
         $(this).dialog "close"
-        tr_id = $("#lender_received_book_confirm").data("trid")
-        tr_id_s = $("#lender_received_book_confirm").data("trids")
-        $.ajax
-          url: "/transaction/update_request_status_return.js"
-          type: "post"
-          context: "this"
-          dataType: "script"
-          data:
-            tr_id: tr_id
-            borrower_feedback: ""
-            borrower_comments: ""
-            
-          success: (msg) ->
-
-          complete: (jqXHR, textStatus) ->
-            $(tr_id_s).remove()
-            if $("#current_books_table tr").length == 1
-              $("#current_books_div").hide()
-          error: (jqXHR, textStatus, errorThrown) ->
-            setTimeout $.unblockUI
-            $("#error_message").dialog "open"
+        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+        $(tr_id_s).remove()
+        if $("#current_books_table tr").length == 1
+          $("#current_books_div").hide()
 
       Cancel: ->
-        $(this).dialog "close"         
+        $(this).dialog "close"
+        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+        $(tr_id_s).remove()
+        if $("#current_books_table tr").length == 1
+          $("#current_books_div").hide()
+
+    beforeClose: (event) ->
+      if event.keyCode is $.ui.keyCode.ESCAPE
+        mode = $("#borrower_returned_book_confirm").data("mode")
+        if mode == "delivery"
+          tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+          $(tr_id_s).remove()
+          if $("#current_books_table tr").length == 1
+            $("#current_books_div").hide()
+
+          noty
+            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+            layout: "topRight"
 
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Compelte transaction from lender side
@@ -585,6 +591,7 @@ $(document).ready ->
             $(tr_id_s).remove()
             if $("#accepted_requests_table tr").length == 1
               $("#accepted_requests_div").hide()
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
@@ -609,6 +616,7 @@ $(document).ready ->
             $(tr_id_s).remove()
             if $("#accepted_requests_table tr").length == 1
               $("#accepted_requests_div").hide()
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"
@@ -662,6 +670,7 @@ $(document).ready ->
         $("#handed_over_" + tr_id).attr("value","Received")
         $("#handed_over_" + tr_id).attr("disabled","true")
         $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
+
       error: (jqXHR, textStatus, errorThrown) ->
         setTimeout $.unblockUI
         $("#error_message").dialog "open"        

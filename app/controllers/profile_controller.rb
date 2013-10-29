@@ -56,12 +56,10 @@ class ProfileController < ApplicationController
       if t.lender_id == current_user.id
         if t.borrower_comments != "" and !t.borrower_comments.nil?
           @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
-          logger.debug "Comment - " + t.borrower_comments.to_s + " ~ " + t.id.to_s + " " + t.borrower_feedback.to_s
         end
       else
         if t.lender_comments != "" and !t.lender_comments.nil?
           @comment_history.push(t.lender_comments + " ~ " + User.find(t.lender_id).full_name)
-          logger.debug "Comment - " + t.lender_comments.to_s + " ~ " + t.id.to_s + " " + t.lender_feedback.to_s
         end
       end
     end
@@ -98,12 +96,10 @@ class ProfileController < ApplicationController
         if t.lender_id == pr.borrower_id
           if t.borrower_comments != "" and !t.borrower_comments.nil?
             @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
-            logger.debug "Comment - " + t.borrower_comments.to_s + " ~ " + t.id.to_s + " " + t.borrower_feedback.to_s
           end
         else
           if t.lender_comments != "" and !t.lender_comments.nil?
             @comment_history.push(t.lender_comments + " ~ " + User.find(t.lender_id).full_name)
-            logger.debug "Comment - " + t.lender_comments.to_s + " ~ " + t.id.to_s + " " + t.lender_feedback.to_s
           end
         end
       end
@@ -136,12 +132,10 @@ class ProfileController < ApplicationController
         if t.lender_id == pr.lender_id
           if t.borrower_comments != "" and !t.borrower_comments.nil?
             @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
-            logger.debug "Comment - " + t.borrower_comments.to_s + " " + t.id.to_s + " " + t.borrower_feedback.to_s
           end
         else
           if t.lender_comments != "" and !t.lender_comments.nil?
             @comment_history.push(t.lender_comments + " ~ " + User.find(t.lender_id).full_name)
-            logger.debug "Comment - " + t.lender_comments.to_s + " " + t.id.to_s + " " + t.lender_feedback.to_s
           end
         end
       end
