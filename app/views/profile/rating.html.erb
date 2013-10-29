@@ -25,12 +25,8 @@
 <div style=" position:absolute; margin-left:400px; top:140px;" class="bold_list">
   <ul style="list-style-type: none">
     <li><h4> Recent Comments </h4></li></br>
-    <% @comment_history.each do |ch| %>
-      <% if ch.lender_id == current_user.id %>
-        <li class="padded_list well "><%= ch.borrower_comments +  " ~ " + User.find(ch.borrower_id).full_name %></li>
-      <% else %>
-        <li class="padded_list well"><%= ch.lender_comments +  " ~ " + User.find(ch.lender_id).full_name %></li>
-      <% end %>  
+    <% @comment_history.first(5).each do |ch| %>
+        <li class="padded_list well "><%= ch %></li>
     <% end %>  
   </ul>
 </div>

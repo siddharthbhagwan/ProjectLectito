@@ -60,6 +60,7 @@ jQuery ->
               theme:     true, 
               title:    'Please Wait', 
               message:  '<p>Your request is being processed</p>'
+              draggable: false
             
           success: (data, textStatus, XHR) ->
             $("#bar_user_success").dialog "open"
@@ -115,6 +116,7 @@ jQuery ->
               theme:     true, 
               title:    'Please Wait', 
               message:  '<p>Your request is being processed</p>'
+              draggable: false
             
           success: (msg) ->
             $("#unbar_user_success").dialog "open"

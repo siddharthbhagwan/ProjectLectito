@@ -221,6 +221,7 @@ class TransactionController < ApplicationController
 		@borrower_received_transaction = Transaction.where(:id => params[:tr_id]).take
 		@borrower_received_transaction.received_date = DateTime.now.to_time
 		@borrower_received_transaction.status = "Received Borrower"
+		@borrower_received_transaction.returned_date = @borrower_received_transaction.received_date + 14.days
 
 		if @borrower_received_transaction.save
 			# If action initiated by borrower, push notification to lender, and vice versa
@@ -230,7 +231,8 @@ class TransactionController < ApplicationController
 				transaction_received_borrower << {
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
-					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery
+					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery,
+					:received_date => @borrower_received_transaction.received_date.to_s(:long)
 				}
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.lender_id.to_s
@@ -242,7 +244,8 @@ class TransactionController < ApplicationController
 				transaction_received_borrower << {
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
-					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery
+					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery,
+					:received_date => @borrower_received_transaction.received_date.to_s(:long)
 				}
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.borrower_id.to_s

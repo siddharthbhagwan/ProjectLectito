@@ -85,7 +85,8 @@ $(document).ready ->
               $.blockUI
                 theme:     true, 
                 title:    'Please Wait', 
-                message:  '<p>Your request is being processed</p>'   
+                message:  '<p>Your request is being processed</p>'
+                draggable: false
 
             success: (msg) ->
 
@@ -358,7 +359,7 @@ $(document).ready ->
                 td_returned_date = "<td>Pending</td>"
                 td_received_date = "<td>Pending</td>"
                 td_borrow_duration = "<td>Pending</td>"
-                table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_returned_date + td_received_date + td_borrow_duration + td_status
+                table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_received_date + td_borrow_duration + td_returned_date + td_status
                 $("#accepted_requests_table > tbody:last").append(table_row_data)
                 if (!$("#accepted_requests_div").is(":visible"))
                   $("#accepted_requests_div").show(500)
@@ -440,6 +441,7 @@ $(document).ready ->
 
               # Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
               else if pData[0] == "received_borrower_by_borrower"
+                $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text(pData[1].received_date)
                 noty
                   text: "The borrower has successfully received '" + pData[1].book_name + "'"
                   layout: "topRight"
@@ -674,6 +676,8 @@ $(document).ready ->
         else
           $("#received_borrower_" + tr_id).attr("value","Return")
           $("#received_borrower_" + tr_id).attr("id","return_self")
+
+        #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
       complete: (jqXHR, textStatus) ->
 
       error: (jqXHR, textStatus, errorThrown) ->

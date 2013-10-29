@@ -47,9 +47,24 @@ class ProfileController < ApplicationController
     @neutral = @neutral_lender + @neutral_borrower
 
     @total_books = Inventory.where(:user_id => current_user.id).count
-    @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", current_user.id, current_user.id, 'Rejected', 'Cancelled' )
+    @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", current_user.id, current_user.id, 'Rejected', 'Cancelled' ).order("created_at desc")
 
-    @total_transactions = @transactions.count 
+    @total_transactions = @transactions.count
+    @comment_history = []
+
+    @transactions.each do |t|
+      if t.lender_id == current_user.id
+        if t.borrower_comments != "" and !t.borrower_comments.nil?
+          @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
+          logger.debug "Comment - " + t.borrower_comments.to_s + " ~ " + t.id.to_s + " " + t.borrower_feedback.to_s
+        end
+      else
+        if t.lender_comments != "" and !t.lender_comments.nil?
+          @comment_history.push(t.lender_comments + " ~ " + User.find(t.lender_id).full_name)
+          logger.debug "Comment - " + t.lender_comments.to_s + " ~ " + t.id.to_s + " " + t.lender_feedback.to_s
+        end
+      end
+    end
 
   end
 
@@ -74,11 +89,24 @@ class ProfileController < ApplicationController
       @neutral = @neutral_lender + @neutral_borrower
 
       @total_books = Inventory.where(:user_id => pr.borrower_id).count
-      @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' )
+      @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' ).order("created_at desc")
 
       @total_transactions = @transactions.count
+      @comment_history = []
 
-      @comment_history = @transactions.where.not(:lender_comments => "").order("created_at desc").limit(3)
+      @transactions.each do |t|
+        if t.lender_id == pr.borrower_id
+          if t.borrower_comments != "" and !t.borrower_comments.nil?
+            @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
+            logger.debug "Comment - " + t.borrower_comments.to_s + " ~ " + t.id.to_s + " " + t.borrower_feedback.to_s
+          end
+        else
+          if t.lender_comments != "" and !t.lender_comments.nil?
+            @comment_history.push(t.lender_comments + " ~ " + User.find(t.lender_id).full_name)
+            logger.debug "Comment - " + t.lender_comments.to_s + " ~ " + t.id.to_s + " " + t.lender_feedback.to_s
+          end
+        end
+      end
 
       render :rating
     elsif  pr.borrower_id == current_user.id
@@ -98,11 +126,25 @@ class ProfileController < ApplicationController
       @neutral = @neutral_lender + @neutral_borrower
 
       @total_books = Inventory.where(:user_id => pr.borrower_id).count
-      @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' )
+      @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' ).order("created_at desc")
 
       @total_transactions = @transactions.count
 
-      @comment_history = @transactions.where.not(:borrower_comments => "").order("created_at desc").limit(5)
+      @comment_history = []
+
+      @transactions.each do |t|
+        if t.lender_id == pr.lender_id
+          if t.borrower_comments != "" and !t.borrower_comments.nil?
+            @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
+            logger.debug "Comment - " + t.borrower_comments.to_s + " " + t.id.to_s + " " + t.borrower_feedback.to_s
+          end
+        else
+          if t.lender_comments != "" and !t.lender_comments.nil?
+            @comment_history.push(t.lender_comments + " ~ " + User.find(t.lender_id).full_name)
+            logger.debug "Comment - " + t.lender_comments.to_s + " " + t.id.to_s + " " + t.lender_feedback.to_s
+          end
+        end
+      end
 
       render :rating
     else
