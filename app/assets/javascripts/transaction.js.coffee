@@ -337,7 +337,7 @@ $(document).ready ->
               empty_table_checks()
               tr_id = "<tr id='current_" + pData[1].id + "'>"
               td_book_name = "<td>" + pData[1].book_name + "</td>"
-              td_lender = "<td>" + pData[1].lender + "</td>"
+              td_lender = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
               if pData[1].delivery_mode
                 td_delivery_mode = "<td>Delivery</td>"
               else
@@ -514,6 +514,8 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
+            $('input:radio[name=borrower_feedback]').val(['neutral']);
+            $("#borrower_comments").val("")
             if $("#current_books_table tr").length == 1
               $("#current_books_div").hide()
 
@@ -547,6 +549,9 @@ $(document).ready ->
           noty
             text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
             layout: "topRight"
+
+    open: (event, ui) ->
+      $(":button:contains('Ok')").focus()          
 
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Compelte transaction from lender side
@@ -589,6 +594,8 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
+            $("#lender_comments").val("")
+            $('input:radio[name=lender_feedback]').val(['neutral'])
             if $("#accepted_requests_table tr").length == 1
               $("#accepted_requests_div").hide()
 
@@ -623,6 +630,9 @@ $(document).ready ->
 
       Cancel: ->
         $(this).dialog "close"
+
+    open: (event, ui) ->
+      $(":button:contains('Ok')").focus()      
 
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on "click", "input[id^='received_borrower_']", ->
