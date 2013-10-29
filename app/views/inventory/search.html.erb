@@ -60,21 +60,21 @@
 
 <div id="lender_received_book_confirm" title="Return Request">
   <p>Please rate your experience to complete this transaction </p>
-  <input type="radio" name="lender_feedback" value="good" checked="true"> Good <br>
-  <input type="radio" name="lender_feedback" value="neutral">  Neutral <br>
-  <input type="radio" name="lender_feedback" value="bad">  Bad <br>
+  <input type="radio" name="lender_feedback" value="good" checked="true"> Good <br/>
+  <input type="radio" name="lender_feedback" value="neutral">  Neutral <br/>
+  <input type="radio" name="lender_feedback" value="bad">  Bad <br/><br/>
   <div id="lender_comments_div">
-    <%= text_field_tag :lender_comments, nil, :placeholder => "Comments" %></br>
+    <%= text_area_tag :lender_comments, nil, :placeholder => :Comments, :class => :feedback_textarea %></br>
   </div>
 </div>
 
 <div id="borrower_returned_book_confirm" title="Return Request">
   <p>Please rate your experience to complete this transaction </p>
-  <input type="radio" name="borrower_feedback" value="good" checked="true"> Good <br>
-  <input type="radio" name="borrower_feedback" value="neutral">  Neutral <br>
-  <input type="radio" name="borrower_feedback" value="bad">  Bad <br>
+  <input type="radio" name="borrower_feedback" value="good" checked="true"> Good <br/>
+  <input type="radio" name="borrower_feedback" value="neutral">  Neutral <br/>
+  <input type="radio" name="borrower_feedback" value="bad">  Bad <br/><br/>
   <div id="lender_comments_div">
-    <%= text_field_tag :borrower_comments, nil, :placeholder => "Comments" %></br>
+    <%= text_area_tag :borrower_comments, nil, :placeholder => :Comments, :class => :feedback_textarea %></br>
   </div>
 </div>
 
