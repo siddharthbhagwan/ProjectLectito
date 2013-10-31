@@ -93,7 +93,7 @@ GEM
     execjs (2.0.2)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
-    ffi (1.9.2)
+    ffi (1.9.3)
     firebase (0.1.4)
       json
       typhoeus (>= 0.6.1)
@@ -201,7 +201,7 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    sidekiq (2.16.0)
+    sidekiq (2.16.1)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
       json
@@ -233,7 +233,7 @@ GEM
       actionpack (>= 3.1)
       execjs
       railties (>= 3.1)
-    typhoeus (0.6.5)
+    typhoeus (0.6.6)
       ethon (~> 0.6.1)
     tzinfo (0.3.38)
     uglifier (2.3.0)
