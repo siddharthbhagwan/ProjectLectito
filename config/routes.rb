@@ -10,6 +10,7 @@ ProjectLectito::Application.routes.draw do
 
   # Admin routes
   get "admin/user_details" => "admin#user_details"
+  get "admin/city_report" => "admin#city_report"
   post "admin/bar_user" => "admin#bar_user"
   post "admin/unbar_user" => "admin#unbar_user"
 
