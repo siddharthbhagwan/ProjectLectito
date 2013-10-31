@@ -42,6 +42,7 @@ $(document).ready ->
     $("#borrow_confirm").data "user_id", $(this).attr("data-uid")
     $("#borrow_confirm").data "button_id", $(this).attr("id")
     $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
+    $("#borrow_confirm_title").text($("#" + $(this).attr("data-cityid") + " td:nth-last-child(1)").text())
     $("#borrow_confirm").dialog "open"
 
 
