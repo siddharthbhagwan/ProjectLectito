@@ -30,7 +30,7 @@ gem 'puma'
 # add these gems to help with the transition:
 gem 'protected_attributes'
 gem 'rails-observers'
-gem 'actionpack-page_caching'
+#gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 
 
