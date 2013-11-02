@@ -701,3 +701,15 @@ $(document).ready ->
         $(this).dialog "close"
 
 #-------------------------------------------------------------------------------------------------------------------- 
+  # window.addEventListener "beforeunload", (e) ->
+  #   $.ajax
+  #     url: "/transaction/testt.json"
+  #     type: "get"
+  #     context: "this"
+  #     dataType: "json"
+        
+  #     success: (msg) ->
+
+  #     complete: (jqXHR, textStatus) ->
+
+  #     error: (jqXHR, textStatus, errorThrown) ->

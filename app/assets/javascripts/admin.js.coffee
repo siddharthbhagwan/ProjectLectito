@@ -152,5 +152,6 @@ jQuery ->
     draggable: false
     buttons:
       "Ok": ->
-        $(this).dialog "close"           
+        $(this).dialog "close"   
+
          

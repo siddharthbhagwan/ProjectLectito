@@ -300,6 +300,14 @@ class TransactionController < ApplicationController
 		end	
 	end
 
+	def testt
+		logger.debug "Asdadadasdadadasdasndjkandjksfnwejo"
+		respond_to do |format|
+			format.html  
+			format.json { render :json => { :user_id => current_user.id.to_json} }
+		end	
+	end
+
 	private
 
 	def require_profile

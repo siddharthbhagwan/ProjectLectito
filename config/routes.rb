@@ -34,6 +34,7 @@ ProjectLectito::Application.routes.draw do
   
   # Transaction Routes
   get "transaction/user_id" => "transaction#user_id"
+  get "transaction/testt" => "transaction#testt"
   post "transaction/new_chat" => "transaction#new_chat"
   post "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   post "transaction/update_request_status_reject" => "transaction#update_request_status_reject"
