@@ -53,6 +53,10 @@ class TransactionController < ApplicationController
 		end
 		#@accept_request.returned_date = 15.days.from_now
 
+		inventory_rented_out = Inventory.find(@accept_request.inventory_id)
+		inventory_rented_out.status = "Rented Out"
+		inventory_rented_out.save
+
 		lender_id_s = @accept_request.lender_id.to_s
 		borrower_id_s = @accept_request.borrower_id.to_s
 

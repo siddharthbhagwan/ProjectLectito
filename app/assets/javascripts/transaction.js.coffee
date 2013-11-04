@@ -291,10 +291,7 @@ $(document).ready ->
 
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
-            if pData[1].online == "Online"
-              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
-            else
-              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+            td_borrower = "<td><a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
             
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
@@ -544,6 +541,10 @@ $(document).ready ->
             if $("#current_books_table tr").length == 1
               $("#current_books_div").hide()
 
+            noty
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+              layout: "topRight"  
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
@@ -743,7 +744,7 @@ $(document).ready ->
     success: (msg) ->
 
     complete: (jqXHR, textStatus) ->
-
+       
     error: (jqXHR, textStatus, errorThrown) ->
 #-------------------------------------------------------------------------------------------------------------------- 
   # window.addEventListener "beforeunload", (e) ->

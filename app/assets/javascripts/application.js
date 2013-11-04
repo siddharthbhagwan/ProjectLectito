@@ -14,6 +14,7 @@
 //= require twitter/bootstrap
 //= require address
 //= require book
+//= require check_browser_close
 //= require devise
 //= require home_page
 //= require profile
