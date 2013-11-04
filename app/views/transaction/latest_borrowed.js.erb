@@ -2,7 +2,11 @@
 	<% @latest_borrowed.each do |b| %>
 		tr_id = "<tr data-trid='<%= b.id %>' data-time='<%= b.updated_at.to_i %>'>"
 		td_book_name = "<td><%= Book.find(Inventory.find(b.inventory_id).book.id).book_name %></td>"
-		td_lender_name = "<td><%= link_to User.find(b.lender_id).full_name, '/profile/public_rating/#{b.id}', :target => '_blank' %></td>"
+		<% if Profile.where(:user_id => b.lender_id).take.profile_status == "Online" %>
+			td_lender_name = "<td><img width='10' height='6' src='/assets/online_dot.png' alt='Online dot' id='online_<%= b.id %>' > <%= link_to User.find(b.lender_id).full_name, '/profile/public_rating/#{b.id}', :target => '_blank' %></td>"
+		<% else %>
+			td_lender_name = "<td><img width='10' height='6' src='/assets/online_dot.png' alt='Online dot' id='online_<%= b.id %>' hidden='true' > <%= link_to User.find(b.lender_id).full_name, '/profile/public_rating/#{b.id}', :target => '_blank' %></td>"
+		<% end %>
 		td_address_summary = "<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>"
 		td_delivery_mode = "<td><% if User.find(b.lender_id).is_delivery %>Delivery<% else %>Self Pick/Drop<% end %></td>"
 		td_rental_price = "<td><%= Inventory.find(b.inventory_id).rental_price %></td>"

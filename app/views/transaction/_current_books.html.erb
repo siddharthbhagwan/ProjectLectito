@@ -17,8 +17,10 @@
 			<% @current.each do |c| %>
 				<tr id='current_<%= c.id %>' >
 					<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
-					<td><% if User.find(c.lender_id) %>
-							<%= image_tag("online_dot.png", :size => "10x6") + " " %>
+					<td><% if Profile.where(:user_id => c.lender_id).first.profile_status == "Online" %>
+							<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + c.id.to_s) + " " %>
+							<% else %>
+								<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + c.id.to_s, :hidden => :true) + " " %>
 							<% end %>
 							<%= link_to(User.find(c.lender_id).full_name, "/profile/public_rating/#{c.id}", :target => "_blank") %></td>
 					<% if User.find(c.lender_id).is_delivery %>
@@ -27,7 +29,11 @@
 						<td>Self Pick/Drop</td>
 					<% end %>
 					<td><%= c.acceptance_date.to_s(:long) %></td>
-					<td><%= c.received_date.to_s(:long) unless c.received_date.nil? %></td>
+					<% if c.received_date.nil? %>
+						<td>Pending</td>
+					<% else %>
+						<td><%= c.received_date.to_s(:long) %></td>
+					<% end %>
 					<td>Pending</td>
 					<td>Pending</td>
 					<% if c.status == 'Accepted' %>

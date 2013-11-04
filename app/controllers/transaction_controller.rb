@@ -28,7 +28,8 @@ class TransactionController < ApplicationController
 				:requested_date => @transaction.request_date.to_s(:long),
 				:status => @transaction.status,
 				:borrower => User.find(@transaction.borrower_id).full_name,
-				:delivery_mode => User.find(@transaction.borrower_id).is_delivery
+				:delivery_mode => User.find(@transaction.borrower_id).is_delivery,
+				:online => Profile.where(:user_id => @transaction.borrower_id).take.profile_status
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
@@ -97,7 +98,8 @@ class TransactionController < ApplicationController
 			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
 			:borrower => User.find(@accept_request.borrower_id).full_name,
 			:delivery_mode => User.find(@accept_request.lender_id).is_delivery,
-			:borrower_id => @accept_request.borrower_id
+			:borrower_id => @accept_request.borrower_id,
+			:online => Profile.where(:user_id => @accept_request.borrower_id).take.profile_status
 		}
 
 		transaction_accepted_borrower = Array.new
@@ -107,7 +109,8 @@ class TransactionController < ApplicationController
 			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
 			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
 			:lender => User.find(@accept_request.lender_id).full_name,
-			:delivery_mode => User.find(@accept_request.borrower_id).is_delivery
+			:delivery_mode => User.find(@accept_request.borrower_id).is_delivery,
+			:online => Profile.where(:user_id => @accept_request.lender_id).take.profile_status
 		}
 
 		if @accept_request.save
