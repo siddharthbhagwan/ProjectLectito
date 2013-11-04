@@ -1,4 +1,7 @@
 ProjectLectito::Application.routes.draw do
+
+  #Devise routes
+  get "users/sign_in" => "inventory#search"
   
   #Profile Routes
   get "profile/rating" => "profile#rating"
