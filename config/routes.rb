@@ -3,6 +3,7 @@ ProjectLectito::Application.routes.draw do
   #Profile Routes
   get "profile/rating" => "profile#rating"
   get "profile/public_rating/:tr_id" => "profile#public_rating"
+  post "profile/update_profile_status" => "profile#update_profile_status"
 
   # Address Routes
   get "address/autocomplete_area" => "address#autocomplete_area"
@@ -10,6 +11,7 @@ ProjectLectito::Application.routes.draw do
 
   # Admin routes
   get "admin/user_details" => "admin#user_details"
+  get "admin/city_report" => "admin#city_report"
   post "admin/bar_user" => "admin#bar_user"
   post "admin/unbar_user" => "admin#unbar_user"
 
@@ -33,6 +35,7 @@ ProjectLectito::Application.routes.draw do
   
   # Transaction Routes
   get "transaction/user_id" => "transaction#user_id"
+  get "transaction/testt" => "transaction#testt"
   post "transaction/new_chat" => "transaction#new_chat"
   post "transaction/update_request_status_accept" => "transaction#update_request_status_accept"
   post "transaction/update_request_status_reject" => "transaction#update_request_status_reject"

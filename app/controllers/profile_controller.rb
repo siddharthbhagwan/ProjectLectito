@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
   include ApplicationHelper
+  Firebase.base_uri = "https://projectlectito.Firebaseio.com/"
   load_and_authorize_resource :class => Profile
 
   def new
@@ -9,6 +10,7 @@ class ProfileController < ApplicationController
   def create
     @profile = Profile.new(params[:profile])
     @profile.user_id = current_user.id
+    @profile.profile_status = "Online"
     if @profile.save
       flash[:notice] = "Your Profile has been created"
       redirect_to new_address_path
@@ -144,6 +146,51 @@ class ProfileController < ApplicationController
     else
       redirect_to home_path
       flash[:alert] = "No such page exists!"
+    end
+  end
+
+  def update_profile_status
+    profile = Profile.where(:user_id => current_user.id).take
+    if profile.profile_status == "Online"
+      respond_to do |format|
+        format.html  
+        format.json { render :json => "Online" }
+      end 
+    else
+      profile.profile_status = "Online"
+      my_transactions_as_lender = Transaction.where(:lender_id => current_user.id).where.not(:status => "Rejected").where.not(:status => "Cancelled").where.not(:status => "Complete")
+      my_transactions_as_borrower = Transaction.where(:borrower_id => current_user.id).where.not(:status => "Rejected").where.not(:status => "Cancelled").where.not(:status => "Complete")
+
+      if !my_transactions_as_lender.nil?
+        my_transactions_as_lender.each do |tl|
+          update_lender_offline = Array.new
+          update_lender_offline << "online"
+          update_lender_offline << {
+          :id => tl.id
+          }
+          publish_channel_all_borrowers = "transaction_listener_" + tl.borrower_id.to_s
+          Firebase.push(publish_channel_all_borrowers, update_lender_offline.to_json)
+        end
+      end
+
+      if !my_transactions_as_borrower.nil?
+        my_transactions_as_borrower.each do |tl|
+          update_borrower_offline = Array.new
+          update_borrower_offline << "online"
+          update_borrower_offline << {
+          :id => tl.id
+          }
+          publish_channel_all_lenders = "transaction_listener_" + tl.lender_id.to_s
+          Firebase.push(publish_channel_all_lenders, update_borrower_offline.to_json)
+        end
+      end
+
+      if profile.save
+        respond_to do |format|
+          format.html  
+          format.json { render :json => "Offline" }
+        end
+      end
     end
   end
 end
