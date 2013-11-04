@@ -284,96 +284,100 @@ $(document).ready ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)
         if pData[0] == "create"
-          noty
-            text: "You have a received a request to lend out '" + pData[1].book_name + "'"
-            layout: "topRight"
+          if !$("#lend_" + pData[1].id).length
+            noty
+              text: "You have a received a request to lend out '" + pData[1].book_name + "'"
+              layout: "topRight"
 
-          tr_id = "<tr id='lend_" + pData[1].id + "'>"
-          td_book_name = "<td>" + pData[1].book_name + "</td>"
-          if pData[1].online == "Online"
-            td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
-          else
-            td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
-          
-          if pData[1].delivery_mode
-            td_delivery_mode = "<td>Delivery</td>"
-            td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
-          else
-            td_delivery_mode = "<td>Self Pick/Drop</td>"
-            td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
+            tr_id = "<tr id='lend_" + pData[1].id + "'>"
+            td_book_name = "<td>" + pData[1].book_name + "</td>"
+            if pData[1].online == "Online"
+              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+            else
+              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target = '_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+            
+            if pData[1].delivery_mode
+              td_delivery_mode = "<td>Delivery</td>"
+              td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
+            else
+              td_delivery_mode = "<td>Self Pick/Drop</td>"
+              td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
-          td_requested_from = "<td>" + pData[1].requested_from + "</td>"
-          td_requested_date = "<td>" + pData[1].requested_date + "</td>"
-          td_status = "<td>" + pData[1].status + "</td>"
-          td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
-          table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_delivery_mode + td_requested_date + td_status + td_accept + td_reject
-          $("#lend_requests_table > tbody:last").append(table_row_data);
-          if (!$("#lend_requests_div").is(":visible"))
-            $("#lend_requests_div").show(500)  
+            td_requested_from = "<td>" + pData[1].requested_from + "</td>"
+            td_requested_date = "<td>" + pData[1].requested_date + "</td>"
+            td_status = "<td>" + pData[1].status + "</td>"
+            td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
+            table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_delivery_mode + td_requested_date + td_status + td_accept + td_reject
+            $("#lend_requests_table > tbody:last").append(table_row_data);
+            if (!$("#lend_requests_div").is(":visible"))
+              $("#lend_requests_div").show(500)  
 
         #Summary of Requests for Books you've lent out (lender)
         else if pData[0] == "accepted_borrower"
-          tr_id = "<tr id='accepted_" + pData[1].id + "'>"
-          td_book_name = "<td>" + pData[1].book_name + "</td>"
-          if pData[1].online == "Online"
-            td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
-          else
-            td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+          if !$("#accepted_" + pData[1].id).length
+            tr_id = "<tr id='accepted_" + pData[1].id + "'>"
+            td_book_name = "<td>" + pData[1].book_name + "</td>"
+            if pData[1].online == "Online"
+              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+            else
+              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
 
-          if pData[1].delivery_mode
-            td_delivery_mode = "<td>Delivery</td>"
-            td_status = "<td><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
-          else
-            td_delivery_mode = "<td>Self Pick/Drop</td>"
-            td_status = "<td><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+            if pData[1].delivery_mode
+              td_delivery_mode = "<td>Delivery</td>"
+              td_status = "<td><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+            else
+              td_delivery_mode = "<td>Self Pick/Drop</td>"
+              td_status = "<td><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
-          td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-          td_returned_date = "<td>Pending</td>"
-          td_received_date = "<td>Pending</td>"
-          td_borrow_duration = "<td>Pending</td>"
-          table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_received_date + td_borrow_duration + td_returned_date + td_status
-          $("#accepted_requests_table > tbody:last").append(table_row_data)
-          if (!$("#accepted_requests_div").is(":visible"))
-            $("#accepted_requests_div").show(500)
+            td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
+            td_returned_date = "<td>Pending</td>"
+            td_received_date = "<td>Pending</td>"
+            td_borrow_duration = "<td>Pending</td>"
+            table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_received_date + td_borrow_duration + td_returned_date + td_status
+            $("#accepted_requests_table > tbody:last").append(table_row_data)
+            if (!$("#accepted_requests_div").is(":visible"))
+              $("#accepted_requests_div").show(500)
         
         #Summary of Books currently with you (borrower)
         else if pData[0] == "accepted_lender"
-          noty
-            text: "Your request to borrow '" + pData[1].book_name + "' has been accepted"
-            layout: "topRight"
+          if !$("#current_" + pData[1].id).length
+            noty
+              text: "Your request to borrow '" + pData[1].book_name + "' has been accepted"
+              layout: "topRight"
 
-          $("#borrow_" + pData[1].id).remove()
-          empty_table_checks()
-          tr_id = "<tr id='current_" + pData[1].id + "'>"
-          td_book_name = "<td>" + pData[1].book_name + "</td>"
-          if pData[1].online == "Online"
-            td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
-          else
-            td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
+            $("#borrow_" + pData[1].id).remove()
+            empty_table_checks()
+            tr_id = "<tr id='current_" + pData[1].id + "'>"
+            td_book_name = "<td>" + pData[1].book_name + "</td>"
+            if pData[1].online == "Online"
+              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
+            else
+              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
 
-          if pData[1].delivery_mode
-            td_delivery_mode = "<td>Delivery</td>"
-          else
-            td_delivery_mode = "<td>Self Pick/Drop</td>"
+            if pData[1].delivery_mode
+              td_delivery_mode = "<td>Delivery</td>"
+            else
+              td_delivery_mode = "<td>Self Pick/Drop</td>"
 
-          td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-          td_received_date = "<td>Pending</td>"
-          td_borrowed_duration = "<td>Pending</td>"
-          td_return_date = "<td>Pending</td>"
-          td_return = "<td><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
-          table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_return        
-          $("#current_books_table > tbody:last").append(table_row_data)
-          if (!$("#current_books_div").is(":visible"))
-            $("#current_books_div").show(500)
+            td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
+            td_received_date = "<td>Pending</td>"
+            td_borrowed_duration = "<td>Pending</td>"
+            td_return_date = "<td>Pending</td>"
+            td_return = "<td><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_return        
+            $("#current_books_table > tbody:last").append(table_row_data)
+            if (!$("#current_books_div").is(":visible"))
+              $("#current_books_div").show(500)
 
         #Summary of Requests for Books you've lent out ( recvd button activates )
         else if pData[0] == "returned"
-          noty
-              text: "Return of '" + pData[1].book_name + "' has been inititated"
-              layout: "topRight"
+          if $("#received_lender_" + pData[1].id).attr("disabled") == "disabled"
+            noty
+                text: "Return of '" + pData[1].book_name + "' has been inititated"
+                layout: "topRight"
 
-          $("#received_lender_" + pData[1].id).removeAttr("disabled") 
-          $("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
+            $("#received_lender_" + pData[1].id).removeAttr("disabled") 
+            $("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
 
         else if pData[0] == "rejected_lender"
           $("#lend_" + pData[1].id).remove()
@@ -402,36 +406,37 @@ $(document).ready ->
 
         #Lender triggers that book's been handed over in self/pick drop.
         else if pData[0] == "received_borrower_by_lender"
-          noty
-            text: "The borrower has handed over '" + pData[1].book_name + "'"
-            layout: "topRight"
+          if  $("#received_borrower_" + pData[1].id).attr("value") != "Return"
+            noty
+              text: "The borrower has handed over '" + pData[1].book_name + "'"
+              layout: "topRight"
 
-            if pData[1].delivery_mode
-              $("#received_borrower_" + pData[1].id).attr("value", "Return")
-              $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
+              if pData[1].delivery_mode
+                $("#received_borrower_" + pData[1].id).attr("value", "Return")
+                $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
 
-            else
-              $("#received_borrower_" + pData[1].id).attr("value", "Return")
-              $("#received_borrower_" + pData[1].id).attr("id", "return_self")
+              else
+                $("#received_borrower_" + pData[1].id).attr("value", "Return")
+                $("#received_borrower_" + pData[1].id).attr("id", "return_self")
 
 
         #Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
         else if pData[0] == "received_borrower_by_borrower"
-          $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text(pData[1].received_date)
-          noty
-            text: "The borrower has successfully received '" + pData[1].book_name + "'"
-            layout: "topRight"
+          if $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text == "Pending"
+            $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text(pData[1].received_date)
+            noty
+              text: "The borrower has successfully received '" + pData[1].book_name + "'"
+              layout: "topRight"
 
-            if !pData[1].delivery_mode
-              $("#handed_over_" + pData[1].id).attr("value", "Received")
-              $("#handed_over_" + pData[1].id).attr("disabled", "true")
-              $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
+              if !pData[1].delivery_mode
+                $("#handed_over_" + pData[1].id).attr("value", "Received")
+                $("#handed_over_" + pData[1].id).attr("disabled", "true")
+                $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
 
         else if pData[0] == "offline"
           $("#online_" + pData[1].id).attr("hidden", "true")
 
         else if pData[0] == "online"
-          console.log "adas"
           $("#online_" + pData[1].id).removeAttr("hidden")
 
         myChild.remove()  
