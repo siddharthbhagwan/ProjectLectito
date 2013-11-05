@@ -2,7 +2,7 @@ ProjectLectito::Application.routes.draw do
 
   #Devise routes
   get "users/sign_in" => "inventory#search"
-  
+    
   #Profile Routes
   get "profile/rating" => "profile#rating"
   get "profile/public_rating/:tr_id" => "profile#public_rating"
@@ -49,7 +49,7 @@ ProjectLectito::Application.routes.draw do
 
 
   root :to => "inventory#search"
-  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}, :controllers => { :sessions => :sessions }
   resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction, :chat
 
 end
