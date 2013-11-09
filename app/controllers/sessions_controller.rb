@@ -1,8 +1,8 @@
 class SessionsController < Devise::SessionsController
+Firebase.base_uri = "https://projectlectito.Firebaseio.com/"
 
 # DELETE /resource/sign_out
   def destroy
-    logger.info "YES YES YES YES YES YES YES YES YES YES YES YES "
     profile = Profile.where(:user_id => current_user.id).take
     profile.profile_status = "Offline"
 
@@ -37,5 +37,6 @@ class SessionsController < Devise::SessionsController
     end
 
     super
+
   end
 end

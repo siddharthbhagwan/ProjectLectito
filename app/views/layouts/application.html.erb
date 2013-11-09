@@ -28,7 +28,7 @@
 									<%= link_to "Users", admin_index_path, class: "accordian" %></br>
 									<%= link_to "Books", book_index_path, class: "accordian" %></br>
 									<%= link_to "Transactions", admin_index_path, class: "accordian" %></br>
-									<%= link_to "Reports", admin_city_report_path, class: "accordian" %>
+									<!-- <%= link_to "Reports", admin_city_report_path, class: "accordian" %> -->
 								</div>  
 							</div>  
 						</div>
@@ -58,7 +58,8 @@
 									<%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></br>
 								<% end %>	
 								<%= link_to "Addresses", address_index_path, class: "accordian" %></br>
-								<%= link_to "Rating", profile_rating_path, class: "accordian" %>	
+								<%= link_to "Rating", profile_rating_path, class: "accordian" %></br>
+								<%= link_to "Security", edit_user_registration_path %>
 							</div>  
 						</div>  
 					</div>   
