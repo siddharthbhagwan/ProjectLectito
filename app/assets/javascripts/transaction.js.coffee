@@ -378,7 +378,7 @@ $(document).ready ->
 
         else if pData[0] == "rejected_lender"
           $("#lend_" + pData[1].id).remove()
-          empty_table_checks()      
+          empty_table_checks()
 
         else if pData[0] == "cancelled"
           noty
@@ -389,9 +389,14 @@ $(document).ready ->
           empty_table_checks()
 
         else if pData[0] == "rejected"
-          noty
-            text: "Your request to borrow '" + pData[1].book_name + "' has been rejected"
-            layout: "topRight"
+          if pData[1].reason == "Unavailable"
+            noty
+              text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as the lender is Unavailable"
+              layout: "topRight"
+          else
+            noty
+              text: "Your request to borrow '" + pData[1].book_name + "' has been rejected"
+              layout: "topRight"  
 
           $("#borrow_" + pData[1].id).remove()
           empty_table_checks()

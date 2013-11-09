@@ -142,6 +142,7 @@ class TransactionController < ApplicationController
 		transaction_rejected << {
 			:id => @latest_rejected.id.to_s,
 			:book_name => Book.find(Inventory.find(@latest_rejected.inventory_id).book_id).book_name,
+			:reason => params[:reject_reason]
 		}
 
 		if @latest_rejected.save
