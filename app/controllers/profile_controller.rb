@@ -37,7 +37,13 @@ class ProfileController < ApplicationController
     @name = User.find(current_user.id).full_name
 
     @good_lender = Transaction.where(:lender_id => current_user.id, :borrower_feedback => 'good').count
+    logger.debug "Good Lender - " + @good_lender.to_s
+    logger.info "Good Lender - " + @good_lender.to_s
+    puts "Good Lender - " + @good_lender.to_s
     @good_borrower = Transaction.where(:borrower_id => params[:id], :lender_feedback => 'good').count
+    logger.debug "Good Borrower - " + @good_borrower.to_s
+    logger.info "Good Borrower - " + @good_borrower.to_s
+    puts "Good Borrower - " + @good_borrower.to_s
     @good = @good_borrower + @good_lender
 
     @bad_lender = Transaction.where(:lender_id => current_user.id, :borrower_feedback => 'bad').count
