@@ -129,7 +129,6 @@ class ProfileController < ApplicationController
       @comment_history = []
 
       @transactions.each do |t|
-        puts "Transaction ID - " + t.id
         if t.lender_id == pr.lender_id
           if t.borrower_comments != "" and !t.borrower_comments.nil?
             @comment_history.push(t.borrower_comments + " ~ " + User.find(t.borrower_id).full_name)
