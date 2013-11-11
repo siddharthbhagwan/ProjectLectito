@@ -222,3 +222,9 @@ $(document).ready ->
     error: (jqXHR, textStatus, errorThrown) ->
       # setTimeout $.unblockUI
       # $("#error_message").dialog "open" 
+
+#--------------------------------------------------------------------------------------------------------------------
+
+  
+  psconsole = $("#chat_box")
+  psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()     

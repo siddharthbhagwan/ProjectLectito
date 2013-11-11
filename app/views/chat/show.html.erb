@@ -1,6 +1,6 @@
 <h4> Conversing with <%= @lender_borrower %> for the book '<%= @book %>' </h4></br>
 <div id="">
-  <%= text_area_tag :chat_box, nil, :disabled => true, :class => :chat_box, :cols => 20, :rows => 10 %></br>
-  <%= text_field_tag :chat_text, nil, :class => :chat_text, :placeholder => "Enter text here", "data-you" => @you %></br>
+  <%= text_area_tag :chat_box, @chat_history, :disabled => true, :class => :chat_box %></br>
+  <%= text_field_tag :chat_text, nil, :class => :chat_text, :placeholder => "Enter text here", "data-you" => @you, :autofocus => true %></br>
  <!-- <%= tag "input", :type => "button", :id => "chat_send", :class => "btn" , :value => "Send", "data-you" => @you %> --></br>
 </div>

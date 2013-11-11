@@ -12,12 +12,16 @@ class ChatController < ApplicationController
       @you =  User.find(@transaction.borrower_id).profile.chat_name
     end
 
-    chat = Chat.where(:transaction_id => params[:id]).last(5)
-    @history = Array.new
-    chat.each do |c|
-      @history << c.body
+    last_10_chats = Chat.where(:transaction_id => params[:id]).last(10)
+    @chat_history = String.new
+    last_10_chats.each do |l|
+      @chat_history << User.find(l.from_user).profile.chat_name + " : " + l.body
     end
-    @history.join()
+    puts @chat_history.inspect
+  end
+
+  def body
+    "asd"
   end
   
   def index
