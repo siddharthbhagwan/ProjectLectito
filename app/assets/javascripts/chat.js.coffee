@@ -224,7 +224,6 @@ $(document).ready ->
       # $("#error_message").dialog "open" 
 
 #--------------------------------------------------------------------------------------------------------------------
-
-  
-  psconsole = $("#chat_box")
-  psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()     
+  jQuery ->
+    psconsole = $("#chat_box")
+    psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()     
