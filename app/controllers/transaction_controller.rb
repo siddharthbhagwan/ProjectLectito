@@ -28,7 +28,7 @@ class TransactionController < ApplicationController
 				:requested_date => @transaction.request_date.to_s(:long),
 				:status => @transaction.status,
 				:borrower => User.find(@transaction.borrower_id).full_name,
-				:delivery_mode => User.find(@transaction.borrower_id).is_delivery,
+				:delivery_mode => (User.find(@transaction.borrower_id).is_delivery or User.find(@transaction.lender_id).is_delivery),
 				:online => Profile.where(:user_id => @transaction.borrower_id).take.profile_status
 			}
 
@@ -101,7 +101,7 @@ class TransactionController < ApplicationController
 			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
 			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
 			:borrower => User.find(@accept_request.borrower_id).full_name,
-			:delivery_mode => User.find(@accept_request.lender_id).is_delivery,
+			:delivery_mode => (User.find(@accept_request.lender_id).is_delivery or User.find(@accept_request.borrower_id).is_delivery),
 			:borrower_id => @accept_request.borrower_id,
 			:online => Profile.where(:user_id => @accept_request.borrower_id).take.profile_status
 		}
@@ -113,7 +113,7 @@ class TransactionController < ApplicationController
 			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
 			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
 			:lender => User.find(@accept_request.lender_id).full_name,
-			:delivery_mode => User.find(@accept_request.borrower_id).is_delivery,
+			:delivery_mode => (User.find(@accept_request.borrower_id).is_delivery or User.find(@accept_request.lender_id).is_delivery),
 			:online => Profile.where(:user_id => @accept_request.lender_id).take.profile_status
 		}
 
@@ -239,7 +239,7 @@ class TransactionController < ApplicationController
 				transaction_received_borrower << {
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
-					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery,
+					:delivery_mode => (User.find(@borrower_received_transaction.lender_id).is_delivery or User.find(@borrower_received_transaction.borrower_id).is_delivery),
 					:received_date => @borrower_received_transaction.received_date.to_s(:long)
 				}
 
@@ -252,7 +252,7 @@ class TransactionController < ApplicationController
 				transaction_received_borrower << {
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
-					:delivery_mode => User.find(@borrower_received_transaction.lender_id).is_delivery,
+					:delivery_mode => (User.find(@borrower_received_transaction.lender_id).is_delivery or User.find(@borrower_received_transaction.borrower_id).is_delivery),
 					:received_date => @borrower_received_transaction.received_date.to_s(:long)
 				}
 
@@ -262,7 +262,7 @@ class TransactionController < ApplicationController
 		end
 
 		respond_to do |format|
-    		format.json  { render :json => User.find(@borrower_received_transaction.lender_id).is_delivery.to_json }
+    		format.json  { render :json => (User.find(@borrower_received_transaction.lender_id).is_delivery or User.find(@borrower_received_transaction.borrower_id).is_delivery).to_json }
 		end
 	end
 
@@ -309,7 +309,6 @@ class TransactionController < ApplicationController
 	end
 
 	def testt
-		logger.debug "Asdadadasdadadasdasndjkandjksfnwejo"
 		respond_to do |format|
 			format.html  
 			format.json { render :json => { :user_id => current_user.id.to_json} }

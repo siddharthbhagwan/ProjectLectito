@@ -24,7 +24,7 @@
 				<% end %>				
 				<td><%= l.request_date.to_s(:long) %></td>
 				<td><%= l.status %></td>
-				<% if User.find(l.lender_id).is_delivery %>
+				<% if User.find(l.lender_id).is_delivery or User.find(l.borrower_id).is_delivery %>
 					<td><input class="btn btn-small" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
 				<% else %>
 					<td><input class="btn btn-small" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>

@@ -85,13 +85,16 @@ class InventoryController < ApplicationController
 				@delivery_uwb = @users_with_book.user.is_delivery
 
 				if user_signed_in?
-					if current_user.is_delivery
-			 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
-							@book_array << book
-						end
-					else
+					if (@address_uwb_in_city.city == params[:city]) 
 						@book_array << book
 					end
+					# if current_user.is_delivery
+			 	# 		if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+					# 		@book_array << book
+					# 	end
+					# else
+					# 	@book_array << book
+					# end
 				else
 					if @address_uwb_in_city.city == params[:city]
 						@book_array << book
@@ -132,20 +135,25 @@ class InventoryController < ApplicationController
 			#If current user's Delivery mode is pickup, look for both, delivery and pick up
 			#TODO make the if more efficient
 			if user_signed_in?
-				if current_user.is_delivery
-		 			if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
-		 				# If criteria matches, store Inventory Details woth corresponding Address in an array
-						@users_and_address << u_wb.clone	
-						@users_and_address << @address_uwb_in_city
-						@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
-					end
-				else
-					if @address_uwb_in_city.city == params[:city]
-						@users_and_address << u_wb.clone	
-						@users_and_address << @address_uwb_in_city
-						@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
-					end
+				if @address_uwb_in_city.city == params[:city]
+					@users_and_address << u_wb.clone	
+					@users_and_address << @address_uwb_in_city
+					@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
 				end
+				# if current_user.is_delivery
+		 	# 		if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
+		 	# 			# If criteria matches, store Inventory Details woth corresponding Address in an array
+				# 		@users_and_address << u_wb.clone	
+				# 		@users_and_address << @address_uwb_in_city
+				# 		@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+				# 	end
+				# else
+				# 	if @address_uwb_in_city.city == params[:city]
+				# 		@users_and_address << u_wb.clone	
+				# 		@users_and_address << @address_uwb_in_city
+				# 		@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+				# 	end
+				# end
 			else
 				if @address_uwb_in_city.city == params[:city]
 					@users_and_address << u_wb.clone	
