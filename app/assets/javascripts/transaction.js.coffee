@@ -540,54 +540,56 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
+            noty
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+              layout: "topRight"
+
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
             $("#borrower_comments").val("")
             if $("#current_books_table tr").length == 1
-              $("#current_books_div").hide()
-
-            noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
-              layout: "topRight"  
+              $("#current_books_div").hide()  
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"       
 
       "Skip": ->
+        noty
+          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+          layout: "topRight"
+
         $(this).dialog "close"
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         $(tr_id_s).remove()
         if $("#current_books_table tr").length == 1
-          $("#current_books_div").hide()
-
-        noty
-          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
-          layout: "topRight"  
+          $("#current_books_div").hide()  
 
       Cancel: ->
+        noty
+          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+          layout: "topRight"  
+
         $(this).dialog "close"
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         $(tr_id_s).remove()
         if $("#current_books_table tr").length == 1
           $("#current_books_div").hide()
 
-        noty
-          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
-          layout: "topRight"  
 
     beforeClose: (event) ->
       if event.keyCode is $.ui.keyCode.ESCAPE
         mode = $("#borrower_returned_book_confirm").data("mode")
         if mode == "delivery"
+          noty
+            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+            layout: "topRight"
+            
           tr_id_s = $("#borrower_returned_book_confirm").data("trids")
           $(tr_id_s).remove()
           if $("#current_books_table tr").length == 1
             $("#current_books_div").hide()
 
-          noty
-            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
-            layout: "topRight"
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()          
