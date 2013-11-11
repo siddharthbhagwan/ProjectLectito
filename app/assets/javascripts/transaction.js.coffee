@@ -505,6 +505,12 @@ $(document).ready ->
 
       Cancel: ->
         $(this).dialog "close"
+        $("#borrower_returned_book_confirm").dialog "close"
+
+    beforeClose: (event) ->
+      if event.keyCode is $.ui.keyCode.ESCAPE
+        $(this).dialog "close"
+        $("#borrower_returned_book_confirm").dialog "close"    
 
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Return from borrowers side in self delivery mode
@@ -584,7 +590,7 @@ $(document).ready ->
           noty
             text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
             layout: "topRight"
-            
+
           tr_id_s = $("#borrower_returned_book_confirm").data("trids")
           $(tr_id_s).remove()
           if $("#current_books_table tr").length == 1
