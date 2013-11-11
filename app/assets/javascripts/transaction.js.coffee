@@ -561,6 +561,8 @@ $(document).ready ->
             $("#error_message").dialog "open"       
 
       "Skip": ->
+        tr_id = $("#borrower_returned_book_confirm").data("trid")
+        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         noty
           text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
           layout: "topRight"
@@ -572,6 +574,8 @@ $(document).ready ->
           $("#current_books_div").hide()  
 
       Cancel: ->
+        tr_id = $("#borrower_returned_book_confirm").data("trid")
+        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         noty
           text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
           layout: "topRight"  
@@ -586,6 +590,8 @@ $(document).ready ->
     beforeClose: (event) ->
       if event.keyCode is $.ui.keyCode.ESCAPE
         mode = $("#borrower_returned_book_confirm").data("mode")
+        tr_id = $("#borrower_returned_book_confirm").data("trid")
+        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         if mode == "delivery"
           noty
             text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
