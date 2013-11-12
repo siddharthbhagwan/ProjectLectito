@@ -50,7 +50,11 @@
 					<td>Pending</td>
 					
 					<!-- Return Date -->
-					<td>Pending</td>
+					<% if c.returned_date.nil? %>
+						<td>Pending</td>
+					<% else %>
+						<td><%= c.returned_date.to_s(:long) %></td>
+					<% end %>
 
 					<!-- Status -->
 					<% if c.status == 'Accepted' %>

@@ -229,7 +229,7 @@ class TransactionController < ApplicationController
 		@borrower_received_transaction = Transaction.where(:id => params[:tr_id]).take
 		@borrower_received_transaction.received_date = DateTime.now.to_time
 		@borrower_received_transaction.status = "Received Borrower"
-		@borrower_received_transaction.returned_date = @borrower_received_transaction.received_date + 14.days
+		#@borrower_received_transaction.returned_date = @borrower_received_transaction.received_date + 14.days
 
 		if @borrower_received_transaction.save
 			# If action initiated by borrower, push notification to lender, and vice versa
