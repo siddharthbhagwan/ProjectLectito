@@ -343,7 +343,7 @@ $(document).ready ->
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
-              td_status = "<td><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
             else
               td_delivery_mode = "<td>Self Pick/Drop</td>"
               td_status = "<td><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
@@ -382,20 +382,21 @@ $(document).ready ->
             td_received_date = "<td>Pending</td>"
             td_borrowed_duration = "<td>Pending</td>"
             td_return_date = "<td>Pending</td>"
-            td_return = "<td><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
-            table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_return        
+            td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_status       
             $("#current_books_table > tbody:last").append(table_row_data)
             if (!$("#current_books_div").is(":visible"))
               $("#current_books_div").show(500)
 
         #Summary of Requests for Books you've lent out ( recvd button activates )
-        else if pData[0] == "returned"
+        else if pData[0] == "returned" #FIXME
           if $("#received_lender_" + pData[1].id).attr("disabled") == "disabled"
             noty
                 text: "Return of '" + pData[1].book_name + "' has been inititated"
                 layout: "topRight"
 
-            $("#received_lender_" + pData[1].id).removeAttr("disabled") 
+            $("#received_lender_" + pData[1].id).removeAttr("disabled")
+            $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
             $("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
 
         else if pData[0] == "rejected_lender"
@@ -448,6 +449,7 @@ $(document).ready ->
         else if pData[0] == "received_borrower_by_borrower"
           if $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text() == "Pending"
             $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text(pData[1].received_date)
+            $("#p_accepted_" + pData[1].id).text("Received by Borrower")
             noty
               text: "The borrower has successfully received '" + pData[1].book_name + "'"
               layout: "topRight"
@@ -765,6 +767,7 @@ $(document).ready ->
             if msg
               $("#received_borrower_" + tr_id).attr("value","Return")
               $("#received_borrower_" + tr_id).attr("id","return_delivery")
+              $("#p_current_" + tr_id).text("Received by You")
 
             else
               $("#received_borrower_" + tr_id).attr("value","Return")

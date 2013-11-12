@@ -1,5 +1,6 @@
 <% unless @latest_borrowed.empty? %>
 	<% @latest_borrowed.each do |b| %>
+		alert("ok");
 		tr_id = "<tr data-trid='<%= b.id %>' data-time='<%= b.updated_at.to_i %>'>"
 		td_book_name = "<td><%= Book.find(Inventory.find(b.inventory_id).book.id).book_name %></td>"
 		<% if Profile.where(:user_id => b.lender_id).take.profile_status == "Online" %>

@@ -62,15 +62,19 @@
 					<!-- Status -->
 					<% if a.status == 'Accepted' %>
 						<% if (User.find(a.lender_id).is_delivery or User.find(a.borrower_id).is_delivery) %>
-							<td><input class="btn btn-small" type="button" disabled='true' value="Received" id="received_lender_<%= a.id %>" data-trid=<%= a.id %> /></td>
+							<td>
+								<p id="p_accepted_<%= a.id %>">Sent to Borrower</p>
+								<input class="btn btn-small" type="button" disabled='true' value="Received" id="received_lender_<%= a.id %>" data-trid=<%= a.id %> /></td>
 						<% else %>
 							<td><input class="btn btn-small" type="button" value="Handed Over" id="handed_over_<%= a.id %>" data-trid=<%= a.id %> /></td>
 							<% end %>
 					<% else %>
 						<% if a.returned_date.nil? %>
-							<td><input class="btn btn-small" type="button" value="Received" id="received_lender_<%= a.id %>" disabled='true' data-trid=<%= a.id %> /></td>
+							<td>
+								<p id="p_accepted_<%= a.id %>">Received by Borrower</p>
+								<input class="btn btn-small" type="button" value="Received" id="received_lender_<%= a.id %>" disabled='true' data-trid=<%= a.id %> /></td>
 						<% else %>
-							<td><input class="btn btn-small" type="button" value="Received" id="received_lender_<%= a.id %>" data-trid=<%= a.id %> /></td>
+							<td>Returned by Borrower<input class="btn btn-small" type="button" value="Received" id="received_lender_<%= a.id %>" data-trid=<%= a.id %> /></td>
 						<% end %>
 					<% end %>	
 
