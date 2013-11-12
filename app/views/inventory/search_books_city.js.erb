@@ -41,7 +41,11 @@ if (<%= @users_and_address.length %> === 0) {
         button_element = "<td><input type='button' value='Request Sent' disabled = 'true' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
       }
       else {
-        button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-cityid ='<%= params[:book_id] %>' /></td>";
+        <% if !current_user.is_delivery and User.find(@users_and_address[i].user_id).is_delivery  %>
+          button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-selftodel='true' data-cityid ='<%= params[:book_id] %>' /></td>";
+        <% else %>
+          button_element = "<td><input type='button' value='Send Request' class='btn btn-small borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-selftodel='false' data-cityid ='<%= params[:book_id] %>' /></td>";
+        <% end %>
       }
     <% end %>
     delivery_charges = "<td>60</td>"
