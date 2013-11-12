@@ -44,7 +44,7 @@ $(document).ready ->
     $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
     $("#borrow_confirm_title").text($("#" + $(this).attr("data-cityid") + " td:nth-last-child(1)").text())
     selftodel = $(this).attr("data-selftodel")
-    if selftodel is true
+    if selftodel == 'true'
       $("#selftodel").html("<b>Kindly note that a delivery charge of &#8377; 60 will be applicable<b>")
 
     $("#borrow_confirm").dialog "open"
