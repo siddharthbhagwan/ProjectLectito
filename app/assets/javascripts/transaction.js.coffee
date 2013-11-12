@@ -581,17 +581,36 @@ $(document).ready ->
             $("#error_message").dialog "open"       
 
       "Skip": ->
+        $(this).dialog "close"
         tr_id = $("#borrower_returned_book_confirm").data("trid")
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
-        noty
-          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
-          layout: "topRight"
+        $.ajax
+          url: "/transaction/update_request_status_return.json"
+          type: "post"
+          context: "this"
+          dataType: "json"
+          data:
+            tr_id: tr_id
+            borrower_feedback: ""
+            borrower_comments: ""
 
-        $(this).dialog "close"
-        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
-        $(tr_id_s).remove()
-        if $("#current_books_table tr").length == 1
-          $("#current_books_div").hide()  
+          success: (msg) ->
+
+          complete: (jqXHR, textStatus) ->
+            noty
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+              layout: "topRight"
+
+            $(tr_id_s).remove()
+            $('input:radio[name=borrower_feedback]').val(['neutral']);
+            $("#borrower_comments").val("")
+            if $("#current_books_table tr").length == 1
+              $("#current_books_div").hide()  
+
+          error: (jqXHR, textStatus, errorThrown) ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"       
+  
 
       Cancel: ->
         tr_id = $("#borrower_returned_book_confirm").data("trid")
