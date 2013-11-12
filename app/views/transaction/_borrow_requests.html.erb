@@ -14,16 +14,29 @@
 		<% unless @borrow.nil? %>
 			<% @borrow.each do |b| %>
 				<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>
+					<!-- Book Name -->
 					<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
+
+					<!-- Lender -->
 					<td><%= link_to User.find(b.lender_id).full_name, "/profile/public_rating/#{b.id}", :target => "_blank" %></td>
+
+					<!-- Address -->
 					<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
+
+					<!-- Delivery Mode -->
 					<% if User.find(b.lender_id).is_delivery %>
 						<td>Delivery</td>
 					<% else %>
 						<td>Self Pick/Drop</td>
-					<% end %>					
+					<% end %>
+
+					<!-- Request Date -->
 					<td><%= b.request_date.to_s(:long) %></td>
+
+					<!-- Status -->
 					<td><%= b.status %></td>
+
+					<!-- Cancel -->
 					<td><%= tag "input", :type => "button", "data-trid" => b.id.to_s, :class => "btn btn-small cancel_trans" , :value => "Cancel" %></td>
 				</tr>
 			<% end %>

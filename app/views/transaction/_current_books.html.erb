@@ -16,26 +16,43 @@
 		<% unless @current.nil? %>
 			<% @current.each do |c| %>
 				<tr id='current_<%= c.id %>' >
+					<!-- Book Name -->
 					<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
-					<td><% if Profile.where(:user_id => c.lender_id).first.profile_status == "Online" %>
+
+					<!-- Lender -->
+					<td>
+						<% if Profile.where(:user_id => c.lender_id).first.profile_status == "Online" %>
 							<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + c.id.to_s) + " " %>
 							<% else %>
 								<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + c.id.to_s, :hidden => :true) + " " %>
 							<% end %>
-							<%= link_to(User.find(c.lender_id).full_name, "/profile/public_rating/#{c.id}", :target => "_blank") %></td>
+							<%= link_to(User.find(c.lender_id).full_name, "/profile/public_rating/#{c.id}", :target => "_blank") %>
+					</td>
+
+					<!-- Delivery Mode -->
 					<% if User.find(c.lender_id).is_delivery %>
 						<td>Delivery</td>
 					<% else %>
 						<td>Self Pick/Drop</td>
 					<% end %>
+
+					<!-- Acceptance Date -->
 					<td><%= c.acceptance_date.to_s(:long) %></td>
+
+					<!-- Received Date -->
 					<% if c.received_date.nil? %>
 						<td>Pending</td>
 					<% else %>
 						<td><%= c.received_date.to_s(:long) %></td>
 					<% end %>
+
+					<!-- Borrow Duration -->
 					<td>Pending</td>
+					
+					<!-- Return Date -->
 					<td>Pending</td>
+
+					<!-- Status -->
 					<% if c.status == 'Accepted' %>
 						<td><input class="btn btn-small" type="button" value="Received" id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> /></td>
 					<% elsif c.status == 'Received Borrower' %>
@@ -45,6 +62,7 @@
 							<td><input class="btn btn-small" type="button" value="Return" id="return_self" data-trid=<%= c.id %> /></td>
 						<% end %>	
 					<% end %>
+					
 				</tr>
 			<% end %>
 		<% end %>	
