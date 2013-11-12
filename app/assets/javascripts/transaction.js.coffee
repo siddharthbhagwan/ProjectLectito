@@ -167,23 +167,43 @@ $(document).ready ->
   $(document).on "click", "#accept_self", ->
     tr_id = $(this).attr("data-trid")
     tr_id_s = "#lend_" + tr_id
-    $.ajax
-      url: "/transaction/update_request_status_accept.js"
-      type: "post"
-      context: "this"
-      dataType: "script"
-      data:
-        tr_id: tr_id
+    $("#accept_self_confirm").data "trid", tr_id
+    $("#accept_self_confirm").data "trids", tr_id_s
+    $("#accept_self_confirm").dialog "open"
+    
+  $("#accept_self_confirm").dialog
+    autoOpen: false
+    modal: true
+    resizeable: false
+    draggable: false
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"
+        tr_id = $("#accept_self_confirm").data "trid"
+        tr_id_s = $("#accept_self_confirm").data "trids"
+        $.ajax
+          url: "/transaction/update_request_status_accept.js"
+          type: "post"
+          context: "this"
+          dataType: "script"
+          data:
+            tr_id: tr_id
 
-      success: (msg) ->
+          success: (msg) ->
 
-      complete: (jqXHR, textStatus) ->
-        $(tr_id_s).fadeOut(500).remove()
-        empty_table_checks()
+          complete: (jqXHR, textStatus) ->
+            $(tr_id_s).remove()
+            empty_table_checks()
 
-      error: (jqXHR, textStatus, errorThrown) ->
-        setTimeout $.unblockUI
-        $("#error_message").dialog "open"        
+          error: (jqXHR, textStatus, errorThrown) ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"  
+
+      Cancel: ->
+        $(this).dialog "close"
+
+    open: (event, ui) ->
+      $(":button:contains('Ok')").focus()       
 
 #--------------------------------------------------------------------------------------------------------------------
 # Update a transaction on request being rejected
@@ -424,7 +444,7 @@ $(document).ready ->
 
         #Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
         else if pData[0] == "received_borrower_by_borrower"
-          if $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text == "Pending"
+          if $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text() == "Pending"
             $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text(pData[1].received_date)
             noty
               text: "The borrower has successfully received '" + pData[1].book_name + "'"
@@ -690,54 +710,100 @@ $(document).ready ->
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on "click", "input[id^='received_borrower_']", ->
     tr_id = $(this).attr("data-trid")
-    $.ajax
-      url: "/transaction/update_request_status_receive_borrower.json"
-      type: "post"
-      context: "this"
-      dataType: "json"
-      data:
-        tr_id: tr_id
-        called_by: 'borrower'
-        
-      success: (msg) ->
-        if msg
-          $("#received_borrower_" + tr_id).attr("value","Return")
-          $("#received_borrower_" + tr_id).attr("id","return_delivery")
+    tr_id_s = "#received_borrower_" + tr_id
+    $("#received_borrower_confirm").data "trid", tr_id
+    $("#received_borrower_confirm").data "trids", tr_id_s
+    # arr = []
+    # arr = $(tr_id_s).find("td").map(->
+    #   @innerHTML
+    # ).get()
+    # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
+    # $("#accept_info").html(html_data)
+    $("#received_borrower_confirm").dialog "open"
 
-        else
-          $("#received_borrower_" + tr_id).attr("value","Return")
-          $("#received_borrower_" + tr_id).attr("id","return_self")
 
-        #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
-      complete: (jqXHR, textStatus) ->
+  $("#received_borrower_confirm").dialog
+    autoOpen: false
+    modal: true
+    resizeable: false
+    draggable: false
+    buttons:
+      "Yes": ->
+        $(this).dialog "close"
+        tr_id = $("#received_borrower_confirm").data("trid")
+        $.ajax
+          url: "/transaction/update_request_status_receive_borrower.json"
+          type: "post"
+          context: "this"
+          dataType: "json"
+          data:
+            tr_id: tr_id
+            called_by: 'borrower'
+            
+          success: (msg) ->
+            if msg
+              $("#received_borrower_" + tr_id).attr("value","Return")
+              $("#received_borrower_" + tr_id).attr("id","return_delivery")
 
-      error: (jqXHR, textStatus, errorThrown) ->
-        setTimeout $.unblockUI
-        $("#error_message").dialog "open"
+            else
+              $("#received_borrower_" + tr_id).attr("value","Return")
+              $("#received_borrower_" + tr_id).attr("id","return_self")
+
+            #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
+          complete: (jqXHR, textStatus) ->
+
+          error: (jqXHR, textStatus, errorThrown) ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"
+
+      Cancel: ->
+        $(this).dialog "close"
+
+    open: (event, ui) ->
+      $(":button:contains('Ok')").focus()      
 
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on "click", "input[id^='handed_over_']", ->
     tr_id = $(this).attr("data-trid")
-    $.ajax
-      url: "/transaction/update_request_status_receive_borrower.json"
-      type: "post"
-      context: "this"
-      dataType: "json"
-      data:
-        tr_id: tr_id
-        called_by: 'lender'
-        
-      success: (msg) ->
+    tr_id_s = "#accepted_" + tr_id
+    $("#handed_over_confirm").data "trid", tr_id
+    $("#handed_over_confirm").dialog "open"
 
-      complete: (jqXHR, textStatus) ->
-        $("#handed_over_" + tr_id).attr("value","Received")
-        $("#handed_over_" + tr_id).attr("disabled","true")
-        $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
 
-      error: (jqXHR, textStatus, errorThrown) ->
-        setTimeout $.unblockUI
-        $("#error_message").dialog "open"        
+  $("#handed_over_confirm").dialog
+    autoOpen: false
+    modal: true
+    resizeable: false
+    draggable: false
+    buttons:
+      "Yes": ->
+        $(this).dialog "close"
+        tr_id = $("#handed_over_confirm").data "trid"
+        $.ajax
+          url: "/transaction/update_request_status_receive_borrower.json"
+          type: "post"
+          context: "this"
+          dataType: "json"
+          data:
+            tr_id: tr_id
+            called_by: 'lender'
+            
+          success: (msg) ->
 
+          complete: (jqXHR, textStatus) ->
+            $("#handed_over_" + tr_id).attr("value","Received")
+            $("#handed_over_" + tr_id).attr("disabled","true")
+            $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
+
+          error: (jqXHR, textStatus, errorThrown) ->
+            setTimeout $.unblockUI
+            $("#error_message").dialog "open"
+
+       Cancel: ->
+        $(this).dialog "close"
+
+    open: (event, ui) ->
+      $(":button:contains('Ok')").focus()
 
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on "click", ".borrow_button_offline" ,->

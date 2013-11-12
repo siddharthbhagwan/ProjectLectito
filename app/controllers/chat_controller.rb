@@ -19,10 +19,6 @@ class ChatController < ApplicationController
     end
     puts @chat_history.inspect
   end
-
-  def body
-    "asd"
-  end
   
   def index
   	chatbox()
