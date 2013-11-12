@@ -308,11 +308,8 @@ class TransactionController < ApplicationController
 		end	
 	end
 
-	def testt
-		respond_to do |format|
-			format.html  
-			format.json { render :json => { :user_id => current_user.id.to_json} }
-		end	
+	def history
+		@t_history =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc")
 	end
 
 	private

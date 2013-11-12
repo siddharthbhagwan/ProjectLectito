@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def chatbox
-    user_accepted_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Accepted")
+    user_accepted_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? OR status != ? OR status != ? OR status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
     @current_transactions = Array.new
     @current_transactions_id = Array.new
     user_accepted_transactions.each do |t|
