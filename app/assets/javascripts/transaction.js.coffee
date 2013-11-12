@@ -43,8 +43,10 @@ $(document).ready ->
     $("#borrow_confirm").data "button_id", $(this).attr("id")
     $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
     $("#borrow_confirm_title").text($("#" + $(this).attr("data-cityid") + " td:nth-last-child(1)").text())
-    if $(this).attr("data-selftodel")
+    selftodel = $(this).attr("data-selftodel")
+    if selftodel is true
       $("#selftodel").html("<b>Kindly note that a delivery charge of &#8377; 60 will be applicable<b>")
+
     $("#borrow_confirm").dialog "open"
 
 
@@ -346,7 +348,7 @@ $(document).ready ->
               td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
             else
               td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_status = "<td><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_returned_date = "<td>Pending</td>"
@@ -369,20 +371,22 @@ $(document).ready ->
             tr_id = "<tr id='current_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             if pData[1].online == "Online"
-              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
+              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"              
             else
-              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"
+              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"              
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
+              td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
             else
               td_delivery_mode = "<td>Self Pick/Drop</td>"
+              td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_received_date = "<td>Pending</td>"
             td_borrowed_duration = "<td>Pending</td>"
             td_return_date = "<td>Pending</td>"
-            td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            #td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
             table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_status       
             $("#current_books_table > tbody:last").append(table_row_data)
             if (!$("#current_books_div").is(":visible"))
@@ -441,6 +445,7 @@ $(document).ready ->
                 $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
 
               else
+                $("#p_current_" + pData[1].id).text("Received by You")
                 $("#received_borrower_" + pData[1].id).attr("value", "Return")
                 $("#received_borrower_" + pData[1].id).attr("id", "return_self")
 
@@ -772,6 +777,7 @@ $(document).ready ->
             else
               $("#received_borrower_" + tr_id).attr("value","Return")
               $("#received_borrower_" + tr_id).attr("id","return_self")
+              $("#p_current_" + tr_id).text("Received by You")
 
             #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
           complete: (jqXHR, textStatus) ->
@@ -815,6 +821,7 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
+            $("#p_accepted_" + tr_id).text("Received by Borrower")
             $("#handed_over_" + tr_id).attr("value","Received")
             $("#handed_over_" + tr_id).attr("disabled","true")
             $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
