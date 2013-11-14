@@ -339,9 +339,17 @@ $(document).ready ->
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             if pData[1].online == "Online"
-              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+              td_b_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
+              td_b_ccn = "data-currentcn='" + pData[1].currentcn + "' "
+              td_b_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
+              td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
+              td_b_title = "data-title='" + pData[1].title + "' "
+              td_b_chatidlist = "data-chatidlist='" + pData[1].chatidlist + "' ></td>"
+              online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + td_b_chatidlist
+              profile_link = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</a>"
+              td_borrower = profile_link + " " + online_dot
             else
-              td_borrower = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+              td_borrower = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].borrower + "</a><img width='10' height='6' src='/assets/online_dot.png' hidden='true'></td>"
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
@@ -370,9 +378,17 @@ $(document).ready ->
             tr_id = "<tr id='current_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             if pData[1].online == "Online"
-              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"              
+              td_c_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
+              td_c_ccn = "data-currentcn='" + pData[1].currentcn + "' "
+              td_c_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
+              td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
+              td_c_title = "data-title='" + pData[1].title + "' "
+              td_c_chatidlist = "data-chatidlist='" + pData[1].chatidlist + "' ></td>"
+              online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + td_c_chatidlist
+              lender_link = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</a>"
+              td_lender = lender_link + " " + online_dot
             else
-              td_lender = "<td><img width='10' height='6' src='/assets/online_dot.png' hidden='true'>  <a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</td>"              
+              td_lender = "<td><a target='_blank' href='/profile/public_rating/" + pData[1].id + "'>" + pData[1].lender + "</a><img width='10' height='6' src='/assets/online_dot.png' hidden='true'></td>"              
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
@@ -873,3 +889,5 @@ $(document).ready ->
   #     complete: (jqXHR, textStatus) ->
 
   #     error: (jqXHR, textStatus, errorThrown) ->
+
+  

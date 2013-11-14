@@ -57,7 +57,7 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
 
-  $(document).on "click", "input[id^='chatbox_']", ->
+  $(document).on "click", "input[id^='chatbox_'], img[id^='online_']", ->
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
       title = $(this).attr("data-title").substring(0,20) + "..."
@@ -227,3 +227,5 @@ $(document).ready ->
   jQuery ->
     psconsole = $("#chat_box")
     psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()     
+
+#--------------------------------------------------------------------------------------------------------------------

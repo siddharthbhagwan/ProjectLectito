@@ -19,12 +19,13 @@
 					<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
 
 					<!-- Borrower -->
-					<td><% if Profile.where(:user_id => a.borrower_id).first.profile_status == "Online" %>
-								<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + a.id.to_s) + " " %>
-							<% else %>
-								<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + a.id.to_s, :hidden => :true) + " " %>
-							<% end %>
-							<%= link_to User.find(a.borrower_id).full_name, "/profile/public_rating/#{a.id}", :target => "_blank" %>
+					<td>
+						<%= link_to User.find(a.borrower_id).full_name, "/profile/public_rating/#{a.id}", :target => "_blank" %>
+						<% if Profile.where(:user_id => a.borrower_id).first.profile_status == "Online" %>
+							<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + a.id.to_s, "data-trid" => a.id, "data-chatidlist" => @current_transactions_id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(a.lender_id).profile.chat_name, "data-borrowercn" => User.find(a.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => a.inventory_id).take.book_id).take.book_name )%>
+						<% else %>
+							<%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + a.id.to_s, :hidden => :true) %>
+						<% end %>
 					</td>
 
 					<!-- Delivery Mode -->
