@@ -466,17 +466,17 @@ $(document).ready ->
 
         #Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
         else if pData[0] == "received_borrower_by_borrower"
-          if $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text() == "Pending"
-            $("#accepted_" + pData[1].id + " td:nth-last-child(4)").text(pData[1].received_date)
+          if $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text() == "Pending"
+            $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
             $("#p_accepted_" + pData[1].id).text("Received by Borrower")
             noty
               text: "The borrower has successfully received '" + pData[1].book_name + "'"
               layout: "topRight"
 
-              if !pData[1].delivery_mode
-                $("#handed_over_" + pData[1].id).attr("value", "Received")
-                $("#handed_over_" + pData[1].id).attr("disabled", "true")
-                $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
+            if !pData[1].delivery_mode
+              $("#handed_over_" + pData[1].id).attr("value", "Received")
+              $("#handed_over_" + pData[1].id).attr("disabled", "true")
+              $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
 
         else if pData[0] == "offline"
           $("#online_" + pData[1].id).attr("hidden", "true")
@@ -590,7 +590,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
               layout: "topRight"
 
             $(tr_id_s).remove()
@@ -621,7 +621,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
               layout: "topRight"
 
             $(tr_id_s).remove()
@@ -639,7 +639,7 @@ $(document).ready ->
         tr_id = $("#borrower_returned_book_confirm").data("trid")
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         noty
-          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
           layout: "topRight"  
 
         $(this).dialog "close"
@@ -656,7 +656,7 @@ $(document).ready ->
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         if mode == "delivery"
           noty
-            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(8)").text() + "'" 
+            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
             layout: "topRight"
 
           tr_id_s = $("#borrower_returned_book_confirm").data("trids")
