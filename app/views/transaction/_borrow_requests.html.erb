@@ -18,7 +18,7 @@
 					<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
 
 					<!-- Lender -->
-					<td><%= link_to User.find(b.lender_id).full_name, "/profile/public_rating/#{b.id}", :target => "_blank" %></td>
+					<td><%= link_to User.find(b.lender_id).full_name, "javascript:void(0)", :id => "public_rating_#{b.id}" %></td>
 
 					<!-- Address -->
 					<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>

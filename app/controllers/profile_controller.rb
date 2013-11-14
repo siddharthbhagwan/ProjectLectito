@@ -106,7 +106,20 @@ class ProfileController < ApplicationController
         end
       end
 
-      render :rating
+      respond_to do |format|
+        format.html { render :rating }
+        format.json { 
+          json_profile = Array.new
+          json_profile << {
+            :name => @name,
+            :good => @good,
+            :neutral => @neutral,
+            :bad => @bad,
+            :transactions => @total_transactions,
+            :books => @total_books
+          }
+          render :json => json_profile.to_json }
+      end
 
     elsif  pr.borrower_id == current_user.id
       @name = User.find(pr.lender_id).full_name
@@ -142,7 +155,20 @@ class ProfileController < ApplicationController
         end
       end
 
-      render :rating
+      respond_to do |format|
+        format.html  { render :rating }
+        format.json { 
+          json_profile = Array.new
+          json_profile << {
+            :name => @name,
+            :good => @good,
+            :neutral => @neutral,
+            :bad => @bad,
+            :transactions => @total_transactions,
+            :books => @total_books
+          }
+          render :json => json_profile.to_json }
+      end
 
     else
       redirect_to home_path

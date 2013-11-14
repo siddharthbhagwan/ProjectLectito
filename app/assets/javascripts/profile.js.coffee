@@ -8,17 +8,23 @@ $(document).ready ->
   	  dateFormat: 'dd-MM-yy'
   	  class: 'ui-widget-date'
 
+#----------------------------------------------------------------------------------------------------------------------
   $(document).on "click", "a[id^='public_rating_']", ->
-    tr_id = "872"
+    tr_id = $(this).attr('id').substring(14).toString()
     $.ajax
-      url: "/profile/public_rating/" + tr_id
+      url: "/profile/public_rating/" + tr_id + ".json"
       type: "get"
       context: "this"
-      dataType: "html"
+      dataType: "json"
 
       success: (msg) ->
+        $("#display_public_profile").dialog("option","title",msg[0].name)
+        $("#total_transactions b").text(msg[0].transactions)
+        $("#total_books b").text(msg[0].books)
+        $("#good_transactions b").text(msg[0].good)
+        $("#neutral_transactions b").text(msg[0].neutral)
+        $("#bad_transactions b").text(msg[0].bad)
         $("#display_public_profile").dialog "open"
-        $("#amnb").html(msg)
 
       complete: (jqXHR, textStatus) ->
 
@@ -26,6 +32,7 @@ $(document).ready ->
         setTimeout $.unblockUI
         $("#error_message").dialog "open"
 
+#----------------------------------------------------------------------------------------------------------------------
 
   $("#display_public_profile").dialog
     autoOpen: false
@@ -35,3 +42,7 @@ $(document).ready ->
     buttons:
       "Ok": ->
         $(this).dialog "close"
+
+    open: (event, ui) ->
+      $(":button:contains('Ok')").focus()
+      
