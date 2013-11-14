@@ -107,6 +107,7 @@ class ProfileController < ApplicationController
       end
 
       render :rating
+
     elsif  pr.borrower_id == current_user.id
       @name = User.find(pr.lender_id).full_name
 
@@ -142,6 +143,7 @@ class ProfileController < ApplicationController
       end
 
       render :rating
+
     else
       redirect_to home_path
       flash[:alert] = "No such page exists!"
