@@ -353,8 +353,7 @@ $(document).ready ->
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_returned_date = "<td>Pending</td>"
             td_received_date = "<td>Pending</td>"
-            td_borrow_duration = "<td>Pending</td>"
-            table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_received_date + td_borrow_duration + td_returned_date + td_status
+            table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_received_date + td_returned_date + td_status
             $("#accepted_requests_table > tbody:last").append(table_row_data)
             if (!$("#accepted_requests_div").is(":visible"))
               $("#accepted_requests_div").show(500)
@@ -384,10 +383,9 @@ $(document).ready ->
 
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_received_date = "<td>Pending</td>"
-            td_borrowed_duration = "<td>Pending</td>"
             td_return_date = "<td>Pending</td>"
             #td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
-            table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_borrowed_duration + td_return_date + td_status       
+            table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_return_date + td_status       
             $("#current_books_table > tbody:last").append(table_row_data)
             if (!$("#current_books_div").is(":visible"))
               $("#current_books_div").show(500)

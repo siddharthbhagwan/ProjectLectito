@@ -7,7 +7,6 @@
 			<th>Delivery Mode</th>
 			<th>Acceptance Date</th> 
 			<th>Received Date</th>
-			<th>Borrow Durtaion</th>
 			<th>Return Date</th> 
 			<th>Status</th>
 		</tr>
@@ -45,9 +44,6 @@
 					<% else %>
 						<td><%= c.received_date.to_s(:long) %></td>
 					<% end %>
-
-					<!-- Borrow Duration -->
-					<td>Pending</td>
 					
 					<!-- Return Date -->
 					<% if c.returned_date.nil? %>
