@@ -11,6 +11,7 @@ class ProfileController < ApplicationController
     @profile = Profile.new(params[:profile])
     @profile.user_id = current_user.id
     @profile.profile_status = "Online"
+    @profile.delivery = "true"
     if @profile.save
       flash[:notice] = "Your Profile has been created"
       redirect_to new_address_path
