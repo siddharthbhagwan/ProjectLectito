@@ -459,8 +459,8 @@ $(document).ready ->
                 $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
 
               else
-                $("#p_current_" + pData[1].id).text("Received by You")
-                $("#received_borrower_" + pData[1].id).attr("value", "Return")
+                $("#p_current_" + pData[1].id).text("Received by You. Meetup to Return")
+                $("#received_borrower_" + pData[1].id).attr("value", "Returned")
                 $("#received_borrower_" + pData[1].id).attr("id", "return_self")
 
 
@@ -789,9 +789,9 @@ $(document).ready ->
               $("#p_current_" + tr_id).text("Received by You")
 
             else
-              $("#received_borrower_" + tr_id).attr("value","Return")
+              $("#received_borrower_" + tr_id).attr("value","Returned")
               $("#received_borrower_" + tr_id).attr("id","return_self")
-              $("#p_current_" + tr_id).text("Received by You")
+              $("#p_current_" + tr_id).text("Received by You. Meetup to Return")
 
             #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
           complete: (jqXHR, textStatus) ->
