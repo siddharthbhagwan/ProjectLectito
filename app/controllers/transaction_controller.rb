@@ -93,6 +93,7 @@ class TransactionController < ApplicationController
 			end
 		end
 
+		#FIXME - TranschatID too long and duplicate
 		user_accepted_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? OR status != ? OR status != ? OR status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
     @current_transactions = Array.new
     @current_transactions_id = Array.new
@@ -224,6 +225,10 @@ class TransactionController < ApplicationController
 		@received_transaction.return_received_date = DateTime.now.to_time
 		@received_transaction.lender_feedback = params[:lender_feedback] 
 		@received_transaction.lender_comments = params[:lender_comments]
+		if @received_transaction.return_pickup_date.nil?
+			@received_transaction.borrow_duration = ((return_received_date - received_date)/1.days).round
+		else
+			@received_transaction.borrow_duration = ((return_received_date - return_pickup_date)/1.days).round
 		@received_transaction.status = "Complete"
 
 		if @received_transaction.save
