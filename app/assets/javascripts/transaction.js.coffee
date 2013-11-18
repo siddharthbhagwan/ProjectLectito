@@ -310,7 +310,7 @@ $(document).ready ->
         if pData[0] == "create"
           if !$("#lend_" + pData[1].id).length
             noty
-              text: "You have a received a request to lend out '" + pData[1].book_name + "'"
+              text: pData[1].name + " would like to borrow '" + pData[1].book_name + "' from you"
               layout: "topRight"
 
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
@@ -370,7 +370,7 @@ $(document).ready ->
         else if pData[0] == "accepted_lender"
           if !$("#current_" + pData[1].id).length
             noty
-              text: "Your request to borrow '" + pData[1].book_name + "' has been accepted"
+              text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
               layout: "topRight"
 
             $("#borrow_" + pData[1].id).remove()
@@ -410,7 +410,7 @@ $(document).ready ->
         else if pData[0] == "returned" #FIXME
           if $("#received_lender_" + pData[1].id).attr("disabled") == "disabled"
             noty
-                text: "Return of '" + pData[1].book_name + "' has been inititated"
+                text: pData[1].name + " has initiated the return of '" + pData[1].book_name + "'"
                 layout: "topRight"
 
             $("#received_lender_" + pData[1].id).removeAttr("disabled")
@@ -432,7 +432,7 @@ $(document).ready ->
         else if pData[0] == "rejected"
           if pData[1].reason == "Unavailable"
             noty
-              text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as the lender is Unavailable"
+              text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as " + pData[1].name + " is Unavailable"
               layout: "topRight"
           else
             noty
@@ -444,14 +444,14 @@ $(document).ready ->
 
         else if pData[0] == "received_lender"
           noty
-            text: "'" + pData[1].book_name + "' has been returned successfully"
+            text: pData[1].name + " has received " + "'" + pData[1].book_name 
             layout: "topRight" 
 
         #Lender triggers that book's been handed over in self/pick drop.
         else if pData[0] == "received_borrower_by_lender"
           if  $("#received_borrower_" + pData[1].id).attr("value") != "Return"
             noty
-              text: "The borrower has handed over '" + pData[1].book_name + "'"
+              text: pData[1].name + " has handed over '" + pData[1].book_name + "'"
               layout: "topRight"
 
               if pData[1].delivery_mode
@@ -470,7 +470,7 @@ $(document).ready ->
             $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
             $("#p_accepted_" + pData[1].id).text("Received by Borrower")
             noty
-              text: "The borrower has successfully received '" + pData[1].book_name + "'"
+              text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
               layout: "topRight"
 
             if !pData[1].delivery_mode
@@ -590,7 +590,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "' " 
               layout: "topRight"
 
             $(tr_id_s).remove()

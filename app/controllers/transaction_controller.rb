@@ -29,7 +29,8 @@ class TransactionController < ApplicationController
 				:status => @transaction.status,
 				:borrower => User.find(@transaction.borrower_id).full_name,
 				:delivery_mode => (User.find(@transaction.borrower_id).is_delivery or User.find(@transaction.lender_id).is_delivery),
-				:online => Profile.where(:user_id => @transaction.borrower_id).take.profile_status
+				:online => Profile.where(:user_id => @transaction.borrower_id).take.profile_status,
+				:name => User.find(current_user.id).full_name
 			}
 
 			publish_channel = "transaction_listener_" + @transaction.lender_id.to_s
@@ -162,7 +163,8 @@ class TransactionController < ApplicationController
 		transaction_rejected << {
 			:id => @latest_rejected.id.to_s,
 			:book_name => Book.find(Inventory.find(@latest_rejected.inventory_id).book_id).book_name,
-			:reason => params[:reject_reason]
+			:reason => params[:reject_reason],
+			:name => User.find(@latest_rejected.lender_id).full_name
 		}
 
 		if @latest_rejected.save
@@ -203,7 +205,8 @@ class TransactionController < ApplicationController
 		returned_transaction << {
 			:id => @return_transaction.id,
 			:returned_date => @return_transaction.returned_date.to_s(:long),
-			:book_name => Book.find(Inventory.find(@return_transaction.inventory_id).book_id).book_name
+			:book_name => Book.find(Inventory.find(@return_transaction.inventory_id).book_id).book_name,
+			:name => User.find(@return_transaction.borrower_id).full_name
 		}
 
 		if @return_transaction.save
@@ -226,9 +229,10 @@ class TransactionController < ApplicationController
 		@received_transaction.lender_feedback = params[:lender_feedback] 
 		@received_transaction.lender_comments = params[:lender_comments]
 		if @received_transaction.return_pickup_date.nil?
-			@received_transaction.borrow_duration = ((return_received_date - received_date)/1.days).round
+			@received_transaction.borrow_duration = ((@received_transaction.return_received_date - @received_transaction.received_date)/1.days).round
 		else
-			@received_transaction.borrow_duration = ((return_received_date - return_pickup_date)/1.days).round
+			@received_transaction.borrow_duration = ((@received_transaction.return_received_date - @received_transaction.return_pickup_date)/1.days).round
+		end
 		@received_transaction.status = "Complete"
 
 		if @received_transaction.save
@@ -240,7 +244,8 @@ class TransactionController < ApplicationController
 			transaction_received_lender << "received_lender"
 			transaction_received_lender << {
 				:id => @received_transaction.id,
-				:book_name => Book.find(Inventory.find(@received_transaction.inventory_id).book_id).book_name
+				:book_name => Book.find(Inventory.find(@received_transaction.inventory_id).book_id).book_name,
+				:name => User.find(@received_transaction.lender_id).full_name
 			}
 
 			publish_channel = "transaction_listener_" + @received_transaction.borrower_id.to_s
@@ -264,7 +269,8 @@ class TransactionController < ApplicationController
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
 					:delivery_mode => (User.find(@borrower_received_transaction.lender_id).is_delivery or User.find(@borrower_received_transaction.borrower_id).is_delivery),
-					:received_date => @borrower_received_transaction.received_date.to_s(:long)
+					:received_date => @borrower_received_transaction.received_date.to_s(:long),
+					:name => User.find(@borrower_received_transaction.borrower_id).full_name
 				}
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.lender_id.to_s
@@ -277,7 +283,8 @@ class TransactionController < ApplicationController
 					:id => @borrower_received_transaction.id,
 					:book_name => Book.find(Inventory.find(@borrower_received_transaction.inventory_id).book_id).book_name,
 					:delivery_mode => (User.find(@borrower_received_transaction.lender_id).is_delivery or User.find(@borrower_received_transaction.borrower_id).is_delivery),
-					:received_date => @borrower_received_transaction.received_date.to_s(:long)
+					:received_date => @borrower_received_transaction.received_date.to_s(:long),
+					:name => User.find(@borrower_received_transaction.lender_id).full_name
 				}
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.borrower_id.to_s
