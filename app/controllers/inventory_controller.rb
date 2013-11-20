@@ -209,10 +209,6 @@ class InventoryController < ApplicationController
 
 	def autocomplete_book_name
 		@book_name_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:book_name)
-		
-		if @book_name_books.empty?
-			@book_name_books = ["No Matching Results Found"]
-		end
 
 		respond_to do |format|
     		format.html  
@@ -222,10 +218,6 @@ class InventoryController < ApplicationController
 
 	def autocomplete_book_details
 		@books = Book.where("lower(book_name) like ?", "%#{params[:book_name].downcase}%")
-		
-		if @books.empty?
-			@books = [{"book_name"=>"No Matching Results Found"}]
-		end
 
 		respond_to do |format|
     		format.html  

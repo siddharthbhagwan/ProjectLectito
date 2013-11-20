@@ -1,5 +1,5 @@
 <h3>Add a book</h3>
-<%= form_tag  inventory_index_path do %>
+<%= form_tag  inventory_index_path, :id => "add_book_form" do %>
 <div id="new_inventory">
 <%= text_field_tag :book_name, nil, :placeholder => "Book Name", :required => :true,:width => "10" %></br>
 
@@ -26,10 +26,11 @@
 
 <%= hidden_field_tag :book_id %>
 </div>
-<div >
-<%= submit_tag 'Add Book', :id => :add_book, class: "btn btn-small", :style => "float:left;" %>
+<div>
+<%= tag "input", :type => "button", :id => "add_book", :class => "btn btn-small" , :value => "Add Book" %></br></br>
 <%= link_to "Back", inventory_index_path, class: "btn btn-small" %>
 </div>
 
+<p style=" position:absolute; margin-left:230px; top:122px;" hidden='true' id="book_name_empty"><i><b>No Results Found</b></i></p>
 
 <% end %>

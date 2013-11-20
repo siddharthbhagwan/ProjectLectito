@@ -162,10 +162,8 @@ $(document).ready ->
             edition: item.edition
             ) 
 
-    select: (e, ui) ->
-      if ui.item.label == "No Matching Results Found"
-        #TODO Clear No matching results text
-        $("#book_name").data("selected_item",ui.item.label)
+    response: (e, ui) ->
+      if ui.content.length is 0
         $("#mrp").hide()
         $("#isbn").hide()
         $("#author").hide()
@@ -175,29 +173,25 @@ $(document).ready ->
         $("#pages").hide()
         $("#publisher").hide()
         $("#edition").hide()
-        $("#book_id").hide()
-        $("#book_name").val("")
-      else
-        $("#mrp").val(ui.item.mrp).fadeIn(500)
-        $("#isbn").val(ui.item.isbn).fadeIn(500)
-        $("#author").val(ui.item.author).fadeIn(500)
-        $("#language").val(ui.item.language).fadeIn(500)
-        $("#genre").val(ui.item.genre).fadeIn(500)
-        $("#version").val(ui.item.version).fadeIn(500)
-        $("#pages").val(ui.item.pages).fadeIn(500)
-        $("#publisher").val(ui.item.publisher).fadeIn(500)
-        $("#edition").val(ui.item.edition).fadeIn(500)
-        $("#book_id").val(ui.item.id)
-        $("#book_name").data("selected_item",ui.item.label)
+        $("#book_name_empty").fadeIn(300)
+      else 
+        $("#book_name_empty").hide()
 
-  )# ).blur ->
-  #   value_typed = $("#book_name").val()
-  #   value_selected = $("#book_name").data("selected_item")
-  #   if value_typed != value_selected
-  #     $("#book_name").val("")
+    select: (e, ui) ->
+      $("#mrp").val(ui.item.mrp).fadeIn(500)
+      $("#isbn").val(ui.item.isbn).fadeIn(500)
+      $("#author").val(ui.item.author).fadeIn(500)
+      $("#language").val(ui.item.language).fadeIn(500)
+      $("#genre").val(ui.item.genre).fadeIn(500)
+      $("#version").val(ui.item.version).fadeIn(500)
+      $("#pages").val(ui.item.pages).fadeIn(500)
+      $("#publisher").val(ui.item.publisher).fadeIn(500)
+      $("#edition").val(ui.item.edition).fadeIn(500)
+      $("#book_id").val(ui.item.id)
+      $("#book_name").data("selected_item",ui.item.label)
 
-  #   if value_selected == "No Matching Results Found"
-  #     $("#book_name").val("")     
+  ).blur ->
+    $("#book_name").trigger("autocompleteselect")   
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -232,3 +226,10 @@ $(document).ready ->
   $(".edit_inventory").show() 
 
 #--------------------------------------------------------------------------------------------------------------------
+  $("#add_book").click ->
+    if ("#book_name").length isnt 0
+      if !$("#book_name_empty").is(":visible")
+        $("#add_book_form").submit()
+
+
+
