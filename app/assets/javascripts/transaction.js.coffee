@@ -450,6 +450,7 @@ $(document).ready ->
         #Lender triggers that book's been handed over in self/pick drop.
         else if pData[0] == "received_borrower_by_lender"
           if  $("#received_borrower_" + pData[1].id).attr("value") != "Return"
+            $("#current_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
             noty
               text: pData[1].name + " has handed over '" + pData[1].book_name + "'"
               layout: "topRight"
@@ -477,6 +478,12 @@ $(document).ready ->
               $("#handed_over_" + pData[1].id).attr("value", "Received")
               $("#handed_over_" + pData[1].id).attr("disabled", "true")
               $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
+
+        else if pData[0] == "received_borrower_by_borrower_lender"
+          $("#current_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
+
+        else if pData[0] == "received_borrower_by_lender_borrower"
+          $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)  
 
         else if pData[0] == "offline"
           $("#online_" + pData[1].id).attr("hidden", "true")

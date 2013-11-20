@@ -276,6 +276,16 @@ class TransactionController < ApplicationController
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.lender_id.to_s
 				Firebase.push(publish_channel, transaction_received_borrower.to_json)
 
+				transaction_received_borrower_lender = Array.new
+				transaction_received_borrower_lender << "received_borrower_by_borrower_lender"
+				transaction_received_borrower_lender << {
+					:id => @borrower_received_transaction.id,
+					:received_date => @borrower_received_transaction.received_date.to_s(:long),
+				}
+
+				publish_channel = "transaction_listener_" + @borrower_received_transaction.borrower_id.to_s
+				Firebase.push(publish_channel, transaction_received_borrower_lender.to_json)
+
 			elsif params[:called_by] == 'lender'
 				transaction_received_borrower = Array.new
 				transaction_received_borrower << "received_borrower_by_lender"
@@ -289,6 +299,16 @@ class TransactionController < ApplicationController
 
 				publish_channel = "transaction_listener_" + @borrower_received_transaction.borrower_id.to_s
 				Firebase.push(publish_channel, transaction_received_borrower.to_json)
+
+				transaction_received_borrower_borrower = Array.new
+				transaction_received_borrower_borrower << "received_borrower_by_lender_borrower"
+				transaction_received_borrower_borrower << {
+					:id => @borrower_received_transaction.id,
+					:received_date => @borrower_received_transaction.received_date.to_s(:long)
+				}
+
+				publish_channel = "transaction_listener_" + @borrower_received_transaction.lender_id.to_s
+				Firebase.push(publish_channel, transaction_received_borrower_borrower.to_json)
 			end
 		end
 
