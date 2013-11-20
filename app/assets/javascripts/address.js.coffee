@@ -17,6 +17,15 @@ $(document).ready ->
             pin: item.pincode
             ) 
 
+    response: (e, ui) ->
+      if ui.content.length is 0
+        $("#locality_empty").fadeIn(300)
+        $("#address_state").val("")
+        $("#address_city").val("")
+        $("#address_pin").val("")
+      else
+        $("#locality_empty").hide()
+
     select: (e, ui) ->
       $("#address_locality").val(ui.item.area)
       $("#address_state").val(ui.item.state)
@@ -40,7 +49,6 @@ $(document).ready ->
     $("#delete_confirm").dialog "open"
 
 
-
   $("#delete_confirm").dialog
     autoOpen: false
     modal: true
@@ -52,4 +60,11 @@ $(document).ready ->
 
       Cancel: ->
         $(this).dialog "close"
+
+#--------------------------------------------------------------------------------------------------------------------
+
+  $("#add_address").click ->  
+    if $("#address_locality").length isnt 0
+      if !$("#locality_empty").is(":visible")
+        $("#new_address").submit()
 

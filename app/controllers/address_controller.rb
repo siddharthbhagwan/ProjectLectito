@@ -67,26 +67,20 @@ class AddressController < ApplicationController
   def autocomplete_area
     @locations = Location.where("lower(area) LIKE ? ", "%#{params[:area].downcase}%")
 
-    if @locations.empty?
-      @locations = [:area => "No Matching Results Found"]
-    end
-
     respond_to do |format|
       format.html  
       format.json { render :json => @locations.to_json }
-    end
-    
+    end    
   end
 
   private
   
-   def require_profile
+    def require_profile
       if current_user.profile.nil?
         flash[:notice] = "Please complete your profile"
         redirect_to new_profile_path
       else
         return false
       end
-     end
-
+    end
 end
