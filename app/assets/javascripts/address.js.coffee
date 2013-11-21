@@ -68,3 +68,10 @@ $(document).ready ->
       if !$("#locality_empty").is(":visible")
         $("#new_address").submit()
 
+#--------------------------------------------------------------------------------------------------------------------
+
+  $("#update_address").click ->  
+    if $("#address_locality").length isnt 0
+      if !$("#locality_empty").is(":visible")
+        $(".edit_address").submit()        
+

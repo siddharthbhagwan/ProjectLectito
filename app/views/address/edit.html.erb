@@ -4,22 +4,19 @@
 <%= render 'error_messages' %>
 
 <%= f.text_area :address_line1, :size => "20 x 5", :resize => :none, :placeholder => "Address Line 1", :required => :true %></br>
-<%= f.text_field :landmark, :placeholder => :Landmark %></br>
-	
+<%= f.text_field :landmark, :placeholder => :Landmark %></br>	
 <%= f.text_field :locality, :placeholder => :Locality, :required => :true %></br>
-
 <%= f.text_field :city ,:readonly => true, :placeholder => :City %></br>
-
 <%= f.text_field :state,:readonly => true, :placeholder => :State %></br>
-
 <%= f.text_field :pin,:readonly => true, :placeholder => :Pin %></br>
-
 <%= f.text_field :country, :value => "India" ,:readonly => true %></br>
 
 </br></br>
 
-<%= f.submit "Update", class: "btn btn-small" %>
-
+<%= tag "input", :type => "button", :class => "btn btn-small" , :value => "Update", :id => :update_address %></br></br>
 <%= link_to "Back", address_path, class: "btn btn-small" %>
+
+<p style=" position:absolute; margin-left:230px; top:285px;" hidden="true" id="locality_empty"><i><b>No Such Locality Found</b></i></p>
+
 
 <% end %>
