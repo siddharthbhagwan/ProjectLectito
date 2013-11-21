@@ -96,6 +96,12 @@ $(document).ready ->
         success: (data) ->
           response(data)
 
+    response: (e, ui) ->
+      if ui.content.length is 0
+        $("#author_empty").fadeIn(300)
+      else
+        $("#author_empty").hide()
+
     select: (e, ui) ->
       $("#search_by_author").data("selected_item", ui.item.label)
 
@@ -123,6 +129,12 @@ $(document).ready ->
           
         success: (data) ->
           response(data)
+
+    response: (e, ui) ->
+      if ui.content.length is 0
+        $("#book_name_empty").fadeIn(300)
+      else
+        $("#book_name_empty").hide()
 
     select: (e, ui) ->
       $("#search_by_book_name").data("selected_item", ui.item.label)

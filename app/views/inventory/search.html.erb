@@ -25,7 +25,11 @@
 
 <div id="author_book_validation"></div>
 
-<%= search_field_tag :search_by_author, nil, :placeholder => "Search By Author" %></br>
+<p hidden="true" id="author_empty"><i><b>No Such Author Found</b></i></p>
+
+<%= text_field_tag :search_by_author, nil, :placeholder => "Search By Author" %></br>
+
+<p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
 
 <%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name" %></br>
 
@@ -33,9 +37,8 @@
 
 <%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
 
-<div id="search_text">
+<div id="search_text"></div>
 
-</div>
 
 <!-- jQuery Dialog divs -->
 <div id="accept_request_confirm" title="Accept Request">

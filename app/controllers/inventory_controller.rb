@@ -197,10 +197,6 @@ class InventoryController < ApplicationController
 			@authors_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name]}%").pluck(:author).uniq
 		end
 
-		if @authors_books.empty?
-			@authors_books = ["No Matching Results Found"]
-		end
-
 		respond_to do |format|
     		format.html  
     		format.json { render :json => @authors_books.to_json }
