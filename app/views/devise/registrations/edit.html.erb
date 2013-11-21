@@ -9,11 +9,11 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
+  <div><%= f.password_field :current_password, :placeholder => " Current Password " %></div>
+
   <div><%= f.password_field :password, :autocomplete => "off", :placeholder => " New password " %></div>
 
-  <div><%= f.password_field :password_confirmation, :placeholder => " Confirm new password " %></div>
-
-  <div><%= f.password_field :current_password, :placeholder => " Current Password " %></div></br>
+  <div><%= f.password_field :password_confirmation, :placeholder => " Confirm new password " %></div></br>
 
   <div><%= f.submit "Update", :class => "btn" %></div>
 <% end %>
