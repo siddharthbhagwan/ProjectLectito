@@ -44,7 +44,7 @@ class TransactionController < ApplicationController
 		end
 	end
 
-
+	# Called when a lender accepts a request
 	def update_request_status_accept
 		@accept_request = Transaction.where(:id => params[:tr_id]).take	
 		@accept_request.status = "Accepted"
@@ -60,6 +60,7 @@ class TransactionController < ApplicationController
 		lender_id_s = @accept_request.lender_id.to_s
 		borrower_id_s = @accept_request.borrower_id.to_s
 
+		# Lender receives 10 requests for a book. Accepts One of them. Remaining 9 need to be rejected.
 		@remaining_requests = Transaction.where(:inventory_id => @accept_request.inventory_id, :lender_id => @accept_request.lender_id, :status => "Pending")
 
 
@@ -84,9 +85,11 @@ class TransactionController < ApplicationController
 					}
 
 					if reject_each.save
+						# Remove remaining requests rows from lender
 						publish_channel_remaining_lender = "transaction_listener_" + reject_each.lender_id.to_s
 						Firebase.push(publish_channel_remaining_lender, reject_update_lender.to_json)
 
+						# Notify each of the remaining that request has been rejected
 						publish_channel_remaining_borrower = "transaction_listener_" + reject_each.borrower_id.to_s
 						Firebase.push(publish_channel_remaining_borrower, reject_update_borrower.to_json)
 					end
@@ -94,7 +97,7 @@ class TransactionController < ApplicationController
 			end
 		end
 
-		#FIXME - TranschatID too long and duplicate
+		#Code duplicated from ChatBox for chat trigger
 		user_accepted_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? AND status != ? AND status != ? AND status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
     @current_transactions = Array.new
     @current_transactions_id = Array.new
@@ -105,20 +108,29 @@ class TransactionController < ApplicationController
       end
     end
 
+    #TODO Check for code optimization
+    book_name = Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name
+    acceptance_date = @accept_request.acceptance_date.to_s(:long)
+    delivery_mode = (User.find(@accept_request.borrower_id).is_delivery or User.find(@accept_request.lender_id).is_delivery)
+    currentcn = User.find(current_user.id).profile.chat_name
+    borrowercn = User.find(@accept_request.borrower_id).profile.chat_name
+    lendercn = User.find(@accept_request.lender_id).profile.chat_name
+    title = Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name
+
 		transaction_accepted_lender = Array.new
 		transaction_accepted_lender << "accepted_borrower"
 		transaction_accepted_lender << {			
 			:id => @accept_request.id,
-			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
-			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
+			:book_name => book_name,
+			:acceptance_date => acceptance_date,
 			:borrower => User.find(@accept_request.borrower_id).full_name,
-			:delivery_mode => (User.find(@accept_request.lender_id).is_delivery or User.find(@accept_request.borrower_id).is_delivery),
+			:delivery_mode => delivery_mode,
 			:borrower_id => @accept_request.borrower_id,
 			:online => Profile.where(:user_id => @accept_request.borrower_id).take.profile_status,
-			:currentcn => User.find(current_user.id).profile.chat_name,
-			:lendercn => User.find(@accept_request.lender_id).profile.chat_name,
-			:borrowercn => User.find(@accept_request.borrower_id).profile.chat_name,
-			:title => Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name,
+			:currentcn => currentcn,
+			:lendercn => lendercn,
+			:borrowercn => borrowercn,
+			:title => title,
 			:chatidlist => @current_transactions_id
 		}
 
@@ -126,15 +138,15 @@ class TransactionController < ApplicationController
 		transaction_accepted_borrower << "accepted_lender"
 		transaction_accepted_borrower << {
 			:id => @accept_request.id,
-			:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name,
-			:acceptance_date => @accept_request.acceptance_date.to_s(:long),
+			:book_name => book_name,
+			:acceptance_date => acceptance_date,
 			:lender => User.find(@accept_request.lender_id).full_name,
-			:delivery_mode => (User.find(@accept_request.borrower_id).is_delivery or User.find(@accept_request.lender_id).is_delivery),
+			:delivery_mode => delivery_mode,
 			:online => Profile.where(:user_id => @accept_request.lender_id).take.profile_status,
-			:currentcn => User.find(current_user.id).profile.chat_name,
-			:lendercn => User.find(@accept_request.lender_id).profile.chat_name,
-			:borrowercn => User.find(@accept_request.borrower_id).profile.chat_name,
-			:title => Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name,
+			:currentcn => currentcn,
+			:lendercn => lendercn,
+			:borrowercn => borrowercn,
+			:title => title,
 			:chatidlist => @current_transactions_id
 		}
 
