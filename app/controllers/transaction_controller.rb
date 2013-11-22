@@ -387,7 +387,7 @@ class TransactionController < ApplicationController
 	end
 
 	def history
-		@t_history =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc").page(params[:page]).per(5)
+		@t_history =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc").page(params[:page]).per(10)
 	end
 
 	private

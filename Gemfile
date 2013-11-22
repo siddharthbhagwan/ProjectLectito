@@ -16,7 +16,7 @@ gem 'cancan', '1.6.7'
 gem 'role_model'
 gem 'rack'
 gem 'kaminari'
-gem 'bootstrap-kaminari-views'
+gem "kaminari-bootstrap"
 gem 'jquery-datatables-rails'
 gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails','2.3.3'
