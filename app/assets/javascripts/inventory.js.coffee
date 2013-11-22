@@ -32,6 +32,8 @@ $(document).ready ->
       else
         $("#author_book_validation").html("<h5>Please Enter either a Book Name, or an Author, or Both</h5>").hide()
         $("#author_book_validation").fadeIn(500)
+        $("#author_empty").hide()
+        $("#book_name_empty").hide()
     else
       $("#city_validation").html("<h5>Please Select your city</h5>").hide()
       $("#city_validation").fadeIn(500)

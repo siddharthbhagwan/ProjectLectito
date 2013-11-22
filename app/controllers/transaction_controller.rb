@@ -188,6 +188,10 @@ class TransactionController < ApplicationController
 			publish_channel = "transaction_listener_" + @cancel_transaction.lender_id.to_s
 			Firebase.push(publish_channel, cancelled_transaction.to_json)
 		end
+
+		respond_to do |format|
+    		format.json { render :json => "abc".to_json}
+		end
 	end
 
 	def update_request_status_return

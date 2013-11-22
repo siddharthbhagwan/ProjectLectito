@@ -272,10 +272,10 @@ $(document).ready ->
         $(this).dialog "close"
         tr_id = $("#cancel_transaction").data("tr_id")
         $.ajax
-          url: "/transaction/update_request_status_cancel.js"
+          url: "/transaction/update_request_status_cancel.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
 
