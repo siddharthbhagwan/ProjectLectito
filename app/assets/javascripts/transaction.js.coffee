@@ -421,6 +421,15 @@ $(document).ready ->
           $("#lend_" + pData[1].id).remove()
           empty_table_checks()
 
+        else if pData[0] == "rejected_borrower"
+          $("#borrow_" + pData[1].id).remove()
+          empty_table_checks()
+
+          noty
+            text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as the book has been lent out"
+            layout: "topRight"
+
+
         else if pData[0] == "cancelled"
           noty
             text: "A request to borrow '" + pData[1].book_name + "' from you has been cancelled"

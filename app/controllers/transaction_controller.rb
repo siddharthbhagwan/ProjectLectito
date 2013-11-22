@@ -52,7 +52,6 @@ class TransactionController < ApplicationController
 		if (!params[:dispatch_date].nil? and !params[:dispatch_time].nil?)
 			@accept_request.accept_pickup_date = params[:dispatch_date] + ", " + params[:dispatch_time]
 		end
-		#@accept_request.returned_date = 15.days.from_now
 
 		inventory_rented_out = Inventory.find(@accept_request.inventory_id)
 		inventory_rented_out.status = "Rented Out"
@@ -80,7 +79,8 @@ class TransactionController < ApplicationController
 					reject_update_borrower = Array.new
 					reject_update_borrower << "rejected_borrower"
 					reject_update_borrower << {
-						:id => reject_each.id.to_s
+						:id => reject_each.id.to_s,
+						:book_name => Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name
 					}
 
 					if reject_each.save
