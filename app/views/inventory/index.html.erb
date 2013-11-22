@@ -9,7 +9,7 @@
         <th>Available @</th>
         <!-- <th>Rental</th> -->
         <th>Current Status</th>
-        <th colspan='2'>Manage</th>
+        <th colspan='1'>Manage</th>
       </tr>
     <thead>
 
@@ -22,7 +22,7 @@
           <!-- <td><%= inventory.rental_price %></td> -->
           <td><%= inventory.status %></td>
           <td><%= link_to "Edit", edit_inventory_path(inventory.id), class: "btn btn-small "%></td>
-          <td><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You sure?' }%></td>
+          <!-- <td><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You sure?' }%></td> -->
         </tr>
       <% end %>
     </tbody>
