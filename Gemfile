@@ -20,7 +20,7 @@ gem 'jquery-datatables-rails'
 gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails','2.3.3'
 gem 'jquery-rails'
-gem 'blockuijs-rails',  :git => 'git://github.com/rusanu/blockuijs-rails.git'
+gem 'blockuijs-rails', :git => 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'sidekiq'
 gem 'jquery-ui-rails'
 gem 'redis'
@@ -32,7 +32,6 @@ gem 'protected_attributes'
 gem 'rails-observers'
 #gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
-
 
 # Gems used only for assets and not required
 # in production environments by default.
