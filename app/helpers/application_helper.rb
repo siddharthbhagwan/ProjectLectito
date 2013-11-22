@@ -18,7 +18,6 @@ module ApplicationHelper
 
   def chatbox
     user_accepted_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? AND status != ? AND status != ? AND status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
-    logger.debug " adasdasda " + user_accepted_transactions.inspect
     @current_transactions = Array.new
     @current_transactions_id = Array.new
     user_accepted_transactions.each do |t|

@@ -140,10 +140,10 @@ $(document).ready ->
         tr_id = $("#accept_request_confirm").data("trid")
         tr_id_s = $("#accept_request_confirm").data("trids")
         $.ajax
-          url: "/transaction/update_request_status_accept.js"
+          url: "/transaction/update_request_status_accept.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
             dispatch_date: $("#accept_request_confirm").data "dispatch_date"
@@ -186,10 +186,10 @@ $(document).ready ->
         tr_id = $("#accept_self_confirm").data "trid"
         tr_id_s = $("#accept_self_confirm").data "trids"
         $.ajax
-          url: "/transaction/update_request_status_accept.js"
+          url: "/transaction/update_request_status_accept.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
 
@@ -231,10 +231,10 @@ $(document).ready ->
         tr_id_s = $("#reject_request_confirm").data("trids")
         reject_reason = $('input[name=rejectReason]:radio:checked').val()
         $.ajax
-          url: "/transaction/update_request_status_reject"
+          url: "/transaction/update_request_status_reject.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
             reject_reason: reject_reason
@@ -712,10 +712,10 @@ $(document).ready ->
         tr_id = $("#lender_received_book_confirm").data("trid")
         tr_id_s = $("#lender_received_book_confirm").data("trids")
         $.ajax
-          url: "/transaction/update_request_status_receive_lender.js"
+          url: "/transaction/update_request_status_receive_lender.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
             lender_feedback: $("input[type='radio'][name='lender_feedback']:checked").val()
@@ -739,10 +739,10 @@ $(document).ready ->
         tr_id = $("#lender_received_book_confirm").data("trid")
         tr_id_s = $("#lender_received_book_confirm").data("trids")
         $.ajax
-          url: "/transaction/update_request_status_receive_lender.js"
+          url: "/transaction/update_request_status_receive_lender.json"
           type: "post"
           context: "this"
-          dataType: "script"
+          dataType: "json"
           data:
             tr_id: tr_id
             lender_feedback: ""

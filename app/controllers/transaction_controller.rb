@@ -161,6 +161,10 @@ class TransactionController < ApplicationController
 		else
 			raise "error"
 		end
+
+		respond_to do |format|
+    		format.json { render nothing: true, :status => 204 }
+		end
 	end
 
 	#TODO , check pattern mapping of rejected vs rejected lender and rejected borrower
@@ -183,6 +187,10 @@ class TransactionController < ApplicationController
 			publish_channel = "transaction_listener_" + @latest_rejected.borrower_id.to_s
 			Firebase.push(publish_channel, transaction_rejected.to_json)
 		end
+
+		respond_to do |format|
+    		format.json { render nothing: true, :status => 204 }
+		end
 	end
 
 	def update_request_status_cancel
@@ -202,7 +210,7 @@ class TransactionController < ApplicationController
 		end
 
 		respond_to do |format|
-    		format.json { render :json => "abc".to_json}
+    		format.json { render nothing: true, :status => 204 }
 		end
 	end
 
@@ -230,7 +238,7 @@ class TransactionController < ApplicationController
 			Firebase.push(publish_channel, returned_transaction.to_json)
 
 			respond_to do |format|
-    		format.json  { render :json => "Yo".to_json }
+    		format.json  { render nothing: true, :status => 204 }
 			end
 
 		else
@@ -267,6 +275,9 @@ class TransactionController < ApplicationController
 			publish_channel = "transaction_listener_" + @received_transaction.borrower_id.to_s
 			Firebase.push(publish_channel, transaction_received_lender.to_json)
 
+			respond_to do |format|
+    		format.json { render nothing: true, :status => 204 }
+			end
 		end
 	end
 

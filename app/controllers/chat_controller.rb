@@ -17,7 +17,6 @@ class ChatController < ApplicationController
     last_10_chats.each do |l|
       @chat_history << User.find(l.from_user).profile.chat_name + " : " + l.body
     end
-    puts @chat_history.inspect
   end
   
   def index
