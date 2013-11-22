@@ -1,5 +1,7 @@
 <h3>My Transaction History</h3>
 
+<%= paginate @t_history %>
+
 <% if !@t_history.empty? %>
   <table class="table table-striped table-bordered table-condensed">
     <thead>
