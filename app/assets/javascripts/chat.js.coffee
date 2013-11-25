@@ -8,6 +8,7 @@ exports.chat_boxes = chat_boxes
 
 $(document).ready ->
   
+  # Send chat on clicking send
   $("#chat_send").click ->
     you = $("#chat_text").attr("data-you")
     chat_text = $("#chat_text").val()
@@ -31,7 +32,7 @@ $(document).ready ->
       error: (jqXHR, textStatus, errorThrown) ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
-
+  # Press Enter key to send chat
   $("#chat_text").keydown (e) ->
     if e.keyCode is 13
       you = $("#chat_text").attr("data-you")
@@ -56,7 +57,7 @@ $(document).ready ->
         error: (jqXHR, textStatus, errorThrown) ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
-
+  # Initiating box chat when user clicks chat
   $(document).on "click", "input[id^='chatbox_'], img[id^='online_']", ->
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
@@ -74,6 +75,7 @@ $(document).ready ->
     else
       othercn = bcn
 
+    # If Box has been initiated, just toggle
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
@@ -100,8 +102,10 @@ $(document).ready ->
             success: (msg) ->
               
             error: (jqXHR, textStatus, errorThrown) ->
+
           $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg you, msg
-              
+        
+        # When the box is closed, move each box after it to the left to fill in the gap     
         boxClosed: ->
           closed_offset = $("#chat_div_" + trid).chatbox("option", "offset")
           exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
@@ -114,24 +118,26 @@ $(document).ready ->
               $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
             i++
       )
-      #$("#chat_div_" + trid).chatbox("option", "boxManager").addMsg you, "sfads \n dasdasda \n adasdas "
-
-  #-------------------------------------------------------------------------------------------------------------------- 
-  
+      # here
+#-------------------------------------------------------------------------------------------------------------------- 
+  # Listening for chat messages sent to user
   $.ajax
     url: "/transaction/user_id.json"
     type: "get"
     context: "this"
     dataType: "json"
-
+    #TODO Remove duplication on code - if and else for initiated and initiating box chat
     success: (msg) ->
         id = msg.user_id
         myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
         myChild = myFirebase.child("transaction_listener_" + id)
         myChild.on "child_added", (childSnapshot, prevChildName) ->
           pData = $.parseJSON(childSnapshot.val())
+          # Listener for Firebase messages
           if pData[0] == "chat"
+            # Box Type Chat
             if pData[1].type == 'box'
+              # Check if chat box for this transaction already Inititated
               if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
                 exports.chat_boxes.push(pData[1].trid)
                 $("#chat_div_" + pData[1].trid).chatbox(
@@ -158,6 +164,7 @@ $(document).ready ->
 
                     $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
 
+                  # When the box is closed, move each box after it to the left to fill in the gap
                   boxClosed: ->
                     closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
                     exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
@@ -171,11 +178,15 @@ $(document).ready ->
                       i++
                 )
                 $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
 
+              # Initiating Chat Box  
               else
+                # Initiating ChatBox with Id and Title
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
                   title: "Chat - " + pData[1].title
+                  # Ajax Request when message is sent
                   messageSent: (id, user, msg) ->
                     $.ajax
                       url: "/transaction/new_chat"
@@ -194,8 +205,10 @@ $(document).ready ->
                         
                       error: (jqXHR, textStatus, errorThrown) ->
 
+                    # Display the sent message with your initials
                     $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
 
+                  # When the box is closed, move each box after it to the left to fill in the gap
                   boxClosed: ->
                     closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
                     exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
@@ -208,6 +221,7 @@ $(document).ready ->
                         $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                       i++
                 )
+                # Displaying the text sent by other user
                 $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
 
             else #if pData[1].type == 'page'
@@ -224,6 +238,7 @@ $(document).ready ->
       # $("#error_message").dialog "open" 
 
 #--------------------------------------------------------------------------------------------------------------------
+  # Keep page chat text box scrolled down
   jQuery ->
     psconsole = $("#chat_box")
     psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()     
