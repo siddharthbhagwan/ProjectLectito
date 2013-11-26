@@ -19,6 +19,13 @@ class TransactionController < ApplicationController
 			raise "error"
 		else
 			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
+			lsa = Profile.where(:user_id => @transaction.borrower_id).take.last_seen_at
+			if (DateTime.now.to_time - lsa).seconds < 5.seconds
+				online_status = "Online"
+			else
+				online_status = "Offline"
+			end
+
 			transaction_details = Array.new 
 			transaction_details << "create"
 			transaction_details << {
@@ -29,7 +36,7 @@ class TransactionController < ApplicationController
 				:status => @transaction.status,
 				:borrower => User.find(@transaction.borrower_id).full_name,
 				:delivery_mode => (User.find(@transaction.borrower_id).is_delivery or User.find(@transaction.lender_id).is_delivery),
-				:online => Profile.where(:user_id => @transaction.borrower_id).take.profile_status,
+				:online => online_status,
 				:name => User.find(current_user.id).full_name
 			}
 
@@ -117,6 +124,13 @@ class TransactionController < ApplicationController
     lendercn = User.find(@accept_request.lender_id).profile.chat_name
     title = Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name
 
+    lsa_borrower = Profile.where(:user_id => @accept_request.borrower_id).take.last_seen_at
+		if (DateTime.now.to_time - lsa_borrower).seconds < 5.seconds
+			online_status_borrower = "Online"
+		else
+			online_status_borrower = "Offline"
+		end
+
 		transaction_accepted_lender = Array.new
 		transaction_accepted_lender << "accepted_borrower"
 		transaction_accepted_lender << {			
@@ -126,13 +140,20 @@ class TransactionController < ApplicationController
 			:borrower => User.find(@accept_request.borrower_id).full_name,
 			:delivery_mode => delivery_mode,
 			:borrower_id => @accept_request.borrower_id,
-			:online => Profile.where(:user_id => @accept_request.borrower_id).take.profile_status,
+			:online => online_status_borrower,
 			:currentcn => currentcn,
 			:lendercn => lendercn,
 			:borrowercn => borrowercn,
 			:title => title,
 			:chatidlist => @current_transactions_id
 		}
+
+		lsa_lender = Profile.where(:user_id => @accept_request.lender_id).take.last_seen_at
+		if (DateTime.now.to_time - lsa_lender).seconds < 5.seconds
+			online_status_lender = "Online"
+		else
+			online_status_lender = "Offline"
+		end
 
 		transaction_accepted_borrower = Array.new
 		transaction_accepted_borrower << "accepted_lender"
@@ -142,7 +163,7 @@ class TransactionController < ApplicationController
 			:acceptance_date => acceptance_date,
 			:lender => User.find(@accept_request.lender_id).full_name,
 			:delivery_mode => delivery_mode,
-			:online => Profile.where(:user_id => @accept_request.lender_id).take.profile_status,
+			:online => online_status_lender,
 			:currentcn => currentcn,
 			:lendercn => lendercn,
 			:borrowercn => borrowercn,

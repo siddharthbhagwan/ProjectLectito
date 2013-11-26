@@ -6,6 +6,7 @@ ProjectLectito::Application.routes.draw do
   #Profile Routes
   get "profile/rating" => "profile#rating"
   get "profile/public_rating/:tr_id" => "profile#public_rating"
+  post "profile/online" => "profile#online"
   post "profile/update_profile_status" => "profile#update_profile_status"
 
   # Address Routes

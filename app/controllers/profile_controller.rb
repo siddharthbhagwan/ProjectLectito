@@ -220,4 +220,31 @@ class ProfileController < ApplicationController
       end
     end
   end
+
+  def online
+    online = User.find(current_user.id).profile
+    online.last_seen_at = DateTime.now.to_time
+    online.save
+
+    #TODO Check if chatbox call is cheaper than the quesries themselves
+    chatbox()
+    active_trans_ids = Array.new
+    @current_transactions.each do |ct|
+      if ct.lender_id == current_user.id
+        lsa = User.find(ct.borrower_id).profile.last_seen_at
+        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 5
+          active_trans_ids.push(ct.id)
+        end
+      else
+        lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
+        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 5
+          active_trans_ids.push(ct.id)
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.json { render :json => active_trans_ids.to_json }
+    end
+  end
 end

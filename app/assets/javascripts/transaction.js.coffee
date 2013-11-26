@@ -494,11 +494,11 @@ $(document).ready ->
         else if pData[0] == "received_borrower_by_lender_borrower"
           $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)  
 
-        else if pData[0] == "offline"
-          $("#online_" + pData[1].id).attr("hidden", "true")
+        # else if pData[0] == "offline"
+        #   $("#online_" + pData[1].id).attr("hidden", "true")
 
-        else if pData[0] == "online"
-          $("#online_" + pData[1].id).removeAttr("hidden")
+        # else if pData[0] == "online"
+        #   $("#online_" + pData[1].id).removeAttr("hidden")
 
         myChild.remove()  
 

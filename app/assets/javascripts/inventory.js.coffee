@@ -245,5 +245,33 @@ $(document).ready ->
       if !$("#book_name_empty").is(":visible")
         $("#add_book_form").submit()
 
+#--------------------------------------------------------------------------------------------------------------------
+  # Online Status Updater
+  jQuery ->
+    setTimeout updateComments, 5000
+
+  updateComments = ->
+    $.ajax
+      url: "/profile/online.json"
+      type: "post"
+      dataType: "script"
+
+      success: (msg) ->
+        els = $('[id^="online_"]')
+        $.each els, (index, value) ->
+          online_id = els[index].id.substring(els[index].id.indexOf("_") + 1)
+          if msg.indexOf(online_id) is -1
+            $("#" + els[index].id).hide()
+          else
+            $("#" + els[index].id).show()
+
+      error: (jqXHR, textStatus, errorThrown) ->
+
+    setTimeout updateComments, 5000
+
+    
+    
+
+
 
 
