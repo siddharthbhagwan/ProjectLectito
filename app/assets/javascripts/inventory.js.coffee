@@ -257,9 +257,13 @@ $(document).ready ->
       dataType: "script"
 
       success: (msg) ->
+        console.log msg + " - msg "
         els = $('[id^="online_"]')
         $.each els, (index, value) ->
+          console.log " Entered Loop "
           online_id = els[index].id.substring(els[index].id.indexOf("_") + 1)
+          console.log "Checking for " + online_id
+          console.log " Result is " + msg.indexOf(online_id)
           if msg.indexOf(online_id) is -1
             $("#" + els[index].id).hide()
           else
@@ -268,10 +272,4 @@ $(document).ready ->
       error: (jqXHR, textStatus, errorThrown) ->
 
     setTimeout updateComments, 5000
-
-    
-    
-
-
-
 
