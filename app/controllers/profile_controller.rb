@@ -226,18 +226,22 @@ class ProfileController < ApplicationController
     online.last_seen_at = DateTime.now.to_time
     online.save
 
+    puts " Checking for " + User.find(current_user.id).full_name + " - " + current_user.id.to_s
     #TODO Check if chatbox call is cheaper than the quesries themselves
     chatbox()
     active_trans_ids = Array.new
+    puts "Current Active Transactions are - " + @current_transactions.count.to_s
     @current_transactions.each do |ct|
       if ct.lender_id == current_user.id
         lsa = User.find(ct.borrower_id).profile.last_seen_at
-        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 5
+        puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
           active_trans_ids.push(ct.id)
         end
       else
         lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
-        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 5
+        puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
           active_trans_ids.push(ct.id)
         end
       end

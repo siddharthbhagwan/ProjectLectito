@@ -259,6 +259,7 @@ $(document).ready ->
       success: (msg) ->
         console.log msg + " - msg "
         els = $('[id^="online_"]')
+        console.log "Els - " + els
         $.each els, (index, value) ->
           console.log " Entered Loop "
           online_id = els[index].id.substring(els[index].id.indexOf("_") + 1)
@@ -272,4 +273,14 @@ $(document).ready ->
       error: (jqXHR, textStatus, errorThrown) ->
 
     setTimeout updateComments, 5000
+
+#--------------------------------------------------------------------------------------------------------------------
+# Highlight rows and make pointer clickable
+
+  $(document).on "mouseenter", "img[id^='online_']", ->
+    $(this).css('cursor', 'pointer');
+
+
+  $(document).on "mouseleave", "img[id^='online_']", ->
+    $(this).css('font-size', '14px')
 
