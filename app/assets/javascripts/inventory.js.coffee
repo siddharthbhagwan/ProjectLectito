@@ -251,24 +251,44 @@ $(document).ready ->
     setTimeout updateComments, 5000
 
   updateComments = ->
+    console.log window.location.pathname + " Current url "
     $.ajax
       url: "/profile/online.json"
       type: "post"
       dataType: "script"
+      data:
+        page: window.location.pathname
 
       success: (msg) ->
-        console.log msg + " - msg "
-        els = $('[id^="online_"]')
-        console.log "Els - " + els
-        $.each els, (index, value) ->
-          console.log " Entered Loop "
-          online_id = els[index].id.substring(els[index].id.indexOf("_") + 1)
-          console.log "Checking for " + online_id
-          console.log " Result is " + msg.indexOf(online_id)
-          if msg.indexOf(online_id) is -1
-            $("#" + els[index].id).hide()
-          else
-            $("#" + els[index].id).show()
+        console.log window.location.pathname + " Current url "
+        if window.location.pathname is "/"
+          console.log window.location.pathname + " Current url "
+          console.log msg + " - Returned by Fn "
+          els = $('[id^="online_"]')
+          console.log els + " - On the page "
+          $.each els, (index, value) ->
+            console.log " Entered Loop "
+            online_id = els[index].id.substring(els[index].id.indexOf("_") + 1)
+            console.log "Checking for " + online_id
+            console.log " Result is " + msg.indexOf(online_id)
+            if msg.indexOf(online_id) is -1
+              $("#" + els[index].id).hide()
+            else
+              $("#" + els[index].id).show()
+
+        else if window.location.pathname.indexOf("/transaction/history") isnt -1
+          id_elements_on_page = $('[id^="online_"]')
+          ids_list = new Array
+          $.id_elements_on_page ids_on_the_page, (index, value) ->
+            id_without_text = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
+            if ids_list.indexOf(id_without_text) is -1
+              ids_list.push(id_without_text)
+
+          $.each ids_list, (index, value) ->
+            if msg.indexOf(ids_list[index]) is -1
+              $(".online_" + ids_list[index]).hide()
+            else
+              $(".online_" + ids_list[index]).show()
 
       error: (jqXHR, textStatus, errorThrown) ->
 

@@ -226,27 +226,53 @@ class ProfileController < ApplicationController
     online.last_seen_at = DateTime.now.to_time
     online.save
 
-    puts " Checking for " + User.find(current_user.id).full_name + " - " + current_user.id.to_s
-    #TODO Check if chatbox call is cheaper than the quesries themselves
-    chatbox()
     active_trans_ids = Array.new
-    puts "Current Active Transactions are - " + @current_transactions.count.to_s
-    @current_transactions.each do |ct|
-      if ct.lender_id == current_user.id
-        lsa = User.find(ct.borrower_id).profile.last_seen_at
-        puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
-        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
-          active_trans_ids.push(ct.id)
+
+    if params[:page] == "/transaction/history"
+      all_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc")
+      puts "Current Active Transactions are - " + all_transactions.count.to_s
+      all_transactions.each do |at|
+        if at.lender_id == current_user.id
+          if !active_trans_ids.include? at.borrower_id
+            lsa = User.find(at.borrower_id).profile.last_seen_at
+            puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+            if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
+              active_trans_ids.push(at.borrower_id)
+            end
+          end
+        else
+          if !active_trans_ids.include? at.lender_id
+            lsa = User.find(at.lender_id).profile.last_seen_at.to_time
+            puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+            if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
+              active_trans_ids.push(at.lender_id)
+            end
+          end
         end
-      else
-        lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
-        puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
-        if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
-          active_trans_ids.push(ct.id)
+      end
+    else  
+      puts " Checking for " + User.find(current_user.id).full_name + " - " + current_user.id.to_s
+      #TODO Check if chatbox call is cheaper than the quesries themselves
+      chatbox()
+      puts "Current Active Transactions are - " + @current_transactions.count.to_s
+      @current_transactions.each do |ct|
+        if ct.lender_id == current_user.id
+          lsa = User.find(ct.borrower_id).profile.last_seen_at
+          puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+          if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
+            active_trans_ids.push(ct.id)
+          end
+        else
+          lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
+          puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+          if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
+            active_trans_ids.push(ct.id)
+          end
         end
       end
     end
 
+    puts " Active Trans - " + active_trans_ids.count.to_s
     respond_to do |format|
       format.json { render :json => active_trans_ids.to_json }
     end

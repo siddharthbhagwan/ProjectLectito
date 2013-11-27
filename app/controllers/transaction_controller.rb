@@ -1,5 +1,6 @@
 class TransactionController < ApplicationController
-
+	include ApplicationHelper
+	
 	before_action :require_profile, :require_address
 
 	Firebase.base_uri = "https://projectlectito.Firebaseio.com/"
@@ -20,7 +21,7 @@ class TransactionController < ApplicationController
 		else
 			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
 			lsa = Profile.where(:user_id => @transaction.borrower_id).take.last_seen_at
-			if (DateTime.now.to_time - lsa).seconds < 5.seconds
+			if (DateTime.now.to_time - lsa).seconds < 6
 				online_status = "Online"
 			else
 				online_status = "Offline"
@@ -125,7 +126,7 @@ class TransactionController < ApplicationController
     title = Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name
 
     lsa_borrower = Profile.where(:user_id => @accept_request.borrower_id).take.last_seen_at
-		if (DateTime.now.to_time - lsa_borrower).seconds < 5.seconds
+		if (DateTime.now.to_time - lsa_borrower).seconds < 6
 			online_status_borrower = "Online"
 		else
 			online_status_borrower = "Offline"
@@ -149,7 +150,7 @@ class TransactionController < ApplicationController
 		}
 
 		lsa_lender = Profile.where(:user_id => @accept_request.lender_id).take.last_seen_at
-		if (DateTime.now.to_time - lsa_lender).seconds < 5.seconds
+		if (DateTime.now.to_time - lsa_lender).seconds < 6
 			online_status_lender = "Online"
 		else
 			online_status_lender = "Offline"
@@ -408,6 +409,7 @@ class TransactionController < ApplicationController
 	end
 
 	def history
+		chatbox()
 		@t_history =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc").page(params[:page]).per(10)
 	end
 
