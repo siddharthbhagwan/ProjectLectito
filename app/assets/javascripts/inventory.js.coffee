@@ -251,7 +251,6 @@ $(document).ready ->
     setTimeout updateComments, 5000
 
   updateComments = ->
-    console.log window.location.pathname + " Current url "
     $.ajax
       url: "/profile/online.json"
       type: "post"
@@ -260,17 +259,11 @@ $(document).ready ->
         page: window.location.pathname
 
       success: (msg) ->
-        console.log window.location.pathname + " Current url "
-        if window.location.pathname is "/"
-          console.log window.location.pathname + " Current url "
-          console.log msg + " - Returned by Fn "
-          els = $('[id^="online_"]')
-          console.log els + " - On the page "
-          $.each els, (index, value) ->
-            console.log " Entered Loop "
-            online_id = els[index].id.substring(els[index].id.indexOf("_") + 1)
-            console.log "Checking for " + online_id
-            console.log " Result is " + msg.indexOf(online_id)
+        if (window.location.pathname is "/home" ) || (window.location.pathname is "/" ) || (window.location.pathname is "/search" ) 
+          id_elements_on_page = $('[id^="online_"]')
+          # Get id of each object and strip it of the 'online_' text, leaving just the transaction id
+          $.each id_elements_on_page, (index, value) ->
+            online_id = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
             if msg.indexOf(online_id) is -1
               $("#" + els[index].id).hide()
             else
@@ -279,12 +272,16 @@ $(document).ready ->
         else if window.location.pathname.indexOf("/transaction/history") isnt -1
           id_elements_on_page = $('[id^="online_"]')
           ids_list = new Array
+          # Get id of each object, and strip it of the 'online_' text, leaving just the user id (lender or borrower)
           $.id_elements_on_page ids_on_the_page, (index, value) ->
             id_without_text = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
             if ids_list.indexOf(id_without_text) is -1
               ids_list.push(id_without_text)
 
           $.each ids_list, (index, value) ->
+            # action is carried upon class as if multiple obj with same id have an operation 
+            # performed on it, only the first one would work, remaining elements stay untouched
+            # in history.html, class and id have been given the same value 
             if msg.indexOf(ids_list[index]) is -1
               $(".online_" + ids_list[index]).hide()
             else

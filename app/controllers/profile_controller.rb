@@ -222,49 +222,61 @@ class ProfileController < ApplicationController
   end
 
   def online
+    # Called every n seconds to update timestamp
     online = User.find(current_user.id).profile
     online.last_seen_at = DateTime.now.to_time
     online.save
 
+    # Array to store the id's whose online status needs to be visible to current user
     active_trans_ids = Array.new
 
+    # For Transaction history, only completed transactions need to be listed
+    # Fn returns id's (lender or borrower) , and not transaction ids. Thus duplication check greatly helps
     if params[:page] == "/transaction/history"
       all_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc")
-      puts "Current Active Transactions are - " + all_transactions.count.to_s
+      # puts "Current Active Transactions are - " + all_transactions.count.to_s
       all_transactions.each do |at|
+        # if current user is the lender
         if at.lender_id == current_user.id
+          # check for duplication
           if !active_trans_ids.include? at.borrower_id
             lsa = User.find(at.borrower_id).profile.last_seen_at
-            puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+            # puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
             if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
               active_trans_ids.push(at.borrower_id)
             end
           end
         else
+          # current user is the borrower
+          # check for duplication
           if !active_trans_ids.include? at.lender_id
             lsa = User.find(at.lender_id).profile.last_seen_at.to_time
-            puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+            #puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
             if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
               active_trans_ids.push(at.lender_id)
             end
           end
         end
       end
+      # For home page / search page, transaction in progress need to be listed
+      # Returns transaction ids. So need need for duplication checks
     else  
-      puts " Checking for " + User.find(current_user.id).full_name + " - " + current_user.id.to_s
+      # puts " Checking for " + User.find(current_user.id).full_name + " - " + current_user.id.to_s
       #TODO Check if chatbox call is cheaper than the quesries themselves
       chatbox()
       puts "Current Active Transactions are - " + @current_transactions.count.to_s
       @current_transactions.each do |ct|
+        # current user is the lender
         if ct.lender_id == current_user.id
           lsa = User.find(ct.borrower_id).profile.last_seen_at
-          puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+          # puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
           if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
             active_trans_ids.push(ct.id)
           end
         else
+          # current user is the borrower
           lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
-          puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
+          # puts " Difference is " + (DateTime.now.to_time - lsa).seconds.to_s
           if !lsa.nil? and (DateTime.now.to_time - lsa).seconds < 6
             active_trans_ids.push(ct.id)
           end
@@ -272,7 +284,7 @@ class ProfileController < ApplicationController
       end
     end
 
-    puts " Active Trans - " + active_trans_ids.count.to_s
+    # puts " Active Trans - " + active_trans_ids.count.to_s
     respond_to do |format|
       format.json { render :json => active_trans_ids.to_json }
     end
