@@ -279,8 +279,5 @@ $(document).ready ->
 
   $(document).on "mouseenter", "img[id^='online_']", ->
     $(this).css('cursor', 'pointer');
-
-
-  $(document).on "mouseleave", "img[id^='online_']", ->
-    $(this).css('font-size', '14px')
+   
 
