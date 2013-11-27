@@ -1,7 +1,7 @@
 <!-- Summary of Books youve requested -->
 <% unless @borrow.empty? %>
 	<% @borrow.each do |b| %>
-		if !$("#current_"<%= b.id %>).length {
+		if (!$("#current_<%= b.id %>").length) {
 			td_id = "raw(<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>"
 			td_book_name = "<td><%= Book.find(Inventory.where(:id => b.inventory_id).take.book.id).book_name %></td>"
 			td_lender_name = "<td><a target='_blank' href=/profile/public_rating/<%= b.id %> ><%= User.find(b.lender_id).full_name %></td>"
