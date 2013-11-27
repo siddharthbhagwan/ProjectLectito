@@ -24,6 +24,7 @@ $(document).ready ->
         $("#good_transactions b").text(msg[0].good)
         $("#neutral_transactions b").text(msg[0].neutral)
         $("#bad_transactions b").text(msg[0].bad)
+        $("#full_profile").replaceWith("<u><a href='/profile/public_rating/" + tr_id + "'>View Complete Profile</a></u>")
         $("#display_public_profile").dialog "open"
 
       complete: (jqXHR, textStatus) ->
