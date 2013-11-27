@@ -273,7 +273,7 @@ $(document).ready ->
           id_elements_on_page = $('[id^="online_"]')
           ids_list = new Array
           # Get id of each object, and strip it of the 'online_' text, leaving just the user id (lender or borrower)
-          $.id_elements_on_page ids_on_the_page, (index, value) ->
+          $.each id_elements_on_page, (index, value) ->
             id_without_text = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
             if ids_list.indexOf(id_without_text) is -1
               ids_list.push(id_without_text)
