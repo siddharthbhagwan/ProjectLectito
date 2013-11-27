@@ -265,9 +265,9 @@ $(document).ready ->
           $.each id_elements_on_page, (index, value) ->
             online_id = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
             if msg.indexOf(online_id) is -1
-              $("#" + els[index].id).hide()
+              $("#" + id_elements_on_page[index].id).hide()
             else
-              $("#" + els[index].id).show()
+              $("#" + id_elements_on_page[index].id).show()
 
         else if window.location.pathname.indexOf("/transaction/history") isnt -1
           id_elements_on_page = $('[id^="online_"]')
