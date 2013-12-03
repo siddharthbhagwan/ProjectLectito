@@ -6,7 +6,7 @@ class InventoryController < ApplicationController
 	end
 
 	def index
-		@inventory = User.where(:id => current_user.id).take.inventories
+		@inventory = User.where(:id => current_user.id).take.inventories.where(:deleted => :false)
 		chatbox()
 	end
 
@@ -53,9 +53,12 @@ class InventoryController < ApplicationController
 
 	def destroy
 		@inventory = Inventory.where(:id => params[:id]).take
-		@inventory.destroy
-		redirect_to inventory_index_path
-		flash[:notice] = "The book has been deleted from your inventory"
+		@inventory.deleted = true
+		@inventory.status = "Unavailable"
+		if @inventory.save!
+			redirect_to inventory_index_path
+			flash[:notice] = "The book has been deleted from your inventory"
+		end
 	end
 
 	def search_books
@@ -71,9 +74,9 @@ class InventoryController < ApplicationController
 
 		@books.each do |book|
 			if user_signed_in?
-				@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ?", book, current_user.id, "Available").take
+				@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? AND deleted = ?", book, current_user.id, "Available", false).take
 			else
-				@users_with_book = Inventory.where("book_id = ? AND status = ?", book, "Available").take
+				@users_with_book = Inventory.where("book_id = ? AND status = ? AND deleted = ?", book, "Available", false).take
 			end
 
 			if !@users_with_book.nil?
@@ -112,9 +115,9 @@ class InventoryController < ApplicationController
 	def search_books_city
 		# Find all users apart from self, who have the book
 	 	if user_signed_in?
-			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? ", params[:book_id], current_user.id, "Available")
+			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? AND deleted = ?", params[:book_id], current_user.id, "Available", false)
 		else
-			@users_with_book = Inventory.where("book_id = ? AND status = ? ", params[:book_id], "Available")
+			@users_with_book = Inventory.where("book_id = ? AND status = ? AND deleted = ?", params[:book_id], "Available", false)
 		end
 		
 		@users_with_book_in_city = []
