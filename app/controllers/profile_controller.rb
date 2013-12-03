@@ -15,6 +15,8 @@ class ProfileController < ApplicationController
     if @profile.save
       flash[:notice] = "Your Profile has been created"
       redirect_to new_address_path
+    else
+      redirect_to new_profile_path  
     end
   end
 

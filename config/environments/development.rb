@@ -37,10 +37,10 @@ ProjectLectito::Application.configure do
   config.assets.debug = false
 
   #Redis Config
-  ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/' 
+  #ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/' 
 
   #DB Pool
-  ENV["DB_POOL"] = '20'
+  #ENV["DB_POOL"] = '20'
 
   #Default Url
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }
@@ -58,7 +58,7 @@ ProjectLectito::Application.configure do
     :domain             => 'gmail.com', #you can also use google.com
     :authentication     => :plain,
     :user_name          => 'sidunderscoresss@gmail.com',
-    :password           => ENV['SMTP_PASSWORD']
+    :password           => 'Mangalia0!'
   }
 
 end

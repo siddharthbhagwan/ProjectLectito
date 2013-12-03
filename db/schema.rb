@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126120429) do
+ActiveRecord::Schema.define(version: 20131127165708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,15 +108,15 @@ ActiveRecord::Schema.define(version: 20131126120429) do
     t.string   "user_last_name"
     t.date     "DoB"
     t.string   "gender"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.integer  "user_id"
     t.string   "profile_status"
     t.string   "user_phone_no"
     t.datetime "last_update"
     t.boolean  "contact_via_sms"
     t.boolean  "delivery"
-    t.datetime "last_seen_at"
+    t.datetime "last_seen_at",    default: '2013-11-27 17:04:45'
   end
 
   create_table "receipts", force: true do |t|
