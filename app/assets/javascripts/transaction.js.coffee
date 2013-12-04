@@ -338,18 +338,20 @@ $(document).ready ->
           if !$("#accepted_" + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
+            
             if pData[1].online == "Online"
-              td_b_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
-              td_b_ccn = "data-currentcn='" + pData[1].currentcn + "' "
-              td_b_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
-              td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
-              td_b_title = "data-title='" + pData[1].title + "' "
-              td_b_chatidlist = "data-chatidlist='" + pData[1].chatidlist + "' ></td>"
-              online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + td_b_chatidlist
-              profile_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
-              td_borrower = profile_link + "&nbsp;&nbsp;" + online_dot
+              td_b_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
             else
-              td_borrower = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>&nbsp;&nbsp;<img width='10' height='6' src='/assets/online_dot.png' hidden='true'></td>"
+              td_b_base = "<img width='10' height='6' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
+
+            td_b_ccn = "data-currentcn='" + pData[1].currentcn + "' "
+            td_b_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
+            td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
+            td_b_title = "data-title='" + pData[1].title + "' "
+            td_b_chatidlist = "data-chatidlist='" + pData[1].chatidlist + "' ></td>"
+            online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + td_b_chatidlist
+            profile_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
+            td_borrower = profile_link + "&nbsp;&nbsp;" + online_dot
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
@@ -365,6 +367,8 @@ $(document).ready ->
             $("#accepted_requests_table > tbody:last").append(table_row_data)
             if (!$("#accepted_requests_div").is(":visible"))
               $("#accepted_requests_div").show(500)
+
+            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")   
         
         #Summary of Books currently with you (borrower)
         else if pData[0] == "accepted_lender"
@@ -377,18 +381,20 @@ $(document).ready ->
             empty_table_checks()
             tr_id = "<tr id='current_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
+
             if pData[1].online == "Online"
-              td_c_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
-              td_c_ccn = "data-currentcn='" + pData[1].currentcn + "' "
-              td_c_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
-              td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
-              td_c_title = "data-title='" + pData[1].title + "' "
-              td_c_chatidlist = "data-chatidlist='" + pData[1].chatidlist + "' ></td>"
-              online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + td_c_chatidlist
-              lender_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
-              td_lender = lender_link + "&nbsp;&nbsp;" + online_dot
+              td_c_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
             else
-              td_lender = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>&nbsp;&nbsp;<img width='10' height='6' src='/assets/online_dot.png' hidden='true'></td>"              
+              td_c_base = "<img width='10' hidden='true' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
+
+            td_c_ccn = "data-currentcn='" + pData[1].currentcn + "' "
+            td_c_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
+            td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
+            td_c_title = "data-title='" + pData[1].title + "' "
+            td_c_chatidlist = "data-chatidlist='" + pData[1].chatidlist + "' ></td>"
+            online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + td_c_chatidlist
+            lender_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
+            td_lender = lender_link + "&nbsp;&nbsp;" + online_dot
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
@@ -405,6 +411,8 @@ $(document).ready ->
             $("#current_books_table > tbody:last").append(table_row_data)
             if (!$("#current_books_div").is(":visible"))
               $("#current_books_div").show(500)
+
+            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")    
 
         #Summary of Requests for Books you've lent out ( recvd button activates )
         else if pData[0] == "returned" #FIXME

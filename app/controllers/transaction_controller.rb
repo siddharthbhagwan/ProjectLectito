@@ -105,74 +105,73 @@ class TransactionController < ApplicationController
 			end
 		end
 
-		#Code duplicated from ChatBox for chat trigger
-		user_accepted_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? AND status != ? AND status != ? AND status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
-    @current_transactions = Array.new
-    @current_transactions_id = Array.new
-    user_accepted_transactions.each do |t|
-      if !(User.where(:id => @accept_request.borrower_id).take.is_delivery) || !(User.where(:id => @accept_request.lender_id).take.is_delivery)
-        @current_transactions << @accept_request
-        @current_transactions_id << @accept_request.id
-      end
-    end
-
-    #TODO Check for code optimization
-    book_name = Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name
-    acceptance_date = @accept_request.acceptance_date.to_s(:long)
-    delivery_mode = (User.find(@accept_request.borrower_id).is_delivery or User.find(@accept_request.lender_id).is_delivery)
-    currentcn = User.find(current_user.id).profile.chat_name
-    borrowercn = User.find(@accept_request.borrower_id).profile.chat_name
-    lendercn = User.find(@accept_request.lender_id).profile.chat_name
-    title = Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name
-
-    lsa_borrower = Profile.where(:user_id => @accept_request.borrower_id).take.last_seen_at
-		if (DateTime.now.to_time - lsa_borrower).seconds < 6
-			online_status_borrower = "Online"
-		else
-			online_status_borrower = "Offline"
-		end
-
-		transaction_accepted_lender = Array.new
-		transaction_accepted_lender << "accepted_borrower"
-		transaction_accepted_lender << {			
-			:id => @accept_request.id,
-			:book_name => book_name,
-			:acceptance_date => acceptance_date,
-			:borrower => User.find(@accept_request.borrower_id).full_name,
-			:delivery_mode => delivery_mode,
-			:borrower_id => @accept_request.borrower_id,
-			:online => online_status_borrower,
-			:currentcn => currentcn,
-			:lendercn => lendercn,
-			:borrowercn => borrowercn,
-			:title => title,
-			:chatidlist => @current_transactions_id
-		}
-
-		lsa_lender = Profile.where(:user_id => @accept_request.lender_id).take.last_seen_at
-		if (DateTime.now.to_time - lsa_lender).seconds < 6
-			online_status_lender = "Online"
-		else
-			online_status_lender = "Offline"
-		end
-
-		transaction_accepted_borrower = Array.new
-		transaction_accepted_borrower << "accepted_lender"
-		transaction_accepted_borrower << {
-			:id => @accept_request.id,
-			:book_name => book_name,
-			:acceptance_date => acceptance_date,
-			:lender => User.find(@accept_request.lender_id).full_name,
-			:delivery_mode => delivery_mode,
-			:online => online_status_lender,
-			:currentcn => currentcn,
-			:lendercn => lendercn,
-			:borrowercn => borrowercn,
-			:title => title,
-			:chatidlist => @current_transactions_id
-		}
-
 		if @accept_request.save
+			#Code duplicated from ChatBox for chat trigger
+			user_accepted_transactions = Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? AND status != ? AND status != ? AND status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
+	    @current_transactions_id = Array.new
+	    user_accepted_transactions.each do |t|
+	      if !(User.where(:id => t.borrower_id).take.is_delivery) || !(User.where(:id => t.lender_id).take.is_delivery)
+	        @current_transactions_id << t.id
+	      end
+	    end
+
+	    #TODO Check for code optimization
+	    book_name = Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name
+	    acceptance_date = @accept_request.acceptance_date.to_s(:long)
+	    delivery_mode = (User.find(@accept_request.borrower_id).is_delivery or User.find(@accept_request.lender_id).is_delivery)
+	    currentcn = User.find(current_user.id).profile.chat_name
+	    borrowercn = User.find(@accept_request.borrower_id).profile.chat_name
+	    lendercn = User.find(@accept_request.lender_id).profile.chat_name
+	    title = Book.where(:id => Inventory.where(:id => @accept_request.inventory_id).take.book_id).take.book_name
+
+	    lsa_borrower = Profile.where(:user_id => @accept_request.borrower_id).take.last_seen_at
+			if (DateTime.now.to_time - lsa_borrower).seconds < 6
+				online_status_borrower = "Online"
+			else
+				online_status_borrower = "Offline"
+			end
+
+			transaction_accepted_lender = Array.new
+			transaction_accepted_lender << "accepted_borrower"
+			transaction_accepted_lender << {			
+				:id => @accept_request.id,
+				:book_name => book_name,
+				:acceptance_date => acceptance_date,
+				:borrower => User.find(@accept_request.borrower_id).full_name,
+				:delivery_mode => delivery_mode,
+				:borrower_id => @accept_request.borrower_id,
+				:online => online_status_borrower,
+				:currentcn => currentcn,
+				:lendercn => lendercn,
+				:borrowercn => borrowercn,
+				:title => title,
+				:chatidlist => @current_transactions_id
+			}
+
+			lsa_lender = Profile.where(:user_id => @accept_request.lender_id).take.last_seen_at
+			if (DateTime.now.to_time - lsa_lender).seconds < 6
+				online_status_lender = "Online"
+			else
+				online_status_lender = "Offline"
+			end
+
+			transaction_accepted_borrower = Array.new
+			transaction_accepted_borrower << "accepted_lender"
+			transaction_accepted_borrower << {
+				:id => @accept_request.id,
+				:book_name => book_name,
+				:acceptance_date => acceptance_date,
+				:lender => User.find(@accept_request.lender_id).full_name,
+				:delivery_mode => delivery_mode,
+				:online => online_status_lender,
+				:currentcn => currentcn,
+				:lendercn => lendercn,
+				:borrowercn => borrowercn,
+				:title => title,
+				:chatidlist => @current_transactions_id
+			}
+
+			
 			#MailWorker.perform_borrow_accept_async(@accept_request.borrower_id)
 			publish_channel_lender = "transaction_listener_" + lender_id_s
 			Firebase.push(publish_channel_lender, transaction_accepted_lender.to_json)
