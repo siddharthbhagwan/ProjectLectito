@@ -157,12 +157,8 @@ $(document).ready ->
           if pData[0] == "chat"
             # Box Type Chat
             if pData[1].type == 'box'
-              console.log "Chat Boxes " + exports.chat_boxes
-              console.log "Pdata[1] " + pData[1]
-              console.log "Trid " + pData[1].trid
               # Check if chat box for this transaction already Inititated
               if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
-                console.log " Not there "
                 exports.chat_boxes.push(pData[1].trid)
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
@@ -202,6 +198,7 @@ $(document).ready ->
                       i++
                 )
 
+                # If no child elements, retrieve history along with last ping, else just display last ping
                 if $("#chat_div_" + pData[1].trid).children().length == 0
                   $.ajax
                     url: "/chat/box_chat_history.json"
@@ -268,7 +265,8 @@ $(document).ready ->
                         $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                       i++
                 )
-                # Displaying the text sent by other user
+
+                # If no child elements, retrieve history along with last ping, else just display last ping
                 if $("#chat_div_" + pData[1].trid).children().length == 0
                   $.ajax
                     url: "/chat/box_chat_history.json"
