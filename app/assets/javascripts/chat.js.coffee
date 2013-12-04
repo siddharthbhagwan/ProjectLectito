@@ -59,7 +59,6 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------- 
   # Initiating box chat when user clicks chat button, or green dot
   $(document).on "click", "input[id^='chatbox_'], img[id^='online_']", ->
-    console.log "yo"
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
       title = $(this).attr("data-title").substring(0,20) + "..."
@@ -75,14 +74,10 @@ $(document).ready ->
       othercn = lcn
     else
       othercn = bcn
-    console.log "yo3"
-    console.log "trid - " + trid
-    console.log exports.chat_boxes
     # If Box has been initiated, just toggle
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
     else
-      console.log "yo4"
       offset = exports.chat_boxes.length * 315
       exports.chat_boxes.push(trid)
       $("#chat_div_" + trid).chatbox(
