@@ -57,7 +57,7 @@ $(document).ready ->
         error: (jqXHR, textStatus, errorThrown) ->
 
 #--------------------------------------------------------------------------------------------------------------------- 
-  # Initiating box chat when user clicks chat
+  # Initiating box chat when user clicks chat button, or green dot
   $(document).on "click", "input[id^='chatbox_'], img[id^='online_']", ->
     trid =  $(this).attr("data-trid")
     if $(this).attr("data-title").length > 20
@@ -119,6 +119,8 @@ $(document).ready ->
             i++
       )
       # here
+      $("#chat_div_" + trid).next().find('textarea').eq(0).focus()
+
 #-------------------------------------------------------------------------------------------------------------------- 
   # Listening for chat messages sent to user
   $.ajax
