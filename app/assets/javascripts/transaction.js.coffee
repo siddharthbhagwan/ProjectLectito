@@ -464,6 +464,8 @@ $(document).ready ->
             text: pData[1].name + " has received " + "'" + pData[1].book_name 
             layout: "topRight" 
 
+          $("chat_div_" + pData[1].id).remove()  
+
         #Lender triggers that book's been handed over in self/pick drop.
         else if pData[0] == "received_borrower_by_lender"
           if  $("#received_borrower_" + pData[1].id).attr("value") != "Return"
