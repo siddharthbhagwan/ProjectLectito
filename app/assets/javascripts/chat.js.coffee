@@ -64,7 +64,7 @@ $(document).ready ->
       title = $(this).attr("data-title").substring(0,20) + "..."
     else
       title = $(this).attr("data-title")
-    console.log "yo2"
+
     ccn = $(this).attr("data-currentcn")
     bcn = $(this).attr("data-lendercn")
     lcn = $(this).attr("data-borrowercn")
@@ -118,10 +118,29 @@ $(document).ready ->
             i++
       )
       # here
+      if $("#chat_div_" + trid).children().length == 0
+        $.ajax
+          url: "/chat/box_chat_history.json"
+          type: "get"
+          context: "this"
+          dataType: "json"
+          data:
+            trid: trid
+
+          success: (msg) ->
+            i = 0
+            while i < msg.length
+              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
+              i = i + 2
+
+          complete: (jqXHR, textStatus) ->  
+
+          error: (jqXHR, textStatus, errorThrown) ->
+
       $("#chat_div_" + trid).next().find('textarea').eq(0).focus()
 
 #-------------------------------------------------------------------------------------------------------------------- 
-  # Listening for chat messages sent to user
+  # Listening for chat messages sent toog user
   $.ajax
     url: "/transaction/user_id.json"
     type: "get"
@@ -138,8 +157,12 @@ $(document).ready ->
           if pData[0] == "chat"
             # Box Type Chat
             if pData[1].type == 'box'
+              console.log "Chat Boxes " + exports.chat_boxes
+              console.log "Pdata[1] " + pData[1]
+              console.log "Trid " + pData[1].trid
               # Check if chat box for this transaction already Inititated
               if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
+                console.log " Not there "
                 exports.chat_boxes.push(pData[1].trid)
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
@@ -178,11 +201,34 @@ $(document).ready ->
                         $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                       i++
                 )
-                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
-                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+
+                if $("#chat_div_" + pData[1].trid).children().length == 0
+                  $.ajax
+                    url: "/chat/box_chat_history.json"
+                    type: "get"
+                    context: "this"
+                    dataType: "json"
+                    data:
+                      trid: pData[1].trid
+
+                    success: (msg) ->
+                      i = 0
+                      while i < msg.length
+                        $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
+                        i = i + 2
+
+                    complete: (jqXHR, textStatus) ->  
+
+                    error: (jqXHR, textStatus, errorThrown) ->
+
+                else
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text      
+
+                $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
               # Initiating Chat Box  
               else
+                console.log " There "
                 # Initiating ChatBox with Id and Title
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
@@ -223,7 +269,29 @@ $(document).ready ->
                       i++
                 )
                 # Displaying the text sent by other user
-                $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+                if $("#chat_div_" + pData[1].trid).children().length == 0
+                  $.ajax
+                    url: "/chat/box_chat_history.json"
+                    type: "get"
+                    context: "this"
+                    dataType: "json"
+                    data:
+                      trid: pData[1].trid
+
+                    success: (msg) ->
+                      i = 0
+                      while i < msg.length
+                        $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
+                        i = i + 2
+
+                    complete: (jqXHR, textStatus) ->  
+
+                    error: (jqXHR, textStatus, errorThrown) ->
+
+                else
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+
+                $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
             else #if pData[1].type == 'page'
               $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text);
