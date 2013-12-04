@@ -149,11 +149,19 @@ $(document).ready ->
             dispatch_date: $("#accept_request_confirm").data "dispatch_date"
             dispatch_time: $("#accept_request_confirm").data "dispatch_time"
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).fadeOut(500).remove()
             empty_table_checks()
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -193,11 +201,19 @@ $(document).ready ->
           data:
             tr_id: tr_id
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
             empty_table_checks()
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -239,11 +255,19 @@ $(document).ready ->
             tr_id: tr_id
             reject_reason: reject_reason
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false  
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).fadeOut(500).remove()
             empty_table_checks()
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -279,11 +303,20 @@ $(document).ready ->
           data:
             tr_id: tr_id
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
             $("#borrow_" + tr_id).fadeOut(500).remove()
             empty_table_checks()
+            setTimeout $.unblockUI
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"                        
@@ -564,9 +597,17 @@ $(document).ready ->
             return_date: $("#return_request_confirm").data "return_date"
             return_time: $("#return_request_confirm").data "return_time"
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
             
           complete: (jqXHR, textStatus) ->
+            setTimeout $.unblockUI
 
           error:  (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -612,6 +653,13 @@ $(document).ready ->
             borrower_feedback: $("input[type='radio'][name='borrower_feedback']:checked").val()
             borrower_comments: $("#borrower_comments").val()
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false  
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
@@ -624,6 +672,8 @@ $(document).ready ->
             $("#borrower_comments").val("")
             if $("#current_books_table tr").length == 1
               $("#current_books_div").hide()  
+
+            setTimeout $.unblockUI  
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -643,6 +693,13 @@ $(document).ready ->
             borrower_feedback: ""
             borrower_comments: ""
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
@@ -654,7 +711,9 @@ $(document).ready ->
             $('input:radio[name=borrower_feedback]').val(['neutral']);
             $("#borrower_comments").val("")
             if $("#current_books_table tr").length == 1
-              $("#current_books_div").hide()  
+              $("#current_books_div").hide()
+
+            setTimeout $.unblockUI  
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -731,6 +790,13 @@ $(document).ready ->
             lender_feedback: $("input[type='radio'][name='lender_feedback']:checked").val()
             lender_comments: $("#lender_comments").val()
 
+          beforeSend: ->
+            $.blockUI
+              theme:     true,
+              title:    'Please Wait',
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
@@ -739,6 +805,8 @@ $(document).ready ->
             $('input:radio[name=lender_feedback]').val(['neutral'])
             if $("#accepted_requests_table tr").length == 1
               $("#accepted_requests_div").hide()
+
+            setTimeout $.unblockUI  
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -758,12 +826,21 @@ $(document).ready ->
             lender_feedback: ""
             lender_comments: ""
             
+          beforeSend: ->
+            $.blockUI
+              theme:     true,
+              title:    'Please Wait',
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
             if $("#accepted_requests_table tr").length == 1
               $("#accepted_requests_div").hide()
+
+            setTimeout $.unblockUI  
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -807,7 +884,14 @@ $(document).ready ->
           data:
             tr_id: tr_id
             called_by: 'borrower'
-            
+       
+          beforeSend: ->
+            $.blockUI
+              theme:     true,
+              title:    'Please Wait',
+              message:  '<p>Your request is being processed</p>'
+              draggable: false
+
           success: (msg) ->
             if msg
               $("#received_borrower_" + tr_id).attr("value","Return")
@@ -821,6 +905,7 @@ $(document).ready ->
 
             #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
           complete: (jqXHR, textStatus) ->
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -857,6 +942,13 @@ $(document).ready ->
           data:
             tr_id: tr_id
             called_by: 'lender'
+
+          beforeSend: ->
+            $.blockUI
+              theme:     true, 
+              title:    'Please Wait', 
+              message:  '<p>Your request is being processed</p>'
+              draggable: false  
             
           success: (msg) ->
 
@@ -865,7 +957,8 @@ $(document).ready ->
             $("#handed_over_" + tr_id).attr("value","Received")
             $("#handed_over_" + tr_id).attr("disabled","true")
             $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
-
+            setTimeout $.unblockUI
+            
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"
