@@ -51,7 +51,7 @@ class ProfileController < ApplicationController
     @neutral_borrower = Transaction.where(:borrower_id => current_user.id, :lender_feedback => 'neutral').count
     @neutral = @neutral_lender + @neutral_borrower
 
-    @total_books = Inventory.where(:user_id => current_user.id).count
+    @total_books = Inventory.where(:user_id => current_user.id, :deleted => :false).count
     @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", current_user.id, current_user.id, 'Rejected', 'Cancelled' ).order("created_at desc")
 
     @total_transactions = @transactions.count
@@ -90,7 +90,7 @@ class ProfileController < ApplicationController
       @neutral_borrower = Transaction.where(:borrower_id => pr.borrower_id, :lender_feedback => 'neutral').count
       @neutral = @neutral_lender + @neutral_borrower
 
-      @total_books = Inventory.where(:user_id => pr.borrower_id).count
+      @total_books = Inventory.where(:user_id => pr.borrower_id, :deleted => :false).count
       @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled' ).order("created_at desc")
 
       @total_transactions = @transactions.count
@@ -138,7 +138,7 @@ class ProfileController < ApplicationController
       @neutral_borrower = Transaction.where(:borrower_id => pr.lender_id, :lender_feedback => 'neutral').count
       @neutral = @neutral_lender + @neutral_borrower
 
-      @total_books = Inventory.where(:user_id => pr.lender_id).count
+      @total_books = Inventory.where(:user_id => pr.lender_id, :deleted => :false).count
       @transactions = Transaction.where("(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)", pr.lender_id, pr.lender_id, 'Rejected', 'Cancelled' ).order("created_at desc")
 
       @total_transactions = @transactions.count
