@@ -24,9 +24,9 @@
             <td>
               <%= link_to User.find(th.borrower_id).full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
               <% if (DateTime.now.to_time - Profile.where(:user_id => th.borrower_id).first.last_seen_at < 6 ) %>
-              <%= image_tag("online_dot.png", :class => "online_" + th.borrower_id.to_s, :size => "10x6", :id => "online_" + th.borrower_id.to_s, "data-trid" => th.id, "data-chatidlist" => @current_transactions_id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(th.lender_id).profile.chat_name, "data-borrowercn" => User.find(th.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => th.inventory_id).take.book_id).take.book_name) %>
+                <%= image_tag("online_dot.png", :class => "online_" + th.borrower_id.to_s, :size => "10x6", :id => "online_" + th.borrower_id.to_s, "data-trid" => th.id, "data-chatidlist" => @current_transactions_id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(th.lender_id).profile.chat_name, "data-borrowercn" => User.find(th.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => th.inventory_id).take.book_id).take.book_name) %>
               <% else %>
-                <%= image_tag("online_dot.png", :size => "10x6", :id => "online_" + th.borrower_id.to_s, :class => "online_" + th.borrower_id.to_s, :hidden => :true) %>
+                <%= image_tag("online_dot.png", :hidden => :true, :class => "online_" + th.borrower_id.to_s, :size => "10x6", :id => "online_" + th.borrower_id.to_s, "data-trid" => th.id, "data-chatidlist" => @current_transactions_id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(th.lender_id).profile.chat_name, "data-borrowercn" => User.find(th.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => th.inventory_id).take.book_id).take.book_name) %>
               <% end %>
             </td>
 

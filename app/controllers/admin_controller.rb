@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
 	include ApplicationHelper
-	class Error < RuntimeError; end
 
 	load_and_authorize_resource :class => User
 

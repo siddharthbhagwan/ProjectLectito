@@ -33,7 +33,6 @@ $(document).ready ->
       "Ok": ->
         $(this).dialog "close"
 
-
 #--------------------------------------------------------------------------------------------------------------------
   # Create a Transaction on borrowing a book
   $(document).on "click", ".borrow_button" ,->
@@ -958,7 +957,7 @@ $(document).ready ->
             $("#handed_over_" + tr_id).attr("disabled","true")
             $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
             setTimeout $.unblockUI
-            
+
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             $("#error_message").dialog "open"
@@ -995,18 +994,5 @@ $(document).ready ->
     complete: (jqXHR, textStatus) ->
        
     error: (jqXHR, textStatus, errorThrown) ->
-#-------------------------------------------------------------------------------------------------------------------- 
-  # window.addEventListener "beforeunload", (e) ->
-  #   $.ajax
-  #     url: "/transaction/testt.json"
-  #     type: "get"
-  #     context: "this"
-  #     dataType: "json"
-        
-  #     success: (msg) ->
-
-  #     complete: (jqXHR, textStatus) ->
-
-  #     error: (jqXHR, textStatus, errorThrown) ->
-
+#---------------------------------------------------------------------------------------------------------------------
   
