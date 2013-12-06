@@ -121,8 +121,9 @@ $(document).ready ->
               $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
             i++
 
-          $("#chat_div_" + trid).remove()  
+          $("#chat_div_" + trid).remove()
       )
+
       # here
       if $("#chat_div_" + trid).children().length == 0
         $.ajax
@@ -275,7 +276,7 @@ $(document).ready ->
                         $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                       i++
 
-                    $("#chat_div_" + pData[1].trid).remove()  
+                    $("#chat_div_" + pData[1].trid).remove()
                 )
 
                 # If no child elements, retrieve history along with last ping, else just display last ping
@@ -294,7 +295,7 @@ $(document).ready ->
                         $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
                         i = i + 2
 
-                    complete: (jqXHR, textStatus) ->  
+                    complete: (jqXHR, textStatus) ->
 
                     error: (jqXHR, textStatus, errorThrown) ->
 
@@ -304,7 +305,7 @@ $(document).ready ->
                 $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
             else #if pData[1].type == 'page'
-              $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text);
+              $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text)
               psconsole = $("#chat_box")
               psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
 
@@ -323,3 +324,8 @@ $(document).ready ->
     psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()     
 
 #--------------------------------------------------------------------------------------------------------------------
+
+  $(document).on "keypress", ".ui-widget-content .ui-chatbox-input", (e) ->
+    if e.which is 0
+      $(this).parent().prev().children().eq(1).click()
+
