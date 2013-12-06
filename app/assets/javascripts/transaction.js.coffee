@@ -96,9 +96,9 @@ $(document).ready ->
 
             complete: (jqXHR, textStatus) ->
               $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
-              setTimeout $.unblockUI
               $("#city_" + city_id).hide()
               $("#" + city_id).attr("data-status","closed")
+              setTimeout $.unblockUI
 
             error: ->
               setTimeout $.unblockUI
@@ -344,6 +344,11 @@ $(document).ready ->
             noty
               text: pData[1].name + " would like to borrow '" + pData[1].book_name + "' from you"
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
 
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
@@ -408,6 +413,11 @@ $(document).ready ->
             noty
               text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
 
             $("#borrow_" + pData[1].id).remove()
             empty_table_checks()
@@ -452,6 +462,12 @@ $(document).ready ->
             noty
                 text: pData[1].name + " has initiated the return of '" + pData[1].book_name + "'"
                 layout: "topRight"
+                closeWith: ["click"]
+                callback:
+                  onClose: ->
+                    if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                      window.location.replace($("#home_link").attr("href"))
+
 
             $("#received_lender_" + pData[1].id).removeAttr("disabled")
             $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
@@ -468,12 +484,23 @@ $(document).ready ->
           noty
             text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as the book has been lent out"
             layout: "topRight"
+            closeWith: ["click"]
+            callback:
+              onClose: ->
+                if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                  window.location.replace($("#home_link").attr("href"))
 
 
         else if pData[0] == "cancelled"
           noty
             text: "A request to borrow '" + pData[1].book_name + "' from you has been cancelled"
             layout: "topRight"
+            closeWith: ["click"]
+            callback:
+              onClose: ->
+                if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                  window.location.replace($("#home_link").attr("href"))
+
 
           $("#lend_" + pData[1].id).remove()
           empty_table_checks()
@@ -483,10 +510,22 @@ $(document).ready ->
             noty
               text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as " + pData[1].name + " is Unavailable"
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
+
           else
             noty
               text: "Your request to borrow '" + pData[1].book_name + "' has been rejected"
-              layout: "topRight"  
+              layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
+
 
           $("#borrow_" + pData[1].id).remove()
           empty_table_checks()
@@ -494,7 +533,12 @@ $(document).ready ->
         else if pData[0] == "received_lender"
           noty
             text: pData[1].name + " has received " + "'" + pData[1].book_name 
-            layout: "topRight" 
+            layout: "topRight"
+            closeWith: ["click"]
+            callback:
+              onClose: ->
+                if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                  window.location.replace($("#home_link").attr("href"))
 
           $("chat_div_" + pData[1].id).remove()  
 
@@ -505,6 +549,11 @@ $(document).ready ->
             noty
               text: pData[1].name + " has handed over '" + pData[1].book_name + "'"
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
 
               if pData[1].delivery_mode
                 $("#received_borrower_" + pData[1].id).attr("value", "Return")
@@ -524,6 +573,11 @@ $(document).ready ->
             noty
               text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
 
             if !pData[1].delivery_mode
               $("#handed_over_" + pData[1].id).attr("value", "Received")
@@ -665,6 +719,11 @@ $(document).ready ->
             noty
               text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "' " 
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
 
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
@@ -705,6 +764,11 @@ $(document).ready ->
             noty
               text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
               layout: "topRight"
+              closeWith: ["click"]
+              callback:
+                onClose: ->
+                  if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                    window.location.replace($("#home_link").attr("href"))
 
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
@@ -725,6 +789,11 @@ $(document).ready ->
         noty
           text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
           layout: "topRight"  
+          closeWith: ["click"]
+          callback:
+            onClose: ->
+              if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                window.location.replace($("#home_link").attr("href"))
 
         $(this).dialog "close"
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
@@ -742,6 +811,11 @@ $(document).ready ->
           noty
             text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
             layout: "topRight"
+            closeWith: ["click"]
+            callback:
+              onClose: ->
+                if (!window.location.pathname == "/home") or (!window.location.pathname == "/")
+                  window.location.replace($("#home_link").attr("href"))
 
           tr_id_s = $("#borrower_returned_book_confirm").data("trids")
           $(tr_id_s).remove()
