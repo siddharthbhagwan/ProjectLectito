@@ -21,7 +21,7 @@
           <td><%= @lender_borrower_name %></td>
           <td><%= link_to "Chat", chat_path(t.id), class: "btn btn-small "%></td>
           <!-- #TODO Check for alternative to double querying, or is it cached? -->
-          <td><%= tag "input", :type => "button", :id => "chatbox_#{t.id}", :class => "btn" , :value => "Chat ", "data-trid" => t.id , "data-title" => Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name ,"data-chatidlist" => @current_transactions_id, "data-currentcn" => User.find(current_user.id).profile.chat_name,  "data-lendercn" => User.find(t.lender_id).profile.chat_name,  "data-borrowercn" => User.find(t.borrower_id).profile.chat_name %></td>
+          <td><%= tag "input", :type => "button", :id => "chatbox_#{t.id}", :class => "btn" , :value => "Chat ", "data-trid" => t.id , "data-title" => Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name , "data-currentcn" => User.find(current_user.id).profile.chat_name,  "data-lendercn" => User.find(t.lender_id).profile.chat_name,  "data-borrowercn" => User.find(t.borrower_id).profile.chat_name %></td>
         </tr>
       <% end %>
      <% end %> 

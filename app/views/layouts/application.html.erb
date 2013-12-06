@@ -85,12 +85,6 @@
 				<%= yield %>
 				<% if user_signed_in? %>
 					<div id="chat_divs">
-						<% if !@current_transactions.nil? %>
-						  <% @current_transactions.each do |t| %>
-						    <div id="chat_div_<%= t.id %>">
-						    </div>
-						  <% end %>
-						<% end %>
 					</div>
 				<% end %> 
 			</div>

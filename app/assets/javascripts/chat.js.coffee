@@ -60,6 +60,9 @@ $(document).ready ->
   # Initiating box chat when user clicks chat button, or green dot
   $(document).on "click", "input[id^='chatbox_'], img[id^='online_']", ->
     trid =  $(this).attr("data-trid")
+    if !$("#chat_div_" + trid).length
+      $("#chat_divs").append("<div id='chat_div_" + trid + "''></div>")
+
     if $(this).attr("data-title").length > 20
       title = $(this).attr("data-title").substring(0,20) + "..."
     else
@@ -74,6 +77,7 @@ $(document).ready ->
       othercn = lcn
     else
       othercn = bcn
+
     # If Box has been initiated, just toggle
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
@@ -116,6 +120,8 @@ $(document).ready ->
             if current_offset > closed_offset
               $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
             i++
+
+          $("#chat_div_" + trid).remove()  
       )
       # here
       if $("#chat_div_" + trid).children().length == 0
@@ -157,6 +163,9 @@ $(document).ready ->
           if pData[0] == "chat"
             # Box Type Chat
             if pData[1].type == 'box'
+              if !$("#chat_div_" + pData[1].trid).length
+                $("#chat_divs").append("<div id='chat_div_" + pData[1].trid + "''></div>")
+
               # Check if chat box for this transaction already Inititated
               if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
                 exports.chat_boxes.push(pData[1].trid)
@@ -196,6 +205,8 @@ $(document).ready ->
                       if current_offset > closed_offset
                         $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                       i++
+
+                    $("#chat_div_" + pData[1].trid).remove()
                 )
 
                 # If no child elements, retrieve history along with last ping, else just display last ping
@@ -225,7 +236,6 @@ $(document).ready ->
 
               # Initiating Chat Box  
               else
-                console.log " There "
                 # Initiating ChatBox with Id and Title
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
@@ -264,6 +274,8 @@ $(document).ready ->
                       if current_offset > closed
                         $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
                       i++
+
+                    $("#chat_div_" + pData[1].trid).remove()  
                 )
 
                 # If no child elements, retrieve history along with last ping, else just display last ping

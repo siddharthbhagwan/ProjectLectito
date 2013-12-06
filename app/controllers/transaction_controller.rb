@@ -106,14 +106,6 @@ class TransactionController < ApplicationController
 		end
 
 		if @accept_request.save
-			#Code duplicated from ChatBox for chat trigger
-			user_accepted_transactions = Transaction.where("((borrower_id = ? OR lender_id = ? ) AND (status != ? AND status != ? AND status != ? AND status != ?))", current_user.id , current_user.id, "Pending", "Cancelled", "Rejected", "Complete")
-	    @current_transactions_id = Array.new
-	    user_accepted_transactions.each do |t|
-	      if !(User.where(:id => t.borrower_id).take.is_delivery) || !(User.where(:id => t.lender_id).take.is_delivery)
-	        @current_transactions_id << t.id
-	      end
-	    end
 
 	    #TODO Check for code optimization
 	    book_name = Book.find(Inventory.find(@accept_request.inventory_id).book_id).book_name
@@ -144,8 +136,7 @@ class TransactionController < ApplicationController
 				:currentcn => currentcn,
 				:lendercn => lendercn,
 				:borrowercn => borrowercn,
-				:title => title,
-				:chatidlist => @current_transactions_id
+				:title => title
 			}
 
 			lsa_lender = Profile.where(:user_id => @accept_request.lender_id).take.last_seen_at
@@ -167,8 +158,7 @@ class TransactionController < ApplicationController
 				:currentcn => currentcn,
 				:lendercn => lendercn,
 				:borrowercn => borrowercn,
-				:title => title,
-				:chatidlist => @current_transactions_id
+				:title => title
 			}
 
 			
