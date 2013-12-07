@@ -81,6 +81,7 @@ $(document).ready ->
     # If Box has been initiated, just toggle
     if jQuery.inArray(trid, exports.chat_boxes) != -1
       $("#chat_div_" + trid).chatbox("option", "boxManager").toggleBox()
+      $("#chat_div_" + trid).next().find('textarea').eq(0).focus()
     else
       offset = exports.chat_boxes.length * 315
       exports.chat_boxes.push(trid)
@@ -325,7 +326,11 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
 
-  $(document).on "keypress", ".ui-widget-content .ui-chatbox-input", (e) ->
-    if e.which is 0
+  # If Esc is pressed in any chat box, it is closed by simulating a click on the cross box, and 
+  # if another chatbox is open, it is focussed upon
+  $(document).on "keydown", ".ui-widget-content .ui-chatbox-input", (e) ->
+    if e.which is 27
       $(this).parent().prev().children().eq(1).click()
+      if $('div[id^="chat_div_"]').length isnt 0
+        $('div[id^="chat_div_"]').next().find('textarea').eq(0).focus()
 
