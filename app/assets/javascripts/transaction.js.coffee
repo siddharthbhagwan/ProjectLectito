@@ -407,7 +407,7 @@ $(document).ready ->
             td_b_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
             td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
             td_b_title = "data-title='" + pData[1].title + "' "
-            online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title
+            online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + "/>"
             profile_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
             td_borrower = profile_link + "&nbsp;&nbsp;" + online_dot
 
@@ -476,7 +476,7 @@ $(document).ready ->
             td_c_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
             td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
             td_c_title = "data-title='" + pData[1].title + "' "
-            online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title
+            online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + "/>"
             lender_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
             td_lender = lender_link + "&nbsp;&nbsp;" + online_dot
 
