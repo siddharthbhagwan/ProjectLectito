@@ -236,7 +236,6 @@ class ProfileController < ApplicationController
     # Fn returns id's (lender or borrower) , and not transaction ids. Thus duplication check greatly helps
     if params[:page] == "/transaction/history"
       all_transactions =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", current_user.id , current_user.id, "Complete").order("request_date desc")
-      # puts "Current Active Transactions are - " + all_transactions.count.to_s
       all_transactions.each do |at|
         # if current user is the lender
         if at.lender_id == current_user.id
@@ -266,7 +265,6 @@ class ProfileController < ApplicationController
       # puts " Checking for " + User.find(current_user.id).full_name + " - " + current_user.id.to_s
       #TODO Check if chatbox call is cheaper than the quesries themselves
       chatbox()
-      puts "Current Active Transactions are - " + @current_transactions.count.to_s
       @current_transactions.each do |ct|
         # current user is the lender
         if ct.lender_id == current_user.id

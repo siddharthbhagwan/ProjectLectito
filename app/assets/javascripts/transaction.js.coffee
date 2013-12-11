@@ -340,7 +340,6 @@ $(document).ready ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)
         if pData[0] == "create"
-          tfn()
           if !$("#lend_" + pData[1].id).length or !$("#accepted_" + pData[1].id).length
             noty
               text: pData[1].name + " would like to borrow '" + pData[1].book_name + "' from you"
@@ -348,30 +347,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
 
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
@@ -395,7 +371,6 @@ $(document).ready ->
 
         #Summary of Requests for Books you've lent out (lender)
         else if pData[0] == "accepted_borrower"
-          tfn()
           if !$("#accepted_" + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
@@ -432,7 +407,6 @@ $(document).ready ->
         
         #Summary of Books currently with you (borrower)
         else if pData[0] == "accepted_lender"
-          tfn()
           if !$("#current_" + pData[1].id).length
             noty
               text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
@@ -440,30 +414,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
 
             $("#borrow_" + pData[1].id).remove()
             empty_table_checks()
@@ -510,31 +461,7 @@ $(document).ready ->
                 closeWith: ["click"]
                 callback:
                   onClose: ->
-                    if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                      profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                      address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                      inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                      address_new = (/^\/address\/new$/.test(window.location.pathname))
-                      inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                      if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                        noty
-                          text: "Unsaved changes will be lost. Proceed?"
-                          layout: "topRight"
-                          buttons: [
-                            addClass: "btn btn-primary"
-                            text: "Ok"
-                            onClick: ($noty) ->
-                              window.location.replace($("#home_link").attr("href"))
-                          ,
-                            addClass: "btn btn-danger"
-                            text: "Cancel"
-                            onClick: ($noty) ->
-                              $noty.close()
-                          ]
-
-                      else
-                        window.location.replace($("#home_link").attr("href"))
-
+                    noty_confirm()
 
             $("#received_lender_" + pData[1].id).removeAttr("disabled")
             $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
@@ -554,31 +481,7 @@ $(document).ready ->
             closeWith: ["click"]
             callback:
               onClose: ->
-                if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                  profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                  address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                  inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                  address_new = (/^\/address\/new$/.test(window.location.pathname))
-                  inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                  if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                    noty
-                      text: "Unsaved changes will be lost. Proceed?"
-                      layout: "topRight"
-                      buttons: [
-                        addClass: "btn btn-primary"
-                        text: "Ok"
-                        onClick: ($noty) ->
-                          window.location.replace($("#home_link").attr("href"))
-                      ,
-                        addClass: "btn btn-danger"
-                        text: "Cancel"
-                        onClick: ($noty) ->
-                          $noty.close()
-                      ]
-
-                  else
-                    window.location.replace($("#home_link").attr("href"))
-
+                noty_confirm()
 
         else if pData[0] == "cancelled"
           noty
@@ -587,31 +490,7 @@ $(document).ready ->
             closeWith: ["click"]
             callback:
               onClose: ->
-                if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                  profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                  address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                  inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                  address_new = (/^\/address\/new$/.test(window.location.pathname))
-                  inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                  if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                    noty
-                      text: "Unsaved changes will be lost. Proceed?"
-                      layout: "topRight"
-                      buttons: [
-                        addClass: "btn btn-primary"
-                        text: "Ok"
-                        onClick: ($noty) ->
-                          window.location.replace($("#home_link").attr("href"))
-                      ,
-                        addClass: "btn btn-danger"
-                        text: "Cancel"
-                        onClick: ($noty) ->
-                          $noty.close()
-                      ]
-
-                  else
-                    window.location.replace($("#home_link").attr("href"))
-
+                noty_confirm()
 
           $("#lend_" + pData[1].id).remove()
           empty_table_checks()
@@ -624,30 +503,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
 
           else
             noty
@@ -656,31 +512,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
-
+                  noty_confirm()
 
           $("#borrow_" + pData[1].id).remove()
           empty_table_checks()
@@ -692,30 +524,7 @@ $(document).ready ->
             closeWith: ["click"]
             callback:
               onClose: ->
-                if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                  profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                  address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                  inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                  address_new = (/^\/address\/new$/.test(window.location.pathname))
-                  inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                  if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                    noty
-                      text: "Unsaved changes will be lost. Proceed?"
-                      layout: "topRight"
-                      buttons: [
-                        addClass: "btn btn-primary"
-                        text: "Ok"
-                        onClick: ($noty) ->
-                          window.location.replace($("#home_link").attr("href"))
-                      ,
-                        addClass: "btn btn-danger"
-                        text: "Cancel"
-                        onClick: ($noty) ->
-                          $noty.close()
-                      ]
-
-                  else
-                    window.location.replace($("#home_link").attr("href"))
+                noty_confirm()
 
           $("chat_div_" + pData[1].id).remove()  
 
@@ -729,30 +538,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
 
               if pData[1].delivery_mode
                 $("#received_borrower_" + pData[1].id).attr("value", "Return")
@@ -775,30 +561,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
 
             if !pData[1].delivery_mode
               $("#handed_over_" + pData[1].id).attr("value", "Received")
@@ -943,30 +706,7 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
 
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
@@ -1010,30 +750,8 @@ $(document).ready ->
               closeWith: ["click"]
               callback:
                 onClose: ->
-                  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                    address_new = (/^\/address\/new$/.test(window.location.pathname))
-                    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                      noty
-                        text: "Unsaved changes will be lost. Proceed?"
-                        layout: "topRight"
-                        buttons: [
-                          addClass: "btn btn-primary"
-                          text: "Ok"
-                          onClick: ($noty) ->
-                            window.location.replace($("#home_link").attr("href"))
-                        ,
-                          addClass: "btn btn-danger"
-                          text: "Cancel"
-                          onClick: ($noty) ->
-                            $noty.close()
-                        ]
-
-                    else
-                      window.location.replace($("#home_link").attr("href"))
+                  noty_confirm()
+                  
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
             $("#borrower_comments").val("")
@@ -1056,30 +774,7 @@ $(document).ready ->
           closeWith: ["click"]
           callback:
             onClose: ->
-              if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                address_new = (/^\/address\/new$/.test(window.location.pathname))
-                inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                  noty
-                    text: "Unsaved changes will be lost. Proceed?"
-                    layout: "topRight"
-                    buttons: [
-                      addClass: "btn btn-primary"
-                      text: "Ok"
-                      onClick: ($noty) ->
-                        window.location.replace($("#home_link").attr("href"))
-                    ,
-                      addClass: "btn btn-danger"
-                      text: "Cancel"
-                      onClick: ($noty) ->
-                        $noty.close()
-                    ]
-
-                else
-                  window.location.replace($("#home_link").attr("href"))
+              noty_confirm()
 
         $(this).dialog "close"
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
@@ -1100,30 +795,7 @@ $(document).ready ->
             closeWith: ["click"]
             callback:
               onClose: ->
-                if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-                  profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-                  address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-                  inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-                  address_new = (/^\/address\/new$/.test(window.location.pathname))
-                  inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-                  if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-                    noty
-                      text: "Unsaved changes will be lost. Proceed?"
-                      layout: "topRight"
-                      buttons: [
-                        addClass: "btn btn-primary"
-                        text: "Ok"
-                        onClick: ($noty) ->
-                          window.location.replace($("#home_link").attr("href"))
-                      ,
-                        addClass: "btn btn-danger"
-                        text: "Cancel"
-                        onClick: ($noty) ->
-                          $noty.close()
-                      ]
-
-                  else
-                    window.location.replace($("#home_link").attr("href"))
+                noty_confirm()
 
           tr_id_s = $("#borrower_returned_book_confirm").data("trids")
           $(tr_id_s).remove()
@@ -1377,26 +1049,29 @@ $(document).ready ->
        
     error: (jqXHR, textStatus, errorThrown) ->
 #---------------------------------------------------------------------------------------------------------------------
+  # Fn to check of current page has any editing activity, and prompt with a second conformation noty
+  noty_confirm = ->
+    if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
+      profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
+      address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
+      inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
+      address_new = (/^\/address\/new$/.test(window.location.pathname))
+      inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
+      if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
+        noty
+          text: "Unsaved changes will be lost. Proceed?"
+          layout: "topRight"
+          buttons: [
+            addClass: "btn btn-primary"
+            text: "Ok"
+            onClick: ($noty) ->
+              window.location.replace($("#home_link").attr("href"))
+          ,
+            addClass: "btn btn-danger"
+            text: "Cancel"
+            onClick: ($noty) ->
+              $noty.close()
+          ]
+      else
+        window.location.replace($("#home_link").attr("href"))
 
-noty_confirm = ->
-  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
-    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
-    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
-    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
-    address_new = (/^\/address\/new$/.test(window.location.pathname))
-    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
-    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
-      noty
-        text: "Unsaved changes will be lost. Proceed?"
-        layout: "topRight"
-        buttons: [
-          addClass: "btn btn-primary"
-          text: "Ok"
-          onClick: ($noty) ->
-            window.location.replace($("#home_link").attr("href"))
-        ,
-          addClass: "btn btn-danger"
-          text: "Cancel"
-          onClick: ($noty) ->
-            $noty.close()
-        ]
