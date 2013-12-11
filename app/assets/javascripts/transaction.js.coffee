@@ -1051,7 +1051,7 @@ $(document).ready ->
 #---------------------------------------------------------------------------------------------------------------------
   # Fn to check of current page has any editing activity, and prompt with a second conformation noty
   noty_confirm = ->
-    if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
+    if (window.location.pathname isnt "/home") and (window.location.pathname isnt "/")
       profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
       address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
       inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
