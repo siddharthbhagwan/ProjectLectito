@@ -26,9 +26,11 @@ module ApplicationHelper
         if current_user.id == t.lender_id
           @lender_borrower_name = User.find(t.borrower_id).full_name
           puts " Borrower " + User.find(t.borrower_id).full_name.to_s
+          puts "Lender Borrower " + @lender_borrower_name.to_s
         else
           @lender_borrower_name = User.find(t.lender_id).full_name
           puts " Lender " + User.find(t.lender_id).full_name.to_s
+          puts " Lender Borrower " + @lender_borrower_name.to_s
         end
       end
     end
