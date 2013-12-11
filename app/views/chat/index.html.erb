@@ -18,7 +18,11 @@
       <% @current_transactions.each do |t| %>
         <tr id='<%= t.id %>' >
           <td><%= Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name %></td>
-          <td><%= @lender_borrower_name %></td>
+          <% if current_user.id == t.lender_id %>
+            <td>User.find(t.borrower_id).full_name</td>
+          <% else %>
+            <td>User.find(t.lender_id).full_name</td>
+          <% end %>  
           <td><%= link_to "Chat", chat_path(t.id), class: "btn btn-small "%></td>
           <!-- #TODO Check for alternative to double querying, or is it cached? -->
           <td><%= tag "input", :type => "button", :id => "chatbox_#{t.id}", :class => "btn" , :value => "Chat ", "data-trid" => t.id , "data-title" => Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name , "data-currentcn" => User.find(current_user.id).profile.chat_name,  "data-lendercn" => User.find(t.lender_id).profile.chat_name,  "data-borrowercn" => User.find(t.borrower_id).profile.chat_name %></td>
