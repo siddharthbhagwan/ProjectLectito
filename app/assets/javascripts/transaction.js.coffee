@@ -340,6 +340,7 @@ $(document).ready ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)
         if pData[0] == "create"
+          tfn()
           if !$("#lend_" + pData[1].id).length or !$("#accepted_" + pData[1].id).length
             noty
               text: pData[1].name + " would like to borrow '" + pData[1].book_name + "' from you"
@@ -394,6 +395,7 @@ $(document).ready ->
 
         #Summary of Requests for Books you've lent out (lender)
         else if pData[0] == "accepted_borrower"
+          tfn()
           if !$("#accepted_" + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
@@ -430,6 +432,7 @@ $(document).ready ->
         
         #Summary of Books currently with you (borrower)
         else if pData[0] == "accepted_lender"
+          tfn()
           if !$("#current_" + pData[1].id).length
             noty
               text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
@@ -1374,4 +1377,26 @@ $(document).ready ->
        
     error: (jqXHR, textStatus, errorThrown) ->
 #---------------------------------------------------------------------------------------------------------------------
-  
+
+noty_confirm = ->
+  if (window.location.pathname isnt "/home") or (window.location.pathname isnt "/")
+    profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
+    address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
+    inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
+    address_new = (/^\/address\/new$/.test(window.location.pathname))
+    inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
+    if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
+      noty
+        text: "Unsaved changes will be lost. Proceed?"
+        layout: "topRight"
+        buttons: [
+          addClass: "btn btn-primary"
+          text: "Ok"
+          onClick: ($noty) ->
+            window.location.replace($("#home_link").attr("href"))
+        ,
+          addClass: "btn btn-danger"
+          text: "Cancel"
+          onClick: ($noty) ->
+            $noty.close()
+        ]
