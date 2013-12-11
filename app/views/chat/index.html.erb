@@ -19,9 +19,9 @@
         <tr id='<%= t.id %>' >
           <td><%= Book.where(:id => Inventory.where(:id => t.inventory_id).take.book_id).take.book_name %></td>
           <% if current_user.id == t.lender_id %>
-            <td>User.find(t.borrower_id).full_name</td>
+            <td><%= User.find(t.borrower_id).full_name %></td>
           <% else %>
-            <td>User.find(t.lender_id).full_name</td>
+            <td><%= User.find(t.lender_id).full_name %></td>
           <% end %>  
           <td><%= link_to "Chat", chat_path(t.id), class: "btn btn-small "%></td>
           <!-- #TODO Check for alternative to double querying, or is it cached? -->
