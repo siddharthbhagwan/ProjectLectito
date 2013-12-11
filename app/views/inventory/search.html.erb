@@ -1,20 +1,44 @@
 <h3>Search </h3>
 
-<div id="borrow_requests_div">
-	<%= render "transaction/borrow_requests" %>
-</div>
+<% if @borrow.blank? %>
+  <div id="borrow_requests_div" hidden="true">
+  	<%= render "transaction/borrow_requests" %>
+  </div>
+<% else %>
+  <div id="borrow_requests_div">
+    <%= render "transaction/borrow_requests" %>
+  </div>
+<% end %>  
 
-<div id="lend_requests_div">
-	<%= render "transaction/lend_requests" %>
-</div>
+<% if @lend.blank? %>
+  <div id="lend_requests_div" hidden="true">
+  	<%= render "transaction/lend_requests" %>
+  </div>
+<% else %>
+  <div id="lend_requests_div">
+      <%= render "transaction/lend_requests" %>
+    </div>
+<% end %> 
 
-<div id="accepted_requests_div">
-	<%= render "transaction/accepted_requests" %>
-</div>
+<% if @accept.blank? %>
+  <div id="accepted_requests_div" hidden="true">
+  	<%= render "transaction/accepted_requests" %>
+  </div>
+<% else %>
+  <div id="accepted_requests_div">
+    <%= render "transaction/accepted_requests" %>
+  </div>
+<% end %>   
 
-<div id="current_books_div">
-  <%= render "transaction/current_books" %>
-</div>
+<% if @current.blank? %>
+  <div id="current_books_div" hidden="true">
+    <%= render "transaction/current_books" %>
+  </div>
+<% else %>
+  <div id="current_books_div">
+    <%= render "transaction/current_books" %>
+  </div>
+<% end %>   
 
 <h5>Search for a book that you'd like to borrow in your city!</h5>
 

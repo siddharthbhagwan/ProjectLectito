@@ -1,18 +1,18 @@
-<% unless @accept.blank? %>
-	<h4> Summary of Requests for Books you've lent out </h4>
-	<table id = "accepted_requests_table" class="table table-striped table-bordered table-condensed">
-		<thead>
-			<tr>
-				<th>Book Name</th>
-				<th>Borrower</th>
-				<th>Delivery Mode</th>
-				<th>Acceptance Date</th>  
-				<th>Received Date</th>
-				<th>Returned Date</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
+<h4> Summary of Requests for Books you've lent out </h4>
+<table id = "accepted_requests_table" class="table table-striped table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>Book Name</th>
+			<th>Borrower</th>
+			<th>Delivery Mode</th>
+			<th>Acceptance Date</th>  
+			<th>Received Date</th>
+			<th>Returned Date</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% unless @accept.blank? %>
 			<% @accept.each do |a| #CHECKID %>
 				<tr id='accepted_<%= a.id %>' >
 					<!-- Book Name -->
@@ -78,7 +78,7 @@
 					<% end %>	
 
 				</tr>
-			<% end %>	
-		</tbody>
-	</table>
-<% end %>	
+			<% end %>		
+		<% end %>	
+	</tbody>
+</table>
