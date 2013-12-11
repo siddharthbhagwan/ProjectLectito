@@ -234,7 +234,9 @@ $(document).ready ->
                 else
                   $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text      
 
-                $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
+                # If another chat box is active, dont focus on new one, focus stays on old one
+                if $("div[id^='chat_div_']").length is 1
+                  $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
               # Initiating Chat Box  
               else
@@ -303,7 +305,9 @@ $(document).ready ->
                 else
                   $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
 
-                $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
+                # If another chat box is active, dont focus on new one, focus stays on old one
+                if $("div[id^='chat_div_']").length is 1
+                  $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
             else #if pData[1].type == 'page'
               $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text)
