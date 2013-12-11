@@ -340,7 +340,7 @@ $(document).ready ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)
         if pData[0] == "create"
-          if !$("#lend_" + pData[1].id).length or !$("#accepted_" + pData[1].id).length
+          if !$("#lend_" + pData[1].id).length and !$("#accepted_" + pData[1].id).length
             noty
               text: pData[1].name + " would like to borrow '" + pData[1].book_name + "' from you"
               layout: "topRight"
