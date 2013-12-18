@@ -284,7 +284,6 @@ class ProfileController < ApplicationController
       end
     end
 
-    # puts " Active Trans - " + active_trans_ids.count.to_s
     respond_to do |format|
       format.json { render :json => active_trans_ids.to_json }
     end

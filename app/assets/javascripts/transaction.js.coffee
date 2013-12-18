@@ -23,8 +23,8 @@ $(document).ready ->
   empty_table_checks()
 
 #--------------------------------------------------------------------------------------------------------------------
-  # Modal Dialog for Errors
-  $("#error_message").dialog
+  # Modal Dialog for 403 Errors
+  $("#error_message_403").dialog
     autoOpen: false
     modal: true
     resizeable: false
@@ -32,6 +32,17 @@ $(document).ready ->
     buttons:
       "Ok": ->
         $(this).dialog "close"
+
+
+  # Modal Dialog for Generic Errors
+  $("#error_message_generic").dialog
+    autoOpen: false
+    modal: true
+    resizeable: false
+    draggable: false
+    buttons:
+      "Ok": ->
+        $(this).dialog "close"      
 
 #--------------------------------------------------------------------------------------------------------------------
   # Create a Transaction on borrowing a book
@@ -208,6 +219,7 @@ $(document).ready ->
               draggable: false
 
           success: (msg) ->
+            console.log msg
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
@@ -216,7 +228,10 @@ $(document).ready ->
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            $("#error_message").dialog "open"  
+            if jqXHR.status is 403
+              $("#error_message_403").dialog "open"  
+            else
+              $("#error_message_generic").dialog "open"  
 
       Cancel: ->
         $(this).dialog "close"

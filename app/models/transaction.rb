@@ -9,4 +9,5 @@ class Transaction < ActiveRecord::Base
   belongs_to :lender, class_name: "User"
 
   #scope :pending, -> { where(:status => :Pending) }
+
 end
