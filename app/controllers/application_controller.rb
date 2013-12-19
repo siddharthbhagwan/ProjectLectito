@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_action :authenticate_user!, :except => [:search_books, :search_books_city, :search, :autocomplete_book_name, :autocomplete_author]
   before_action :is_user_barred, :except => [:barred, :destroy, :search, :sub_search]
+  after_action :update_timestamp
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
@@ -16,5 +17,11 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+  end
+
+  def update_timestamp
+    online = User.find(current_user.id).profile
+    online.last_seen_at = DateTime.now.to_time
+    online.save
   end
 end
