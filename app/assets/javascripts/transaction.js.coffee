@@ -756,19 +756,6 @@ $(document).ready ->
       "Ok": ->
         $(this).dialog "close"
 
-#-------------------------------------------------------------------------------------------------------------------- 
-  $.ajax
-    url: "/profile/update_profile_status.json"
-    type: "post"
-    context: "this"
-    dataType: "json"
-
-    success: (msg) ->
-
-    complete: (jqXHR, textStatus) ->
-       
-    error: (jqXHR, textStatus, errorThrown) ->
-      
 #---------------------------------------------------------------------------------------------------------------------
 
   # Fn to check of current page has any editing activity, and prompt with a second conformation noty
