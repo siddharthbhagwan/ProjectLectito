@@ -10,10 +10,11 @@ class Transaction < ActiveRecord::Base
 
   #scope :pending, -> { where(:status => :Pending) }
   def update_transaction(action, current_user, *transaction_data)
+  	#TODO Modify and clauses after delivery kicks in
 		case action
 
 			when 'Received Borrower'
-				if is_my_transaction(current_user)
+				if (is_my_transaction(current_user)) and (self.status == "Accepted")
 					self.received_date = DateTime.now.to_time
 					self.status = "Received Borrower"
 					#self.returned_date = @borrower_received_transaction.received_date + 14.days
@@ -29,7 +30,7 @@ class Transaction < ActiveRecord::Base
 				end
 
 			when 'Reject'
-				if is_my_transaction(current_user)
+				if (is_my_transaction(current_user)) and (self.status == "Pending")
 					self.status = "Rejected"
 					self.rejection_date = DateTime.now.to_time
 					self.rejection_reason = transaction_data[0]
@@ -44,7 +45,7 @@ class Transaction < ActiveRecord::Base
 				end
 
 			when 'Cancel'
-				if is_my_transaction(current_user)
+				if (is_my_transaction(current_user)) and (self.status == "Pending")
 					self.status = "Cancelled"
 
 					if self.save
@@ -57,7 +58,7 @@ class Transaction < ActiveRecord::Base
 				end
 
 			when 'Returned'
-				if is_my_transaction(current_user)
+				if (is_my_transaction(current_user)) and (self.status = "Received Borrower")
 					self.status = "Returned"
 					self.returned_date = DateTime.now.to_time
 					self.borrower_feedback = transaction_data[0] #borrower_feedback
@@ -76,7 +77,7 @@ class Transaction < ActiveRecord::Base
 				end						
 
 			when 'Complete'
-				if is_my_transaction(current_user)
+				if (is_my_transaction(current_user)) and (self.status == "Returned")
 					current_DateTime = DateTime.now.to_time
 					self.return_received_date = current_DateTime
 					self.lender_feedback = transaction_data[0] 
@@ -102,7 +103,6 @@ class Transaction < ActiveRecord::Base
 				else
 					false
 				end
-
 
 		end
 	end
