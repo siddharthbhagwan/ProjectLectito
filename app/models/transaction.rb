@@ -13,6 +13,27 @@ class Transaction < ActiveRecord::Base
   	#TODO Modify and clauses after delivery kicks in
 		case action
 
+			when "Accepted"
+				if (is_my_transaction(current_user)) and (self.status == "Pending")
+					self.status = "Accepted"
+					self.acceptance_date = DateTime.now.to_time
+					if (!transaction_data[0].blank? and !transaction_data[1].blank?)
+						self.accept_pickup_date = transaction_data[0] + ", " + transaction_data[1]
+					end
+
+					inventory_rented_out = Inventory.find(self.inventory_id)
+					inventory_rented_out.status = "Rented Out"
+					inventory_rented_out.save
+
+					if self.save
+						true
+					else
+						false
+					end
+				else
+					false
+				end
+
 			when 'Received Borrower'
 				if (is_my_transaction(current_user)) and (self.status == "Accepted")
 					self.received_date = DateTime.now.to_time
