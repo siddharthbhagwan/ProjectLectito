@@ -22,6 +22,10 @@ class AdminController < ApplicationController
 		end
 	end
 
+	def user_transaction_history
+		@t_history =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", params[:id] , params[:id], "Complete").order("request_date desc").page(params[:page]).per(10)
+	end
+
 	def bar_user
 		@bar_user = User.find(params[:bar_user_id])
 
