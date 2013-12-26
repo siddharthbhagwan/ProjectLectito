@@ -39,6 +39,21 @@ class BookController < ApplicationController
 		redirect_to book_index_path
 	end
 
+	def history
+		@book = Book.find(params[:id])
+		@b_history = Array.new
+		relevant_inventory = Inventory.where(:book_id => @book.id)
+		relevant_inventory.each do |ri|
+			transaction_for_inventory = Transaction.where(:inventory_id => ri.id, :status => "Complete")
+			transaction_for_inventory.each do |tfi|
+				@b_history.push(tfi)
+			end
+		end
+
+		@b_history.sort_by!{ |bh| bh.request_date }
+		@b_history.reverse!
+	end
+
 	def book_status
 		@available = Inventory.where(:deleted => false, :status => "Available", :book_id => params[:book_id]).count
 		@borrowed = Inventory.where(:deleted => false, :status => "Unavailable", :book_id => params[:book_id]).count

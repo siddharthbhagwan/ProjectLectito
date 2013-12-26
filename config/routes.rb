@@ -26,6 +26,7 @@ ProjectLectito::Application.routes.draw do
   get "home_page/barred" => "home_page#user_barred"
 
   # Book Routes
+  get "book/history/:id" => "book#history"
   get "book/book_status" => "book#book_status"
   get "book/available_book_stats" => "book#available_book_stats"
   get "book/borrowed_book_stats" => "book#borrowed_book_stats"
