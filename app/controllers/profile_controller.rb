@@ -2,7 +2,7 @@
 class ProfileController < ApplicationController
   include ApplicationHelper
   Firebase.base_uri = 'https://projectlectito.Firebaseio.com/'
-  load_and_authorize_resource class: :Profile
+  load_and_authorize_resource class: Profile
 
   def new
     @profile = Profile.new
@@ -32,7 +32,7 @@ class ProfileController < ApplicationController
   end
 
   def edit
-    @profile = Profile.where(id: :params[:id]).take
+    @profile = Profile.where(id: params[:id]).take
     chatbox
   end
 

@@ -1,7 +1,7 @@
 # Controller for Book Model
 class BookController < ApplicationController
   include ApplicationHelper
-  load_and_authorize_resource class: :Book
+  load_and_authorize_resource class: Book
 
   def new
     @book = Book.new
@@ -41,8 +41,20 @@ class BookController < ApplicationController
   end
 
   def history
+    @book = Book.find(params[:id])
+    @b_history = Array.new
+    relevant_inventory = Inventory.where(:book_id => @book.id)
+    relevant_inventory.each do |ri|
+      transaction_for_inventory = Transaction.where(:inventory_id => ri.id, :status => "Complete")
+      transaction_for_inventory.each do |tfi|
+        @b_history.push(tfi)
+      end
+    end
 
+    @b_history.sort_by!{ |bh| bh.request_date }
+    @b_history.reverse!
   end
+
 
   def book_status
     @available = Inventory.where(deleted: :false,

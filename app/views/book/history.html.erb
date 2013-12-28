@@ -1,0 +1,29 @@
+<h3><%= @book.book_name %> History</h3>
+
+<table class="table table-striped table-bordered table-hover" id="bookdetail_table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Lender</th>
+      <th>Borrower</th>
+      <th>Request Date</th>
+      <th>Borrow Duration</th>
+      <th>Transaction Duration</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @b_history.each do |bh| %>
+      <tr>
+        <td><%= bh.id %></td>
+        <td><%= User.find(bh.lender_id).full_name %></td>
+        <td><%= User.find(bh.borrower_id).full_name %></td>
+        <td><%= bh.request_date.to_s(:long) %></td>
+        <td><%= ((bh.returned_date - bh.received_date)/60/60/24).ceil %></td>
+        <td><%= ((bh.return_received_date - bh.request_date)/60/60/24).ceil %></td>
+      </tr>
+    <% end %>  
+  </tbody>
+</table>
+<br />
+
+<%= link_to 'Add a Book', new_book_path, class: "btn btn-small" %>
