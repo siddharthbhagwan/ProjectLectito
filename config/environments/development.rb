@@ -34,7 +34,7 @@ ProjectLectito::Application.configure do
   config.serve_static_assets = true
 
   # Expands the lines which load the assets
-  config.assets.debug = false
+  config.assets.debug = true
 
   #Redis Config
   #ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/' 

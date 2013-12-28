@@ -1,64 +1,34 @@
 <h3>Current addresses</h3>
 
 <% if !@address.empty? %>
-<table class="custom-table">
-  <tbody>
-    <% i = 0 %> 
-    <% while i <= @address.length/2 + @address.length%2  %>
-    <tr>
-      <td>
-        <table class="table table-striped table-bordered table-condensed table-nonfluid">
-          <tbody>
-            <tr>
-              <td colspan='2'>
-                <%= @address[i].address_line1 %></br>
-                <% if @address[i].landmark? %>
-                  Landmark: <%= @address[i].landmark %>
-                <% end %>   
-                <%= @address[i].locality %></br>
-                <%= @address[i].city %></br>
-                <%= @address[i].state %></br>
-                <%= @address[i].pin %></br>
-              </td>
-            </tr>
-            <tr>
-              <td><%= link_to "Edit", edit_address_path(@address[i].id), class: "btn btn-small "%></td>
-              <td><%= link_to "Delete", address_path(@address[i].id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You Sure' }%>
-              </td>
-                
-            </tr>
-          </tbody>
-        </table>
-      </td>
-      <% if !@address[i+1].nil? %>
-        <td>
+  <% i = 0 %> 
+  <% while i <= (@address.length/3) + (3 - @address.length % 3) %>
+    <div class='row'>
+      <% j = 0 %>
+      <% while ((j<3) and ((i*3) + j) < @address.length ) %>
+        <% k = (i * 3) + j %>
+        <div class='span2.5'>
           <table class="table table-striped table-bordered table-condensed table-nonfluid">
             <tbody>
               <tr>
                 <td colspan='2'>
-                  <%= @address[i+1].address_line1 %></br>
-                  <% if @address[i+1].landmark? %>
-                    Landmark: <%= @address[i+1].landmark %>
-                  <% end %>   
-                  <%= @address[i+1].locality %></br>
-                  <%= @address[i+1].city %></br>
-                  <%= @address[i+1].state %></br>
-                  <%= @address[i+1].pin %></br>
+                  <%= @address[k].address_line1 %></br>
+                  <%= @address[k].pin %></br>
                 </td>
               </tr>
               <tr>
-                <td><%= link_to "Edit", edit_address_path(@address[i+1].id), class: "btn btn-small "%></td>
-                <td><%= link_to "Delete", address_path(@address[i+1].id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You Sure' }%></td>
+                <td><%= link_to "Edit", edit_address_path(@address[k].id), class: "btn btn-small "%></td>
+                <td><%= link_to "Delete", address_path(@address[k].id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You Sure' }%>
+                </td>                
               </tr>
             </tbody>
           </table>
-        </td>
-      <% end %>
-      <% i+=2 %>
-    </tr>
-    <% end %>
-  </tbody> 
-</table>
+        </div>
+        <% j+=1 %>
+      <% end %>    
+    </div>  
+    <% i = i + 1 %>
+  <% end %>
 <% end %>
 <br />
 

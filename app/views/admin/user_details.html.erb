@@ -13,6 +13,10 @@
 <%= render 'admin_user_inventories_view' %>
 <%= render 'admin_user_login_stats_view' %>
 
+<%= link_to "Click here for User's Transaction History", :controller => "admin", 
+            :action => "user_transaction_history", 
+            :id => 7, :class => "btn btn-small" %></br></br>
+
 <div id="bar_user_confirm" title="Accept Request">
   <p> You are about to bar this User </p>
 </div>
@@ -34,3 +38,4 @@
 </div>
 
 <%= link_to "Back", admin_index_path, class:"btn btn-small" %>
+</br></br>

@@ -17,7 +17,7 @@ ProjectLectito::Application.routes.draw do
 
   # Admin routes
   get "admin/user_details" => "admin#user_details"
-  get "admin/city_report" => "admin#city_report"
+  get "admin/user_transaction_history/:id" => "admin#user_transaction_history"
   post "admin/bar_user" => "admin#bar_user"
   post "admin/unbar_user" => "admin#unbar_user"
 
@@ -26,6 +26,7 @@ ProjectLectito::Application.routes.draw do
   get "home_page/barred" => "home_page#user_barred"
 
   # Book Routes
+  get "book/history/:id" => "book#history"
   get "book/book_status" => "book#book_status"
   get "book/available_book_stats" => "book#available_book_stats"
   get "book/borrowed_book_stats" => "book#borrowed_book_stats"

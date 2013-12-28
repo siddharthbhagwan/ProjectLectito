@@ -10,9 +10,9 @@
 
   <tbody>
     <tr>
-      <td><%= @user.sign_in_count %></td>
-      <td><%= @user.current_sign_in_at %></td>
-      <td><%= @user.last_sign_in_at %></td>
+      <td><%= @user.sign_in_count.to_s(:long) %></td>
+      <td><%= @user.current_sign_in_at.to_s(:long) %></td>
+      <td><%= @user.last_sign_in_at.to_s(:long) %></td>
     </tr> 
   </tbody>  
 </table>
