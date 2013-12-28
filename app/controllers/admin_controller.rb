@@ -29,25 +29,19 @@ class AdminController < ApplicationController
 	def bar_user
 		@bar_user = User.find(params[:bar_user_id])
 
-		if current_user.id == params[:bar_user_id].to_i
+		if @bar_user.current_status != "Locked"
+			@bar_user.current_status  = "Locked"
+
+			if !@bar_user.save
+				raise "error"
+			end
 
 			respond_to do |format|
-	    		format.html  
-	    		format.json { render :json => "Admin cant Lock itself" }
-	  		end
-
+    		format.json { render nothing: true, :status => 204 }
+			end
 		else
-			if @bar_user.current_status != "Locked"
-				@bar_user.current_status  = "Locked"
-
-				if !@bar_user.save
-					raise "error"
-				end
-			else
-				respond_to do |format|
-    				format.html  
-    				format.json { render :json => "User is already locked" }
-  				end	
+			respond_to do |format|
+    		format.json { render nothing: true, :status => 204 }
 			end
 		end
 
@@ -59,6 +53,10 @@ class AdminController < ApplicationController
 
 		if !@unbar_user.save
 			raise "error"
+		end
+
+		respond_to do |format|
+    	format.json { render nothing: true, :status => 204 }
 		end
 	end
 end

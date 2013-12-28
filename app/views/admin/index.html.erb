@@ -12,7 +12,7 @@
  <tbody>
    <%  @user.each do |u| %> 
      <tr>
-      <td><%= link_to "#{u.id}", admin_user_details_path(:user_id => u.id) , class:"btn btn-small" %></td>
+      <td><%= link_to "#{u.id}", admin_user_details_path(user_id: u.id) , class:"btn btn-small" %></td>
       <td><%= u.profile.user_first_name + " " + u.profile.user_last_name unless u.profile.blank? %></td>
       <td><%= u.email %></td>    
       <td><%= u.current_status %></td>
@@ -22,12 +22,12 @@
 </tbody>
 <tfoot>
   <%= form_tag do %>
-    <tr class="search_init1">
-      <th><%= text_field_tag("search_id", nil, placeholder: "Search Id") %></th>
-      <th><%= text_field_tag("search_name", nil, placeholder: "Search Name") %></th>
-      <th><%= text_field_tag("search_email", nil, placeholder: "Search Email") %></th>
-      <th><%= text_field_tag("search_current status", nil, placeholder: "Search Current Status") %></th>
-      <th><%= text_field_tag("search_priveleges", nil, placeholder: "Search Priveleges") %></th>
+    <tr>
+      <th><%= text_field_tag("search_id", nil, placeholder: "Search Id", class: :searchid) %></th>
+      <th><%= text_field_tag("search_name", nil, placeholder: "Search Name", class: :searchtable) %></th>
+      <th><%= text_field_tag("search_email", nil, placeholder: "Search Email", class: :searchtable) %></th>
+      <th><%= text_field_tag("search_current status", nil, placeholder: "Search Current Status", class: :searchtable) %></th>
+      <th><%= text_field_tag("search_priveleges", nil, placeholder: "Search Priveleges", class: :searchtable) %></th>
     </tr>
   <% end %>
 </tfoot> 

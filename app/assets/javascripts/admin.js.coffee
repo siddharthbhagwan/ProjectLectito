@@ -29,9 +29,27 @@ $(document).ready ->
     if @value is ""
       @className = "search_init"
       @value = asInitVals[$("tfoot input").index(this)]
-   
+
 #--------------------------------------------------------------------------------------------------------------------
 
+# Fn to block UI while processing ajax calls
+before_send = ->
+  $.blockUI
+    theme:     true,
+    title:    'Please Wait',
+    message:  '<p>Your request is being processed</p>'
+    draggable: false  
+
+#--------------------------------------------------------------------------------------------------------------------
+
+  # Fn to decide what error to display
+  display_error = (statusCode) ->
+    if statusCode is 403
+      $("#error_message_403").dialog "open"
+    else
+      $("#error_message_generic").dialog "open"
+
+#--------------------------------------------------------------------------------------------------------------------
 
 jQuery ->
   $(document).on "click", "#bar_user", ->
@@ -56,26 +74,25 @@ jQuery ->
             bar_user_id: $("#bar_user").attr("data-uid")
 
           beforeSend: ->
-            $.blockUI
-              theme:     true, 
-              title:    'Please Wait', 
-              message:  '<p>Your request is being processed</p>'
-              draggable: false
+            before_send()
             
           success: (data, textStatus, XHR) ->
             $("#bar_user_success").dialog "open"
             $("#bar_user").val("Un Bar User").attr("id","unbar_user")
             $("#user_current_status").text("Locked").fadeIn(500)
-          complete: (jqXHR, textStatus) -> 
-            setTimeout $.unblockUI            
+
+          complete: (jqXHR, textStatus) ->
+            setTimeout $.unblockUI
+
           error: (XHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            $("#custom_error").html(XHR.responseText)
-            $("#error_message").dialog "open"
+            display_error(jqXHR.status)
+
       Cancel: ->
         $(this).dialog "close"  
 
-
+#--------------------------------------------------------------------------------------------------------------------
+# Bar User Success Modal
 jQuery ->
   $("#bar_user_success").dialog
     autoOpen: false
@@ -112,26 +129,26 @@ jQuery ->
             unbar_user_id: $("#unbar_user").attr("data-uid")
 
           beforeSend: ->
-            $.blockUI
-              theme:     true, 
-              title:    'Please Wait', 
-              message:  '<p>Your request is being processed</p>'
-              draggable: false
+            before_send()
             
           success: (msg) ->
             $("#unbar_user_success").dialog "open"
             $("#unbar_user").val("Bar User").attr("id","bar_user")
             $("#user_current_status").text("Active").fadeIn(500)
-          complete: (jqXHR, textStatus) -> 
-            setTimeout $.unblockUI         
+
+          complete: (jqXHR, textStatus) ->
+            setTimeout $.unblockUI
+
           error: (jqXHR, textStatus, errorThrown)  ->
             setTimeout $.unblockUI
             $("#custom_error").html("Unblocking Unsuccessful. Please contact admin")
             $("#error_message").dialog "open"
+
       Cancel: ->
         $(this).dialog "close"         
 
-
+#--------------------------------------------------------------------------------------------------------------------
+# UnBar User modal
 jQuery ->
   $("#unbar_user_success").dialog
     autoOpen: false
@@ -145,7 +162,7 @@ jQuery ->
 #--------------------------------------------------------------------------------------------------------------------
 # Error Message
 jQuery ->
-  $("#error_message").dialog
+  $("#error_message_generic").dialog
     autoOpen: false
     modal: true
     resizeable: false

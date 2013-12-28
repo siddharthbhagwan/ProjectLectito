@@ -54,6 +54,7 @@ $(document).ready ->
 
   # Fn to block UI while processing ajax calls
   before_send = ->
+    alert "oo"
     $.blockUI
       theme:     true, 
       title:    'Please Wait', 
@@ -128,9 +129,9 @@ $(document).ready ->
               $("#" + city_id).attr("data-status","closed")
               setTimeout $.unblockUI
 
-            error: ->
+            error: (jqXHR, textStatus, errorThrown) ->
               setTimeout $.unblockUI
-              $("#error_message").dialog "open"  
+              display_error(jqXHR.status) 
 
       Cancel: ->
         $(this).dialog "close"       
@@ -188,7 +189,7 @@ $(document).ready ->
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            $("#error_message").dialog "open"       
+            display_error(jqXHR.status)     
 
       Cancel: ->
         $(this).dialog "close"
