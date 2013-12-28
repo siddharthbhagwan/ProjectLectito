@@ -40,6 +40,10 @@ class BookController < ApplicationController
     redirect_to book_index_path
   end
 
+  def history
+
+  end
+
   def book_status
     @available = Inventory.where(deleted: :false,
                                  status: 'Available',
