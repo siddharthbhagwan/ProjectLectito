@@ -22,7 +22,7 @@ class ProfileController < ApplicationController
   end
 
   def update
-    @profile = Profile.where(user_id: :current_user.id).take
+    @profile = Profile.where(user_id: current_user.id).take
     if @profile.update_attributes(params[:profile])
       redirect_to edit_profile_path
       flash[:notice] = 'Your Profile has been updated'
@@ -39,19 +39,19 @@ class ProfileController < ApplicationController
   def rating
     @name = User.find(current_user.id).full_name
 
-    @good_lender = Transaction.where(lender_id: :current_user.id, borrower_feedback: :good).count
-    @good_borrower = Transaction.where(borrower_id: :current_user.id, lender_feedback: :good).count
+    @good_lender = Transaction.where(lender_id: current_user.id, borrower_feedback: :good).count
+    @good_borrower = Transaction.where(borrower_id: current_user.id, lender_feedback: :good).count
     @good = @good_borrower + @good_lender
 
-    @bad_lender = Transaction.where(lender_id: :current_user.id, borrower_feedback: :bad).count
-    @bad_borrower = Transaction.where(borrower_id: :current_user.id, lender_feedback: :bad).count
+    @bad_lender = Transaction.where(lender_id: current_user.id, borrower_feedback: :bad).count
+    @bad_borrower = Transaction.where(borrower_id: current_user.id, lender_feedback: :bad).count
     @bad = @bad_lender + @bad_borrower
 
-    @neutral_lender = Transaction.where(lender_id: :current_user.id, borrower_feedback: :neutral).count
-    @neutral_borrower = Transaction.where(borrower_id: :current_user.id, lender_feedback: :neutral).count
+    @neutral_lender = Transaction.where(lender_id: current_user.id, borrower_feedback: :neutral).count
+    @neutral_borrower = Transaction.where(borrower_id: current_user.id, lender_feedback: :neutral).count
     @neutral = @neutral_lender + @neutral_borrower
 
-    @total_books = Inventory.where(user_id: :current_user.id, deleted: :false).count
+    @total_books = Inventory.where(user_id: current_user.id, deleted: :false).count
     @transactions = Transaction.where('(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)', current_user.id, current_user.id, 'Rejected', 'Cancelled').order('created_at desc')
 
     @total_transactions = @transactions.count
@@ -77,19 +77,19 @@ class ProfileController < ApplicationController
     if pr.lender_id == id
       @name = User.find(pr.borrower_id).full_name
 
-      @good_lender = Transaction.where(lender_id: :pr.borrower_id, borrower_feedback: :good).count
-      @good_borrower = Transaction.where(borrower_id: :pr.borrower_id, lender_feedback: :good).count
+      @good_lender = Transaction.where(lender_id: pr.borrower_id, borrower_feedback: :good).count
+      @good_borrower = Transaction.where(borrower_id: pr.borrower_id, lender_feedback: :good).count
       @good = @good_borrower + @good_lender
 
-      @bad_lender = Transaction.where(lender_id: :pr.borrower_id, borrower_feedback: :bad).count
-      @bad_borrower = Transaction.where(borrower_id: :pr.borrower_id, lender_feedback: :bad).count
+      @bad_lender = Transaction.where(lender_id: pr.borrower_id, borrower_feedback: :bad).count
+      @bad_borrower = Transaction.where(borrower_id: pr.borrower_id, lender_feedback: :bad).count
       @bad = @bad_lender + @bad_borrower
 
-      @neutral_lender = Transaction.where(lender_id: :pr.borrower_id, borrower_feedback: :neutral).count
-      @neutral_borrower = Transaction.where(borrower_id: :pr.borrower_id, lender_feedback: :neutral).count
+      @neutral_lender = Transaction.where(lender_id: pr.borrower_id, borrower_feedback: :neutral).count
+      @neutral_borrower = Transaction.where(borrower_id: pr.borrower_id, lender_feedback: :neutral).count
       @neutral = @neutral_lender + @neutral_borrower
 
-      @total_books = Inventory.where(user_id: :pr.borrower_id, deleted: :false).count
+      @total_books = Inventory.where(user_id: pr.borrower_id, deleted: :false).count
       @transactions = Transaction.where('(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)', pr.borrower_id, pr.borrower_id, 'Rejected', 'Cancelled').order('created_at desc')
 
       @total_transactions = @transactions.count
@@ -112,32 +112,32 @@ class ProfileController < ApplicationController
         format.json {
           json_profile = Array.new
           json_profile << {
-            name: :@name,
-            good: :@good,
-            neutral: :@neutral,
-            bad: :@bad,
-            transactions: :@total_transactions,
-            books: :@total_books
+            name: @name,
+            good: @good,
+            neutral: @neutral,
+            bad: @bad,
+            transactions: @total_transactions,
+            books: @total_books
           }
-          render json: :json_profile.to_json }
+          render json: json_profile.to_json }
       end
 
     elsif  pr.borrower_id == current_user.id
       @name = User.find(pr.lender_id).full_name
 
-      @good_lender = Transaction.where(lender_id: :pr.lender_id, borrower_feedback: :good).count
-      @good_borrower = Transaction.where(borrower_id: :pr.lender_id, lender_feedback: :good).count
+      @good_lender = Transaction.where(lender_id: pr.lender_id, borrower_feedback: :good).count
+      @good_borrower = Transaction.where(borrower_id: pr.lender_id, lender_feedback: :good).count
       @good = @good_borrower + @good_lender
 
-      @bad_lender = Transaction.where(lender_id: :pr.lender_id, borrower_feedback: :bad).count
-      @bad_borrower = Transaction.where(borrower_id: :pr.lender_id, lender_feedback: :bad).count
+      @bad_lender = Transaction.where(lender_id: pr.lender_id, borrower_feedback: :bad).count
+      @bad_borrower = Transaction.where(borrower_id: pr.lender_id, lender_feedback: :bad).count
       @bad = @bad_lender + @bad_borrower
 
-      @neutral_lender = Transaction.where(lender_id: :pr.lender_id, borrower_feedback: :neutral).count
-      @neutral_borrower = Transaction.where(borrower_id: :pr.lender_id, lender_feedback: :neutral).count
+      @neutral_lender = Transaction.where(lender_id: pr.lender_id, borrower_feedback: :neutral).count
+      @neutral_borrower = Transaction.where(borrower_id: pr.lender_id, lender_feedback: :neutral).count
       @neutral = @neutral_lender + @neutral_borrower
 
-      @total_books = Inventory.where(user_id: :pr.lender_id, deleted: :false).count
+      @total_books = Inventory.where(user_id: pr.lender_id, deleted: :false).count
       @transactions = Transaction.where('(lender_id = ? OR borrower_id = ?) AND (status != ? OR status != ?)', pr.lender_id, pr.lender_id, 'Rejected', 'Cancelled').order('created_at desc')
 
       @total_transactions = @transactions.count
@@ -161,14 +161,14 @@ class ProfileController < ApplicationController
         format.json {
           json_profile = Array.new
           json_profile << {
-            name: :@name,
-            good: :@good,
-            neutral: :@neutral,
+            name: @name,
+            good: @good,
+            neutral: @neutral,
             bad: :@bad,
-            transactions: :@total_transactions,
-            books: :@total_books
+            transactions: @total_transactions,
+            books: @total_books
           }
-          render json: :json_profile.to_json }
+          render json: json_profile.to_json }
       end
 
     else
