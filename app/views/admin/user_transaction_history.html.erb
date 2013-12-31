@@ -18,8 +18,7 @@
         <tr>
           <!-- Book Name -->
           <% th_book = Book.find(Inventory.find(th.inventory_id).book_id) %>
-          <td><%= link_to th_book.book_name, :controller => "book", 
-            :action => "history", :id => th_book.id %></td>
+          <td><%= link_to th_book.book_name, book_history_path(th_book.id) %></td>
         <!-- Checking If user is Lender or borrower for this transaction -->
           <% if th.lender_id == current_user.id %>
             <!-- Link To full Profile -->
