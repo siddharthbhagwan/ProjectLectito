@@ -4,6 +4,8 @@
 
 asInitVals = new Array()
 $(document).ready ->
+
+# DataTables For Admin Table
   oTable = $("#admin_view").dataTable(
     oLanguage: sSearch: "Search All : "    
   )
@@ -29,6 +31,17 @@ $(document).ready ->
     if @value is ""
       @className = "search_init"
       @value = asInitVals[$("tfoot input").index(this)]
+
+#--------------------------------------------------------------------------------------------------------------------
+# DataTables For User Transaction History
+$(document).ready ->
+  oTable = ($("table[id$='_transaction_history']")).dataTable(
+    oLanguage: sSearch: "Search All : "    
+  )
+
+  $("tfoot input").keyup ->    
+    # Filter on the column (the index) of this element 
+    oTable.fnFilter @value, $("tfoot input").index(this)
 
 #--------------------------------------------------------------------------------------------------------------------
 

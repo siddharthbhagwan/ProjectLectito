@@ -400,7 +400,7 @@ class TransactionController < ApplicationController
 
 	def history
 		chatbox
-		@t_history =  Transaction.where('((borrower_id = ? OR lender_id = ? ) AND status = ? )', params[:id] , params[:id], 'Complete').order('request_date desc').page(params[:page]).per(10)
+		@t_history =  Transaction.where('((borrower_id = ? OR lender_id = ? ) AND status = ? )', params[:id] , params[:id], 'Complete').order('request_date desc')
 	end
 
   private
