@@ -2,7 +2,7 @@ $(document).ready ->
 
   asInitVals = new Array()
   $(document).ready ->
-    oTable = $("#8_book_history").dataTable(
+    oTable = ($("table[id$='_book_history']")).dataTable(
       oLanguage: sSearch: "Search All : "    
     )
 
