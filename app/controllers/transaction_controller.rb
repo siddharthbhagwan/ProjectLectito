@@ -380,6 +380,17 @@ class TransactionController < ApplicationController
   	end
 	end
 
+	def details
+		if current_user.admin? || is_my_transaction(trans_id)
+			@details = Transaction.find(params[:id])
+		else
+			flash[:alert] = "No Such Transaction Exists"
+			redirect_to home_path
+		end
+	rescue ActiveRecord::RecordNotFound
+		redirect_to home_path
+	end
+
 	def user_id
 		respond_to do |format|
 			format.html  

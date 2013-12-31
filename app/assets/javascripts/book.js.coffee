@@ -1,5 +1,13 @@
 $(document).ready ->
 
+  asInitVals = new Array()
+  $(document).ready ->
+    oTable = $("#8_book_history").dataTable(
+      oLanguage: sSearch: "Search All : "    
+    )
+
+    
+
   # $("#bookdetail_table tbody tr").click ->
   #   book_id = undefined
   #   row_number = undefined
