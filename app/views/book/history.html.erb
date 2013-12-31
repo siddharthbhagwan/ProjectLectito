@@ -23,16 +23,16 @@
       <% end %>  
     </tbody>
     <tfoot>
-    <tr>
-      <%= form_tag do %>
-        <th><%= text_field_tag('search_id', nil, placeholder: 'Id') %></th>
-        <th><%= text_field_tag('search_lender', nil, placeholder: 'Lender') %></th>
-        <th><%= text_field_tag('search_borrower', nil, placeholder: 'Borrower') %></th>
-        <th><%= text_field_tag('search_req_date', nil, placeholder: 'Request Date') %></th>
-        <th><%= text_field_tag('search_b_duration', nil, placeholder: 'Borrowed') %></th>
-        <th><%= text_field_tag('search_t_duration', nil, placeholder: 'Total') %></th>
-      <% end %>
-    </tr>
+      <tr>
+        <%= form_tag do %>
+          <th><%= text_field_tag('search_id', nil, placeholder: 'Id') %></th>
+          <th><%= text_field_tag('search_lender', nil, placeholder: 'Lender') %></th>
+          <th><%= text_field_tag('search_borrower', nil, placeholder: 'Borrower') %></th>
+          <th><%= text_field_tag('search_req_date', nil, placeholder: 'Request Date') %></th>
+          <th><%= text_field_tag('search_b_duration', nil, placeholder: 'Borrowed') %></th>
+          <th><%= text_field_tag('search_t_duration', nil, placeholder: 'Total') %></th>
+        <% end %>
+      </tr>
   </tfoot>
   </table>
 <br />

@@ -54,7 +54,6 @@ $(document).ready ->
 
   # Fn to block UI while processing ajax calls
   before_send = ->
-    alert "oo"
     $.blockUI
       theme:     true, 
       title:    'Please Wait', 

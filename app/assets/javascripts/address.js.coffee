@@ -73,5 +73,17 @@ $(document).ready ->
   $("#update_address").click ->  
     # if $("#address_locality").length isnt 0
     #   if !$("#locality_empty").is(":visible")
-    $(".edit_address").submit()        
+    $(".edit_address").submit()
+
+#--------------------------------------------------------------------------------------------------------------------
+# DataTables For User Transaction History
+  oTable_transaction_history = ($("table[id$='_transaction_history']")).dataTable(
+    oLanguage: sSearch: "Search All : " 
+  )
+
+  $("tfoot input").keyup ->    
+    # Filter on the column (the index) of this element 
+    oTable_transaction_history.fnFilter @value, $("tfoot input").index(this)
+
+#--------------------------------------------------------------------------------------------------------------------
 

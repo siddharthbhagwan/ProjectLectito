@@ -2,13 +2,14 @@ $(document).ready ->
 
   asInitVals = new Array()
 
-  oTable = ($("table[id$='_book_history']")).dataTable(
+  # DataTables For Book History
+  oTable_book_history = ($("table[id$='_book_history']")).dataTable(
     oLanguage: sSearch: "Search All : "    
   )
 
   $("tfoot input").keyup ->    
     # Filter on the column (the index) of this element 
-    oTable.fnFilter @value, $("tfoot input").index(this)
+    oTable_book_history.fnFilter @value, $("tfoot input").index(this)
     
 
   # $("tfoot input").each (i) ->

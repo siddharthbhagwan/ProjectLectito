@@ -32,11 +32,7 @@
 
             <!-- feedback -->
             <td>
-              <% if th.borrower_feedback.nil? or th.borrower_feedback.empty? %>
-                Not Rated
-              <% else %>
-                <%= th.borrower_feedback.capitalize %>
-              <% end %>
+              <%= th.borrower_feedback.capitalize %>
             </td>
           <% else %>
             <td>
@@ -48,11 +44,7 @@
               <% end %>
             </td>
             <td>
-              <% if th.lender_feedback.nil? or th.lender_feedback.empty? %>
-                Not Rated
-              <% else %>
-                <%= th.lender_feedback.capitalize %>
-              <% end %>
+              <%= th.lender_feedback.capitalize %>
             </td>
           <% end %>
 
