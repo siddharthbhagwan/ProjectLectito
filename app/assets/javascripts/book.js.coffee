@@ -1,11 +1,31 @@
 $(document).ready ->
 
   asInitVals = new Array()
-  $(document).ready ->
-    oTable = ($("table[id$='_book_history']")).dataTable(
-      oLanguage: sSearch: "Search All : "    
-    )
 
+  oTable = ($("table[id$='_book_history']")).dataTable(
+    oLanguage: sSearch: "Search All : "    
+  )
+
+  $("tfoot input").keyup ->    
+    # Filter on the column (the index) of this element 
+    oTable.fnFilter @value, $("tfoot input").index(this)
+    
+
+  # $("tfoot input").each (i) ->
+  #   asInitVals[i] = @value
+
+
+  # $("tfoot input").focus ->
+  #   console.log "called"
+  #   console.log @classname
+  #   if @className is "search_init"
+  #     @className = ""
+  #     @value = ""
+
+  # $("tfoot input").blur (i) ->
+  #   if @value is ""
+  #     @className = "search_init"
+  #     @value = asInitVals[$("tfoot input").index(this)]
     
 
   # $("#bookdetail_table tbody tr").click ->
