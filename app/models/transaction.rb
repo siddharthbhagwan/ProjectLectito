@@ -89,11 +89,7 @@ class Transaction < ActiveRecord::Base
 						self.borrower_feedback = transaction_data[0] #borrower_feedback
 					end
 
-					if self.borrower_comments.blank?
-						self.borrower_comments = 'Not Rated'
-					else
-						self.borrower_comments = transaction_data[1] #borrower_comments
-					end
+					self.borrower_comments = transaction_data[1] #borrower_comments
 
 					if (!transaction_data[2].blank? and !transaction_data[3].blank?) #return_Date, #return_time
 						self.return_pickup_date = transaction_data[2] + ', ' + transaction_data[3]
@@ -118,11 +114,7 @@ class Transaction < ActiveRecord::Base
 						self.lender_feedback = transaction_data[0]
 					end
 
-					if self.lender_comments.blank?
-						self.lender_comments = transaction_data[1]
-					else
-						self.lender_comments = 'Not Rated'
-					end
+					self.lender_comments = transaction_data[1]
 
 					if self.return_pickup_date.nil?
 						self.borrow_duration = ((current_DateTime - self.received_date)/1.days).round
@@ -130,7 +122,7 @@ class Transaction < ActiveRecord::Base
 						self.borrow_duration = ((current_DateTime - self.return_pickup_date)/1.days).round
 					end
 
-					received_inventory = Inventory.where(:id => self.inventory_id).take
+					received_inventory = Inventory.where(id: self.inventory_id).take
 					received_inventory.status = 'Available'
 					received_inventory.save
 
