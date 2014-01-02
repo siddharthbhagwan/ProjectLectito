@@ -4,73 +4,18 @@
   	<title>ProjectLectito</title>
   	<%= stylesheet_link_tag    "application", :media => "all" %>
   	<%= javascript_include_tag "application" %>
-    <!-- <%= javascript_include_tag "https://cdn.firebase.com/v0/firebase.js" %> -->
+    <%= javascript_include_tag "https://cdn.firebase.com/v0/firebase.js" %>
   	<%= csrf_meta_tags %>
   	<!-- Responeible for responsive-ness on mobile devices -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
-  	<% if user_signed_in? %>
-  		<div class = "container" >
+    <div class='container'>
+      <%= render 'layouts/header' %>
+      <div class = "container" >
   			<div class = "row">
-  				<div class="span2">
-  					<% if user_signed_in? %>
-  					<div class="accordion" id="menu_accordion">  
-  						<% if current_user.has_role? :admin %>
-  							<div class="accordion-group">  
-  								<div class="accordion-heading">  
-  									<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseThree"> 
-  										Admin  
-  									</a>  
-  								</div>  
-  								<div id="collapseThree" class="accordion-body collapse">  
-  									<div class="accordion-inner">  
-  										<%= link_to "Users", admin_index_path, class: "accordian" %></br>
-  										<%= link_to "Books", book_index_path, class: "accordian" %></br>
-  										<%= link_to "Transactions", admin_index_path, class: "accordian" %></br>
-  									</div>  
-  								</div>  
-  							</div>
-  						<% end %>
-  						<div class="accordion-group">  
-  							<div class="accordion-heading">  
-  								<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseTwo"> 
-  									Books  
-  								</a>  
-  							</div>  
-  							<div id="collapseTwo" class="accordion-body collapse">  
-  								<div class="accordion-inner">  
-  									<%= link_to "My Books", inventory_index_path, class: "accordian" %>
-  									<%= link_to "Conversations", chat_index_path, class: "accordian" %>
-  								</div>  
-  							</div>  
-  						</div>				
-  						<div class="accordion-group">  
-  							<div class="accordion-heading">  
-  								<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_accordion" href="#collapseOne"> 
-  									Profile  
-  								</a>  
-  							</div>  
-  							<div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">  
-  								<div class="accordion-inner">
-  									<% if !current_user.profile.nil? %>							
-  										<%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></br>
-  									<% end %>	
-  									<%= link_to "Addresses", address_index_path, class: "accordian" %></br>
-  									<%= link_to "Rating", profile_rating_path, class: "accordian" %></br>
-  									<%= link_to "Security", edit_user_registration_path, class: "accordian" %></br>
-  									<%= link_to "History", transaction_history_path, class: "accordian" %>
-  								</div>  
-  							</div>  
-  						</div>   
-  					</div>
-  					<% end %>  
-  				</div>
-
-
-  				<div class = "span8">
+  				<div class = "span10">
   					<% if flash[:notice] %>
   					<p class="label label-success"><%= flash[:notice] %></p>
   					<% end %>
@@ -89,18 +34,9 @@
   						</div>
   					<% end %> 
   				</div>
-
-  				<div class="span2">
-  					<% if !user_signed_in? %>
-  						<%= render 'devise/sessions/sign_in' %>
-  					<% end %>
-  				</div>
-  			</div>		
-  		</div>
-
-  	<% else %>
-      <%= yield %>
-  	<% end %>
-    <%= render 'layouts/footer' %>
-  </body>	
+  			</div>
+      </div>
+    </div>
+  <%= render 'layouts/footer' %>    
+  </body>
 </html>
