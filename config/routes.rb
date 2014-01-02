@@ -1,7 +1,7 @@
 ProjectLectito::Application.routes.draw do
 
   # Devise routes
-  get 'users/sign_in' => 'inventory#search'
+  # get 'users/sign_in' => 'inventory#search'
 
   # Chat Routes
   get 'chat/box_chat_history' => 'chat#box_chat_history'
