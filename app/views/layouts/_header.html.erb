@@ -1,28 +1,63 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
-			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</a>
-			<a class="brand" href="/home">Project Lectito</a>
-			<div class="nav-collapse">
-				<ul class="nav">
-					<% if user_signed_in? %>
-						<li><%= link_to "Welcome " + current_user.welcome_name , home_path %></li>
-						<li><%= link_to " Home ", home_path, :id => :home_link %></li>
-						<li><%= link_to " Search ", home_path %></li>
-						<li><%= link_to "Sign Out" , destroy_user_session_path , :method => :delete %></li>
-					<% else %>
-						<li><%= link_to "Sign Up" , new_user_registration_path  %></li>
-					<!--	<li><%= link_to " Sign In ", new_user_session_path %></li> -->
-					<!--	<li><%= link_to "Sign in with Twitter" , user_omniauth_authorize_path(:twitter)  %></li> -->
-					<!--	<li><%= link_to "Sign in with Facebook" , user_omniauth_authorize_path(:facebook)  %></li> -->
-					<!--	<li><%= link_to "Sign in with Google" , user_omniauth_authorize_path(:google_oauth2)  %></li> -->
-					<% end %>
-				</ul>
-			</div>
+			<% if user_signed_in? %>			
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="/home">Project Lectito</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<% if user_signed_in? %>
+							<li><%= link_to "Welcome " + current_user.welcome_name , inventory_search_path %></li>
+							<li><%= link_to " Home ", inventory_search_path, :id => :home_link %></li>
+							<li><%= link_to " Search ", inventory_search_path %></li>
+							<li><%= link_to "Sign Out" , destroy_user_session_path , :method => :delete %></li>
+						<% else %>
+							<li><%= link_to "Sign Up" , new_user_registration_path  %></li>
+						<!--	<li><%= link_to " Sign In ", new_user_session_path %></li> -->
+						<!--	<li><%= link_to "Sign in with Twitter" , user_omniauth_authorize_path(:twitter)  %></li> -->
+						<!--	<li><%= link_to "Sign in with Facebook" , user_omniauth_authorize_path(:facebook)  %></li> -->
+						<!--	<li><%= link_to "Sign in with Google" , user_omniauth_authorize_path(:google_oauth2)  %></li> -->
+						<% end %>
+					</ul>
+				</div>
+			<% else %>
+	      <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a href="#" class="brand">ProjectLectito</a>
+	      <div class="nav-collapse collapse">
+	        <ul class="nav">
+	          <li class="active"><a href="#">Home</a></li>
+	          <li><a href="#about">About</a></li>
+	          <li><a href="#contact">FAQ</a></li>
+	          <li class="dropdown">
+	            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+	          </li>
+	        </ul>
+
+          <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "navbar-form pull-right"} ) do |f| %>
+            <%= f.email_field :email, :autofocus => true, :placeholder => :Email, :class => :span2 %>
+					  <%= f.password_field :password, :placeholder => "Password", :class => :span2 %>
+            <%= f.submit "Sign in", :class => :btn %>
+          <% end %>
+	        </div>
+	      </div>
+			<% end %>
 		</div>
 	</div>
 </div>

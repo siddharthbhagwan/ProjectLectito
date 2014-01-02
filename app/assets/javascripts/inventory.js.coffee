@@ -90,7 +90,7 @@ $(document).ready ->
   $("#search_by_author").autocomplete(
     source: (request, response) ->
       $.ajax
-        url: "inventory/autocomplete_author"
+        url: "/inventory/autocomplete_author"
         dataType: "json"
         data:
           author: $("#search_by_author").val()
@@ -123,7 +123,7 @@ $(document).ready ->
   $("#search_by_book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
-        url: "inventory/autocomplete_book_name"
+        url: "/inventory/autocomplete_book_name"
         dataType: "json"
         data:
           author: $("#search_by_author").val()
