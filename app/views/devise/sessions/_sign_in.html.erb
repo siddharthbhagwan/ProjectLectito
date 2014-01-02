@@ -1,18 +1,69 @@
-<h2>Sign in</h2></br>
+<div class="container">
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div>
-  <%= f.email_field :email, :autofocus => true, :placeholder => :Email %></div>
+    <!-- Main hero unit for a primary marketing message or call to action -->
+    <div class="hero-unit cbg">
+      <div class="row">
+        <div class="span8">
+          <h1>Hello, world!</h1><br/>
+          <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <br/>
+          <p> Sign Up! Its free and easy </p>
+          <%= link_to "Sign-Up", new_user_registration_path, :class => "btn btn-large btn-success "%>
+        </div>
+        <div class="span2 pull-right">
+          <%= image_tag("books_stack.jpg") %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8">
+          
+        </div>
+      </div>
+    </div>
 
-  <div>
-  <%= f.password_field :password, :placeholder => "Password" %></div>
+    <!-- Example row of columns -->
+    <div class="row">
+      <div class="span4">
+        <h2>Step 1</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      </div>
+      <div class="span4">
+        <h2>Step 2</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+     </div>
+      <div class="span4">
+        <h2>Step 3</h2>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      </div>
+    </div>
+  </div>
 
-  <!-- <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
--->
+  <div class="hero-unit cbg">
+      <div class="row">
+        <h5>Search for a book that you'd like to borrow in your city!</h5>
 
-  <div><%= f.submit "Sign in", :class => :btn %></div>
-<% end %>
+        <%= form_tag() do %>
+        <div id="city_validation"></div>
 
-<%= render "devise/shared/links" %>
+        <%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city.."  %></br>
+
+        <div id="author_book_validation"></div>
+
+        <p hidden="true" id="author_empty"><i><b>No Such Author Found</b></i></p>
+
+        <%= text_field_tag :search_by_author, nil, :placeholder => "Search By Author" %></br>
+
+        <p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
+
+        <%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name" %></br>
+
+        <% end %>
+
+        <%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
+
+        <div id="search_text"></div>
+
+        <div id="dynamicTable"></div>
+      </div>
+    </div>
+
