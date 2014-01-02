@@ -22,7 +22,6 @@ ProjectLectito::Application.routes.draw do
   post 'admin/unbar_user' => 'admin#unbar_user'
 
   get 'devise/User'
-  get 'home' => 'inventory#search'
   get 'home_page/barred' => 'home_page#user_barred'
 
   # Book Routes

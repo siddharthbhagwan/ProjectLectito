@@ -1,6 +1,5 @@
 <div class="container">
 
-    <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit cbg">
       <div class="row">
         <div class="span8">
@@ -8,7 +7,7 @@
           <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
           <br/>
           <p> Sign Up! Its free and easy </p>
-          <%= link_to "Sign-Up", new_user_registration_path, :class => "btn btn-large btn-success "%>
+          <%= link_to "Sign-Up", new_user_registration_path, class: "btn btn-large btn-success "%>
         </div>
         <div class="span2 pull-right">
           <%= image_tag("books_stack.jpg") %>
@@ -21,7 +20,6 @@
       </div>
     </div>
 
-    <!-- Example row of columns -->
     <div class="row">
       <div class="span4">
         <h2>Step 1</h2>
@@ -45,7 +43,7 @@
         <%= form_tag() do %>
         <div id="city_validation"></div>
 
-        <%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city.."  %></br>
+        <%= select_tag :city, options_for_select(india_cities), prompt: "Select your city.."  %></br>
 
         <div id="author_book_validation"></div>
 
@@ -55,11 +53,11 @@
 
         <p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
 
-        <%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name" %></br>
+        <%= text_field_tag :search_by_book_name, nil, placeholder: "Search By Book Name" %></br>
 
         <% end %>
 
-        <%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
+        <%= tag "input", type: "button", id: "search_books", class: "btn" , value: "Search" %></br></br>
 
         <div id="search_text"></div>
 
