@@ -19,9 +19,9 @@ $table_header3 = "<th>Delivery Mode</th>"
 $table_header5 = "<th>Borrow</th></tr></thead>"
 
 <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
-  $table_header = $table_header1 + $table_header2 + $table_header3 + $table_header5; // + $table_header4;
+  $table_header = $table_header1 + $table_header2; //+ $table_header3 + $table_header5; // + $table_header4;
 <% else %>
-  $table_header = $table_header1 + $table_header2 + $table_header3 + $table_header5;
+  $table_header = $table_header1 + $table_header2; //+ $table_header3 + $table_header5;
 <% end %>  
 $final_table = $final_table + $table_header;
 
@@ -59,9 +59,9 @@ if (<%= @users_and_address.length %> === 0) {
     }
     <% end %>
     <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
-      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + button_element + "</tr>"; //+ delivery_charges 
+      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at; // + delivery_mode + button_element + "</tr>"; //+ delivery_charges 
     <% else %>
-      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + button_element + "</tr>";
+      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at; // + delivery_mode + button_element + "</tr>";
     <% end %>
 
     <%= i = i + 2 %>
