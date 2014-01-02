@@ -1,0 +1,50 @@
+<h3> Transaction Details - <%= @details.id %> </h3><br/>
+
+<div class='container'>
+	<div class='span2'>
+		<ul style='none'>
+			<li>Lender</li>
+			<li>Borrower</li>
+			<li>Book</li>
+			<li>Request date</li>
+			<li>
+				<% if @details.status == 'Rejected' %>
+					Date Rejected
+				<% elsif @details.status == 'Cancelled' %>
+					Date Cancelled
+				<% else %>
+					Date Accepted
+				<% end %>
+			</li>
+			<li>Date Lent Out</li>
+			<li>Date Returned</li>
+			<li>Lender Feedback</li>
+			<li>Lender Comments</li>
+			<li>Borrower Feedback</li>
+			<li>Borrower Comments</li>
+		</ul>
+	</div>
+	<div class='span3 offest2'>
+		<ul style='none'>
+			<li><%= User.find(@details.lender_id).full_name %></li>
+			<li><%= User.find(@details.borrower_id).full_name %></li>
+			<li><%= Book.find(Inventory.find(@details.inventory_id).book_id).book_name %></li>
+			<li><%=  @details.request_date.to_s(:long) %></li>
+			<li>
+				<% if @details.status == 'Rejected' %>
+					<%= @details.rejection_date.to_s(:long) %>
+				<% elsif @details.status == 'Cancelled' %>
+					<%= @details.cncelled_date.to_s(:long) %>
+				<% else %>
+					<%= @details.acceptance_date.to_s(:long) %>
+				<% end %>
+			</li>
+			<li><%= @details.received_date.to_s(:long) %></li>
+			<li><%= @details.returned_date.to_s(:long) %></li>
+			<li><%= @details.lender_feedback %></li>
+			<li><%= @details.lender_comments %></li>
+			<li><%= @details.borrower_feedback %></li>
+			<li><%= @details.borrower_comments %></li>
+		</ul>
+	</div>
+</div>
