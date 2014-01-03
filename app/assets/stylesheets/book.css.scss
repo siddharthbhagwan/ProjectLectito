@@ -6,7 +6,6 @@
 	width:35px;
 }
 
-
 #search_lender{
 	width:100px;
 }
@@ -15,11 +14,9 @@
 	width:100px;
 }
 
-
 #search_req_date{
 	width:150px;
 }
-
 
 #search_b_duration{
 	width:62px;
@@ -27,4 +24,23 @@
 
 #search_t_duration{
 	width:60px;
+}
+
+* {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -4em;
+}
+
+.footer, .push {
+  height: 4em;
 }

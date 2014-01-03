@@ -239,7 +239,7 @@ class ProfileController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: :active_trans_ids.to_json }
+      format.json { render json: active_trans_ids.to_json }
     end
   end
 end
