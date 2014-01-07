@@ -51,7 +51,16 @@ ProjectLectito::Application.routes.draw do
   post 'transaction/update_request_status_receive_lender' => 'transaction#update_request_status_receive_lender'
   post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
 
-  root to: 'inventory#search'
+  authenticated :user do
+    root :to => 'inventory#search'
+  end
+
+  unauthenticated :user do
+    devise_scope :user do 
+      get "/" => "devise/sessions#new"
+    end
+  end
+
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, controllers: { sessions: :sessions }
   resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction, :chat
 
