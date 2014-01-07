@@ -1,32 +1,34 @@
 <h3><%= @name %></h3></br>
 
-<div style=" position:absolute; margin-left:0px; top:140px;" class="bold_list">
-  <ul style="list-style-type: none" class="padded_list">
-    <li class="padded_list">Total Books</li>
-    <li class="padded_list">Total Transactions</li>
-    <li class="padded_list">Feedback</li>
-    <li class="padded_list">Good</li>
-    <li class="padded_list">Neutral</li>
-    <li class="padded_list">Bad</li>
-  </ul>
-</div>
+<div class='row'>
+  <div class='span1'>
+    <ul style="list-style-type: none">
+      <li class="padded_list">Total Books</li>
+      <li class="padded_list">Total Transactions</li>
+      <li class="padded_list">Feedback</li>
+      <li class="padded_list">Good</li>
+      <li class="padded_list">Neutral</li>
+      <li class="padded_list">Bad</li>
+    </ul>
+  </div>
 
-<div style=" position:absolute; margin-left:220px; top:155px;" class="bold_list">
-  <ul style="list-style-type: none">
-    <li class="padded_list"><%= @total_books %></li>
-    <li class="padded_list"><%= @total_transactions %></li>
-    <li class="padded_list"></br></li>
-    <li class="padded_list"><%= @good %></li>
-    <li class="padded_list"><%= @neutral %></li>
-    <li class="padded_list"><%= @bad %></li>
-  </ul>
-</div>
+  <div class='span1 offset1'>
+    <ul style="list-style-type: none">
+      <li class="padded_list"><%= @total_books %></li>
+      <li class="padded_list"><%= @total_transactions %></li>
+      <li class="padded_list"></br></li>
+      <li class="padded_list"><%= @good %></li>
+      <li class="padded_list"><%= @neutral %></li>
+      <li class="padded_list"><%= @bad %></li>
+    </ul>
+  </div>
 
-<div style=" position:absolute; margin-left:400px; top:140px;" class="bold_list">
-  <ul style="list-style-type: none">
-    <li><h4> Recent Comments </h4></li></br>
-    <% @comment_history.first(5).each do |ch| %>
-        <li class="padded_list well "><%= ch %></li>
-    <% end %>  
-  </ul>
+  <div class='span6 offset1'>
+    <ul style="list-style-type: none">
+      <li><h4> Recent Comments </h4></li></br>
+      <% @comment_history.first(5).each do |ch| %>
+          <li class=" well "><%= ch %></li>
+      <% end %>  
+    </ul>
+  </div>
 </div>
