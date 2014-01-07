@@ -296,5 +296,4 @@ $(document).ready ->
 
   $(document).on "mouseenter", "img[id^='online_']", ->
     $(this).css('cursor', 'pointer');
-   
 

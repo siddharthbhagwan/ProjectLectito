@@ -5,8 +5,8 @@
 asInitVals = new Array()
 $(document).ready ->
 
-# DataTables For Admin Table
-  oTable_admin_view = $("#admin_view").dataTable(
+# DataTables For All tables with class as datatable
+  oTable_admin_view = $(".datatable").dataTable(
     oLanguage: sSearch: "Search All : "    
   )
 
@@ -18,19 +18,19 @@ $(document).ready ->
   #	 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
   #	 * the footer
   #	 
-  $("tfoot input").each (i) ->
-    asInitVals[i] = @value
+  # $("tfoot input").each (i) ->
+  #   asInitVals[i] = @value
 
 
-  $("tfoot input").focus ->
-    if @className is "search_init"
-      @className = ""
-      @value = ""
+  # $("tfoot input").focus ->
+  #   if @className is "search_init"
+  #     @className = ""
+  #     @value = ""
 
-  $("tfoot input").blur (i) ->
-    if @value is ""
-      @className = "search_init"
-      @value = asInitVals[$("tfoot input").index(this)]
+  # $("tfoot input").blur (i) ->
+  #   if @value is ""
+  #     @className = "search_init"
+  #     @value = asInitVals[$("tfoot input").index(this)]
 
 #--------------------------------------------------------------------------------------------------------------------
 

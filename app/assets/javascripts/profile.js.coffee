@@ -46,4 +46,5 @@ $(document).ready ->
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()
+
       

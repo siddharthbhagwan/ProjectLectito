@@ -1,7 +1,7 @@
 <h3><%= User.find(params[:id]).full_name %>'s Transaction History</h3>
 
 <% if !@t_history.empty? %>
-  <table id='<%= params[:id] %>_transaction_history' class='table table-striped table-bordered table-condensed'>
+  <table id='<%= params[:id] %>_transaction_history' class='table table-striped table-bordered table-condensed datatable'>
     <thead>
       <tr>
         <th>Id</th>
