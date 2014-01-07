@@ -15,14 +15,18 @@
       <%= render 'layouts/header' %>
       <div class = 'container' >
         <div class = 'row'>
-          <div class = 'span10'>
+          <% if user_signed_in? %>
+            <div class = 'span10 offset1'>
+          <% else %>
+            <div class = 'span10 '>
+          <% end %>
             <% if flash[:notice] %>
             <p class='label label-success'><%= flash[:notice] %></p>
             <% end %>
             <% if flash[:error] %>
             <p class='label label-important'><%= flash[:error] %></p>
             <% end %>
-            <% if flash[:info] %>
+            <% if flash[:info] %> 
             <p class='label label-info'><%= flash[:info] %></p>
             <% end %>
             <% if alert %>
