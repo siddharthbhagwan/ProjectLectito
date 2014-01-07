@@ -1,31 +1,36 @@
 <h3>Edit book</h3>
-<%= form_tag  "/inventory/#{@inventory.id}", :method => "put" do %>
 
-<div id="edit_inventory">
-<%= text_field_tag :book_name, Book.where(:id => @inventory.book_id).take.book_name, :placeholder => "Book Name", :required => :true,:width => "10", :disabled => :true %></br>
+<div class='row'>
+	<div class='span2'>
+		<%= form_tag  '/inventory/#{@inventory.id}', method: :put do %>
 
-<div style=" position:absolute; margin-left:220px; top:120px;">
-	<ul style="list-style-type: none">
-		<li><%= text_field_tag :isbn, Book.where(:id => @inventory.book_id).take.isbn, :disabled => true, :placeholder => :ISBN , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :author , Book.where(:id => @inventory.book_id).take.author, :disabled => true, :placeholder => :Author , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :language, Book.where(:id => @inventory.book_id).take.language, :disabled => true, :placeholder => :Language , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :genre, Book.where(:id => @inventory.book_id).take.genre, :disabled => true, :placeholder => :Genre , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :version, Book.where(:id => @inventory.book_id).take.version, :disabled => true, :placeholder => :Version , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :edition, Book.where(:id => @inventory.book_id).take.edition, :disabled => true, :placeholder => :Edition , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :publisher, Book.where(:id => @inventory.book_id).take.publisher, :disabled => true, :placeholder => :Publisher , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :pages, Book.where(:id => @inventory.book_id).take.pages, :disabled => true, :placeholder => :Pages , :class => :edit_inventory %></li>
-		<li><%= text_field_tag :mrp, Book.where(:id => @inventory.book_id).take.mrp, :disabled => true, :placeholder => :MRP , :class => :edit_inventory %></li>
-	</ul>
+		<div id='edit_inventory'>
+		<%= text_field_tag :book_name, Book.where(id: @inventory.book_id).take.book_name, placeholder: 'Book Name', required: true, width: '10', disabled: true %></br>
+
+		<%= collection_select :inventory, :available_in_city, @address, :id, :address_summary %></br>
+
+		<!-- <%= text_field_tag :rental_price, @inventory.rental_price , placeholder: 'Rental Price', required: true %></br> -->
+
+		<%= select_tag :status, options_for_select(['Available','Unavailable'], @inventory.status), placeholder: 'Current Status' %>
+		</br></br>
+
+		</div>
+		<%= submit_tag 'Update', class: :btn %>
+
+		<% end %>
+	</div>	
+
+	<div class='span2 offset1'>
+		<ul style='list-style-type: none'>
+			<li><%= text_field_tag :isbn, Book.where(id: @inventory.book_id).take.isbn, disabled: true, placeholder: :ISBN , class: :edit_inventory %></li>
+			<li><%= text_field_tag :author , Book.where(id: @inventory.book_id).take.author, disabled: true, placeholder: :Author , class: :edit_inventory %></li>
+			<li><%= text_field_tag :language, Book.where(id: @inventory.book_id).take.language, disabled: true, placeholder: :Language , class: :edit_inventory %></li>
+			<li><%= text_field_tag :genre, Book.where(id: @inventory.book_id).take.genre, disabled: true, placeholder: :Genre , class: :edit_inventory %></li>
+			<li><%= text_field_tag :version, Book.where(id: @inventory.book_id).take.version, disabled: true, placeholder: :Version , class: :edit_inventory %></li>
+			<li><%= text_field_tag :edition, Book.where(id: @inventory.book_id).take.edition, disabled: true, placeholder: :Edition , class: :edit_inventory %></li>
+			<li><%= text_field_tag :publisher, Book.where(id: @inventory.book_id).take.publisher, disabled: true, placeholder: :Publisher , class: :edit_inventory %></li>
+			<li><%= text_field_tag :pages, Book.where(id: @inventory.book_id).take.pages, disabled: true, placeholder: :Pages , class: :edit_inventory %></li>
+			<li><%= text_field_tag :mrp, Book.where(id: @inventory.book_id).take.mrp, disabled: true, placeholder: :MRP , class: :edit_inventory %></li>
+		</ul>
+	</div>
 </div>
-
-<%= collection_select :inventory, :available_in_city, @address, :id, :address_summary %></br>
-
-<!-- <%= text_field_tag :rental_price, @inventory.rental_price , :placeholder => "Rental Price", :required => :true %></br> -->
-
-<%= select_tag :status, options_for_select(['Available','Unavailable'], @inventory.status), :placeholder => "Current Status" %>
-</br></br>
-
-</div>
-<%= submit_tag 'Update' %>
-
-<% end %>
