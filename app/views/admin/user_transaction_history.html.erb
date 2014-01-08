@@ -1,5 +1,12 @@
 <h3><%= User.find(params[:id]).full_name %>'s Transaction History</h3>
 
+<%= content_tag 'a', "Filter By Date Range ->", id: :dates_filter_toggle %><br/><br/>
+<div id='dates_filter_div' style="display: none;">
+  <%= text_field_tag :min_req, nil, :placeholder => "Min Req Date (YYYY-MM-DD)" %>
+  <%= text_field_tag :max_req, nil, :placeholder => "Max Req Date (YYYY-MM-DD)" %>
+</div>
+<br/>
+
 <% if !@t_history.empty? %>
   <table id='<%= params[:id] %>_transaction_history' class='table table-striped table-bordered table-condensed datatable'>
     <thead>
@@ -39,7 +46,7 @@
             </td>
           <% end %>
 
-          <td><%= th.request_date.to_s(:long) %></td>
+          <td><%= th.request_date.to_date.to_s %></td>
         </tr>
       <% end %>
     </tbody>
