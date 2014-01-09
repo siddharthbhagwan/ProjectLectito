@@ -226,6 +226,6 @@ jQuery ->
 #--------------------------------------------------------------------------------------------------------------------
 # Span fix for sign in page
 jQuery ->
-  if (".hero-unit").length
+  if $(".hero-unit").length
     $(".span10").removeClass("offset1")
 
