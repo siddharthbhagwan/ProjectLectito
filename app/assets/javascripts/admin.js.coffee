@@ -220,6 +220,12 @@ jQuery ->
     draggable: false
     buttons:
       "Ok": ->
-        $(this).dialog "close"   
+        $(this).dialog "close" 
 
          
+#--------------------------------------------------------------------------------------------------------------------
+# Span fix for sign in page
+jQuery ->
+  if (".hero-unit").length
+    $(".span10").removeClass("offset1")
+
