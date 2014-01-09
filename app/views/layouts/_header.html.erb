@@ -17,6 +17,20 @@
               </ul>
 	          </li>
 
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Profile<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <% if !current_user.profile.nil? %>             
+                  <li><%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></li>
+                <% end %> 
+                <li><%= link_to "Addresses", address_index_path  %></li>
+                <li><%= link_to "Rating", profile_rating_path  %></li>                    
+                <li><%= link_to "History", transaction_history_path %></li>
+                <li class="divider"></li>
+                <li><%= link_to "Change Password", edit_user_registration_path %></li>
+              </ul>
+            </li>
+
 	          <% if current_user.has_role? :admin %>
 	          	<li class="dropdown">
 	          		<a data-toggle="dropdown" class="dropdown-toggle" href="#">Admin<b class="caret"></b></a>
@@ -24,27 +38,9 @@
 	                <li><%= link_to "Users", admin_index_path %></li>
 	                <li><%= link_to "Books", book_index_path %></li>
 	                <li><%= link_to "Transactions", admin_index_path %></li>
-	                <li class="divider"></li>
-	                <li class="nav-header">Nav header</li>
-	                <li><a href="#">Separated link</a></li>
-	                <li><a href="#">One more separated link</a></li>
             		</ul>
 	          	</li>
 	          <% end %>
-
-	          <li class="dropdown">
-	            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Profile<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-              	<% if !current_user.profile.nil? %>							
-  								<li><%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></li>
-  							<% end %>	
-                <li><%= link_to "Addresses", address_index_path  %></li>
-                <li><%= link_to "Rating", profile_rating_path  %></li>  									
-  							<li><%= link_to "History", transaction_history_path %></li>
-  							<li class="divider"></li>
-  							<li><%= link_to "Change Password", edit_user_registration_path %></li>
-              </ul>
-	          </li>
 
 	          <li><%= link_to "Sign Out" , destroy_user_session_path , method: :delete %></li>
 
