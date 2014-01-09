@@ -187,7 +187,8 @@ $(document).ready ->
         $("#pages").hide()
         $("#publisher").hide()
         $("#edition").hide()
-        $("#book_name_empty").fadeIn(300)
+        $("#book_name_empty").hide()
+        $("#book_name_empty").fadeIn(600)
       else 
         $("#book_name_empty").hide()
 
