@@ -28,6 +28,7 @@ gem 'redis'
 gem 'rspec'
 gem 'puma'
 gem 'rubocop'
+gem 'bigbertha'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

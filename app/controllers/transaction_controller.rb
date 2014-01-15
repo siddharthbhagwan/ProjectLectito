@@ -373,7 +373,11 @@ class TransactionController < ApplicationController
       }
 
 			# Firebase.push(publish_from_channel, chat_data.to_json)
-      response = Firebase.push(publish_to_channel, chat_data.to_json)
+      #response = Firebase.push(publish_to_channel, chat_data.to_json)
+
+			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_to_channel )
+			bigBertha_ref.push(chat_data.to_json)
+
       render nothing: true
     else
     		raise 'error'

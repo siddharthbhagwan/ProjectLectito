@@ -157,9 +157,8 @@ $(document).ready ->
     #TODO Remove duplication on code - if and else for initiated and initiating box chat
     success: (msg) ->
         id = msg.user_id
-        myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
-        myChild = myFirebase.child("transaction_listener_" + id)
-        myChild.on "child_added", (childSnapshot, prevChildName) ->
+        myFirebase = new Firebase("https://projectlectito.firebaseio.com/transaction_listener_" + id)
+        myFirebase.on "child_added", (childSnapshot, prevChildName) ->
           pData = $.parseJSON(childSnapshot.val())
           # Listener for Firebase messages
           if pData[0] == "chat"
@@ -314,7 +313,11 @@ $(document).ready ->
               psconsole = $("#chat_box")
               psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
 
-            myChild.remove()  
+            myFirebase.child(childSnapshot.bc.path.m[1]).remove()
+            # If myFirebase.remove() is called, -> If there are multiple calues udner a single key, only the last value
+            # is delivered, the others are read from Firebase, but dont reach. So instead of removing the entire parent,
+            # traverse the above path and find the key, and individually remove each. Strangely, placing this comment
+            # Above the line causes the code to stop working, so be careful.
               
     complete: (jqXHR, textStatus) ->
 

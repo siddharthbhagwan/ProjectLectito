@@ -795,8 +795,8 @@ $(document).ready ->
 
     success: (msg) ->
       id = msg.user_id
-      myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
-      myChild = myFirebase.child("transaction_listener_" + id)
+      # myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
+      # myChild = myFirebase.child("transaction_listener_" + id)
       myChild.on "child_added", (childSnapshot, prevChildName) ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)

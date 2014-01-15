@@ -47,12 +47,19 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.0)
+    arrayfields (4.9.0)
     ast (1.1.0)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    bigbertha (0.0.5)
+      firebase_token_generator (~> 1.0.1)
+      main (~> 5.2.0)
+      map (~> 6.3.0)
+      typhoeus (~> 0.6.2)
+      values (~> 1.5.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
@@ -60,6 +67,7 @@ GEM
     cancan (1.6.7)
     celluloid (0.15.2)
       timers (~> 1.1.0)
+    chronic (0.10.2)
     coderay (1.1.0)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -92,10 +100,12 @@ GEM
     execjs (2.0.2)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    fattr (2.2.1)
     ffi (1.9.3)
     firebase (0.1.4)
       json
       typhoeus (>= 0.6.1)
+    firebase_token_generator (1.0.3)
     hashie (2.0.5)
     hike (1.2.3)
     httpauth (0.2.0)
@@ -125,6 +135,12 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    main (5.2.0)
+      arrayfields (>= 4.7.4)
+      chronic (>= 0.6.2)
+      fattr (>= 2.2.0)
+      map (>= 5.1.0)
+    map (6.3.0)
     meta_request (0.2.8)
       callsite
       rack-contrib
@@ -251,6 +267,7 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    values (1.5.0)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -261,6 +278,7 @@ DEPENDENCIES
   actionpack-action_caching
   activesupport (~> 4.0.0)
   better_errors
+  bigbertha
   binding_of_caller
   blockuijs-rails!
   cancan (= 1.6.7)
