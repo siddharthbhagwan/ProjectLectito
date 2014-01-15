@@ -119,16 +119,26 @@ $(document).ready ->
 
             beforeSend: ->
               before_send()
+              console.log "here before send"
 
             success: (msg) ->
+              console.log "here in success"
 
             complete: (jqXHR, textStatus) ->
+              console.log "here in completion"
               $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
+              console.log "here in completion 2"
               $("#city_" + city_id).hide()
+              console.log "here in completion 3"
               $("#" + city_id).attr("data-status","closed")
+              console.log "here in completion 4"
               setTimeout $.unblockUI
+              console.log "here in completion 5"
 
             error: (jqXHR, textStatus, errorThrown) ->
+              console.log jqXHR
+              console.log textStatus
+              console.log errorThrown
               setTimeout $.unblockUI
               display_error(jqXHR.status) 
 
@@ -795,9 +805,9 @@ $(document).ready ->
 
     success: (msg) ->
       id = msg.user_id
-      # myFirebase = new Firebase("https://projectlectito.firebaseio.com/")
+      myFirebase = new Firebase("https://projectlectito.firebaseio.com/transaction_listener_" + id)
       # myChild = myFirebase.child("transaction_listener_" + id)
-      myChild.on "child_added", (childSnapshot, prevChildName) ->
+      myFirebase.on "child_added", (childSnapshot, prevChildName) ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)
         if pData[0] == "create"
@@ -1041,7 +1051,8 @@ $(document).ready ->
         # else if pData[0] == "online"
         #   $("#online_" + pData[1].id).removeAttr("hidden")
 
-        myChild.remove()  
+        myFirebase.child(childSnapshot.bc.path.m[1]).remove()
+        # Refer line 316 in chat.js for comments 
 
     complete: (jqXHR, textStatus) ->
 

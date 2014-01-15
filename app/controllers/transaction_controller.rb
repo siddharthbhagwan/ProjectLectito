@@ -42,7 +42,10 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
-			Firebase.push(publish_channel, transaction_details.to_json)
+			#Firebase.push(publish_channel, transaction_details.to_json)
+
+			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
+			bigBertha_ref.push(transaction_details.to_json)
 
 		end
 
