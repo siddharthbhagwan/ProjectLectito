@@ -1,4 +1,3 @@
-# Transaction Controller
 class TransactionController < ApplicationController
 	include ApplicationHelper, TransactionHelper
 	
@@ -15,13 +14,13 @@ class TransactionController < ApplicationController
 		@transaction.renewal_count = 0
 		@transaction.status = 'Pending'
 
-		@borrow = Transaction.where('borrower_id = ? AND created_at > ? AND status =?', current_user.id, Time.at(params[:after_b].to_i + 1), 'Pending')
-		
+		@borrow = Transaction.where('borrower_id = ? AND updated_at > ? AND status =?', current_user.id, Time.at(params[:after_b].to_i + 1), 'Pending')
+
 		if !@transaction.save
 			raise 'error'
 		else
-			# MailWorker.perform_borrow_request_async(@transaction.lender_id)
-			lsa = Profile.where(user_id: @transaction.borrower_id).take.last_seen_at
+			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
+			lsa = Profile.where(:user_id => @transaction.borrower_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa).seconds < 6
 				online_status = 'Online'
 			else
@@ -43,21 +42,19 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
-			#Firebase.push(publish_channel, transaction_details.to_json)
-
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.firebaseio.com/' + publish_channel )
-			bigBertha_ref.push(transaction_details.to_json)
+			Firebase.push(publish_channel, transaction_details.to_json)
 
 		end
 
 		respond_to do |format|
+    		format.html  
     		format.js
 		end
 	end
 
 	# Called when a lender accepts a request
 	def update_request_status_accept
-		accepted_request = Transaction.where(id: params[:tr_id]).take
+		accepted_request = Transaction.where(:id => params[:tr_id]).take
 		transaction_data = []
 		transaction_data << params[:dispatch_date] << params[:dispatch_time]
 		accepted_request_status = accepted_request.update_transaction('Accepted', current_user.id, *transaction_data)
@@ -68,7 +65,7 @@ class TransactionController < ApplicationController
 		if accepted_request_status
 
 			# Lender receives 10 requests for a book. Accepts One of them. Remaining 9 need to be rejected.
-			@remaining_requests = Transaction.where(inventory_id: accepted_request.inventory_id, lender_id: accepted_request.lender_id, status: 'Pending')
+			@remaining_requests = Transaction.where(:inventory_id => accepted_request.inventory_id, :lender_id => accepted_request.lender_id, :status => 'Pending')
 
 
 			if !@remaining_requests.nil?
@@ -94,15 +91,11 @@ class TransactionController < ApplicationController
 						if reject_each.save
 							# Remove remaining requests rows from lender
 							publish_channel_remaining_lender = 'transaction_listener_' + reject_each.lender_id.to_s
-							# Firebase.push(publish_channel_remaining_lender, reject_update_lender.to_json)
-							bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel_remaining_lender )
-							bigBertha_ref.push(reject_update_lender.to_json)
+							Firebase.push(publish_channel_remaining_lender, reject_update_lender.to_json)
 
 							# Notify each of the remaining that request has been rejected
 							publish_channel_remaining_borrower = 'transaction_listener_' + reject_each.borrower_id.to_s
-							# Firebase.push(publish_channel_remaining_borrower, reject_update_borrower.to_json)
-							bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel_remaining_borrower )
-							bigBertha_ref.push(reject_update_borrower.to_json)
+							Firebase.push(publish_channel_remaining_borrower, reject_update_borrower.to_json)
 						end
 					end
 				end
@@ -117,9 +110,9 @@ class TransactionController < ApplicationController
 	    currentcn = User.find(current_user.id).profile.chat_name
 	    borrowercn = User.find(accepted_request.borrower_id).profile.chat_name
 	    lendercn = User.find(accepted_request.lender_id).profile.chat_name
-	    title = Book.where(id: Inventory.where(id: accepted_request.inventory_id).take.book_id).take.book_name
+	    title = Book.where(:id => Inventory.where(:id => accepted_request.inventory_id).take.book_id).take.book_name
 
-	    lsa_borrower = Profile.where(user_id: accepted_request.borrower_id).take.last_seen_at
+	    lsa_borrower = Profile.where(:user_id => accepted_request.borrower_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa_borrower).seconds < 6
 				online_status_borrower = 'Online'
 			else
@@ -129,20 +122,20 @@ class TransactionController < ApplicationController
 			transaction_accepted_lender = []
 			transaction_accepted_lender << 'accepted_borrower'
 			transaction_accepted_lender << {			
-				id: accepted_request.id,
-				book_name: book_name,
-				acceptance_date: acceptance_date,
-				borrower: User.find(accepted_request.borrower_id).full_name,
-				delivery_mode: delivery_mode,
-				borrower_id: accepted_request.borrower_id,
-				online: online_status_borrower,
-				currentcn: currentcn,
-				lendercn: lendercn,
-				borrowercn: borrowercn,
-				title: title
+				:id => accepted_request.id,
+				:book_name => book_name,
+				:acceptance_date => acceptance_date,
+				:borrower => User.find(accepted_request.borrower_id).full_name,
+				:delivery_mode => delivery_mode,
+				:borrower_id => accepted_request.borrower_id,
+				:online => online_status_borrower,
+				:currentcn => currentcn,
+				:lendercn => lendercn,
+				:borrowercn => borrowercn,
+				:title => title
 			}
 
-			lsa_lender = Profile.where(user_id: accepted_request.lender_id).take.last_seen_at
+			lsa_lender = Profile.where(:user_id => accepted_request.lender_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa_lender).seconds < 6
 				online_status_lender = 'Online'
 			else
@@ -152,36 +145,32 @@ class TransactionController < ApplicationController
 			transaction_accepted_borrower = []
 			transaction_accepted_borrower << 'accepted_lender'
 			transaction_accepted_borrower << {
-				id: accepted_request.id,
-				book_name: book_name,
-				acceptance_date: acceptance_date,
-				lender: User.find(accepted_request.lender_id).full_name,
-				delivery_mode: delivery_mode,
-				online: online_status_lender,
-				currentcn: currentcn,
-				lendercn: lendercn,
-				borrowercn: borrowercn,
-				title: title
+				:id => accepted_request.id,
+				:book_name => book_name,
+				:acceptance_date => acceptance_date,
+				:lender => User.find(accepted_request.lender_id).full_name,
+				:delivery_mode => delivery_mode,
+				:online => online_status_lender,
+				:currentcn => currentcn,
+				:lendercn => lendercn,
+				:borrowercn => borrowercn,
+				:title => title
 			}
 
 			
 			#MailWorker.perform_borrow_accept_async(accepted_request.borrower_id)
 			publish_channel_lender = 'transaction_listener_' + lender_id_s
-			# Firebase.push(publish_channel_lender, transaction_accepted_lender.to_json)
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel_lender )
-			bigBertha_ref.push(transaction_accepted_lender.to_json)
+			Firebase.push(publish_channel_lender, transaction_accepted_lender.to_json)
 
 			publish_channel_borrower = 'transaction_listener_' + borrower_id_s
-			# Firebase.push(publish_channel_borrower, transaction_accepted_borrower.to_json)
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel_borrower )
-			bigBertha_ref.push(transaction_accepted_borrower.to_json)
+			Firebase.push(publish_channel_borrower, transaction_accepted_borrower.to_json)
 
 		else
 			raise 'error'
 		end
 
 		respond_to do |format|
-    		format.json { render nothing: true, status: 204 }
+    		format.json { render nothing: true, :status => 204 }
 		end
 	end
 
@@ -202,9 +191,7 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + rejected_transaction.borrower_id.to_s
-			# Firebase.push(publish_channel, transaction_rejected.to_json)
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-			bigBertha_ref.push(transaction_rejected.to_json)
+			Firebase.push(publish_channel, transaction_rejected.to_json)
 
 			respond_to do |format|
 	    		format.json { render nothing: true, status: 204 }
@@ -230,9 +217,7 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + cancelled_transaction.lender_id.to_s
-			# Firebase.push(publish_channel, cancelled_transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-			bigBertha_ref.push(cancelled_transaction_details.to_json)
+			Firebase.push(publish_channel, cancelled_transaction_details.to_json)
 
 			respond_to do |format|
 	    		format.json { render nothing: true, status: 204 }
@@ -261,10 +246,7 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + returned_transaction.lender_id.to_s
-			# Firebase.push(publish_channel, returned_transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-			bigBertha_ref.push(returned_transaction_details.to_json)
-
+			Firebase.push(publish_channel, returned_transaction_details.to_json)
 
 			respond_to do |format|
     		format.json  { render nothing: true, status: 204 }
@@ -277,7 +259,6 @@ class TransactionController < ApplicationController
 		end
 	end
 
-	# Lender has recieved the book on borrowers return, end of cycle
 	def update_request_status_receive_lender
 		received_transaction = Transaction.where(id: params[:tr_id]).take
 		transaction_data = []
@@ -285,6 +266,7 @@ class TransactionController < ApplicationController
 		received_transaction_status = received_transaction.update_transaction('Complete', current_user.id, *transaction_data) 
 
 		if received_transaction_status
+
 			received_transaction_details = []
 			received_transaction_details << 'received_lender'
 			received_transaction_details << {
@@ -294,9 +276,7 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + received_transaction.borrower_id.to_s
-			# Firebase.push(publish_channel, received_transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-			bigBertha_ref.push(received_transaction_details.to_json)
+			Firebase.push(publish_channel, received_transaction_details.to_json)
 
 			respond_to do |format|
     		format.json { render nothing: true, status: 204 }
@@ -322,9 +302,7 @@ class TransactionController < ApplicationController
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.lender_id.to_s
-				# Firebase.push(publish_channel, borrower_received_transaction_details.to_json)
-				bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-				bigBertha_ref.push(borrower_received_transaction_details.to_json)
+				Firebase.push(publish_channel, borrower_received_transaction_details.to_json)
 
 				borrower_received_transaction_lender_details = []
 				borrower_received_transaction_lender_details << 'received_borrower_by_borrower_lender'
@@ -334,9 +312,7 @@ class TransactionController < ApplicationController
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.borrower_id.to_s
-				# Firebase.push(publish_channel, borrower_received_transaction_lender_details.to_json)
-				bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-				bigBertha_ref.push(borrower_received_transaction_lender_details.to_json)
+				Firebase.push(publish_channel, borrower_received_transaction_lender_details.to_json)
 
 			elsif params[:called_by] == 'lender'
 				borrower_received_transaction_details = []
@@ -350,9 +326,7 @@ class TransactionController < ApplicationController
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.borrower_id.to_s
-				# Firebase.push(publish_channel, borrower_received_transaction_details.to_json)
-				bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-				bigBertha_ref.push(borrower_received_transaction_details.to_json)
+				Firebase.push(publish_channel, borrower_received_transaction_details.to_json)
 
 				transaction_received_borrower_borrower = []
 				transaction_received_borrower_borrower << 'received_borrower_by_lender_borrower'
@@ -362,10 +336,7 @@ class TransactionController < ApplicationController
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.lender_id.to_s
-				# Firebase.push(publish_channel, transaction_received_borrower_borrower.to_json)
-				bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
-				bigBertha_ref.push(transaction_received_borrower_borrower.to_json)
-
+				Firebase.push(publish_channel, transaction_received_borrower_borrower.to_json)
 			end
 		end
 
@@ -402,11 +373,7 @@ class TransactionController < ApplicationController
       }
 
 			# Firebase.push(publish_from_channel, chat_data.to_json)
-      #response = Firebase.push(publish_to_channel, chat_data.to_json)
-
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_to_channel )
-			bigBertha_ref.push(chat_data.to_json)
-
+      response = Firebase.push(publish_to_channel, chat_data.to_json)
       render nothing: true
     else
     		raise 'error'
