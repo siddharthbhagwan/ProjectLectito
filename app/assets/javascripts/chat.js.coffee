@@ -164,11 +164,13 @@ $(document).ready ->
           if pData[0] == "chat"
             # Box Type Chat
             if pData[1].type == 'box'
+              # Check if div for this particular transaction id exists, if not, create it
               if !$("#chat_div_" + pData[1].trid).length
-                $("#chat_divs").append("<div id='chat_div_" + pData[1].trid + "''></div>")
+                $("#chat_divs").append("<div id='chat_div_" + pData[1].trid + "'></div>")
 
               # Check if chat box for this transaction already Inititated
               if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
+                # Chat box isnt initialzed , initalize it
                 exports.chat_boxes.push(pData[1].trid)
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
@@ -193,6 +195,7 @@ $(document).ready ->
                       error: (jqXHR, textStatus, errorThrown) ->
 
                     $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
+                    console.log "ad"
 
                   # When the box is closed, move each box after it to the left to fill in the gap
                   boxClosed: ->
@@ -223,7 +226,7 @@ $(document).ready ->
                     success: (msg) ->
                       i = 0
                       while i < msg.length
-                        $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
+                        $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2)
                         i = i + 2
 
                     complete: (jqXHR, textStatus) ->  
@@ -231,15 +234,15 @@ $(document).ready ->
                     error: (jqXHR, textStatus, errorThrown) ->
 
                 else
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text      
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+                  console.log "yo"    
 
                 # If another chat box is active, dont focus on new one, focus stays on old one
                 if $("div[id^='chat_div_']").length is 1
                   $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
-              # Initiating Chat Box  
+              # Chat box already initialized 
               else
-                # Initiating ChatBox with Id and Title
                 $("#chat_div_" + pData[1].trid).chatbox(
                   id: "chatbox_" + pData[1].trid
                   title: "Chat - " + pData[1].title
@@ -264,6 +267,7 @@ $(document).ready ->
 
                     # Display the sent message with your initials
                     $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
+                    console.log "here"
 
                   # When the box is closed, move each box after it to the left to fill in the gap
                   boxClosed: ->
@@ -281,7 +285,8 @@ $(document).ready ->
                     $("#chat_div_" + pData[1].trid).remove()
                 )
 
-                # If no child elements, retrieve history along with last ping, else just display last ping
+                # If no child elements i.e, no text already present in window (window is newly opened), retrieve history
+                # along with last ping, else just display last ping
                 if $("#chat_div_" + pData[1].trid).children().length == 0
                   $.ajax
                     url: "/chat/box_chat_history.json"
