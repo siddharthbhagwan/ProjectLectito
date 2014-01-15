@@ -269,6 +269,7 @@ class TransactionController < ApplicationController
 		end
 	end
 
+	# Lender has recieved the book on borrowers return, end of cycle
 	def update_request_status_receive_lender
 		received_transaction = Transaction.where(id: params[:tr_id]).take
 		transaction_data = []
@@ -276,7 +277,6 @@ class TransactionController < ApplicationController
 		received_transaction_status = received_transaction.update_transaction('Complete', current_user.id, *transaction_data) 
 
 		if received_transaction_status
-
 			received_transaction_details = []
 			received_transaction_details << 'received_lender'
 			received_transaction_details << {
@@ -286,7 +286,9 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + received_transaction.borrower_id.to_s
-			Firebase.push(publish_channel, received_transaction_details.to_json)
+			# Firebase.push(publish_channel, received_transaction_details.to_json)
+			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
+			bigBertha_ref.push(received_transaction_details.to_json)
 
 			respond_to do |format|
     		format.json { render nothing: true, status: 204 }
