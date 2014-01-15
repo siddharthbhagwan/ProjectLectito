@@ -194,7 +194,9 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + rejected_transaction.borrower_id.to_s
-			Firebase.push(publish_channel, transaction_rejected.to_json)
+			# Firebase.push(publish_channel, transaction_rejected.to_json)
+			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
+			bigBertha_ref.push(transaction_rejected.to_json)
 
 			respond_to do |format|
 	    		format.json { render nothing: true, status: 204 }
