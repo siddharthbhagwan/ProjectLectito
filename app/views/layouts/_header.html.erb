@@ -2,10 +2,10 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<% if user_signed_in? %>
-				<a class="brand" href="/home">Project Lectito</a>
+				<a class="brand" href="/inventory/search">Project Lectito</a>
 				<div class="nav-collapse">
 					<ul class="nav">
-	          <li><%= link_to "Welcome " + current_user.welcome_name , inventory_search_path %></li>
+	          <li><%= link_to " Welcome " + current_user.welcome_name , inventory_search_path %></li>
 	          <li><%= link_to " Home ", inventory_search_path, id: :home_link %></li>
 						<li><%= link_to " Search ", inventory_search_path %></li>
 
