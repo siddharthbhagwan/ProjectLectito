@@ -1,3 +1,4 @@
+# Transaction Controller
 class TransactionController < ApplicationController
 	include ApplicationHelper, TransactionHelper
 	
@@ -19,8 +20,8 @@ class TransactionController < ApplicationController
 		if !@transaction.save
 			raise 'error'
 		else
-			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
-			lsa = Profile.where(:user_id => @transaction.borrower_id).take.last_seen_at
+			# MailWorker.perform_borrow_request_async(@transaction.lender_id)
+			lsa = Profile.where(user_id: @transaction.borrower_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa).seconds < 6
 				online_status = 'Online'
 			else
@@ -30,15 +31,15 @@ class TransactionController < ApplicationController
 			transaction_details = [] 
 			transaction_details << 'create'
 			transaction_details << {
-				:id => @transaction.id,
-				:book_name => Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
-				:requested_from => Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
-				:requested_date => @transaction.request_date.to_s(:long),
-				:status => @transaction.status,
-				:borrower => User.find(@transaction.borrower_id).full_name,
-				:delivery_mode => (User.find(@transaction.borrower_id).is_delivery or User.find(@transaction.lender_id).is_delivery),
-				:online => online_status,
-				:name => User.find(current_user.id).full_name
+				id: @transaction.id,
+				book_name: Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
+				requested_from: Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
+				requested_date: @transaction.request_date.to_s(:long),
+				status: @transaction.status,
+				borrower: User.find(@transaction.borrower_id).full_name,
+				delivery_mode: (User.find(@transaction.borrower_id).is_delivery or User.find(@transaction.lender_id).is_delivery),
+				online: online_status,
+				name: User.find(current_user.id).full_name
 			}
 
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
@@ -57,7 +58,7 @@ class TransactionController < ApplicationController
 
 	# Called when a lender accepts a request
 	def update_request_status_accept
-		accepted_request = Transaction.where(:id => params[:tr_id]).take
+		accepted_request = Transaction.where(id: params[:tr_id]).take
 		transaction_data = []
 		transaction_data << params[:dispatch_date] << params[:dispatch_time]
 		accepted_request_status = accepted_request.update_transaction('Accepted', current_user.id, *transaction_data)
@@ -68,7 +69,7 @@ class TransactionController < ApplicationController
 		if accepted_request_status
 
 			# Lender receives 10 requests for a book. Accepts One of them. Remaining 9 need to be rejected.
-			@remaining_requests = Transaction.where(:inventory_id => accepted_request.inventory_id, :lender_id => accepted_request.lender_id, :status => 'Pending')
+			@remaining_requests = Transaction.where(inventory_id: accepted_request.inventory_id, lender_id: accepted_request.lender_id, status: 'Pending')
 
 
 			if !@remaining_requests.nil?
@@ -81,14 +82,14 @@ class TransactionController < ApplicationController
 						reject_update_lender = []
 						reject_update_lender << 'rejected_lender'
 						reject_update_lender << {
-							:id => reject_each.id.to_s
+							id: reject_each.id.to_s
 						}
 
 						reject_update_borrower = []
 						reject_update_borrower << 'rejected_borrower'
 						reject_update_borrower << {
-							:id => reject_each.id.to_s,
-							:book_name => Book.find(Inventory.find(accepted_request.inventory_id).book_id).book_name
+							id: reject_each.id.to_s,
+							book_name: Book.find(Inventory.find(accepted_request.inventory_id).book_id).book_name
 						}
 
 						if reject_each.save
@@ -117,9 +118,9 @@ class TransactionController < ApplicationController
 	    currentcn = User.find(current_user.id).profile.chat_name
 	    borrowercn = User.find(accepted_request.borrower_id).profile.chat_name
 	    lendercn = User.find(accepted_request.lender_id).profile.chat_name
-	    title = Book.where(:id => Inventory.where(:id => accepted_request.inventory_id).take.book_id).take.book_name
+	    title = Book.where(id: Inventory.where(id: accepted_request.inventory_id).take.book_id).take.book_name
 
-	    lsa_borrower = Profile.where(:user_id => accepted_request.borrower_id).take.last_seen_at
+	    lsa_borrower = Profile.where(user_id: accepted_request.borrower_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa_borrower).seconds < 6
 				online_status_borrower = 'Online'
 			else
@@ -129,20 +130,20 @@ class TransactionController < ApplicationController
 			transaction_accepted_lender = []
 			transaction_accepted_lender << 'accepted_borrower'
 			transaction_accepted_lender << {			
-				:id => accepted_request.id,
-				:book_name => book_name,
-				:acceptance_date => acceptance_date,
-				:borrower => User.find(accepted_request.borrower_id).full_name,
-				:delivery_mode => delivery_mode,
-				:borrower_id => accepted_request.borrower_id,
-				:online => online_status_borrower,
-				:currentcn => currentcn,
-				:lendercn => lendercn,
-				:borrowercn => borrowercn,
-				:title => title
+				id: accepted_request.id,
+				book_name: book_name,
+				acceptance_date: acceptance_date,
+				borrower: User.find(accepted_request.borrower_id).full_name,
+				delivery_mode: delivery_mode,
+				borrower_id: accepted_request.borrower_id,
+				online: online_status_borrower,
+				currentcn: currentcn,
+				lendercn: lendercn,
+				borrowercn: borrowercn,
+				title: title
 			}
 
-			lsa_lender = Profile.where(:user_id => accepted_request.lender_id).take.last_seen_at
+			lsa_lender = Profile.where(user_id: accepted_request.lender_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa_lender).seconds < 6
 				online_status_lender = 'Online'
 			else
@@ -152,16 +153,16 @@ class TransactionController < ApplicationController
 			transaction_accepted_borrower = []
 			transaction_accepted_borrower << 'accepted_lender'
 			transaction_accepted_borrower << {
-				:id => accepted_request.id,
-				:book_name => book_name,
-				:acceptance_date => acceptance_date,
-				:lender => User.find(accepted_request.lender_id).full_name,
-				:delivery_mode => delivery_mode,
-				:online => online_status_lender,
-				:currentcn => currentcn,
-				:lendercn => lendercn,
-				:borrowercn => borrowercn,
-				:title => title
+				id: accepted_request.id,
+				book_name: book_name,
+				acceptance_date: acceptance_date,
+				lender: User.find(accepted_request.lender_id).full_name,
+				delivery_mode: delivery_mode,
+				online: online_status_lender,
+				currentcn: currentcn,
+				lendercn: lendercn,
+				borrowercn: borrowercn,
+				title: title
 			}
 
 			
@@ -181,7 +182,7 @@ class TransactionController < ApplicationController
 		end
 
 		respond_to do |format|
-    		format.json { render nothing: true, :status => 204 }
+    		format.json { render nothing: true, status: 204 }
 		end
 	end
 
