@@ -15,8 +15,8 @@ class TransactionController < ApplicationController
 		@transaction.renewal_count = 0
 		@transaction.status = 'Pending'
 
-		@borrow = Transaction.where('borrower_id = ? AND updated_at > ? AND status =?', current_user.id, Time.at(params[:after_b].to_i + 1), 'Pending')
-
+		@borrow = Transaction.where('borrower_id = ? AND created_at > ? AND status =?', current_user.id, Time.at(params[:after_b].to_i + 1), 'Pending')
+		
 		if !@transaction.save
 			raise 'error'
 		else
@@ -45,13 +45,12 @@ class TransactionController < ApplicationController
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
 			#Firebase.push(publish_channel, transaction_details.to_json)
 
-			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.Firebaseio.com/' + publish_channel )
+			bigBertha_ref = Bigbertha::Ref.new( 'https://projectlectito.firebaseio.com/' + publish_channel )
 			bigBertha_ref.push(transaction_details.to_json)
 
 		end
 
 		respond_to do |format|
-    		format.html  
     		format.js
 		end
 	end

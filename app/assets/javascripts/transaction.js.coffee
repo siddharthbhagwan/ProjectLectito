@@ -125,15 +125,10 @@ $(document).ready ->
               console.log "here in success"
 
             complete: (jqXHR, textStatus) ->
-              console.log "here in completion"
               $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
-              console.log "here in completion 2"
               $("#city_" + city_id).hide()
-              console.log "here in completion 3"
               $("#" + city_id).attr("data-status","closed")
-              console.log "here in completion 4"
               setTimeout $.unblockUI
-              console.log "here in completion 5"
 
             error: (jqXHR, textStatus, errorThrown) ->
               console.log jqXHR
