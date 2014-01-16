@@ -195,7 +195,6 @@ $(document).ready ->
                       error: (jqXHR, textStatus, errorThrown) ->
 
                     $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
-                    console.log "ad"
 
                   # When the box is closed, move each box after it to the left to fill in the gap
                   boxClosed: ->
@@ -213,7 +212,7 @@ $(document).ready ->
                     $("#chat_div_" + pData[1].trid).remove()
                 )
 
-                # If no child elements, retrieve history along with last ping, else just display last ping
+                # If no child elements i.e, no texts displayed in the box (box is newly initialized), retrieve history along with last ping, else just display last ping
                 if $("#chat_div_" + pData[1].trid).children().length == 0
                   $.ajax
                     url: "/chat/box_chat_history.json"
@@ -226,6 +225,8 @@ $(document).ready ->
                     success: (msg) ->
                       i = 0
                       while i < msg.length
+                        # Trim last 2 characters from each chat => \n
+                        # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
                         $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2)
                         i = i + 2
 
@@ -235,7 +236,6 @@ $(document).ready ->
 
                 else
                   $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
-                  console.log "yo"    
 
                 # If another chat box is active, dont focus on new one, focus stays on old one
                 if $("div[id^='chat_div_']").length is 1
@@ -267,7 +267,6 @@ $(document).ready ->
 
                     # Display the sent message with your initials
                     $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
-                    console.log "here"
 
                   # When the box is closed, move each box after it to the left to fill in the gap
                   boxClosed: ->
@@ -287,6 +286,7 @@ $(document).ready ->
 
                 # If no child elements i.e, no text already present in window (window is newly opened), retrieve history
                 # along with last ping, else just display last ping
+                # FIXME - chances are, there would be no need for the history part if the box is already initialized
                 if $("#chat_div_" + pData[1].trid).children().length == 0
                   $.ajax
                     url: "/chat/box_chat_history.json"
