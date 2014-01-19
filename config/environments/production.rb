@@ -1,6 +1,9 @@
   ProjectLectito::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Firebase URL
+  ENV['firebase_url'] = 'https://projectlectito.firebaseio.com/'
+
   config.eager_load = true
 
   # Code is not reloaded between requests
