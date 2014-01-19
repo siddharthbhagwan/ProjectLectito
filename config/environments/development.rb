@@ -42,6 +42,10 @@ ProjectLectito::Application.configure do
   #DB Pool
   #ENV["DB_POOL"] = '20'
 
+  # Firebase Cinfig
+  ENV['firebase_url'] = 'https://projectlectito.firebaseio.com/'
+
+
   #Default Url
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }
 

@@ -43,7 +43,7 @@ class TransactionController < ApplicationController
 
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
 			# Firebase.push(publish_channel, transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
 			bigBertha_ref.push(transaction_details.to_json)
 
 		end
@@ -94,13 +94,13 @@ class TransactionController < ApplicationController
 							# Remove remaining requests rows from lender
 							publish_channel_remaining_lender = 'transaction_listener_' + reject_each.lender_id.to_s
 							# Firebase.push(publish_channel_remaining_lender, reject_update_lender.to_json)
-							bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel_remaining_lender)
+							bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel_remaining_lender)
       				bigBertha_ref.push(reject_update_lender.to_json)
 
 							# Notify each of the remaining that request has been rejected
 							publish_channel_remaining_borrower = 'transaction_listener_' + reject_each.borrower_id.to_s
 							# Firebase.push(publish_channel_remaining_borrower, reject_update_borrower.to_json)
-							bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel_remaining_borrower)
+							bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel_remaining_borrower)
       				bigBertha_ref.push(reject_update_borrower.to_json)
 						end
 					end
@@ -167,12 +167,12 @@ class TransactionController < ApplicationController
 			#MailWorker.perform_borrow_accept_async(accepted_request.borrower_id)
 			publish_channel_lender = 'transaction_listener_' + lender_id_s
 			# Firebase.push(publish_channel_lender, transaction_accepted_lender.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel_lender)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel_lender)
       bigBertha_ref.push(transaction_accepted_lender.to_json)
 
 			publish_channel_borrower = 'transaction_listener_' + borrower_id_s
 			# Firebase.push(publish_channel_borrower, transaction_accepted_borrower.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel_borrower)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel_borrower)
       bigBertha_ref.push(transaction_accepted_borrower.to_json)
 
 		else
@@ -202,7 +202,7 @@ class TransactionController < ApplicationController
 
 			publish_channel = 'transaction_listener_' + rejected_transaction.borrower_id.to_s
 			# Firebase.push(publish_channel, transaction_rejected.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       bigBertha_ref.push(transaction_rejected.to_json)
 
 			respond_to do |format|
@@ -230,7 +230,7 @@ class TransactionController < ApplicationController
 
 			publish_channel = 'transaction_listener_' + cancelled_transaction.lender_id.to_s
 			# Firebase.push(publish_channel, cancelled_transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       bigBertha_ref.push(cancelled_transaction_details.to_json)
 
 			respond_to do |format|
@@ -261,7 +261,7 @@ class TransactionController < ApplicationController
 
 			publish_channel = 'transaction_listener_' + returned_transaction.lender_id.to_s
 			# Firebase.push(publish_channel, returned_transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       bigBertha_ref.push(returned_transaction_details.to_json)
 
 			respond_to do |format|
@@ -293,7 +293,7 @@ class TransactionController < ApplicationController
 
 			publish_channel = 'transaction_listener_' + received_transaction.borrower_id.to_s
 			# Firebase.push(publish_channel, received_transaction_details.to_json)
-			bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       bigBertha_ref.push(received_transaction_details.to_json)
 
 			respond_to do |format|
@@ -321,7 +321,7 @@ class TransactionController < ApplicationController
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.lender_id.to_s
 				# Firebase.push(publish_channel, borrower_received_transaction_details.to_json)
-				bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+				bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       	bigBertha_ref.push(borrower_received_transaction_details.to_json)
 
 				borrower_received_transaction_lender_details = []
@@ -333,7 +333,7 @@ class TransactionController < ApplicationController
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.borrower_id.to_s
 				# Firebase.push(publish_channel, borrower_received_transaction_lender_details.to_json)
-				bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+				bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       	bigBertha_ref.push(borrower_received_transaction_lender_details.to_json)
 
 			elsif params[:called_by] == 'lender'
@@ -349,7 +349,7 @@ class TransactionController < ApplicationController
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.borrower_id.to_s
 				# Firebase.push(publish_channel, borrower_received_transaction_details.to_json)
-				bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+				bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       	bigBertha_ref.push(borrower_received_transaction_details.to_json)
 
 				transaction_received_borrower_borrower = []
@@ -361,7 +361,7 @@ class TransactionController < ApplicationController
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.lender_id.to_s
 				# Firebase.push(publish_channel, transaction_received_borrower_borrower.to_json)
-				bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_channel)
+				bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
       	bigBertha_ref.push(transaction_received_borrower_borrower.to_json)
 
 			end
@@ -401,7 +401,7 @@ class TransactionController < ApplicationController
 
 			# Firebase.push(publish_from_channel, chat_data.to_json)
       # response = Firebase.push(publish_to_channel, chat_data.to_json)
-      bigBertha_ref = Bigbertha::Ref.new('https://projectlectito.firebaseio.com/' + publish_to_channel)
+      bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_to_channel)
       bigBertha_ref.push(chat_data.to_json)
 
       render nothing: true
