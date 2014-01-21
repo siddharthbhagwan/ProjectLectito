@@ -21,7 +21,7 @@
       <h5>Sign In Using</h5>
       <div class='row sml'>
         <%= link_to image_tag('sign_in_twitter.png'), '#' %> <!-- #user_omniauth_authorize_path(:twitter) %> -->
-        <%= link_to image_tag('sign_in_facebook.png'), '#' %> <!-- #user_omniauth_authorize_path(:facebook) %> -->
+        <%= link_to image_tag('sign_in_facebook.png'), user_omniauth_authorize_path(:facebook) %>
         <%= link_to image_tag('sign_in_google+.png'), '#' %> <!-- user_omniauth_authorize_path(:google_oauth2) %> -->
       </div>
     </div>

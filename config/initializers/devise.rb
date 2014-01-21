@@ -216,7 +216,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-    require "omniauth-google-oauth2"
+    require 'omniauth-google-oauth2'
+    require 'omniauth-facebook'
     if Rails.env.production?
         config.omniauth :google_oauth2, '275953175384.apps.googleusercontent.com', '7ZudHU0fRqvdu3Ux5vVROGZO', { access_type: "offline", approval_prompt: "", :client_options => {:ssl => {:verify => false}} }
         config.omniauth :twitter, 'ql2NzezDs22gdIjAbpLfw', 'YZMGsmFfPQ9J5f67N57sgkkjkw9bKHFb1bI1OcVhzY'
@@ -224,7 +225,7 @@ Devise.setup do |config|
     else Rails.env.development?
         config.omniauth :google_oauth2, '684836737669.apps.googleusercontent.com', 'i2Q9sqcVdVf8KFHml5abHowj', { access_type: "offline", approval_prompt: "", :client_options => {:ssl => {:verify => false}} }  
         config.omniauth :twitter, 'ql2NzezDs22gdIjAbpLfw', 'YZMGsmFfPQ9J5f67N57sgkkjkw9bKHFb1bI1OcVhzY'
-        config.omniauth :facebook, '118017795063722', '90349a74e5305e306d3bb64b658d9eee', {:client_options => {:ssl => {:verify => false}}}
+        config.omniauth :facebook, '118017795063722', '90349a74e5305e306d3bb64b658d9eee', :strategy_class => OmniAuth::Strategies::Facebook, {:client_options => {:ssl => {:verify => false}}}
     end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
