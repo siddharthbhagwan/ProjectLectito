@@ -37,7 +37,9 @@
         </div>
       </div>
       <div class="push"></div>
-      <%= render 'layouts/sign_in' %>
+      <% unless user_signed_in? %>
+        <%= render 'layouts/sign_in' %>
+      <% end %>  
     </div>
     <%= render 'layouts/footer' %>
   </body>
