@@ -21,3 +21,8 @@
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI
 //= require_tree .
+
+
+$(document).ready(function() {
+  window.scrollTo(0, 0);
+});
