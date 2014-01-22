@@ -18,7 +18,7 @@
 	          </li>
 
             <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Profile<b class="caret"></b></a>
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#" id='lkj'>Profile<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <% if !current_user.profile.nil? %>             
                   <li><%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></li>

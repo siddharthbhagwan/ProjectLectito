@@ -24,5 +24,15 @@
 
 
 $(document).ready(function() {
+
   window.scrollTo(0, 0);
+
+
+  $("#lkj").hover(function() {
+    $("#lkj").click();
+  }, function(){
+     alert('o');
+  })
+
+
 });
