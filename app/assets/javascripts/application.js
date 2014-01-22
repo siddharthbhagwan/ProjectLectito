@@ -22,17 +22,17 @@
 //= require jquery.blockUI
 //= require_tree .
 
-
 $(document).ready(function() {
 
+  // Function to Scroll to the top of the screen on page load
   window.scrollTo(0, 0);
 
-
-  $("#lkj").hover(function() {
-    $("#lkj").click();
+  // Function for hover on menu
+  $(".header_hover").hover(function() {
+    $(this).click();
   }, function(){
-     alert('o');
+     $(this).click();
+     $(this).blur();
   })
-
 
 });

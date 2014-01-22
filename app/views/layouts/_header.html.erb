@@ -10,7 +10,7 @@
 						<li><%= link_to " Search ", inventory_search_path %></li>
 
 	          <li class="dropdown">
-	            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Books<b class="caret"></b></a>
+	            <a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#">Books<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><%= link_to "My Books", inventory_index_path %></li>
                 <li><%= link_to "Conversations", chat_index_path %></li>
@@ -18,7 +18,7 @@
 	          </li>
 
             <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#" id='lkj'>Profile<b class="caret"></b></a>
+              <a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#" >Profile<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <% if !current_user.profile.nil? %>             
                   <li><%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></li>
@@ -33,7 +33,7 @@
 
 	          <% if current_user.has_role? :admin %>
 	          	<li class="dropdown">
-	          		<a data-toggle="dropdown" class="dropdown-toggle" href="#">Admin<b class="caret"></b></a>
+	          		<a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#">Admin<b class="caret"></b></a>
 	          		<ul class="dropdown-menu">
 	                <li><%= link_to "Users", admin_index_path %></li>
 	                <li><%= link_to "Books", book_index_path %></li>
