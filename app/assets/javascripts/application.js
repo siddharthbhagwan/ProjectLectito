@@ -12,12 +12,6 @@
 //
 //= require jquery
 //= require twitter/bootstrap
-//= require address
-//= require book
-//= require devise
-//= require home_page
-//= require profile
-//= require inventory
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI
 //= require_tree .
