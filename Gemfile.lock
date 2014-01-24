@@ -102,12 +102,7 @@ GEM
       multipart-post (~> 1.2.0)
     fattr (2.2.1)
     ffi (1.9.3)
-    firebase (0.1.4)
-      json
-      typhoeus (>= 0.6.1)
     firebase_token_generator (1.0.3)
-    flatstrap-rails (0.3.0.2)
-      twitter-bootstrap-rails (~> 2.2.6)
     hashie (2.0.5)
     hike (1.2.3)
     httpauth (0.2.0)
@@ -287,8 +282,6 @@ DEPENDENCIES
   coffee-rails (= 4.0.0)
   debugger
   devise
-  firebase
-  flatstrap-rails
   jquery-datatables-rails
   jquery-rails
   jquery-ui-rails
