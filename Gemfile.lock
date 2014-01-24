@@ -62,6 +62,8 @@ GEM
       values (~> 1.5.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.0.3.0)
+      sass (~> 3.2)
     builder (3.1.4)
     callsite (0.0.11)
     cancan (1.6.7)
@@ -278,6 +280,7 @@ DEPENDENCIES
   bigbertha
   binding_of_caller
   blockuijs-rails!
+  bootstrap-sass (~> 3.0.3.0)
   cancan (= 1.6.7)
   coffee-rails (= 4.0.0)
   debugger
