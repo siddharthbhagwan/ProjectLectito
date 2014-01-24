@@ -227,5 +227,5 @@ jQuery ->
 # Span fix for sign in page
 jQuery ->
   if $(".jumbotron").length
-    $(".col-lg-10").removeClass("col-lg-offset-1")
+    $(".col-md-10").removeClass("col-md-offset-1")
 
