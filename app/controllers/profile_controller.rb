@@ -1,7 +1,6 @@
 # Profile Controller
 class ProfileController < ApplicationController
   include ApplicationHelper
-  Firebase.base_uri = 'https://projectlectito.Firebaseio.com/'
   load_and_authorize_resource class: Profile
 
   def new
