@@ -1,9 +1,9 @@
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
+<div class="navbar navbar-fixed-top navbar-default">
+	<div class="container">
 		<div class="container">
 			<% if user_signed_in? %>
 				<a class="brand" href="/inventory/search">Project Lectito</a>
-				<div class="nav-collapse">
+				<div class="navbar-collapse"></div>
 					<ul class="nav">
 	          <li><%= link_to " Welcome " + current_user.welcome_name , inventory_search_path %></li>
 	          <li><%= link_to " Home ", inventory_search_path, id: :home_link %></li>
