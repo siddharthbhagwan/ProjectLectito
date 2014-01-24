@@ -29,6 +29,7 @@ gem 'rspec'
 gem 'puma'
 gem 'rubocop'
 gem 'bigbertha'
+gem 'flatstrap-rails'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

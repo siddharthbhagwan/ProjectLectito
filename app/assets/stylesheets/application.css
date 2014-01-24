@@ -11,7 +11,7 @@
  *= require_self
  *= require jquery.ui.chatbox
  *= require jquery.ui.all
- *= require bootstrap_and_overrides
+ *= require flatstrap/bootstrap
  *= require dataTables/jquery.dataTables
  *= require_tree .
  */
