@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="container">
 			<% if user_signed_in? %>
-				<a class="brand" href="/inventory/search">Project Lectito</a>
+				<a class="navbar-brand" href="/inventory/search">Project Lectito</a>
 				<div class="navbar-collapse"></div>
 					<ul class="nav">
 	          <li><%= link_to " Welcome " + current_user.welcome_name , inventory_search_path %></li>
@@ -47,8 +47,8 @@
 	        </ul>
 				</div>
 			<% else %>
-	      <a href="#" class="brand">ProjectLectito</a>
-	      <%= tag "input", :type => "button", :id => "sign_in", :class => "btn pull-right" , :value => " Sign In" %></br></br>
+	      <a href="#" class="navbar-brand">ProjectLectito</a>
+	      <%= tag "input", :type => "button", :id => "sign_in", :class => "btn btn-default btn-primary navbar-btn pull-right" , :value => " Sign In" %></br></br>
 			<% end %>
 		</div>
 	</div>

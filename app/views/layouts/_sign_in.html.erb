@@ -1,28 +1,28 @@
 <div id='sign_in_div'>
-  <div class='row sign_in_modal eHeight'>
-    <div class='col-md-3'>
-      <div class='row'>
-        <div class='col-md-2'>
-          <h5>Sign In</h5>
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "navbar-form pull-right"} ) do |f| %>
-            <%= f.email_field :email, autofocus: true, placeholder: :Email, class: 'md-col-2' %>
-            <%= f.password_field :password, placeholder: "Password", class: 'md-col-2' %>
-            <br/>
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class='col-md-7'>      
+        <div class='col-md-8'>
+          <h5>Sign In</h5>      
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <%= f.email_field :email, autofocus: true, placeholder: :Email, class: 'form-control' %>
+            <%= f.password_field :password, placeholder: "Password", class: 'form-control' %>
             <%= f.submit "Sign In", class: 'btn btn-default' %>
-          <% end %>
-          <%= link_to "Forgot password", new_password_path(resource_name), class: :fplink %><br />
+            </br>
+            <%= link_to "Forgot password", new_password_path(resource_name), class: :fplink %><br />
+          <% end %>       
         </div>
-        <div class="pull-right text-right col-md-1"></div>
+        <div class='col-md-4 text-center'>
           <br/><br/><br/>| OR |
-        </div>  
+        </div>
       </div>
-    </div>
-    <div class='col-md-1 text-center eHeight'>
-      <h5>Sign In Using</h5>
-      <div class='row sml'>
-        <%= link_to image_tag('sign_in_twitter.png'), '#' %> <!-- #user_omniauth_authorize_path(:twitter) %> -->
-        <%= link_to image_tag('sign_in_facebook.png'), user_omniauth_authorize_path(:facebook) %>
-        <%= link_to image_tag('sign_in_google+.png'), '#' %> <!-- user_omniauth_authorize_path(:google_oauth2) %> -->
+      <div class='col-md-5 text-center'>
+        <h5>Sign In Using</h5>
+        <div class='sml'>
+          <%= link_to image_tag('sign_in_twitter.png'), '#' %> <!-- #user_omniauth_authorize_path(:twitter) %> -->
+          <%= link_to image_tag('sign_in_facebook.png'), user_omniauth_authorize_path(:facebook) %>
+          <%= link_to image_tag('sign_in_google+.png'), '#' %> <!-- user_omniauth_authorize_path(:google_oauth2) %> -->
+        </div>
       </div>
     </div>
   </div>

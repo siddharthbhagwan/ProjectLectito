@@ -71,5 +71,5 @@ if (<%= @users_and_address.length %> === 0) {
   $final_table = $final_table + $rental_data + $table_ending
 }
 
-$("#book_count").text(<%= @transactions_requested.length.to_s %> +  " books found");
+$("#book_count").text(<%= ((@users_and_address.length.to_i)/2).to_s %> +  " book(s) found");
 $("#search_results_table > tbody > tr").eq(row_number).after($final_table);

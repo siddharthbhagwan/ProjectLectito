@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-
+  
   $("#sign_in").click ->
     $("#sign_in_div").dialog 'open'
     # Remove Title Bar
@@ -15,5 +15,5 @@ $(document).ready ->
     modal: true
     resizeable: false
     draggable: false
-    minWidth: 640
-    maxHeight: 230
+    minWidth: 600
+    minHeight: 170 
