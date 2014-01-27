@@ -42,26 +42,41 @@
 
 <h5>Search for a book that you'd like to borrow in your city!</h5>
 
-<%= form_tag() do %>
-<div id="city_validation"></div>
+<div class='col-md-4'>
 
-<%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city.."  %></br>
+  <%= form_tag() do %>
 
-<div id="author_book_validation"></div>
+    <div id="city_validation"></div>
 
-<p hidden="true" id="author_empty"><i><b>No Such Author Found</b></i></p>
+    <div class='form_elements_padding'>
+      <%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city..", class: 'form-control'  %>
+    </div>
 
-<%= text_field_tag :search_by_author, nil, :placeholder => "Search By Author" %></br>
+    <div id="author_book_validation"></div>
 
-<p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
+    <p hidden="true" id="author_empty"><i><b>No Such Author Found</b></i></p>
 
-<%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name" %></br>
+    <div class='form_elements_padding'>
+      <%= text_field_tag :search_by_author, nil, :placeholder => "Search By Author", class: 'form-control' %>
+    </div>  
 
-<% end %>
+    <p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
 
-<%= tag "input", :type => "button", :id => "search_books", :class => "btn" , :value => "Search" %></br></br>
+    <div class='form_elements_padding'>
+      <%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name", class: 'form-control' %>
+    </div>    
 
-<div id="search_text"></div>
+  <% end %>
+
+  <%= tag "input", :type => "button", :id => "search_books", :class => "btn btn-default" , :value => "Search" %></br></br>
+
+</div>
+
+<div class='col-md-11'>
+  <div id="search_text"></div>
+
+  <div id="dynamicTable"></div>
+</div>  
 
 
 <!-- jQuery Dialog divs -->
@@ -152,8 +167,4 @@
   <p id="neutral_transactions">Neutral : <b></b></p>
   <p id="bad_transactions">Bad : <b></b></p>
   <p id="full_profile">View Complete Profile<b></b></p>
-</div>
-
-<div id="dynamicTable">
-
 </div>

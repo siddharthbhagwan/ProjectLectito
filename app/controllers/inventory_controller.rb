@@ -224,10 +224,6 @@ class InventoryController < ApplicationController
   	end
 	end
 
-	def check_inventory_duplication
-		#@duplicate_books = Inventory.where(:user_id => current_user.id, books_id => params[:book_id])
-	end
-
 	private
 
 	def require_profile
