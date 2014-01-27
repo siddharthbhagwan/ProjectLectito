@@ -4,10 +4,14 @@
       <div class='col-md-7'>      
         <div class='col-md-8'>
           <h5>Sign In</h5>      
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <%= f.email_field :email, autofocus: true, placeholder: :Email, class: 'form-control' %>
-            <%= f.password_field :password, placeholder: "Password", class: 'form-control' %>
-            <%= f.submit "Sign In", class: 'btn btn-default' %>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name, class: 'form_elements_padding')) do |f| %>
+            <div class='form_elements_padding'>
+              <%= f.email_field :email, autofocus: true, placeholder: :Email, class: 'form-control' %>
+            </div>
+            <div class='form_elements_padding'>
+              <%= f.password_field :password, placeholder: "Password", class: 'form-control' %>
+            </div>
+            <%= f.submit "Sign In", class: 'btn btn-primary btn-sm' %>
             </br>
             <%= link_to "Forgot password", new_password_path(resource_name), class: :fplink %><br />
           <% end %>       
