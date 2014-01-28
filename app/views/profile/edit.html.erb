@@ -14,16 +14,16 @@
 
       <%= f.text_field :user_phone_no, :placeholder => '10 Digit Phone Number', :maxlength => '10', :required => :true, numericality: true, class: 'form-control' %>
 
-      <%= f.label 'Gender', 'Gender' %></span>
+      <%= f.label 'Gender', 'Gender' %>
       
       <div class='row'>
         <div class='col-md-6'>
           <%= f.radio_button :gender, 'M', class: 'form-control' %>
-          <%= f.label 'Male', 'Male' %></span>
+          <%= f.label 'Male', 'Male' %>
         </div>
         <div class='col-md-6'>
           <%= f.radio_button :gender, 'F', class: 'form-control' %>
-          <%= f.label 'Female', 'Female' %></span>
+          <%= f.label 'Female', 'Female' %>
         </div>        
       </div>
 
