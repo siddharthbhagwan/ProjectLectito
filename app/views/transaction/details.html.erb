@@ -1,50 +1,46 @@
 <h3> Transaction Details - <%= @details.id %> </h3><br/>
 
 <div class='container'>
-	<div class='span2'>
-		<ul style='none'>
-			<li>Lender</li>
-			<li>Borrower</li>
-			<li>Book</li>
-			<li>Request date</li>
-			<li>
-				<% if @details.status == 'Rejected' %>
-					Date Rejected
-				<% elsif @details.status == 'Cancelled' %>
-					Date Cancelled
-				<% else %>
-					Date Accepted
-				<% end %>
-			</li>
-			<li>Date Lent Out</li>
-			<li>Date Returned</li>
-			<li>Lender Feedback</li>
-			<li>Lender Comments</li>
-			<li>Borrower Feedback</li>
-			<li>Borrower Comments</li>
-		</ul>
+	<div class='col-md-3'>
+		<div class='form_padding'>
+			<%= label_tag 'Lender', 'Lender' %><br/>
+			<%= label_tag 'Borrower', 'Borrower' %><br/>
+			<%= label_tag 'Book', 'Book' %><br/>
+			<%= label_tag 'Request Date', 'Request Date' %><br/>
+			<% if @details.status == 'Rejected' %><br/>
+				<%= label_tag 'Date Rejected', 'Date Rejected' %><br/> 
+			<% elsif @details.status == 'Cancelled' %><br/>
+				<%= label_tag 'Date Cancelled', 'Date Cancelled' %><br/>
+			<% else %>
+				<%= label_tag 'Date Accepted', 'Date Accepted' %><br/>
+			<% end %>
+			<%= label_tag 'Date Lent Out', 'Date Lent Out' %><br/>
+			<%= label_tag 'Date Returned', 'Date Returned' %><br/>
+			<%= label_tag 'Lender Feedback', 'Lender Feedback' %><br/>
+			<%= label_tag 'Lender Comments', 'Lender Comments' %><br/>
+			<%= label_tag 'Borrower Feedback', 'Borrower Feedback' %><br/>
+			<%= label_tag 'Borrower Comments', 'Borrower Comments' %><br/>
+		</div>
 	</div>
-	<div class='span3 offest2'>
-		<ul style='none'>
-			<li><%= User.find(@details.lender_id).full_name %></li>
-			<li><%= User.find(@details.borrower_id).full_name %></li>
-			<li><%= Book.find(Inventory.find(@details.inventory_id).book_id).book_name %></li>
-			<li><%=  @details.request_date.to_s(:long) %></li>
-			<li>
-				<% if @details.status == 'Rejected' %>
-					<%= @details.rejection_date.to_s(:long) %>
-				<% elsif @details.status == 'Cancelled' %>
-					<%= @details.cncelled_date.to_s(:long) %>
-				<% else %>
-					<%= @details.acceptance_date.to_s(:long) %>
-				<% end %>
-			</li>
-			<li><%= @details.received_date.to_s(:long) %></li>
-			<li><%= @details.returned_date.to_s(:long) %></li>
-			<li><%= @details.lender_feedback %></li>
-			<li><%= @details.lender_comments %></li>
-			<li><%= @details.borrower_feedback %></li>
-			<li><%= @details.borrower_comments %></li>
-		</ul>
+	<div class='form_padding'>	
+		<div class='col-md-4'>
+			<%= label_tag User.find(@details.lender_id).full_name %><br/>
+			<%= label_tag User.find(@details.borrower_id).full_name %><br/>
+			<%= label_tag Book.find(Inventory.find(@details.inventory_id).book_id).book_name %><br/>
+			<%= label_tag @details.request_date.to_s(:long) %><br/>
+			<% if @details.status == 'Rejected' %>
+				<%= label_tag @details.rejection_date.to_s(:long) %><br/>
+			<% elsif @details.status == 'Cancelled' %><br/>
+				<%= label_tag @details.cncelled_date.to_s(:long) %><br/>
+			<% else %>
+				<%= label_tag @details.acceptance_date.to_s(:long) %><br/>
+			<% end %>
+			<%= label_tag @details.received_date.to_s(:long) %><br/>
+			<%= label_tag @details.returned_date.to_s(:long) %><br/>
+			<%= label_tag @details.lender_feedback %><br/>
+			<%= label_tag @details.lender_comments %><br/>
+			<%= label_tag @details.borrower_feedback %><br/>
+			<%= label_tag @details.borrower_comments %><br/>
+		</div>
 	</div>
 </div>

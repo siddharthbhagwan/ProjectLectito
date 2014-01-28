@@ -38,13 +38,13 @@
 
 					<!-- Accept -->
 					<% if User.find(l.lender_id).is_delivery or User.find(l.borrower_id).is_delivery %>
-						<td><input class="btn btn-small" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
+						<td><input class="btn btn-default" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
 					<% else %>
-						<td><input class="btn btn-small" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
+						<td><input class="btn btn-default" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
 					<% end %>
 
 					<!-- Reject -->
-					<td><input class="btn btn-small" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>
+					<td><input class="btn btn-default" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>
 				
 				</tr>
 			<% end %>	
