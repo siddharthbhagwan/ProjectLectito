@@ -19,3 +19,10 @@
 #address_address_line1 {
     resize: none;
 }
+
+// Centralizing the td
+#address_index_table{
+  td{
+    text-align: center;
+  }
+}

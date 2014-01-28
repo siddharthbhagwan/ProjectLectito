@@ -1,4 +1,4 @@
-<h3>Current addresses</h3>
+<h3>Current addresses</h3><br/>
 
 <% if !@address.empty? %>
   <% i = 0 %> 
@@ -7,8 +7,8 @@
       <% j = 0 %>
       <% while ((j<4) and ((i*4) + j) < @address.length ) %>
         <% k = (i * 4) + j %>
-        <div class='span2.5'>
-          <table class="table table-striped table-bordered table-condensed table-nonfluid">
+        <div class='col-md-3'>
+          <table class="table table-striped table-bordered table-condensed table-nonfluid" id='address_index_table'>
             <tbody>
               <tr>
                 <td colspan='2'>
@@ -17,8 +17,8 @@
                 </td>
               </tr>
               <tr>
-                <td><%= link_to "Edit", edit_address_path(@address[k].id), class: "btn btn-small "%></td>
-                <td><%= link_to "Delete", address_path(@address[k].id), :method => "delete", class: "btn btn-small ", data: { confirm: 'Are You Sure' }%>
+                <td><%= link_to "Edit", edit_address_path(@address[k].id), class: "btn btn-default "%></td>
+                <td><%= link_to "Delete", address_path(@address[k].id), :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You Sure' }%>
                 </td>                
               </tr>
             </tbody>
@@ -32,4 +32,4 @@
 <% end %>
 <br />
 
-<%= link_to 'Add an address', new_address_path, class: "btn btn-small" %>
+<%= link_to 'Add an address', new_address_path, class: "btn btn-default" %>

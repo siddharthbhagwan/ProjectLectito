@@ -1,17 +1,25 @@
-<h3>Add a New Address</h3>
-<%= form_for @address, :url => address_index_path do |f| %>
+<h3>Add a New Address</h3><br/>
 
-<%= render 'error_messages' %>
+<div class='col-md-4'>
 
-<%= f.text_area :address_line1, :size => "20 x 6", :resize => :none, :placeholder => "Address Line 1", :required => :true %></br>
-<%= f.text_field :pin, :placeholder => :Pin %></br>
+  <div class='form_padding'>
 
-</br>
+    <%= form_for @address, :url => address_index_path do |f| %>
 
-<%= tag "input", :type => "button", :id => "add_address", :class => "btn btn-small" , :value => "Add " %></br></br>
+    <%= render 'error_messages' %>
 
-<%= link_to "Back", address_index_path, class: "btn btn-small" %>
+    <%= f.text_area :address_line1, :size => "20x6", :placeholder => 'Address', :resize => :none, :required => :true, class: 'form-control' %>
+    <%= f.text_field :pin, :placeholder => :Pin, class: 'form-control' %>
 
-<p style=" position:absolute; margin-left:230px; top:285px;" hidden="true" id="locality_empty"><i><b>No Such Locality Found</b></i></p>
+    </br>
 
-<% end %>
+    <%= tag "input", :type => "button", :id => "add_address", :class => "btn btn-default" , :value => "Add" %>
+    <%= link_to "Back", address_index_path, class: "btn btn-default" %>
+
+    <!-- <p style=" position:absolute; margin-left:230px; top:285px;" hidden="true" id="locality_empty"><i><b>No Such Locality Found</b></i></p> -->
+
+    <% end %>
+
+  </div>
+
+</div>
