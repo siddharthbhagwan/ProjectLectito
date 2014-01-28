@@ -38,6 +38,7 @@ class BookController < ApplicationController
     @book = Book.find(params[:id])
     @book.update_attributes(params[:book])
     redirect_to book_index_path
+    flash[:info] = 'The Book details have been updated'
   end
 
   def history

@@ -1,12 +1,14 @@
 <% if @book.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-error">
-      The form contains <%= pluralize(@book.errors.count, "error") %>.
+  <div class='well'>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        The form contains <%= pluralize(@book.errors.count, "error") %>.
+      </div>
+      <ul>
+      <% @book.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
     </div>
-    <ul>
-    <% @book.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
   </div>
 <% end %>
