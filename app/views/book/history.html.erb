@@ -49,8 +49,8 @@
       <% @b_history.each do |bh| %>
         <tr>
           <td><%= link_to bh.id, transaction_details_path(bh.id) %></td>
-          <td><%= link_to User.find(bh.lender_id).full_name, '/profile/public_rating/#{bh.lender_id}' %></td>
-          <td><%= link_to User.find(bh.borrower_id).full_name, '/profile/public_rating/#{bh.lender_id}' %></td>
+          <td><%= link_to User.find(bh.lender_id).full_name, "/profile/public_rating/#{bh.lender_id}" %></td>
+          <td><%= link_to User.find(bh.borrower_id).full_name, "/profile/public_rating/#{bh.lender_id}" %></td>
           <td><%= bh.request_date.to_s(:long) %></td>
           <td><%= ((bh.returned_date - bh.received_date)/60/60/24).ceil %></td>
           <td><%= ((bh.return_received_date - bh.request_date)/60/60/24).ceil %></td>

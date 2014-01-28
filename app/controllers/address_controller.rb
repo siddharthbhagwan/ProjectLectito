@@ -66,7 +66,7 @@ class AddressController < ApplicationController
   end
 
   def autocomplete_area
-    @locations = Location.where('lower(area) LIKE ? ', '%#{params[:area].downcase}%')
+    @locations = Location.where("lower(area) LIKE ? ", "%#{params[:area].downcase}%")
 
     respond_to do |format|
       format.json { render json: @locations.to_json }
