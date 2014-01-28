@@ -1,33 +1,51 @@
-<h3>Profile</h3>
-<%= form_for @profile, :url => profile_path, :method => :put do |f| %>
-<%= render 'error_messages' %>
+<h3>Profile</h3><br/>
 
-<%= f.text_field :user_first_name, :placeholder => "First Name", :required => :true %></br>
+<div class='col-md-3'>
 
-<%= f.text_field :user_last_name, :placeholder => "Last Name", :required => :true %></br>	
+  <div class='form_padding'>
 
-<%= f.text_field :user_phone_no, :placeholder => "10 Digit Phone Number", :maxlength => "10", :required => :true, numericality: true %></br>
+    <%= form_for @profile, :url => profile_path, :method => :put do |f| %>
 
-<div>
-<span>Gender </span>
-<%= f.radio_button :gender, "M", :checked => 'checked' %><span style="margin:10px 10px; vertical-align:middle; padding-">Male </span>
-<%= f.radio_button :gender, "F" %><span style="margin:10px 10px; vertical-align:middle;">Female</span></br></br>
-</div>
+      <%= render 'error_messages' %>
 
-<!-- 
-Mode of Delivery &nbsp; &nbsp;
-<%= f.radio_button :delivery, "true", :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Delivery &nbsp; &nbsp;
-<%= f.radio_button :delivery, "false" %>&nbsp; &nbsp; Self Pick/Drop</br></br>
--->
+      <%= f.text_field :user_first_name, :placeholder => 'First Name', :required => :true, class: 'form-control' %>
 
-<%= f.label "Date", "Date Of Birth" %>
-<%= f.text_field :DoB, :placeholder => "Select Date of Birth", :required => :true, :class => "dob_class"%>
+      <%= f.text_field :user_last_name, :placeholder => 'Last Name', :required => :true, class: 'form-control' %>
 
-</br></br>
-<%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br>
+      <%= f.text_field :user_phone_no, :placeholder => '10 Digit Phone Number', :maxlength => '10', :required => :true, numericality: true, class: 'form-control' %>
 
-<%= f.submit "Update", class: "btn btn-small " %></br></br>
+      <%= f.label 'Gender', 'Gender' %></span>
+      
+      <div class='row'>
+        <div class='col-md-6'>
+          <%= f.radio_button :gender, 'M', class: 'form-control' %>
+          <%= f.label 'Male', 'Male' %></span>
+        </div>
+        <div class='col-md-6'>
+          <%= f.radio_button :gender, 'F', class: 'form-control' %>
+          <%= f.label 'Female', 'Female' %></span>
+        </div>        
+      </div>
+      <br/>
 
-<%= link_to 'Add Address', new_address_path, class: "btn btn-small" %>
+      <!-- 
+      Mode of Delivery &nbsp; &nbsp;
+      <%= f.radio_button :delivery, 'true', :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Delivery &nbsp; &nbsp;
+      <%= f.radio_button :delivery, 'false' %>&nbsp; &nbsp; Self Pick/Drop</br></br>
+      -->
+
+      <%= f.label 'Date', 'Date Of Birth' %>
+      <%= f.text_field :DoB, :placeholder => 'Select Date of Birth', :required => :true, :class => 'dob_class form-control'%>
+
+      </br></br>
+      <!-- <%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br> -->
+
+      <%= f.submit 'Update', class: 'btn btn-default' %>
+
+      <%= link_to 'Add Address', new_address_path, class: 'btn btn-sm btn-default' %>
+
+    </div>
+
+  </div>  
 
 <% end %>
