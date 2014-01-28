@@ -2,13 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.searchid{
-	width:60px;
-}
-
-.searchtable{
-	width:120px;
-}
 
 // User Transaction History Table SearchBox lengths
 // Colns not specified are in book.css from Book History table
@@ -23,4 +16,8 @@
 
 #search_book_name{
 	width:250px;
+}
+
+#search_id{
+  width: 50px;
 }

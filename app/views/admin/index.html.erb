@@ -1,4 +1,4 @@
-<h3> User List </h3>
+<h3> User List </h3><br/>
 <table id="admin_view" class="table table-striped table-bordered table-condensed datatable">
   <thead>
     <tr>
@@ -23,11 +23,11 @@
   <tfoot>
     <tr>
       <%= form_tag do %>
-        <th><%= text_field_tag("search_id", nil, placeholder: "Id", class: :searchid) %></th>
-        <th><%= text_field_tag("search_name", nil, placeholder: "Name", class: :searchtable) %></th>
-        <th><%= text_field_tag("search_email", nil, placeholder: "Email", class: :searchtable) %></th>
-        <th><%= text_field_tag("search_current_status", nil, placeholder: "Current Status", class: :searchtable) %></th>
-        <th><%= text_field_tag("search_priveleges", nil, placeholder: "Priveleges", class: :searchtable) %></th>
+        <th><%= text_field_tag("search_id", nil, placeholder: "Id", class: 'form-control') %></th>
+        <th><%= text_field_tag("search_name", nil, placeholder: "Name", class: 'form-control') %></th>
+        <th><%= text_field_tag("search_email", nil, placeholder: "Email", class: 'form-control') %></th>
+        <th><%= text_field_tag("search_current_status", nil, placeholder: "Current Status", class: 'form-control') %></th>
+        <th><%= text_field_tag("search_priveleges", nil, placeholder: "Priveleges", class: 'form-control') %></th>
       <% end %>
     </tr>
   </tfoot>
