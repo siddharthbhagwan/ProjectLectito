@@ -1,34 +1,64 @@
 <h3><%= @name %></h3></br>
 
 <div class='row'>
-  <div class='span1'>
-    <ul style="list-style-type: none">
-      <li class="padded_list">Total Books</li>
-      <li class="padded_list">Total Transactions</li>
-      <li class="padded_list">Feedback</li>
-      <li class="padded_list">Good</li>
-      <li class="padded_list">Neutral</li>
-      <li class="padded_list">Bad</li>
-    </ul>
+  <div class='col-md-4'>
+
+    <div class='row'>
+      
+      <div class='col-md-6'>
+        <div class='form_padding'>
+          <%= label_tag 'Total Books' %><br/>
+          <%= label_tag 'Total Transactions' %><br/>          
+        </div>
+      </div>
+
+      <div class='col-md-6'>
+        <div class='form_padding'>
+          <%= label_tag @total_books %><br/>
+          <%= label_tag @total_transactions %><br/>
+        </div>
+      </div>
+
+    </div>
+
+    <div class='row'>
+
+      <div class='col-md-6'>
+        <div class='form_padding text-right'>
+          <%= label_tag 'Feedback' %><br/>
+        </div>
+      </div>  
+
+    </div>
+
+    <div class='row'>
+
+      <div class='col-md-6'>
+        <div class='form_padding'>
+          <%= label_tag 'Good' %><br/>
+          <%= label_tag 'Neutral' %><br/>
+          <%= label_tag 'Bad' %><br/>
+        </div>
+      </div>
+
+      <div class='col-md-6'>
+        <div class='form_padding'>
+          <%= label_tag @good %><br/>
+          <%= label_tag @neutral %><br/>
+          <%= label_tag @bad %><br/>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class='span1 offset1'>
-    <ul style="list-style-type: none">
-      <li class="padded_list"><%= @total_books %></li>
-      <li class="padded_list"><%= @total_transactions %></li>
-      <li class="padded_list"></br></li>
-      <li class="padded_list"><%= @good %></li>
-      <li class="padded_list"><%= @neutral %></li>
-      <li class="padded_list"><%= @bad %></li>
-    </ul>
+  <div class='col-md-8'>
+    <h4> Recent Comments </h4>
+    <% @comment_history.first(5).each do |ch| %>
+      <div class=" well "><%= ch %></div>
+    <% end %>
   </div>
 
-  <div class='span6 offset1'>
-    <ul style="list-style-type: none">
-      <li><h4> Recent Comments </h4></li></br>
-      <% @comment_history.first(5).each do |ch| %>
-          <li class=" well "><%= ch %></li>
-      <% end %>  
-    </ul>
-  </div>
-</div>
+</div>      
+      

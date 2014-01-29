@@ -33,7 +33,7 @@ $.fn.dataTableExt.afnFiltering.push (oSettings, aData, iDataIndex) ->
       iMin_temp = "2013-12-20"  if iMin_temp is ""
 
       iMax_temp = $("#max_req").val()
-      iMax_temp = "2014-01-01"  if iMax_temp is ""
+      iMax_temp = "2016-01-01"  if iMax_temp is ""
 
       arr_min = iMin_temp.split("-")
       arr_max = iMax_temp.split("-")

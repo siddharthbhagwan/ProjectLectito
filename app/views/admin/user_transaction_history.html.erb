@@ -1,9 +1,13 @@
 <h3><%= User.find(params[:id]).full_name %>'s Transaction History</h3>
 
-<%= content_tag 'a', "Filter By Date Range ->", id: :dates_filter_toggle %><br/><br/>
-<div id='dates_filter_div' style="display: none;">
-  <%= text_field_tag :min_req, nil, :placeholder => "Min Req Date (YYYY-MM-DD)" %>
-  <%= text_field_tag :max_req, nil, :placeholder => "Max Req Date (YYYY-MM-DD)" %>
+<%= content_tag 'a', 'Filter By Date Range ->', id: :dates_filter_toggle %><br/><br/>
+<div id='dates_filter_div' style='display:none;'>
+  <div class='col-md-3'>
+    <%= text_field_tag :min_req, nil, :placeholder => 'Min Req Date (YYYY-MM-DD)', class: 'form-control' %>
+  </div>
+  <div class='col-md-3'>  
+    <%= text_field_tag :max_req, nil, :placeholder => 'Max Req Date (YYYY-MM-DD)', class: 'form-control' %>
+  </div>  
 </div>
 <br/>
 
