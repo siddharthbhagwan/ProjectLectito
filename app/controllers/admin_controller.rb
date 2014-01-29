@@ -37,11 +37,11 @@ class AdminController < ApplicationController
 			end
 
 			respond_to do |format|
-    		format.json { render nothing: true, :status => 204 }
+    		format.json { render nothing: true, status: 204 }
 			end
 		else
 			respond_to do |format|
-    		format.json { render nothing: true, :status => 204 }
+    		format.json { render nothing: true, status: 204 }
 			end
 		end
 
@@ -56,7 +56,7 @@ class AdminController < ApplicationController
 		end
 
 		respond_to do |format|
-    	format.json { render nothing: true, :status => 204 }
+    	format.json { render nothing: true, status: 204 }
 		end
 	end
 end

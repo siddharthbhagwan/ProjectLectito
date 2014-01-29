@@ -2,13 +2,13 @@ class Transaction < ActiveRecord::Base
 	#FIXME check for security of ids => primary key for users	
   attr_accessible :borrower_id, :lender_id, :status, :inventory_id
 
-  validates :borrower_id, :lender_id, :status, :inventory_id , :presence => true
+  validates :borrower_id, :lender_id, :status, :inventory_id , presence: true
 
   has_many :chats
   belongs_to :borrower, class_name: 'User'
   belongs_to :lender, class_name: 'User'
 
-  #scope :pending, -> { where(:status => :Pending) }
+  #scope :pending, -> { where(status: :Pending) }
   def update_transaction(action, current_user, *transaction_data)
   	#TODO Modify and clauses after delivery kicks in
 		case action

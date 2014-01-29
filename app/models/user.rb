@@ -19,11 +19,11 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   # Active Record Associations
-  has_one :profile, :dependent => :destroy
-  has_many :addresses, :dependent => :destroy
-  has_many :inventories ,:dependent => :destroy
-  has_many :books, :through => :inventories
-  has_many :transactions, :dependent => :destroy
+  has_one :profile, dependent: :destroy
+  has_many :addresses, dependent: :destroy
+  has_many :inventories ,dependent: :destroy
+  has_many :books, through: :inventories
+  has_many :transactions, dependent: :destroy
 
   # Returns Full name, or Email, which ever is available
   def welcome_name

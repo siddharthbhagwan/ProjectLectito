@@ -50,21 +50,21 @@
 
       <div id="city_validation"></div>
 
-      <%= select_tag :city, options_for_select(india_cities), :prompt => "Select your city..", class: 'form-control'  %>
+      <%= select_tag :city, options_for_select(india_cities), prompt: "Select your city..", class: 'form-control'  %>
 
       <div id="author_book_validation"></div>
 
       <p hidden="true" id="author_empty"><i><b>No Such Author Found</b></i></p>
 
-      <%= text_field_tag :search_by_author, nil, :placeholder => "Search By Author", class: 'form-control' %>  
+      <%= text_field_tag :search_by_author, nil, placeholder: "Search By Author", class: 'form-control' %>  
 
       <p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
 
-      <%= text_field_tag :search_by_book_name, nil, :placeholder => "Search By Book Name", class: 'form-control' %>    
+      <%= text_field_tag :search_by_book_name, nil, placeholder: "Search By Book Name", class: 'form-control' %>    
 
     <% end %>
 
-    <%= tag "input", :type => "button", :id => "search_books", :class => "btn btn-default" , :value => "Search" %></br></br>
+    <%= tag "input", type: "button", id: "search_books", class: "btn btn-default" , value: "Search" %></br></br>
 
   </div>
 
@@ -82,7 +82,7 @@
   <p id="accept_info"></p>
   <p id="user_dispatch_date">Please specify a good time to pick up the book for delivery </p>
   <div id="accept_datepicker">
-	  <%= text_field_tag :dispatch_date, Date.tomorrow, :placeholder => "Select Date" %></br>
+	  <%= text_field_tag :dispatch_date, Date.tomorrow, placeholder: "Select Date" %></br>
   </div>
   <input type="radio" name="dispatchTime" value="Before 1 PM" checked="true"> Before 1 PM <br>
   <input type="radio" name="dispatchTime" value="After 1 PM">  After 1 PM
@@ -92,7 +92,7 @@
   <p id="return_info"></p>
   <p id="return_dispatch_date">Please specify a good time to pick up the book for delivery </p>
   <div id="return_info_datepicker">
-    <%= text_field_tag :return_pickup_date, Date.tomorrow, :placeholder => "Select Date" %></br>
+    <%= text_field_tag :return_pickup_date, Date.tomorrow, placeholder: "Select Date" %></br>
   </div>
   <input type="radio" name="return_time" value="Before 1 PM" checked="true"> Before 1 PM <br>
   <input type="radio" name="return_time" value="After 1 PM">  After 1 PM
@@ -104,7 +104,7 @@
   <input type="radio" name="lender_feedback" value="neutral">  Neutral <br/>
   <input type="radio" name="lender_feedback" value="bad">  Bad <br/><br/>
   <div id="lender_comments_div">
-    <%= text_area_tag :lender_comments, nil, :placeholder => :Comments, :class => :feedback_textarea %></br>
+    <%= text_area_tag :lender_comments, nil, placeholder: :Comments, class: :feedback_textarea %></br>
   </div>
 </div>
 
@@ -114,7 +114,7 @@
   <input type="radio" name="borrower_feedback" value="neutral">  Neutral <br/>
   <input type="radio" name="borrower_feedback" value="bad">  Bad <br/><br/>
   <div id="lender_comments_div">
-    <%= text_area_tag :borrower_comments, nil, :placeholder => :Comments, :class => :feedback_textarea %></br>
+    <%= text_area_tag :borrower_comments, nil, placeholder: :Comments, class: 'feedback_textarea' %></br>
   </div>
 </div>
 
