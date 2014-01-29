@@ -821,15 +821,15 @@ $(document).ready ->
             
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
-              td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
+              td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
             else
               td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_accept = "<td><input class='btn btn-small' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
+              td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
             td_requested_from = "<td>" + pData[1].requested_from + "</td>"
             td_requested_date = "<td>" + pData[1].requested_date + "</td>"
             td_status = "<td>" + pData[1].status + "</td>"
-            td_reject = "<td><input class='btn btn-small' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
+            td_reject = "<td><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
             table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_delivery_mode + td_requested_date + td_status + td_accept + td_reject
             $("#lend_requests_table > tbody:last").append(table_row_data);
             if (!$("#lend_requests_div").is(":visible"))
@@ -856,10 +856,10 @@ $(document).ready ->
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
-              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-small' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-default' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
             else
               td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-small' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_returned_date = "<td>Pending</td>"
@@ -902,15 +902,15 @@ $(document).ready ->
 
             if pData[1].delivery_mode
               td_delivery_mode = "<td>Delivery</td>"
-              td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+              td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
             else
               td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+              td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_received_date = "<td>Pending</td>"
             td_return_date = "<td>Pending</td>"
-            #td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-small' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            #td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
             table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_return_date + td_status       
             $("#current_books_table > tbody:last").append(table_row_data)
             if (!$("#current_books_div").is(":visible"))
