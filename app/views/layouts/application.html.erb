@@ -15,16 +15,16 @@
       <div class = 'container' >        
         <div class = 'col-md-12 col-md-offset1'>
           <% if flash[:notice] %>
-          <p class='label label-success'><%= flash[:notice] %></p>
+            <p class='label label-success'><%= flash[:notice] %></p><br/>
           <% end %>
           <% if flash[:error] %>
-          <p class='label label-important'><%= flash[:error] %></p>
+            <p class='label label-important'><%= flash[:error] %><br/></p>
           <% end %>
           <% if flash[:info] %> 
-          <p class='label label-info'><%= flash[:info] %></p>
+            <p class='label label-info'><%= flash[:info] %><br/></p>
           <% end %>
           <% if alert %>
-          <p class='alert alert-error'><%= alert %></p>
+            <p class='label label-danger'><%= alert %><br/></p>
           <% end %>
           <%= yield %>
           <% if user_signed_in? %>

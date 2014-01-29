@@ -160,7 +160,7 @@ Devise.setup do |config|
    config.maximum_attempts = 3
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
-    config.unlock_in = 2.minutes
+    config.unlock_in = 3600.minutes
 
   # ==> Configuration for :recoverable
   #

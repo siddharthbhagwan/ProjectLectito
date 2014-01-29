@@ -12,18 +12,10 @@
           <li><%= link_to " Search ", inventory_search_path %></li>
 
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle header_hover" data-toggle="dropdown">Books <b class="caret"></b></a>
-            <ul class="dropdown-menu header_hover_sub">
-              <li><%= link_to "My Books", inventory_index_path %></li>
-              <li><%= link_to "Conversations", chat_index_path %></li>
-            </ul>
-          </li>
-
-          <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle header_hover">Profile<b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle header_hover">Profile <b class="caret"></b></a>
             <ul class="dropdown-menu header_hover_sub">
               <% if !current_user.profile.nil? %>             
-                <li><%= link_to "Personal", edit_profile_path(current_user.profile.id), class: "accordian" %></li>
+                <li><%= link_to "Personal", edit_profile_path(current_user.profile.id) %></li>
               <% end %> 
               <li><%= link_to "Addresses", address_index_path  %></li>
               <li><%= link_to "Rating", profile_rating_path  %></li>                    
@@ -33,9 +25,17 @@
             </ul>
           </li>
 
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle header_hover" data-toggle="dropdown">Books <b class="caret"></b></a>
+            <ul class="dropdown-menu header_hover_sub">
+              <li><%= link_to "My Books", inventory_index_path %></li>
+              <li><%= link_to "Conversations", chat_index_path %></li>
+            </ul>
+          </li>
+
           <% if current_user.has_role? :admin %>
             <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#">Admin<b class="caret"></b></a>
+              <a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#">Admin <b class="caret"></b></a>
               <ul class="dropdown-menu header_hover_sub">
                 <li><%= link_to "Users", admin_index_path %></li>
                 <li><%= link_to "Books", book_index_path %></li>

@@ -1,1 +1,88 @@
-<%= render 'devise/sessions/sign_in' %>
+<div class='jumbotron cbg'>
+  <div class='row'>
+    <div class='col-md-8'>
+      <h1>Hello, world!</h1><br/>
+      <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+      <br/>
+      <p> Sign Up! Its free and easy </p>
+      <%= link_to 'Sign-Up', new_user_registration_path, class: 'btn btn-lg btn-success'%>
+    </div>
+    <div class='col-md-2 text-center'>
+      <%= image_tag('books_stack.jpg', size: '200x300') %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-8'>          
+    </div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-md-4'>
+    <div class='text-center'>
+      <h2>Step 1</h2>
+    </div>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+  <div class='col-md-4'>
+    <div class='text-center'>
+      <h2>Step 2</h2>
+    </div>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+ </div>
+  <div class='col-md-4'>
+    <div class='text-center'>
+      <h2>Step 3</h2>
+    </div>
+    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+  </div>
+</div>
+<br/>
+<br/>
+
+<div class='sbg rounded-corners'>
+
+  <div class='row'>
+  
+    <h5>Search for a book that you'd like to borrow in your city!</h5>
+
+    <div class='col-md-4'>
+
+      <div class='form_padding'>
+
+        <%= form_tag() do %>
+
+          <div id='city_validation'></div>
+
+          <%= select_tag :city, options_for_select(india_cities), prompt: 'Select your city..', class: 'form-control' %>
+
+          <div id='author_book_validation'></div>
+
+          <p hidden='true' id='author_empty'><i><b>No Such Author Found</b></i></p>
+
+          <%= text_field_tag :search_by_author, nil, placeholder: 'Search By Author', class: 'form-control' %>  
+
+          <p hidden='true' id='book_name_empty'><i><b>No Such Book Found</b></i></p>
+
+          <%= text_field_tag :search_by_book_name, nil, placeholder: 'Search By Book Name', class: 'form-control' %>  
+
+        <% end %>
+
+        <%= tag 'input', type: 'button', id: 'search_books', class: 'btn btn-default' , value: 'Search' %></br></br>
+
+      </div>  
+
+    </div>
+
+  </div>
+
+  <div class='row'>
+    <div class='col-md-11'>
+      <div>
+        <h5 id='book_count'></h5>
+      </div>
+      <div id='search_text'></div>
+      <div id='dynamicTable'></div>
+    </div> 
+  </div>
+</div>  

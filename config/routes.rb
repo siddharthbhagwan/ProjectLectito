@@ -58,6 +58,7 @@ ProjectLectito::Application.routes.draw do
   unauthenticated :user do
     devise_scope :user do 
       get "/" => "devise/sessions#new"
+      get '/users/confirmation/new' => 'devise/passwords#new'
     end
   end
 
