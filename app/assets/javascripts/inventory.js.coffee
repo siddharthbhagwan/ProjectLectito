@@ -248,10 +248,11 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
   # Online Status Updater
-  jQuery ->
-    setTimeout updateComments, 5000
+  $ ->
+    setTimeout updateComments, 500
 
   updateComments = ->
+    console.log 'called'
     $.ajax
       url: "/profile/online.json"
       type: "post"
@@ -260,7 +261,7 @@ $(document).ready ->
         page: window.location.pathname
 
       success: (msg) ->
-        if (window.location.pathname is "/home" ) || (window.location.pathname is "/" ) || (window.location.pathname is "/search" ) 
+        if (window.location.pathname is "/home" ) || (window.location.pathname is "/" ) || (window.location.pathname is "/inventory/search" ) 
           id_elements_on_page = $('[id^="online_"]')
           # Get id of each object and strip it of the 'online_' text, leaving just the transaction id
           $.each id_elements_on_page, (index, value) ->
@@ -290,7 +291,7 @@ $(document).ready ->
 
       error: (jqXHR, textStatus, errorThrown) ->
 
-    setTimeout updateComments, 5000
+    setTimeout updateComments, 500
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
