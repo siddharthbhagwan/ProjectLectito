@@ -247,12 +247,9 @@ $(document).ready ->
         $("#add_book_form").submit()
 
 #--------------------------------------------------------------------------------------------------------------------
-  # Online Status Updater
-  $ ->
-    setTimeout updateComments, 500
+  # Online Status Updater    
 
   updateComments = ->
-    console.log 'called'
     $.ajax
       url: "/profile/online.json"
       type: "post"
@@ -291,7 +288,9 @@ $(document).ready ->
 
       error: (jqXHR, textStatus, errorThrown) ->
 
-    setTimeout updateComments, 500
+    setTimeout updateComments, 5000
+
+  setTimeout updateComments, 5000  
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
@@ -300,4 +299,3 @@ $(document).ready ->
     $(this).css('cursor', 'pointer');
 
 #--------------------------------------------------------------------------------------------------------------------
-

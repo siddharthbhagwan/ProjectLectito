@@ -1055,4 +1055,3 @@ $(document).ready ->
       # setTimeout $.unblockUI
       # $("#error_message").dialog "open" 
 
-
