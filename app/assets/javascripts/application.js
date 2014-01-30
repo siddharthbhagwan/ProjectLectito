@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.all
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI
 //= require_tree .
