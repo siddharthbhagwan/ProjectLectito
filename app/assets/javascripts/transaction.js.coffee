@@ -836,9 +836,9 @@ $(document).ready ->
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             
             if pData[1].online == "Online"
-              td_b_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
+              td_b_base = "<img width='10' height='10' class='img-cirlce' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
             else
-              td_b_base = "<img width='10' height='6' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
+              td_b_base = "<img width='10' height='10' class='img-circle' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
 
             td_b_ccn = "data-currentcn='" + pData[1].currentcn + "' "
             td_b_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
@@ -882,9 +882,9 @@ $(document).ready ->
             td_book_name = "<td>" + pData[1].book_name + "</td>"
 
             if pData[1].online == "Online"
-              td_c_base = "<img width='10' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
+              td_c_base = "<img width='10' height='10' class='img-circle' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
             else
-              td_c_base = "<img width='10' hidden='true' height='6' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
+              td_c_base = "<img width='10' height='10' class='img-circle' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
 
             td_c_ccn = "data-currentcn='" + pData[1].currentcn + "' "
             td_c_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
