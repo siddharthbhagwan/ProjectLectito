@@ -119,10 +119,8 @@ $(document).ready ->
 
             beforeSend: ->
               before_send()
-              console.log "here before send"
 
             success: (msg) ->
-              console.log "here in success"
 
             complete: (jqXHR, textStatus) ->
               $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
@@ -131,9 +129,6 @@ $(document).ready ->
               setTimeout $.unblockUI
 
             error: (jqXHR, textStatus, errorThrown) ->
-              console.log jqXHR
-              console.log textStatus
-              console.log errorThrown
               setTimeout $.unblockUI
               display_error(jqXHR.status) 
 
@@ -233,7 +228,6 @@ $(document).ready ->
             before_send()
 
           success: (msg) ->
-            console.log msg
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()

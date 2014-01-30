@@ -69,11 +69,9 @@ $(document).ready ->
     oTable_admin_view.fnFilter @value, $("tfoot input").index(this)
 
   $("#min_req").keyup ->
-    console.log "called"
     oTable_admin_view.fnDraw()
 
   $("#max_req").keyup ->
-    console.log "asdas"
     oTable_admin_view.fnDraw()
     
   
