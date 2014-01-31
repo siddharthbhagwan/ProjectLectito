@@ -8,7 +8,7 @@
 
 .ui-chatbox-titlebar {
     padding: 3px;
-    height: 27px;
+    height: 29px;
     cursor: pointer;
 }
 
@@ -20,6 +20,7 @@
 
 .ui-chatbox-log {
     padding: 3px;
+    padding-left: 7px;
     height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
