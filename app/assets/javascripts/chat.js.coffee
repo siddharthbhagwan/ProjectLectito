@@ -138,7 +138,9 @@ $(document).ready ->
           success: (msg) ->
             i = 0
             while i < msg.length
-              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
+              # Trim last 2 characters from each chat => \n
+              # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
+              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2)
               i = i + 2
 
           complete: (jqXHR, textStatus) ->  
