@@ -15,24 +15,104 @@
  */
 
 @import "bootstrap";
+
 // body { padding-top: 60px; }
 
 // Form Padding for form elements
-.form_padding{
-  select, input, a, textarea, label{
-  margin-bottom: 10px;
-  }
- }
+.form_padding {
+    select, input, a, textarea, label {
+        margin-bottom: 10px;
+    }
+}
 
 // Wrapper Class for Pushing Footer to the bottom
 .wrapper {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -4em;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -4em;
 }
 
 // Footer Class
 .footer, .push {
-  height: 4em;
+    height: 4em;
+}
+
+// Custom Navbar from TWBSColor
+
+$bgDefault      : #2b3e50;
+$bgHighlight    : #fafafa;
+$colDefault     : #faffff;
+$colHighlight   : #96ccff;
+
+.navbar-default {
+    background-color: $bgDefault;
+    border-color: $bgHighlight;
+    .navbar-brand {
+        color: $colDefault;
+        &:hover, &:focus {
+            color: $colHighlight;
+        }
+    }
+    .navbar-text {
+        color: $colDefault;
+    }
+    .navbar-nav {
+        > li {
+            > a {
+                color: $colDefault;
+                &:hover,  &:focus {
+                    color: $colHighlight;
+                }
+            }
+        }
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: $colHighlight;
+                background-color: $bgHighlight;
+            }
+        }
+        > .open {
+            > a, > a:hover, > a:focus {
+                color: $colHighlight;
+                background-color: $bgHighlight;
+            }
+        }
+    }
+    .navbar-toggle {
+        border-color: $bgHighlight;
+        &:hover, &:focus {
+            background-color: $bgHighlight;
+        }
+        .icon-bar {
+            background-color: $colDefault;
+        }
+    }
+    .navbar-collapse,
+    .navbar-form {
+        border-color: $colDefault;
+    }
+    .navbar-link {
+        color: $colDefault;
+        &:hover {
+            color: $colHighlight;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu {
+        > li > a {
+            color: $colDefault;
+            &:hover, &:focus {
+                color: $colHighlight;
+            }
+        }
+        > .active {
+            > a, > a:hover, > a:focus, {
+                color: $colHighlight;
+                background-color: $bgHighlight;
+            }
+        }
+    }
 }
