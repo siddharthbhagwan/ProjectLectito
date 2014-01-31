@@ -10,8 +10,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <div class='col-md-4'>
           <ul class="nav navbar-nav">
-            <li class="<%= 'active' if params[:controller] == 'inventory' %>"><%= link_to " Search ", inventory_search_path, id: :home_link %></li>
-
+            <li class="<%= 'active' if params[:controller] == 'inventory' && params[:action] == 'search' %>"><%= link_to " Search ", inventory_search_path, id: :home_link %></li>
             <li class="dropdown <%= 'active' if params[:controller] == 'profile' || params[:controller] == 'address' || params[:controller] == 'transaction' %>">
               <a href="#" data-toggle="dropdown" class="dropdown-toggle header_hover">Profile <b class="caret"></b></a>
               <ul class="dropdown-menu header_hover_sub">
@@ -24,7 +23,7 @@
               </ul>
             </li>
 
-            <li class="dropdown <%= 'active' if params[:controller] == 'chat' || params[:controller] == 'inventory' %>">
+            <li class="dropdown <%= 'active' if params[:controller] == 'chat' || ( params[:controller] == 'inventory' && params[:action] != 'search') %>">
               <a href="#" class="dropdown-toggle header_hover" data-toggle="dropdown">Books <b class="caret"></b></a>
               <ul class="dropdown-menu header_hover_sub">
                 <li><%= link_to "My Books", inventory_index_path %></li>
