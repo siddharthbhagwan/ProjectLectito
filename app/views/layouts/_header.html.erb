@@ -1,57 +1,65 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="col-md-10 col-md-offset-1">
     <% if user_signed_in? %>
-      <div class="navbar-header">
-         <a class="navbar-brand" href="/inventory/search">Project Lectito</a>
-      </div>
+      <div class='col-md-4'>
+        <div class="navbar-header">
+           <a class="navbar-brand" href="/inventory/search">Project Lectito</a>
+        </div>
+      </div>  
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><%= link_to " Welcome " + current_user.welcome_name , inventory_search_path %></li>
-          <li><%= link_to " Home ", inventory_search_path, id: :home_link %></li>
-          <li><%= link_to " Search ", inventory_search_path %></li>
+        <div class='col-md-4'>
+          <ul class="nav navbar-nav">
+            <li class="<%= 'active' if params[:controller] == 'inventory' %>"><%= link_to " Search ", inventory_search_path, id: :home_link %></li>
 
-          <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle header_hover">Profile <b class="caret"></b></a>
-            <ul class="dropdown-menu header_hover_sub">
-              <% if !current_user.profile.nil? %>             
-                <li><%= link_to "Personal", edit_profile_path(current_user.profile.id) %></li>
-              <% end %> 
-              <li><%= link_to "Addresses", address_index_path  %></li>
-              <li><%= link_to "Rating", profile_rating_path  %></li>                    
-              <li><%= link_to "History", transaction_history_path %></li>
-              <li class="divider"></li>
-              <li><%= link_to "Change Password", edit_user_registration_path %></li>
-            </ul>
-          </li>
-
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle header_hover" data-toggle="dropdown">Books <b class="caret"></b></a>
-            <ul class="dropdown-menu header_hover_sub">
-              <li><%= link_to "My Books", inventory_index_path %></li>
-              <li><%= link_to "Conversations", chat_index_path %></li>
-            </ul>
-          </li>
-
-          <% if current_user.has_role? :admin %>
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#">Admin <b class="caret"></b></a>
+            <li class="dropdown <%= 'active' if params[:controller] == 'profile' || params[:controller] == 'address' || params[:controller] == 'transaction' %>">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle header_hover">Profile <b class="caret"></b></a>
               <ul class="dropdown-menu header_hover_sub">
-                <li><%= link_to "Users", admin_index_path %></li>
-                <li><%= link_to "Books", book_index_path %></li>
-                <!-- <li><%= link_to "Transactions", admin_index_path %></li> -->
+                <% if !current_user.profile.nil? %>             
+                  <li><%= link_to "Personal", edit_profile_path(current_user.profile.id) %></li>
+                <% end %> 
+                <li><%= link_to "Addresses", address_index_path  %></li>
+                <li><%= link_to "Rating", profile_rating_path  %></li>
+                <li><%= link_to "History", transaction_history_path %></li>
               </ul>
             </li>
-          <% end %>
-        </ul>
-      
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "Sign Out" ,destroy_user_session_path, method: :delete %></li>
+
+            <li class="dropdown <%= 'active' if params[:controller] == 'chat' || params[:controller] == 'inventory' %>">
+              <a href="#" class="dropdown-toggle header_hover" data-toggle="dropdown">Books <b class="caret"></b></a>
+              <ul class="dropdown-menu header_hover_sub">
+                <li><%= link_to "My Books", inventory_index_path %></li>
+                <li><%= link_to "Conversations", chat_index_path %></li>
+              </ul>
+            </li>
+
+            <% if current_user.has_role? :admin %>
+              <li class="dropdown <%= 'active' if params[:controller] == 'admin' || params[:controller] == 'book' %>">
+                <a data-toggle="dropdown" class="dropdown-toggle header_hover" href="#">Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu header_hover_sub">
+                  <li><%= link_to "Users", admin_index_path %></li>
+                  <li><%= link_to "Books", book_index_path %></li>
+                  <!-- <li><%= link_to "Transactions", admin_index_path %></li> -->
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class='col-md-4'>
+          <ul class="nav navbar-right navbar-nav">
+            <li class="dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle header_hover"><%= current_user.welcome_name %> <b class="caret"></b></a>
+              <ul class="dropdown-menu header_hover_sub">
+                <li><%= link_to "Sign Out" ,destroy_user_session_path, method: :delete %></li>
+                <li><%= link_to "Change Password", edit_user_registration_path %></li>
+              </ul>
+            </li>
+          </ul>
         </ul>
       </div>
     <% else %>
       <a href="#" class="navbar-brand">ProjectLectito</a>
-        <%= tag "input", :type => "button", :id => "sign_in", :class => "btn btn-default btn-primary navbar-btn pull-right" , :value => " Sign In" %></br></br>
+        <%= tag "input", :type => "button", :id => "sign_in", class: "btn btn-default btn-primary navbar-btn pull-right", value: "Sign In" %></br></br>
     <% end %>
   </div>  
 </nav>
