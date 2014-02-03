@@ -26,6 +26,7 @@ ProjectLectito::Application.routes.draw do
   get 'address/:id/autocomplete_area' => 'address#autocomplete_area'
 
   # Admin routes
+  get 'admin' => 'admin#index', as: 'admin_index'
   get 'admin/user_details' => 'admin#user_details'
   get 'admin/user_transaction_history/:id' => 'admin#user_transaction_history', as: 'user_transaction_history'
   post 'admin/bar_user' => 'admin#bar_user'
@@ -62,6 +63,6 @@ ProjectLectito::Application.routes.draw do
   post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, controllers: { sessions: :sessions }
-  resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction, :chat
+  resources :profile, :address, :home_page, :book, :inventory, :transaction, :chat
 
 end
