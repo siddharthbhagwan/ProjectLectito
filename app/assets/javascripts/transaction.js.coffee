@@ -3,7 +3,6 @@
 # # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-
   # Hide tables if no data
   empty_table_checks = ->
     if $("#borrow_requests_table tr").length == 1
@@ -743,17 +742,13 @@ $(document).ready ->
 
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on "click", ".borrow_button_offline" ,->
-    $("#login").dialog "open"
+    $("#sign_in_or_sign_up").dialog "open"
 
 
-  $("#login").dialog
+  $("#sign_in_or_sign_up").dialog
     autoOpen: false
     modal: true
     resizable: false
-    draggable: false
-    buttons:
-      "Ok": ->
-        $(this).dialog "close"
 
 #---------------------------------------------------------------------------------------------------------------------
 

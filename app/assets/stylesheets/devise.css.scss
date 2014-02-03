@@ -16,7 +16,14 @@
   padding-top: 15px;
 }
 
-
+// Sign Up Text in Search Result Pop up (when offline) text white
+#sign_in_or_sign_up{
+  .col-md-offset-3{
+    a{
+      color: #ffffff;
+    }
+  }
+}
 // Sign In modal
 .sign_in_modal{
   padding-bottom: 15px;
@@ -32,15 +39,12 @@
   font-size: 70%;
 }
 
-
 //Footer Padding
 .footer_padding{
   padding-top: 6px;
 }
 
-
 // Jumbotron Top Margin
-
 .jtp{
   margin-top: 10px;
 }
