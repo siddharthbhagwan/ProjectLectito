@@ -25,6 +25,11 @@
     }
 }
 
+// Site wide text areas made non resizable
+textarea {
+    resize: none;
+}
+
 // Wrapper Class for Pushing Footer to the bottom
 .wrapper {
     min-height: 100%;
