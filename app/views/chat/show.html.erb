@@ -5,7 +5,8 @@
   <div class='form_padding' id='chat_message_div'>
     <%= text_area_tag :chat_box, @chat_history, disabled: true, class: 'form-control' %>
     <%= text_field_tag :chat_text, nil, class: 'form-control', placeholder: 'Enter text here', 'data-you' => @you, autofocus: true %>
-
   </div>
+  <br/>
+  <td><%= link_to 'Back', chat_index_path, class: 'btn btn-default'%></td>
 
 </div>
