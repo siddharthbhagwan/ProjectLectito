@@ -4,19 +4,17 @@
 
   <div class='form_padding'>
 
-    <%= form_for @address, :url => address_index_path do |f| %>
+    <%= form_for @address, url: address_index_path do |f| %>
 
     <%= render 'error_messages' %>
 
-    <%= f.text_area :address_line1, :size => "20x6", :placeholder => 'Address', :resize => :none, :required => :true, class: 'form-control' %>
-    <%= f.text_field :pin, :placeholder => :Pin, class: 'form-control' %>
+    <%= f.text_area :address_line1, size: '20x6', placeholder: 'Address Line 1', required: :true, class: 'form-control' %>
+    <%= f.number_field :pin, placeholder: :Pin, required: true, class: 'form-control' %>
 
     </br>
 
-    <%= tag "input", :type => "button", :id => "add_address", :class => "btn btn-default" , :value => "Add" %>
-    <%= link_to "Back", address_index_path, class: "btn btn-default" %>
-
-    <!-- <p style=" position:absolute; margin-left:230px; top:285px;" hidden="true" id="locality_empty"><i><b>No Such Locality Found</b></i></p> -->
+    <%= f.submit 'Add', class: 'btn btn-default' %>
+    <%= link_to 'Back', address_index_path, class: 'btn btn-default' %>
 
     <% end %>
 
