@@ -2,12 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.chat_box {
-	height: 15em;
-  width: 30em;
-  resize: none;
-}
-
-.chat_text {
-  width: 30em;
+// Height for text area of messages
+#chat_message_div{
+  textarea{
+    height: 250px;
+  }
 }

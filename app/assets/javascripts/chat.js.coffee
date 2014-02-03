@@ -290,6 +290,7 @@ $(document).ready ->
                 # along with last ping, else just display last ping
                 # FIXME - chances are, there would be no need for the history part if the box is already initialized
                 if $("#chat_div_" + pData[1].trid).children().length == 0
+                  console.log 'c1'
                   $.ajax
                     url: "/chat/box_chat_history.json"
                     type: "get"
@@ -316,6 +317,7 @@ $(document).ready ->
                   $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
 
             else #if pData[1].type == 'page'
+              console.log 'here'
               $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text)
               psconsole = $("#chat_box")
               psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
