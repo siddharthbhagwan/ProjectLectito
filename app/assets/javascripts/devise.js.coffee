@@ -13,10 +13,10 @@ $(document).ready ->
   $("#sign_in_div").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     minWidth: 600
-    minHeight: 170
+    minHeight: 170    
 
 
   if ($(".label-success") || $(".label-important") || $(".label-info") || $(".label-error"))
