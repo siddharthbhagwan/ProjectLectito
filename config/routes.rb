@@ -1,7 +1,17 @@
 ProjectLectito::Application.routes.draw do
 
   # Devise routes
-  # get 'users/sign_in' => 'inventory#search'
+  authenticated :user do
+    root :to => 'inventory#search'
+  end
+
+  unauthenticated :user do
+    devise_scope :user do 
+      get "/" => "devise/sessions#new"
+      get '/users/confirmation/new' => 'devise/passwords#new'
+      get '/inventory/search' => 'devise/sessions#new'
+    end
+  end
 
   # Chat Routes
   get 'chat/box_chat_history' => 'chat#box_chat_history'
@@ -50,17 +60,6 @@ ProjectLectito::Application.routes.draw do
   post 'transaction/update_request_status_return' => 'transaction#update_request_status_return'
   post 'transaction/update_request_status_receive_lender' => 'transaction#update_request_status_receive_lender'
   post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
-
-  authenticated :user do
-    root :to => 'inventory#search'
-  end
-
-  unauthenticated :user do
-    devise_scope :user do 
-      get "/" => "devise/sessions#new"
-      get '/users/confirmation/new' => 'devise/passwords#new'
-    end
-  end
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, controllers: { sessions: :sessions }
   resources :profile, :address, :home_page, :admin, :book, :inventory, :transaction, :chat
