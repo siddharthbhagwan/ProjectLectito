@@ -51,12 +51,13 @@ $colDefault     : #faffff;
 $colHighlight   : #96ccff;
 
 .navbar-default {
+    padding-top: 7px;
     background-color: $bgDefault;
     border-color: $bgHighlight;
     .navbar-brand {
         color: $colDefault;
         &:hover, &:focus {
-            color: $colHighlight;
+            color: #ffffff;
         }
     }
     .navbar-text {
@@ -66,8 +67,15 @@ $colHighlight   : #96ccff;
         > li {
             > a {
                 color: $colDefault;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 &:hover,  &:focus {
                     color: $colHighlight;
+                    background-color: $bgHighlight;
+                    border-radius: 8px;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: $bgDefault;
                 }
             }
         }
@@ -75,12 +83,20 @@ $colHighlight   : #96ccff;
             > a, > a:hover, > a:focus {
                 color: $colHighlight;
                 background-color: $bgHighlight;
+                border-radius: 8px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: $bgDefault;
             }
         }
         > .open {
             > a, > a:hover, > a:focus {
                 color: $colHighlight;
                 background-color: $bgHighlight;
+                border-radius: 8px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: $bgDefault;
             }
         }
     }
