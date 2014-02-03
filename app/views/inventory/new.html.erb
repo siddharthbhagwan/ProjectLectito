@@ -4,7 +4,7 @@
 
 		<div class='form_padding'>
 
-			<%= form_tag  inventory_index_path, id: 'add_book_form' do %>
+			<%= form_tag inventory_index_path, id: 'add_book_form' do %>
 
 				<div id='new_inventory'>
 						<%= text_field_tag :book_name, nil, placeholder: 'Book Name', required: :true, width: '10', class: 'form-control' %>				
@@ -15,7 +15,7 @@
 				</div>
 
 				<div>
-					<%= tag 'input', type: 'button', id: 'add_book', :class => 'btn btn-default' , value: 'Add Book' %>
+					<%= submit_tag 'Add Book', id: :add_book, class: 'btn btn-default', disabled: :true %>
 					<%= link_to 'Back', inventory_index_path, class: 'btn btn-default' %>
 				</div>
 

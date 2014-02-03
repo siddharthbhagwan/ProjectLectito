@@ -189,6 +189,7 @@ $(document).ready ->
         $("#edition").hide()
         $("#book_name_empty").hide()
         $("#book_name_empty").fadeIn(600)
+        $("#add_book").attr('disabled', true)
       else 
         $("#book_name_empty").hide()
 
@@ -204,6 +205,7 @@ $(document).ready ->
       $("#edition").val(ui.item.edition).fadeIn(500)
       $("#book_id").val(ui.item.id)
       $("#book_name").data("selected_item",ui.item.label)
+      $("#add_book").attr('disabled', false)
 
   ).blur ->
     $("#book_name").trigger("autocompleteselect")   
