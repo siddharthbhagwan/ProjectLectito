@@ -109,7 +109,7 @@ jQuery ->
   $("#bar_user_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Bar": ->
@@ -146,7 +146,7 @@ jQuery ->
   $("#bar_user_success").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -164,7 +164,7 @@ jQuery ->
   $("#unbar_user_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Un-Bar": ->
@@ -202,7 +202,7 @@ jQuery ->
   $("#unbar_user_success").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -214,7 +214,7 @@ jQuery ->
   $("#error_message_generic").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->

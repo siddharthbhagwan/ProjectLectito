@@ -38,7 +38,7 @@ $(document).ready ->
   $("#display_public_profile").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->

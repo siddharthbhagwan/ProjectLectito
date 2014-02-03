@@ -23,7 +23,7 @@ $(document).ready ->
   $("#error_message_403").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -35,7 +35,7 @@ $(document).ready ->
   $("#error_message_generic").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -84,7 +84,7 @@ $(document).ready ->
   $("#borrow_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -159,7 +159,7 @@ $(document).ready ->
   $("#accept_request_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -209,7 +209,7 @@ $(document).ready ->
   $("#accept_self_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -257,7 +257,7 @@ $(document).ready ->
   $("#reject_request_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -304,7 +304,7 @@ $(document).ready ->
   $("#cancel_transaction").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -364,7 +364,7 @@ $(document).ready ->
   $("#return_request_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -416,7 +416,7 @@ $(document).ready ->
   $("#borrower_returned_book_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -561,7 +561,7 @@ $(document).ready ->
   $("#lender_received_book_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
@@ -650,7 +650,7 @@ $(document).ready ->
   $("#received_borrower_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Yes": ->
@@ -704,7 +704,7 @@ $(document).ready ->
   $("#handed_over_confirm").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Yes": ->
@@ -749,7 +749,7 @@ $(document).ready ->
   $("#login").dialog
     autoOpen: false
     modal: true
-    resizeable: false
+    resizable: false
     draggable: false
     buttons:
       "Ok": ->
