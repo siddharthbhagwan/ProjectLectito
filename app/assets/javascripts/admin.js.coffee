@@ -115,7 +115,7 @@ jQuery ->
       "Bar": ->
         $(this).dialog "close"
         $.ajax
-          url: "bar_user"
+          url: "/bar_user"
           type: "POST"
           context: "this"
           dataType: "json"
@@ -170,7 +170,7 @@ jQuery ->
       "Un-Bar": ->
         $(this).dialog "close"
         $.ajax
-          url: "unbar_user.js"
+          url: "/unbar_user.js"
           type: "post"
           context: "this"
           dataType: "script"

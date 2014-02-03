@@ -4,7 +4,7 @@ $(document).ready ->
   $("#address_locality").autocomplete(
     source: (request, response) ->
       $.ajax
-        url: "autocomplete_area"
+        url: "/autocomplete_area"
         dataType: "json"
         data:
           area: $("#address_locality").val()
