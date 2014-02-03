@@ -4,34 +4,34 @@
 
   <div class='form_padding'>
 
-    <%= form_for @book, :url => book_index_path do |f| %>
+    <%= form_for @book, url: book_index_path do |f| %>
 
       <%= render 'error_messages' %>
 
-      <%= f.text_field :isbn, :placeholder => :ISBN, :required => :true, class: 'form-control' %>
+      <%= f.text_field :isbn, placeholder: :ISBN, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :book_name, :placeholder => "Book Name", :required => :true, class: 'form-control' %>
+      <%= f.text_field :book_name, placeholder: 'Book Name', required: :true, class: 'form-control' %>
 
-      <%= f.text_field :author, :placeholder => :Author, :required => :true, class: 'form-control' %>
+      <%= f.text_field :author, placeholder: :Author, required: :true, class: 'form-control' %>
       	
-      <%= f.text_field :language, :placeholder => :Language, :required => :true, class: 'form-control' %>
+      <%= f.text_field :language, placeholder: :Language, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :genre, :placeholder => :Genre, :required => :true, class: 'form-control' %>
+      <%= f.text_field :genre, placeholder: :Genre, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :version, :placeholder => :Version, :required => :true, class: 'form-control' %>
+      <%= f.text_field :version, placeholder: :Version, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :edition, :placeholder => :Edition, :required => :true, class: 'form-control' %>
+      <%= f.text_field :edition, placeholder: :Edition, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :publisher, :placeholder => :Publisher, :required => :true, class: 'form-control' %>
+      <%= f.text_field :publisher, placeholder: :Publisher, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :pages, :placeholder => :Pages, :required => :true, class: 'form-control' %>
+      <%= f.number_field :pages, placeholder: :Pages, required: :true, class: 'form-control' %>
 
-      <%= f.text_field :mrp, :placeholder => :MRP, :required => :true, class: 'form-control' %>
+      <%= f.number_field :mrp, placeholder: :MRP, required: :true, class: 'form-control' %>
 
       </br>
 
-      <%= f.submit "Add", class: "btn btn-default" %>
-      <%= link_to "Back", book_index_path, class: "btn btn-default" %>
+      <%= f.submit 'Add', class: 'btn btn-default' %>
+      <%= link_to 'Back', book_index_path, class: 'btn btn-default' %>
 
     <% end %>
 

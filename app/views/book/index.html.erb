@@ -1,28 +1,28 @@
 <h3>Current Books</h3><br/>
 
-<table class="table table-striped table-bordered table-hover table-condensed" id="bookdetail_table">
+<table class='table table-striped table-bordered table-hover table-condensed' id='bookdetail_table'>
   <thead>
     <tr>
       <th>Book Name</th>
       <th>Author</th>
-      <th colspan= "3">Copies (T, A, B)</th>
-      <th colspan="2">Manage</th>
+      <th colspan= '3'>Copies (T, A, B)</th>
+      <th colspan='2'>Manage</th>
     </tr>
   </thead>
   <tbody>
     <% @book.each do |book| %>
-      <tr id=<%= book.id %> data-general_stats="closed">
+      <tr id=<%= book.id %> data-general_stats='closed'>
         <td><%= link_to book.book_name, book_history_path(book.id) %></td>
         <td><%= book.author %></td>
-        <td><%= Inventory.where(:book_id => book.id).count %></td>
-        <td><%= Inventory.where(:book_id => book.id, :status => "Available").count %></td>
-        <td><%= Inventory.where(:book_id => book.id).where.not(:status => "Available").count %></td>
-        <td><%= link_to "Edit", edit_book_path(book.id), class: "btn btn-default "%></td>
-        <td><%= link_to "Delete", book_path(book.id), :method => "delete", data: { confirm: 'Are You Sure' } , class: "btn btn-default "%></td>
+        <td><%= Inventory.where(book_id: book.id).count %></td>
+        <td><%= Inventory.where(book_id: book.id, status: 'Available').count %></td>
+        <td><%= Inventory.where(book_id: book.id).where.not(status: 'Available').count %></td>
+        <td><%= link_to 'Edit', edit_book_path(book.id), class: 'btn btn-default' %></td>
+        <td><%= link_to 'Delete', book_path(book.id), method: 'delete', data: { confirm: 'Are You Sure' } , class: 'btn btn-default '%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br />
 
-<%= link_to 'Add a Book', new_book_path, class: "btn btn-default" %>
+<%= link_to 'Add a Book', new_book_path, class: 'btn btn-default' %>
