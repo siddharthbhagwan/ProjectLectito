@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_action :authenticate_user!, except: [:search_books, :search_books_city, :search, :autocomplete_book_name, :autocomplete_author]
   before_action :user_barred?, except: [:barred, :destroy, :search, :sub_search]
-  after_action :update_timestamp
+  # Online makes its own update as it is
+  after_action :update_timestamp, except: [:online]
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, alert: exception.message

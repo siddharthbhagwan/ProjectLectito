@@ -179,7 +179,9 @@ class ProfileController < ApplicationController
   def online
     # Called every n seconds to update timestamp
     online = User.find(current_user.id).profile
-    online.last_seen_at = DateTime.now.to_time
+    time_now = DateTime.now
+    online.last_seen_at = time_now
+    p 'Updating ' + User.find(current_user.id).full_name.upcase + ' to ' + time_now.to_time.to_s
     online.save
 
     # Array to store the id's whose online status needs to be visible to current user
@@ -191,12 +193,15 @@ class ProfileController < ApplicationController
       all_transactions =  Transaction.where('((borrower_id = ? OR lender_id = ? ) AND status = ? )', current_user.id , current_user.id, 'Complete').order('request_date desc')
       all_transactions.each do |at|
         # if current user is the lender
+        time_now_update = Time.now
         if at.lender_id == current_user.id
           # check for duplication
           if !active_trans_ids.include? at.borrower_id
             lsa = User.find(at.borrower_id).profile.last_seen_at
-            puts ' Difference is 1 ' + (DateTime.now.to_time - lsa).seconds.to_s
-            if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
+            # p 'Last seen ' + User.find(at.borrower_id).full_name + ' at ' + lsa.to_time.to_s
+            # p 'Time now is  ' + time_now_update.to_s
+            # p ' Difference is 1 ' + (time_now_update - lsa).seconds.to_s
+            if !lsa.nil? && (time_now_update - lsa).seconds < 6.5
               active_trans_ids.push(at.borrower_id)
             end
           end
@@ -204,9 +209,10 @@ class ProfileController < ApplicationController
           # current user is the borrower
           # check for duplication
           if !active_trans_ids.include? at.lender_id
-            lsa = User.find(at.lender_id).profile.last_seen_at.to_time
-            puts ' Difference is 2 ' + (DateTime.now.to_time - lsa).seconds.to_s
-            if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
+            # p 'Last seen ' + User.find(at.lender_id).full_name + ' at ' + lsa.to_time.to_s
+            # p 'Time now is  ' + time_now_update.now.to_s
+            # p ' Difference is 2 ' + (time_now_update.now - lsa).seconds.to_s
+            if !lsa.nil? && (Time.now - lsa).seconds < 6.5
               active_trans_ids.push(at.lender_id)
             end
           end
@@ -220,19 +226,22 @@ class ProfileController < ApplicationController
       chatbox
       @current_transactions.each do |ct|
         # current user is the lender
+        time_now_update = Time.now
         if ct.lender_id == current_user.id
           lsa = User.find(ct.borrower_id).profile.last_seen_at
-          p "Last seen at " + lsa.to_s
-          puts ' Difference is 3 ' + (DateTime.now.to_time - lsa).seconds.to_s
-          if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
+          # p 'Last seen ' + User.find(ct.borrower_id).full_name + ' at ' + lsa.to_time.to_s
+          # p 'Time now is  ' + time_now_update.to_s
+          # p ' Difference is 3 ' + (time_now_update - lsa).seconds.to_s
+          if !lsa.nil? && (time_now_update - lsa).seconds < 6
             active_trans_ids.push(ct.id)
           end
         else
           # current user is the borrower
           lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
-          p "Last seen at " + lsa.to_s
-          puts ' Difference is 4 ' + (DateTime.now.to_time - lsa).seconds.to_s
-          if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
+          # p 'Last seen ' + User.find(ct.lender_id).full_name + ' at ' + lsa.to_time.to_s
+          # p 'Time now is  ' + time_now_update.to_s
+          # p ' Difference is 4 ' + (time_now_update - lsa).seconds.to_s
+          if !lsa.nil? && (time_now_update - lsa).seconds < 6.5
             active_trans_ids.push(ct.id)
           end
         end
@@ -240,6 +249,7 @@ class ProfileController < ApplicationController
     end
 
     respond_to do |format|
+      # p ' Sending list to caller ' + active_trans_ids.inspect
       format.json { render json: active_trans_ids.to_json }
     end
   end
