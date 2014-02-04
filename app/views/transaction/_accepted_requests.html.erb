@@ -21,7 +21,7 @@
 					<!-- Borrower -->
 					<td>
 						<%= link_to User.find(a.borrower_id).full_name,  "javascript:void(0)", :id => "public_rating_#{a.id}" %> &nbsp;
-						<% if (DateTime.now.to_time - Profile.where(:user_id => a.borrower_id).first.last_seen_at < 6 ) %>
+						<% if (DateTime.now.to_time - Profile.where(:user_id => a.borrower_id).first.last_seen_at < 6.5 ) %>
 							<%= image_tag("online_dot.png", :size => "12x12", class: 'img-circle', :id => "online_" + a.id.to_s, "data-trid" => a.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(a.lender_id).profile.chat_name, "data-borrowercn" => User.find(a.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => a.inventory_id).take.book_id).take.book_name) %>
 						<% else %>
 							<%= image_tag("online_dot.png", :hidden => :true, :size => "12x12", class: 'img-circle', :id => "online_" + a.id.to_s, "data-trid" => a.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(a.lender_id).profile.chat_name, "data-borrowercn" => User.find(a.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => a.inventory_id).take.book_id).take.book_name) %>

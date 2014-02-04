@@ -195,8 +195,8 @@ class ProfileController < ApplicationController
           # check for duplication
           if !active_trans_ids.include? at.borrower_id
             lsa = User.find(at.borrower_id).profile.last_seen_at
-            # puts ' Difference is ' + (DateTime.now.to_time - lsa).seconds.to_s
-            if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6
+            puts ' Difference is 1 ' + (DateTime.now.to_time - lsa).seconds.to_s
+            if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
               active_trans_ids.push(at.borrower_id)
             end
           end
@@ -205,8 +205,8 @@ class ProfileController < ApplicationController
           # check for duplication
           if !active_trans_ids.include? at.lender_id
             lsa = User.find(at.lender_id).profile.last_seen_at.to_time
-            # puts ' Difference is ' + (DateTime.now.to_time - lsa).seconds.to_s
-            if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6
+            puts ' Difference is 2 ' + (DateTime.now.to_time - lsa).seconds.to_s
+            if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
               active_trans_ids.push(at.lender_id)
             end
           end
@@ -222,15 +222,17 @@ class ProfileController < ApplicationController
         # current user is the lender
         if ct.lender_id == current_user.id
           lsa = User.find(ct.borrower_id).profile.last_seen_at
-          # puts ' Difference is ' + (DateTime.now.to_time - lsa).seconds.to_s
-          if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6
+          p "Last seen at " + lsa.to_s
+          puts ' Difference is 3 ' + (DateTime.now.to_time - lsa).seconds.to_s
+          if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
             active_trans_ids.push(ct.id)
           end
         else
           # current user is the borrower
           lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
-          # puts ' Difference is ' + (DateTime.now.to_time - lsa).seconds.to_s
-          if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6
+          p "Last seen at " + lsa.to_s
+          puts ' Difference is 4 ' + (DateTime.now.to_time - lsa).seconds.to_s
+          if !lsa.nil? && (DateTime.now.to_time - lsa).seconds < 6.5
             active_trans_ids.push(ct.id)
           end
         end
