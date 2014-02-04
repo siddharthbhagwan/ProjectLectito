@@ -113,6 +113,7 @@ class TransactionController < ApplicationController
 	    borrowercn = User.find(accepted_request.borrower_id).profile.chat_name
 	    lendercn = User.find(accepted_request.lender_id).profile.chat_name
 	    title = Book.where(id: Inventory.where(id: accepted_request.inventory_id).take.book_id).take.book_name
+	    request_date = accepted_request.request_date.to_s(:long)
 
 	    lsa_borrower = Profile.where(user_id: accepted_request.borrower_id).take.last_seen_at
 			if (DateTime.now.to_time - lsa_borrower).seconds < 6
@@ -127,6 +128,7 @@ class TransactionController < ApplicationController
 				id: accepted_request.id,
 				book_name: book_name,
 				acceptance_date: acceptance_date,
+				requested_date: request_date,
 				borrower: User.find(accepted_request.borrower_id).full_name,
 				delivery_mode: delivery_mode,
 				borrower_id: accepted_request.borrower_id,
@@ -150,6 +152,7 @@ class TransactionController < ApplicationController
 				id: accepted_request.id,
 				book_name: book_name,
 				acceptance_date: acceptance_date,
+				requested_date: request_date,
 				lender: User.find(accepted_request.lender_id).full_name,
 				delivery_mode: delivery_mode,
 				online: online_status_lender,

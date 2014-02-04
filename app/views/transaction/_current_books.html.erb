@@ -1,86 +1,84 @@
 <h4> Summary of Books currently with you </h4>
-<table id = "current_books_table" class="table table-striped table-bordered table-condensed">
-	<thead>
-		<tr>
-			<th>Book Name</th>
-			<th>Lender</th>
-			<th>Delivery Mode</th>
-			<th>Acceptance Date</th> 
-			<th>Received Date</th>
-			<th>Return Date</th> 
-			<th>Status</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% unless @current.blank? %>
-			<% @current.each do |c| %>
-				<tr id='current_<%= c.id %>' >
-					<!-- Book Name -->
-					<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
-
-					<!-- Lender -->
-					<td>
-						<%= link_to(User.find(c.lender_id).full_name, "javascript:void(0)", :id => "public_rating_#{c.id}") %> &nbsp;
-						<% if (DateTime.now.to_time - Profile.where(:user_id => c.lender_id).first.last_seen_at < 6.5 ) %>
-							<%= image_tag("online_dot.png", :size => "12x12", class: 'img-circle', :id => "online_" + c.id.to_s, "data-trid" => c.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(c.lender_id).profile.chat_name, "data-borrowercn" => User.find(c.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => c.inventory_id).take.book_id).take.book_name) %>
-							<% else %>
-								<%= image_tag("online_dot.png", :hidden => :true, :size => "12x12", class: 'img-circle', :id => "online_" + c.id.to_s, "data-trid" => c.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(c.lender_id).profile.chat_name, "data-borrowercn" => User.find(c.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => c.inventory_id).take.book_id).take.book_name) %>
-							<% end %>
-					</td>
-
-					<!-- Delivery Mode -->
-					<% if User.find(c.lender_id).is_delivery %>
-						<td>Delivery</td>
-					<% else %>
-						<td>Self Pick/Drop</td>
-					<% end %>
-
-					<!-- Acceptance Date -->
-					<td><%= c.acceptance_date.to_s(:long) %></td>
-
-					<!-- Received Date -->
-					<% if c.received_date.nil? %>
-						<td>Pending</td>
-					<% else %>
-						<td><%= c.received_date.to_s(:long) %></td>
-					<% end %>
-					
-					<!-- Return Date -->
-					<% if c.returned_date.nil? %>
-						<td>Pending</td>
-					<% else %>
-						<td><%= c.returned_date.to_s(:long) %></td>
-					<% end %>
-
-					<!-- Status -->
-					<% if c.status == 'Accepted' %>
-						<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
-							<td>
-								<p id="p_current_<%= c.id %>">Sent by Lender</p>
-								<input class="btn btn-default" type="button" value="Received" id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
-							</td>
-						<% else %>
-							<td>
-								<p id="p_current_<%= c.id %>">Meetup as decided</p>
-								<input class="btn btn-default" type="button" value="Received" id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
-							</td>
-						<% end %>						
-					<% elsif c.status == 'Received Borrower' %>
-						<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
-							<td>
-								<p id="p_current_<%= c.id %>">Received by You</p>
-								<input class="btn btn-default" type="button" value="Return" id="return_delivery" data-trid=<%= c.id %> />
-							</td>
-						<% else %>
-							<td>
-								<p id="p_current_<%= c.id %>">Received by You. Meetup to Return</p>
-								<input class="btn btn-default" type="button" value="Returned" id="return_self" data-trid=<%= c.id %> />
-							</td>
-						<% end %>	
-					<% end %>
-
+<div class='row'>
+	<div class='col-md-11'>
+		<table id = "current_books_table" class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Book Name</th>
+					<th>Lender</th> 
+					<th colspan='2'>Status</th>
+					<th>Timeline</th>
 				</tr>
-			<% end %>	
-		<% end %>	
-	</tbody>
-</table>
+			</thead>
+			<tbody>
+				<% unless @current.blank? %>
+					<% @current.each do |c| %>
+						<tr id='current_<%= c.id %>' >
+							<!-- Book Name -->
+							<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
+
+							<!-- Lender -->
+							<td>
+								<%= link_to(User.find(c.lender_id).full_name, "javascript:void(0)", :id => "public_rating_#{c.id}") %> &nbsp;
+								<% if (DateTime.now.to_time - Profile.where(:user_id => c.lender_id).first.last_seen_at < 6.5 ) %>
+									<%= image_tag("online_dot.png", :size => "12x12", class: 'img-circle', :id => "online_" + c.id.to_s, "data-trid" => c.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(c.lender_id).profile.chat_name, "data-borrowercn" => User.find(c.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => c.inventory_id).take.book_id).take.book_name) %>
+									<% else %>
+										<%= image_tag("online_dot.png", :hidden => :true, :size => "12x12", class: 'img-circle', :id => "online_" + c.id.to_s, "data-trid" => c.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(c.lender_id).profile.chat_name, "data-borrowercn" => User.find(c.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => c.inventory_id).take.book_id).take.book_name) %>
+									<% end %>
+							</td>
+
+							<!-- Status -->
+							<% if c.status == 'Accepted' %>
+								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
+									<td>
+										<p id="p_current_<%= c.id %>">Sent by Lender</p>
+									</td>
+									<td>	
+										<input class="btn btn-default" type="button" value="Received" id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
+									</td>
+								<% else %>
+									<td>
+										<p id="p_current_<%= c.id %>">Meetup as decided</p>
+									</td>
+									<td>
+										<input class="btn btn-default" type="button" value="Received" id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
+									</td>
+								<% end %>
+							<% elsif c.status == 'Received Borrower' %>
+								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
+									<td>
+										<p id="p_current_<%= c.id %>">Received by You</p>
+									</td>
+									<td>
+										<input class="btn btn-default" type="button" value="Return" id="return_delivery" data-trid=<%= c.id %> />
+									</td>
+								<% else %>
+									<td>
+										<p id="p_current_<%= c.id %>">Received by You. Meetup to Return</p>
+									</td>
+									<td>	
+										<input class="btn btn-default" type="button" value="Returned" id="return_self" data-trid=<%= c.id %> />
+									</td>
+								<% end %>
+							<% end %>
+
+							<td>
+								<%= tag 'input', type: :button, id: "timeline_#{c.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
+									title: 'Timeline', 
+									content: "
+										<div style='font-size:90%;'>
+											#{ if !c.request_date.blank? then '<u>Accepted</u><br/>' + c.request_date.to_s(:long) + '<br/>' end } 
+											#{ if !c.acceptance_date.blank? then '<u>Requested</u><br/>' + c.acceptance_date.to_s(:long) + '<br/>' end }
+											#{ if !c.received_date.blank? then '<u>Received</u><br/>' + c.received_date.to_s(:long) + '<br/>' end }
+											#{ if !c.returned_date.blank? then '<u>Returned</u><br/>' + c.returned_date.to_s(:long) + '<br/>' end }
+										</div>"
+								} %>
+							</td>
+						</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+	

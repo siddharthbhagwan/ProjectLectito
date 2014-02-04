@@ -439,7 +439,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "' " 
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(4)").text() + "' " 
               layout: "topRight"
               closeWith: ["click"]
               callback:
@@ -680,7 +680,6 @@ $(document).ready ->
 
             #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
           complete: (jqXHR, textStatus) ->
-            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -779,7 +778,7 @@ $(document).ready ->
         window.location.replace($("#home_link").attr("href"))
 
 #--------------------------------------------------------------------------------------------------------------------
-  #SSE Listener for creating a transaction
+  # SSE Listener for creating a transaction
   #TODO Remove bracket element so its no more an element
   $.ajax
     url: "/transaction/user_id.json"
@@ -807,24 +806,26 @@ $(document).ready ->
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             td_borrower = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</td>"
-            
-            if pData[1].delivery_mode
-              td_delivery_mode = "<td>Delivery</td>"
-              td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
-            else
-              td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
+            td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
+
+            # if pData[1].delivery_mode
+            #   td_delivery_mode = "<td>Delivery</td>"
+            #   td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_delivery' data-trid=" + pData[1].id + "></td>"
+            # else
+            #   td_delivery_mode = "<td>Self Pick/Drop</td>"
+            #   td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
             td_requested_from = "<td>" + pData[1].requested_from + "</td>"
-            td_requested_date = "<td>" + pData[1].requested_date + "</td>"
             td_status = "<td>" + pData[1].status + "</td>"
-            td_reject = "<td><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td></tr>"
-            table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_delivery_mode + td_requested_date + td_status + td_accept + td_reject
+            td_reject = "<td><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td>"
+            td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+              data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/></div>'></td></tr>"
+            table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_status + td_accept + td_reject + td_timeline_button
             $("#lend_requests_table > tbody:last").append(table_row_data);
             if (!$("#lend_requests_div").is(":visible"))
               $("#lend_requests_div").show(500)  
 
-        #Summary of Requests for Books you've lent out (lender)
+        # Summary of Requests for Books you've lent out (lender)
         else if pData[0] == "accepted_borrower"
           if !$("#accepted_" + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
@@ -843,17 +844,19 @@ $(document).ready ->
             profile_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
             td_borrower = profile_link + "&nbsp;&nbsp;" + online_dot
 
-            if pData[1].delivery_mode
-              td_delivery_mode = "<td>Delivery</td>"
-              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-default' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
-            else
-              td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+            # if pData[1].delivery_mode
+            #   td_delivery_mode = "<td>Delivery</td>"
+            #   td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-default' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+            # else
+            #   td_delivery_mode = "<td>Self Pick/Drop</td>"
+            #   td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
+            td_status_text = "<td><p> Meetup as decided</p></td>"
+            td_status_button = "<td id='p_accepted_" + pData[1].id + "'><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-            td_returned_date = "<td>Pending</td>"
-            td_received_date = "<td>Pending</td>"
-            table_row_data = tr_id + td_book_name + td_borrower + td_delivery_mode + td_acceptance_date + td_received_date + td_returned_date + td_status
+            td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+              data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
+            table_row_data = tr_id + td_book_name + td_borrower + td_status_text + td_status_button + td_timeline_button
             $("#accepted_requests_table > tbody:last").append(table_row_data)
             if (!$("#accepted_requests_div").is(":visible"))
               $("#accepted_requests_div").show(500)
@@ -889,18 +892,19 @@ $(document).ready ->
             lender_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
             td_lender = lender_link + "&nbsp;&nbsp;" + online_dot
 
-            if pData[1].delivery_mode
-              td_delivery_mode = "<td>Delivery</td>"
-              td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
-            else
-              td_delivery_mode = "<td>Self Pick/Drop</td>"
-              td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            # if pData[1].delivery_mode
+            #   td_delivery_mode = "<td>Delivery</td>"
+            #   td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            # else
+            #   td_delivery_mode = "<td>Self Pick/Drop</td>"
+            #   td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
+            td_status_text = "<td><p>Meetup as decided</p></td>"
+            td_status_button = "<td id='p_current_" + pData[1].id + "'><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-            td_received_date = "<td>Pending</td>"
-            td_return_date = "<td>Pending</td>"
-            #td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
-            table_row_data = tr_id + td_book_name + td_lender + td_delivery_mode + td_acceptance_date + td_received_date + td_return_date + td_status       
+            td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+              data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
+            table_row_data = tr_id + td_book_name + td_lender + td_status_text + td_status_button + td_timeline_button      
             $("#current_books_table > tbody:last").append(table_row_data)
             if (!$("#current_books_div").is(":visible"))
               $("#current_books_div").show(500)
@@ -918,9 +922,13 @@ $(document).ready ->
                   onClose: ->
                     noty_confirm()
 
+            timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+            timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
+            timeline_data_content = timeline_data_content + "<u>Returned</u><br/>" + pData[1].returned_date + "</div>"
+            timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
             $("#received_lender_" + pData[1].id).removeAttr("disabled")
             $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
-            $("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
+            #$("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
 
         else if pData[0] == "rejected_lender"
           $("#lend_" + pData[1].id).remove()
@@ -974,7 +982,7 @@ $(document).ready ->
 
         else if pData[0] == "received_lender"
           noty
-            text: pData[1].name + " has received " + "'" + pData[1].book_name 
+            text: pData[1].name + " has received '" + pData[1].book_name + "'"
             layout: "topRight"
             closeWith: ["click"]
             callback:
@@ -983,57 +991,70 @@ $(document).ready ->
 
           $("chat_div_" + pData[1].id).remove()  
 
-        #Lender triggers that book's been handed over in self/pick drop.
+        # Lender triggers that book's been handed over in self/pick drop.
+        # Notifiation for borrower
         else if pData[0] == "received_borrower_by_lender"
-          if  $("#received_borrower_" + pData[1].id).attr("value") != "Return"
-            $("#current_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
-            noty
-              text: pData[1].name + " has handed over '" + pData[1].book_name + "'"
-              layout: "topRight"
-              closeWith: ["click"]
-              callback:
-                onClose: ->
-                  noty_confirm()
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+          timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
+          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "<br/></div>"
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
 
-              if pData[1].delivery_mode
-                $("#received_borrower_" + pData[1].id).attr("value", "Return")
-                $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
+          noty
+            text: pData[1].name + " has handed over '" + pData[1].book_name + "'"
+            layout: "topRight"
+            closeWith: ["click"]
+            callback:
+              onClose: ->
+                noty_confirm()
 
-              else
-                $("#p_current_" + pData[1].id).text("Received by You. Meetup to Return")
-                $("#received_borrower_" + pData[1].id).attr("value", "Returned")
-                $("#received_borrower_" + pData[1].id).attr("id", "return_self")
+            if pData[1].delivery_mode
+              $("#received_borrower_" + pData[1].id).attr("value", "Return")
+              $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
+
+            else
+              $("#p_current_" + pData[1].id).text("Received by You. Meetup to Return")
+              $("#received_borrower_" + pData[1].id).attr("value", "Returned")
+              $("#received_borrower_" + pData[1].id).attr("id", "return_self")
 
 
-        #Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
+        # Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
+        # Called when borrower clicks on received, push notification for lender
         else if pData[0] == "received_borrower_by_borrower"
-          if $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text() == "Pending"
-            $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
-            $("#p_accepted_" + pData[1].id).text("Received by Borrower")
-            noty
-              text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
-              layout: "topRight"
-              closeWith: ["click"]
-              callback:
-                onClose: ->
-                  noty_confirm()
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+          timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
+          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "</div>"
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
+          #$("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
+          $("#p_accepted_" + pData[1].id).text("Received by Borrower")
+          noty
+            text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
+            layout: "topRight"
+            closeWith: ["click"]
+            callback:
+              onClose: ->
+                noty_confirm()
 
-            if !pData[1].delivery_mode
-              $("#handed_over_" + pData[1].id).attr("value", "Received")
-              $("#handed_over_" + pData[1].id).attr("disabled", "true")
-              $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
+          if !pData[1].delivery_mode
+            $("#handed_over_" + pData[1].id).attr("value", "Received")
+            $("#handed_over_" + pData[1].id).attr("disabled", "true")
+            $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
 
+        # Called when borrower clicks received, push notification for borrower himself
         else if pData[0] == "received_borrower_by_borrower_lender"
-          $("#current_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+          timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
+          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "<br/></div>"
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
+          # Block set in ajax is removed here because after controller updates, theres a push back to the caller itself
+          setTimeout $.unblockUI
 
+        # Lender clicks 'Handed Over', Controller updates data, action to be carried out on lenders page itself
         else if pData[0] == "received_borrower_by_lender_borrower"
-          $("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)  
-
-        # else if pData[0] == "offline"
-        #   $("#online_" + pData[1].id).attr("hidden", "true")
-
-        # else if pData[0] == "online"
-        #   $("#online_" + pData[1].id).removeAttr("hidden")
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+          timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
+          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "<br/></div>"
+          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
+          
 
         myFirebase.child(childSnapshot.bc.path.m[1]).remove()
         # Refer line 316 in chat.js for comments 

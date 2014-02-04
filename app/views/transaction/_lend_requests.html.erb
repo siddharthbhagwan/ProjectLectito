@@ -1,53 +1,65 @@
 <h4> Summary of Requests for Books users want to borrow from you </h4>
-<table id = "lend_requests_table" class="table table-striped table-bordered table-condensed">
-	<thead>
-		<tr>
-			<th>Book Name</th>
-			<th>Borrower</th>
-			<th>Requested From</th>
-			<th>Delivery Mode</th>
-			<th>Request Date</th>
-			<th colspan ='3'>Status</th>   
-		</tr>
-	</thead>
-	<tbody>
-		<% unless @lend.blank? %>
-			<% @lend.each do |l| %>
-				<tr id='lend_<%= l.id %>'>
-					<!-- Book Name -->
-					<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>
-
-					<!-- Borrower -->
-					<td><%= link_to User.find(l.borrower_id).full_name,  "javascript:void(0)", :id => "public_rating_#{l.id}" %></td>
-
-					<!-- Address -->
-					<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>
-
-					<!-- Delivery Mode -->
-					<% if User.find(l.lender_id).is_delivery %>
-						<td>Delivery</td>
-					<% else %>
-						<td>Self Pick/Drop</td>
-					<% end %>
-
-					<!-- Request Date -->
-					<td><%= l.request_date.to_s(:long) %></td>
-
-					<!-- Status -->
-					<td><%= l.status %></td>
-
-					<!-- Accept -->
-					<% if User.find(l.lender_id).is_delivery or User.find(l.borrower_id).is_delivery %>
-						<td><input class="btn btn-default" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
-					<% else %>
-						<td><input class="btn btn-default" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
-					<% end %>
-
-					<!-- Reject -->
-					<td><input class="btn btn-default" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>
-				
+<div class='row'>
+	<div class='col-md-11'>
+		<table id = "lend_requests_table" class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Book Name</th>
+					<th>Borrower</th>
+					<th>Requested From</th>
+					<th colspan ='3'>Status</th>
+					<th>Timeline</th>  
 				</tr>
-			<% end %>	
-		<% end %>	
-	</tbody>
-</table>
+			</thead>
+			<tbody>
+				<% unless @lend.blank? %>
+					<% @lend.each do |l| %>
+						<tr id='lend_<%= l.id %>'>
+							<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>
+
+							<td><%= link_to User.find(l.borrower_id).full_name,  "javascript:void(0)", :id => "public_rating_#{l.id}" %></td>
+
+							<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>
+
+							<!-- Delivery Mode
+							<% if User.find(l.lender_id).is_delivery %>
+								<td>Delivery</td>
+							<% else %>
+								<td>Self Pick/Drop</td>
+							<% end %> -->
+
+							<td><%= l.status %></td>
+
+							<!-- 
+							<% if User.find(l.lender_id).is_delivery or User.find(l.borrower_id).is_delivery %>
+								<td><input class="btn btn-default" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
+							<% else %>
+								<td><input class="btn btn-default" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
+							<% end %>
+							-->
+							
+							<td><input class="btn btn-default" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
+
+							<td><input class="btn btn-default" type="button" value="Reject" id="reject" data-trid=<%= l.id %> /></td>
+
+							<td>
+								<%= tag 'input', type: :button, id: "timeline_#{l.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
+									title: 'Timeline', 
+									content: "
+										<div style='font-size:90%;'>
+											#{ if !l.request_date.blank? then '<u>Accepted</u><br/>' + l.request_date.to_s(:long) + '<br/>' end } 
+											#{ if !l.acceptance_date.blank? then '<u>Requested</u><br/>' + l.acceptance_date.to_s(:long) + '<br/>' end }
+											#{ if !l.received_date.blank? then '<u>Received</u><br/>' + l.received_date.to_s(:long) + '<br/>' end }
+											#{ if !l.returned_date.blank? then '<u>Returned</u><br/>' + l.returned_date.to_s(:long) + '<br/>' end }
+										</div>"
+								} %>
+							</td>
+						
+						</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+		

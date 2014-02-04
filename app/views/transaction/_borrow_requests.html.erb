@@ -1,46 +1,49 @@
 <h4> Summary of Books you've requested </h4>
-<table id = "borrow_requests_table" class="table table-striped table-bordered table-condensed">
-	<thead>
-		<tr>
-			<th>Book Name</th>
-			<th>Lender</th>
-			<th>Available @</th>
-			<th>Delivery Mode</th>
-			<th>Request Date</th>
-			<th colspan='2'>Status</th>   
-		</tr>
-	</thead>
-	<tbody>
-		<% unless @borrow.blank? %>
-			<% @borrow.each do |b| %>
-				<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>
-					<!-- Book Name -->
-					<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
-
-					<!-- Lender -->
-					<td><%= link_to User.find(b.lender_id).full_name, "javascript:void(0)", :id => "public_rating_#{b.id}" %></td>
-
-					<!-- Address -->
-					<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
-
-					<!-- Delivery Mode -->
-					<% if User.find(b.lender_id).is_delivery %>
-						<td>Delivery</td>
-					<% else %>
-						<td>Self Pick/Drop</td>
-					<% end %>
-
-					<!-- Request Date -->
-					<td><%= b.request_date.to_s(:long) %></td>
-
-					<!-- Status -->
-					<td><%= b.status %></td>
-
-					<!-- Cancel -->
-					<td><%= tag "input", :type => "button", "data-trid" => b.id.to_s, :class => "btn btn-default cancel_trans" , :value => "Cancel" %></td>
-					
+<div class='row'>
+	<div class='col-md-11'>
+		<table id = 'borrow_requests_table' class='table table-striped table-bordered table-condensed'>
+			<thead>
+				<tr>
+					<th>Book Name</th>
+					<th>Lender</th>
+					<th>Available @</th>
+					<th colspan='2'>Status</th>
+					<th>Timeline</th>
 				</tr>
-			<% end %>	
-		<% end %>
-	</tbody>
-</table>
+			</thead>
+			<tbody>
+				<% unless @borrow.blank? %>
+					<% @borrow.each do |b| %>
+						<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>
+
+							<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
+
+							<td><%= link_to User.find(b.lender_id).full_name, "javascript:void(0)", id: "public_rating_#{b.id}" %></td>
+
+							<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
+
+							<td><%= b.status %></td>
+
+							<td><%= tag 'input', type: :button, 'data-trid' => b.id.to_s, class: 'btn btn-default cancel_trans' , value: 'Cancel' %></td>
+
+							<td>
+								<%= tag 'input', type: :button, id: "timeline_#{b.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
+									title: 'Timeline', 
+									content: "
+										<div style='font-size:90%;'>
+											#{ if !b.request_date.blank? then '<u>Accepted</u><br/>' + b.request_date.to_s(:long) + '<br/>' end } 
+											#{ if !b.acceptance_date.blank? then '<u>Requested</u><br/>' + b.acceptance_date.to_s(:long) + '<br/>' end }
+											#{ if !b.received_date.blank? then '<u>Received</u><br/>' + b.received_date.to_s(:long) + '<br/>' end }
+											#{ if !b.returned_date.blank? then '<u>Returned</u><br/>' + b.returned_date.to_s(:long) + '<br/>' end }
+										</div>"
+								} %>
+							</td>
+							
+						</tr>
+					<% end %>	
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+	
