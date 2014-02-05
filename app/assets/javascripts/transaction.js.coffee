@@ -439,7 +439,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(4)").text() + "' " 
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "' " 
               layout: "topRight"
               closeWith: ["click"]
               callback:
@@ -678,7 +678,6 @@ $(document).ready ->
               $("#received_borrower_" + tr_id).attr("id","return_self")
               $("#p_current_" + tr_id).text("Received by You. Meetup to Return")
 
-            #$("#current_" + tr_id + " td:nth-last-child(4)").text($.now())
           complete: (jqXHR, textStatus) ->
 
           error: (jqXHR, textStatus, errorThrown) ->
@@ -851,8 +850,8 @@ $(document).ready ->
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
             #   td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
-            td_status_text = "<td><p> Meetup as decided</p></td>"
-            td_status_button = "<td id='p_accepted_" + pData[1].id + "'><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
+            td_status_text = "<td><p id='p_accepted_" + pData[1].id + "'>Meetup as decided</p></td>"
+            td_status_button = "<td><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
@@ -899,8 +898,8 @@ $(document).ready ->
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
             #   td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
-            td_status_text = "<td><p>Meetup as decided</p></td>"
-            td_status_button = "<td id='p_current_" + pData[1].id + "'><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
+            td_status_text = "<td><p id='p_current_" + pData[1].id + "'>Meetup as decided</p></td>"
+            td_status_button = "<td><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
@@ -928,7 +927,6 @@ $(document).ready ->
             timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
             $("#received_lender_" + pData[1].id).removeAttr("disabled")
             $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
-            #$("#accepted_" + pData[1].id + " td:nth-last-child(2)").text(pData[1].returned_date).fadeIn(300) 
 
         else if pData[0] == "rejected_lender"
           $("#lend_" + pData[1].id).remove()
@@ -1024,7 +1022,6 @@ $(document).ready ->
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
           timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "</div>"
           timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
-          #$("#accepted_" + pData[1].id + " td:nth-last-child(3)").text(pData[1].received_date)
           $("#p_accepted_" + pData[1].id).text("Received by Borrower")
           noty
             text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
