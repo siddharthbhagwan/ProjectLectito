@@ -30,8 +30,15 @@ textarea {
   resize: none;
 }
 
+// Td vertical align made middle, overrides bootstrap top vertical
 td {
-  vertical-align: middle!important;
+  vertical-align: middle !important;
+}
+
+// Margin for Dialogs and Chat box
+.ui-dialog-content{
+  margin-top: 10px;
+  margin-bottom: -10px;
 }
 
 
