@@ -479,7 +479,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
+              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "'" 
               layout: "topRight"
               closeWith: ["click"]
               callback:
@@ -503,7 +503,7 @@ $(document).ready ->
         tr_id = $("#borrower_returned_book_confirm").data("trid")
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         noty
-          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
+          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "'" 
           layout: "topRight"  
           closeWith: ["click"]
           callback:
@@ -524,7 +524,7 @@ $(document).ready ->
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         if mode == "delivery"
           noty
-            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(7)").text() + "'" 
+            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "'" 
             layout: "topRight"
             closeWith: ["click"]
             callback:
