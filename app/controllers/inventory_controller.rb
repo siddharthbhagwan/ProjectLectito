@@ -54,7 +54,7 @@ class InventoryController < ApplicationController
 	def destroy
 		@inventory = Inventory.where(id: params[:id]).take
 		@inventory.deleted = true
-		@inventory.status = 'Unavailable'
+		@inventory.status = 'Deleted'
 		if @inventory.save!
 			redirect_to inventory_index_path
 			flash[:notice] = 'The book has been deleted from your inventory'
