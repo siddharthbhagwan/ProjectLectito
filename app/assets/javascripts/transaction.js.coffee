@@ -129,7 +129,7 @@ $(document).ready ->
               $("input[id^='timeline_']").popover
                 placement: 'right'
                 html: true
-                trigger: 'click'
+                trigger: 'hover'
                 container: 'body'
 
               setTimeout $.unblockUI
@@ -244,7 +244,7 @@ $(document).ready ->
             $("#timeline_" + tr_id).popover
               placement: 'right'
               html: true
-              trigger: 'click'
+              trigger: 'hover'
               container: 'body'
 
             setTimeout $.unblockUI
@@ -845,7 +845,7 @@ $(document).ready ->
             $("#timeline_" + pData[1].id).popover
               placement: 'right'
               html: true
-              trigger: 'click'
+              trigger: 'hover'
               container: 'body'
 
             if (!$("#lend_requests_div").is(":visible"))
@@ -941,7 +941,7 @@ $(document).ready ->
             $("#timeline_" + pData[1].id).popover
               placement: 'right'
               html: true
-              trigger: 'click'
+              trigger: 'hover'
               container: 'body'
 
             if (!$("#current_books_div").is(":visible"))
