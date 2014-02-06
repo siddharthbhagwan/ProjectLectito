@@ -123,7 +123,7 @@ class TransactionController < ApplicationController
 			end
 
 			transaction_accepted_lender = []
-			transaction_accepted_lender << 'accepted_borrower'
+			transaction_accepted_lender << 'accepted_lender'
 			transaction_accepted_lender << {			
 				id: accepted_request.id,
 				book_name: book_name,
@@ -147,7 +147,7 @@ class TransactionController < ApplicationController
 			end
 
 			transaction_accepted_borrower = []
-			transaction_accepted_borrower << 'accepted_lender'
+			transaction_accepted_borrower << 'accepted_borrower'
 			transaction_accepted_borrower << {
 				id: accepted_request.id,
 				book_name: book_name,

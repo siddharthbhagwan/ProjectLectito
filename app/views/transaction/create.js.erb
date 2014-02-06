@@ -12,7 +12,6 @@
 			td_borrow_button = "<td><input type='button' value='Cancel' class='btn btn-default cancel_trans'  data-trid='<%= b.id %>'/></td>"
 			content = "<div style='font-size:90%;'><u>Accepted</u><br/><%= b.request_date.to_s(:long) %><br/></div>"
 			td_timeline_button = "<td><input type='button' class='btn btn-default' id='timeline_<%= b.id %>' data-title='Timeline' value='View' rel='popover' data-content='<div style=font-size:90%;><u>Accepted</u><br/><%= b.request_date.to_s(:long) %><br/></div>'></td></tr>)"
-			console.log(td_timeline_button);
 			$("#borrow_requests_table > tbody:last").append(td_id + td_book_name + td_lender_name + td_address + td_status + td_borrow_button + td_timeline_button);
 		}
 	<% end %>

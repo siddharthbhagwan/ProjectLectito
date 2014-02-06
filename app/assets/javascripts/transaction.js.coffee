@@ -105,6 +105,7 @@ $(document).ready ->
             after_l = "0"
         else
           after_l = $("#lend_requests_table tbody tr:last-child").attr("data-time")
+
         $.ajax
             url: "/transaction.js"
             type: "post"
@@ -125,6 +126,12 @@ $(document).ready ->
               $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
               $("#city_" + city_id).hide()
               $("#" + city_id).attr("data-status","closed")
+              $("input[id^='timeline_']").popover
+                placement: 'right'
+                html: true
+                trigger: 'click'
+                container: 'body'
+
               setTimeout $.unblockUI
 
             error: (jqXHR, textStatus, errorThrown) ->
@@ -231,6 +238,15 @@ $(document).ready ->
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
             empty_table_checks()
+            # Destroy popover with same id, which was referring to the old button, which has been removed,
+            # recreate the popover
+            $("#timeline_" + tr_id).popover('destroy')
+            $("#timeline_" + tr_id).popover
+              placement: 'right'
+              html: true
+              trigger: 'click'
+              container: 'body'
+
             setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
@@ -280,6 +296,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).fadeOut(500).remove()
+            $('#timeline_' + tr_id).popover('destroy')
             empty_table_checks()
             setTimeout $.unblockUI
 
@@ -324,6 +341,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $("#borrow_" + tr_id).fadeOut(500).remove()
+            $('#timeline_' + tr_id).popover('destroy')
             empty_table_checks()
             setTimeout $.unblockUI
 
@@ -447,6 +465,7 @@ $(document).ready ->
                   noty_confirm()
 
             $(tr_id_s).remove()
+            $('#timeline_' + tr_id).popover('destroy')
             $('input:radio[name=borrower_feedback]').val(['neutral']);
             $("#borrower_comments").val("")
             if $("#current_books_table tr").length == 1
@@ -584,6 +603,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
+            $('#timeline_' + tr_id).popover('destroy')
             $("#lender_comments").val("")
             $('input:radio[name=lender_feedback]').val(['neutral'])
             if $("#accepted_requests_table tr").length == 1
@@ -821,11 +841,19 @@ $(document).ready ->
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_status + td_accept + td_reject + td_timeline_button
             $("#lend_requests_table > tbody:last").append(table_row_data);
+
+            $("#timeline_" + pData[1].id).popover
+              placement: 'right'
+              html: true
+              trigger: 'click'
+              container: 'body'
+
             if (!$("#lend_requests_div").is(":visible"))
-              $("#lend_requests_div").show(500)  
+              $("#lend_requests_div").show(500)
 
         # Summary of Requests for Books you've lent out (lender)
-        else if pData[0] == "accepted_borrower"
+        # Changes on borrowers page after lender accepts the request
+        else if pData[0] == "accepted_lender"
           if !$("#accepted_" + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
@@ -857,13 +885,16 @@ $(document).ready ->
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_borrower + td_status_text + td_status_button + td_timeline_button
             $("#accepted_requests_table > tbody:last").append(table_row_data)
+
             if (!$("#accepted_requests_div").is(":visible"))
               $("#accepted_requests_div").show(500)
 
-            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")   
+            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")
+
         
-        #Summary of Books currently with you (borrower)
-        else if pData[0] == "accepted_lender"
+        # Summary of Books currently with you (borrower)
+        # Changes on the lenders page after lender accepts the request
+        else if pData[0] == "accepted_borrower"
           if !$("#current_" + pData[1].id).length
             noty
               text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
@@ -885,7 +916,7 @@ $(document).ready ->
 
             td_c_ccn = "data-currentcn='" + pData[1].currentcn + "' "
             td_c_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
-            td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
+            td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "
             td_c_title = "data-title='" + pData[1].title + "' "
             online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + "/>"
             lender_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
@@ -905,10 +936,18 @@ $(document).ready ->
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_lender + td_status_text + td_status_button + td_timeline_button      
             $("#current_books_table > tbody:last").append(table_row_data)
+
+            $("#timeline_" + pData[1].id).popover('destroy')
+            $("#timeline_" + pData[1].id).popover
+              placement: 'right'
+              html: true
+              trigger: 'click'
+              container: 'body'
+
             if (!$("#current_books_div").is(":visible"))
               $("#current_books_div").show(500)
 
-            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")    
+            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")
 
         #Summary of Requests for Books you've lent out ( recvd button activates )
         else if pData[0] == "returned" #FIXME
@@ -934,6 +973,7 @@ $(document).ready ->
 
         else if pData[0] == "rejected_borrower"
           $("#borrow_" + pData[1].id).remove()
+          $('#timeline_' + pData[1].id).popover('destroy')
           empty_table_checks()
 
           noty
@@ -944,6 +984,8 @@ $(document).ready ->
               onClose: ->
                 noty_confirm()
 
+        # Request has been cancelled by borrower. On lenders page, the entry is removed, empty table check is called,
+        # and popover is destroyed
         else if pData[0] == "cancelled"
           noty
             text: "A request to borrow '" + pData[1].book_name + "' from you has been cancelled"
@@ -954,6 +996,7 @@ $(document).ready ->
                 noty_confirm()
 
           $("#lend_" + pData[1].id).remove()
+          $("#timeline_" + pData[1].id).popover('destroy')
           empty_table_checks()
 
         else if pData[0] == "rejected"
@@ -987,7 +1030,7 @@ $(document).ready ->
               onClose: ->
                 noty_confirm()
 
-          $("chat_div_" + pData[1].id).remove()  
+          $("chat_div_" + pData[1].id).remove()
 
         # Lender triggers that book's been handed over in self/pick drop.
         # Notifiation for borrower
