@@ -25,6 +25,7 @@
   }
 }
 
+
 // Site wide text areas made non resizable
 textarea {
   resize: none;
@@ -33,6 +34,11 @@ textarea {
 // Td vertical align made middle, overrides bootstrap top vertical
 td {
   vertical-align: middle !important;
+}
+
+// Centering table headers
+th {
+  text-align: center;
 }
 
 // Margin for Dialogs and Chat box
