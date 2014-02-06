@@ -7,7 +7,7 @@ class Ability
     	can :manage, User
       can :manage, Book
     end
-    puts " Checking for user " + user.user?.to_s
+
     if user.user?
     	can :manage, Profile
     	can :manage, Address

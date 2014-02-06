@@ -84,6 +84,7 @@ class ProfileController < ApplicationController
       @bad_borrower = Transaction.where(borrower_id: pr.borrower_id, lender_feedback: :bad).count
       @bad = @bad_lender + @bad_borrower
 
+
       @neutral_lender = Transaction.where(lender_id: pr.borrower_id, borrower_feedback: :neutral).count
       @neutral_borrower = Transaction.where(borrower_id: pr.borrower_id, lender_feedback: :neutral).count
       @neutral = @neutral_lender + @neutral_borrower
@@ -163,7 +164,7 @@ class ProfileController < ApplicationController
             name: @name,
             good: @good,
             neutral: @neutral,
-            bad: :@bad,
+            bad: @bad,
             transactions: @total_transactions,
             books: @total_books
           }

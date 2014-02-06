@@ -228,15 +228,15 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------
 # Hide Book Details by default till book name is selected
 
-  $("#isbn").hide() 
-  $("#author").hide()  
-  $("#language").hide() 
-  $("#genre").hide() 
+  $("#isbn").hide()
+  $("#author").hide()
+  $("#language").hide()
+  $("#genre").hide()
   $("#version").hide()
-  $("#edition").hide() 
+  $("#edition").hide()
   $("#publisher").hide()
-  $("#pages").hide() 
-  $("#mrp").hide() 
+  $("#pages").hide()
+  $("#mrp").hide()
 
 #--------------------------------------------------------------------------------------------------------------------
 
@@ -249,7 +249,7 @@ $(document).ready ->
         $("#add_book_form").submit()
 
 #--------------------------------------------------------------------------------------------------------------------
-  # Online Status Updater    
+  # Online Status Updater
 
   updateComments = ->
     $.ajax
@@ -292,7 +292,7 @@ $(document).ready ->
 
     setTimeout updateComments, 4000
 
-  setTimeout updateComments, 4000  
+  setTimeout updateComments, 4000
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable

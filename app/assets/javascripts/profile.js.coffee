@@ -23,6 +23,7 @@ $(document).ready ->
         $("#total_books b").text(msg[0].books)
         $("#good_transactions b").text(msg[0].good)
         $("#neutral_transactions b").text(msg[0].neutral)
+        alert msg[0].bad
         $("#bad_transactions b").text(msg[0].bad)
         $("#full_profile").replaceWith("<u><a href='/profile/public_rating/" + tr_id + "'>View Complete Profile</a></u>")
         $("#display_public_profile").dialog "open"
