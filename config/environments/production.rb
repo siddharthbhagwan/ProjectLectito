@@ -71,7 +71,9 @@
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   #Default Url
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => 'http://stormy-spire-3896.herokuapp.com' }
+  config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
   :address        => 'smtp.sendgrid.net',
