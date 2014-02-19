@@ -7,7 +7,7 @@ ProjectLectito::Application.routes.draw do
 
   unauthenticated :user do
     devise_scope :user do 
-      get "/" => "devise/sessions#new"
+      get '/' => 'devise/sessions#new'
       get '/users/confirmation/new' => 'devise/passwords#new'
       get '/inventory/search' => 'devise/sessions#new'
     end
@@ -62,7 +62,7 @@ ProjectLectito::Application.routes.draw do
   post 'transaction/update_request_status_receive_lender' => 'transaction#update_request_status_receive_lender'
   post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
 
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, controllers: { sessions: :sessions }
+  devise_for :users, :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
   resources :profile, :address, :home_page, :book, :inventory, :transaction, :chat
 
 end

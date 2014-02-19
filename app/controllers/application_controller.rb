@@ -24,8 +24,10 @@ class ApplicationController < ActionController::Base
   def update_timestamp
     if user_signed_in?
       online = User.find(current_user.id).profile
-      online.last_seen_at = DateTime.now.to_time
-      online.save
+      unless online.blank?
+        online.last_seen_at = DateTime.now.to_time
+        online.save
+      end  
     end
   end
   
