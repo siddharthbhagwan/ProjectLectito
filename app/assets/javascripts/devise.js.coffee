@@ -19,7 +19,7 @@ $(document).ready ->
     resizable: false
     draggable: false
     minWidth: 600
-    minHeight: 170
+    height: 230
 
 
   if ($('.label-success') || $('.label-important') || $('.label-info') || $('.label-error'))
