@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
      # user.username = auth.info.nickname
       user.email = auth.info.email
+      p ' +++++++++++++++++++ ' + user.email.to_s
     end
   end
 
