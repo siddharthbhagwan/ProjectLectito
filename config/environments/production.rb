@@ -71,17 +71,17 @@
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   #Default Url
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { :host => 'http://stormy-spire-3896.herokuapp.com' }
-  config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.default_url_options = { host: 'stormy-spire-3896.herokuapp.com' }
+  # config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-  :address        => 'smtp.sendgrid.net',
-  :port           => '587',
-  :authentication => :plain,
-  :user_name      => ENV['SENDGRID_USERNAME'],
-  :password       => ENV['SENDGRID_PASSWORD'],
-  :domain         => 'heroku.com',
-  :enable_starttls_auto => true
-}
+    :port           => '25',
+    :address        => ENV['POSTMARK_SMTP_SERVER'],
+    :user_name      => ENV['POSTMARK_API_KEY'],
+    :password       => ENV['POSTMARK_API_KEY'],
+    :domain         => 'stormy-spire-3896.heroku.com',
+    :authentication => :plain,
+  }
+  ActionMailer::Base.delivery_method = :smtp
 end

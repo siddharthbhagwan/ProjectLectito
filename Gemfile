@@ -30,6 +30,7 @@ gem 'puma'
 gem 'rubocop'
 gem 'bigbertha'
 gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'postmark-rails'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
