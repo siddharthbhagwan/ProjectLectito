@@ -1,42 +1,42 @@
 <h3>Search</h3>
 
 <% if @borrow.blank? %>
-  <div id="borrow_requests_div" hidden="true">
-  	<%= render "transaction/borrow_requests" %>
+  <div id='borrow_requests_div' hidden='true'>
+  	<%= render 'transaction/borrow_requests' %>
   </div>
 <% else %>
-  <div id="borrow_requests_div">
-    <%= render "transaction/borrow_requests" %>
+  <div id='borrow_requests_div'>
+    <%= render 'transaction/borrow_requests' %>
   </div>
 <% end %>  
 
 <% if @lend.blank? %>
-  <div id="lend_requests_div" hidden="true">
-  	<%= render "transaction/lend_requests" %>
+  <div id='lend_requests_div' hidden='true'>
+  	<%= render 'transaction/lend_requests' %>
   </div>
 <% else %>
-  <div id="lend_requests_div">
-      <%= render "transaction/lend_requests" %>
+  <div id='lend_requests_div'>
+      <%= render 'transaction/lend_requests' %>
     </div>
 <% end %> 
 
 <% if @accept.blank? %>
-  <div id="accepted_requests_div" hidden="true">
-  	<%= render "transaction/accepted_requests" %>
+  <div id='accepted_requests_div' hidden='true'>
+  	<%= render 'transaction/accepted_requests' %>
   </div>
 <% else %>
-  <div id="accepted_requests_div">
-    <%= render "transaction/accepted_requests" %>
+  <div id='accepted_requests_div'>
+    <%= render 'transaction/accepted_requests' %>
   </div>
 <% end %>   
 
 <% if @current.blank? %>
-  <div id="current_books_div" hidden="true">
-    <%= render "transaction/current_books" %>
+  <div id='current_books_div' hidden='true'>
+    <%= render 'transaction/current_books' %>
   </div>
 <% else %>
-  <div id="current_books_div">
-    <%= render "transaction/current_books" %>
+  <div id='current_books_div'>
+    <%= render 'transaction/current_books' %>
   </div>
 <% end %>   
 
@@ -48,117 +48,32 @@
 
     <%= form_tag() do %>
 
-      <div id="city_validation"></div>
+      <div id='city_validation'></div>
 
-      <%= select_tag :city, options_for_select(india_cities), prompt: "Select your city..", class: 'form-control'  %>
+      <%= select_tag :city, options_for_select(india_cities), prompt: 'Select your city..', class: 'form-control'  %>
 
-      <div id="author_book_validation"></div>
+      <div id='author_book_validation'></div>
 
-      <p hidden="true" id="author_empty"><i><b>No Such Author Found</b></i></p>
+      <p hidden='true' id='author_empty'><i><b>No Such Author Found</b></i></p>
 
-      <%= text_field_tag :search_by_author, nil, placeholder: "Search By Author", class: 'form-control' %>  
+      <%= text_field_tag :search_by_author, nil, placeholder: 'Search By Author', class: 'form-control' %>  
 
-      <p hidden="true" id="book_name_empty"><i><b>No Such Book Found</b></i></p>
+      <p hidden='true' id='book_name_empty'><i><b>No Such Book Found</b></i></p>
 
-      <%= text_field_tag :search_by_book_name, nil, placeholder: "Search By Book Name", class: 'form-control' %>    
+      <%= text_field_tag :search_by_book_name, nil, placeholder: 'Search By Book Name', class: 'form-control' %>    
 
     <% end %>
 
-    <%= tag "input", type: "button", id: "search_books", class: "btn btn-default" , value: "Search" %></br></br>
+    <%= tag 'input', type: 'button', id: 'search_books', class: 'btn btn-default' , value: 'Search' %></br></br>
 
   </div>
 
 </div>
 
 <div class='col-md-11'>
-  <div id="search_text"></div>
+  <div id='search_text'></div>
 
-  <div id="dynamicTable"></div>
+  <div id='dynamicTable'></div>
 </div>  
 
-
-<!-- jQuery Dialog divs -->
-<div id="accept_request_confirm" title="Accept Request">
-  <p id="accept_info"></p>
-  <p id="user_dispatch_date">Please specify a good time to pick up the book for delivery </p>
-  <div id="accept_datepicker">
-	  <%= text_field_tag :dispatch_date, Date.tomorrow, placeholder: "Select Date" %></br>
-  </div>
-  <input type="radio" name="dispatchTime" value="Before 1 PM" checked="true"> Before 1 PM <br>
-  <input type="radio" name="dispatchTime" value="After 1 PM">  After 1 PM
-</div>
-
-<div id="return_request_confirm" title="Return Request">
-  <p id="return_info"></p>
-  <p id="return_dispatch_date">Please specify a good time to pick up the book for delivery </p>
-  <div id="return_info_datepicker">
-    <%= text_field_tag :return_pickup_date, Date.tomorrow, placeholder: "Select Date" %></br>
-  </div>
-  <input type="radio" name="return_time" value="Before 1 PM" checked="true"> Before 1 PM <br>
-  <input type="radio" name="return_time" value="After 1 PM">  After 1 PM
-</div>
-
-<div id="lender_received_book_confirm" title="Return Request">
-  <p>Please rate your experience to complete this transaction </p>
-  <input type="radio" name="lender_feedback" value="good" checked="true"> Good <br/>
-  <input type="radio" name="lender_feedback" value="neutral">  Neutral <br/>
-  <input type="radio" name="lender_feedback" value="bad">  Bad <br/><br/>
-  <div id="lender_comments_div">
-    <%= text_area_tag :lender_comments, nil, placeholder: :Comments, class: :feedback_textarea %></br>
-  </div>
-</div>
-
-<div id="borrower_returned_book_confirm" title="Return Request">
-  <p>Please rate your experience to complete this transaction </p>
-  <input type="radio" name="borrower_feedback" value="good" checked="true"> Good <br/>
-  <input type="radio" name="borrower_feedback" value="neutral">  Neutral <br/>
-  <input type="radio" name="borrower_feedback" value="bad">  Bad <br/><br/>
-  <div id="lender_comments_div">
-    <%= text_area_tag :borrower_comments, nil, placeholder: :Comments, class: 'feedback_textarea' %></br>
-  </div>
-</div>
-
-<div id="error_message_generic" title="Error">
-  Oops. Something went wrong. Please try again later
-</div>
-
-<div id="error_message_403" title="Error">
-  You are not authorized to perform this action
-</div>
-
-<div id="borrow_confirm" title="Borrow Request">
-  <p>You are about to send a request to borrow - </p>
-  <div id="borrow_confirm_title"></div>
-  <div id="selftodel"></div>
-</div>
-
-<div id="reject_request_confirm" title="Reject Request">
-  <p>You are about to Reject this request</p>
-  <input type="radio" name="rejectReason" value="Unavailable" checked="true"> I am currently Unavailable <br>
-  <input type="radio" name="rejectReason" value="Do Not Wish To Lend"> I do not wish to lend this book as of now
-</div>
-
-<div id="cancel_transaction" title="Cancel Transaction">
-  Are you sure you want to cancel this request?
-</div>
-
-<div id="received_borrower_confirm" title="Received Book">
-  Have you received the book?
-</div>
-
-<div id="accept_self_confirm" title="Accept Request">
-  You are about to accept a request to lend out this book
-</div>
-
-<div id="handed_over_confirm" title="Book Handed Over">
-  Have you handed the book over ?
-</div>
-
-<div id="display_public_profile" title="">
-  <p id="total_books">Total Books : <b></b></p>
-  <p id="total_transactions">Total Transactions : <b></b></p>
-  <p id="good_transactions">Good : <b></b></p>
-  <p id="neutral_transactions">Neutral : <b></b></p>
-  <p id="bad_transactions">Bad : <b></b></p>
-  <p id="full_profile">View Complete Profile<b></b></p>
-</div>
+<%= render 'dialogs' %>
