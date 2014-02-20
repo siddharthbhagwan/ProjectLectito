@@ -19,11 +19,7 @@ module DeviseHelper
         </div>
 
         <div class='sbg rounded-corners'>
-          <h5> Perhaps you signed up using </h5>
-
-          #{ link_to image_tag('twitter_64.png'), user_omniauth_authorize_path(:twitter) }
-          #{ link_to image_tag('facebook_64.png'), user_omniauth_authorize_path(:facebook) } 
-          #{ link_to image_tag('google+_64.png'), user_omniauth_authorize_path(:google_oauth2) }
+          <h5> Perhaps you signed up using another service</h5>
         </div>
       </div>
       <div><h5>Sign Up with another Email Id</h5></div>
