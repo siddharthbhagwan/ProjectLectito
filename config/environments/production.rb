@@ -72,7 +72,6 @@
 
   #Default Url
   # config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: 'stormy-spire-3896.herokuapp.com' }
   # config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
@@ -84,5 +83,8 @@
     :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
+
+  ActionMailer::Base.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: 'stormy-spire-3896.herokuapp.com' }
 
 end
