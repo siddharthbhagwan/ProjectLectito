@@ -1,0 +1,43 @@
+module DeviseHelper
+  def devise_error_messages!
+    return '' if resource.errors.empty?
+
+    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+    sentence = I18n.t('errors.messages.not_saved',
+      count: resource.errors.count,
+      resource: resource.class.model_name.human.downcase)
+
+    if messages == '<li>Email has already been taken</li>'
+      html = <<-HTML
+      <div class='signin_options'>
+      
+        <div class='alert alert-danger'>
+          <strong>#{sentence}</strong>
+          <ul>
+            #{messages}
+          </ul>
+        </div>
+
+        <div class='sbg rounded-corners'>
+          <h5> Perhaps you signed up using </h5>
+
+          #{ link_to image_tag('twitter_64.png'), user_omniauth_authorize_path(:twitter) }
+          #{ link_to image_tag('facebook_64.png'), user_omniauth_authorize_path(:facebook) } 
+          #{ link_to image_tag('google+_64.png'), user_omniauth_authorize_path(:google_oauth2) }
+        </div>
+      </div>  
+      HTML
+    else
+      html = <<-HTML
+      <div class='alert alert-danger'>
+        <strong>#{sentence}</strong>
+        <ul>
+          #{messages}
+        </ul>
+      </div>
+      HTML
+    end
+
+    html.html_safe
+  end
+end
