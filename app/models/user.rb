@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable, :confirmable,
-  		 :lockable, :timeoutable, :omniauthable, omniauth_providers: [:facebook, :twitter, :google]
+  		 :lockable, :timeoutable, :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :roles_mask
