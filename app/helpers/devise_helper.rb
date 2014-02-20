@@ -25,7 +25,8 @@ module DeviseHelper
           #{ link_to image_tag('facebook_64.png'), user_omniauth_authorize_path(:facebook) } 
           #{ link_to image_tag('google+_64.png'), user_omniauth_authorize_path(:google_oauth2) }
         </div>
-      </div>  
+      </div>
+      <div><h5>Sign Up with another Email Id</h5></div>
       HTML
     else
       if params[:provider] == 'twitter'
