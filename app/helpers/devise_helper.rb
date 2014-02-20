@@ -28,15 +28,28 @@ module DeviseHelper
       </div>  
       HTML
     else
-      html = <<-HTML
-      <div class='alert alert-danger'>
-        <strong>#{sentence}</strong>
-        <ul>
-          #{messages}
-        </ul>
-      </div>
-      HTML
+      if params[:provider] == 'twitter'
+        html = <<-HTML
+        <div class='alert alert-info'>
+          <strong>#{sentence}</strong>
+          <ul>
+            Please enter an Email Id
+          </ul>
+        </div>
+        HTML
+      else
+        html = <<-HTML
+        <div class='alert alert-danger'>
+          <strong>#{sentence}</strong>
+          <ul>
+            #{messages}
+          </ul>
+        </div>
+        HTML
+      end
+
     end
+
 
     html.html_safe
   end
