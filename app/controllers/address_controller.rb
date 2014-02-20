@@ -46,7 +46,11 @@ class AddressController < ApplicationController
     @address.user_id = current_user.id
     if @address.save
       flash[:notice] = 'The address has been added'
-      redirect_to address_index_path
+      if current_user.addresses.count == 1
+        redirect_to inventory_search_path
+      else 
+        redirect_to address_index_path
+      end  
     else
       render 'new'
     end

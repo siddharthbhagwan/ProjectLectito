@@ -30,17 +30,17 @@ class User < ActiveRecord::Base
     if profile.nil? or (profile.user_first_name.nil? and profile.user_last_name.nil?)
       email 
     else
-      profile.user_first_name + " " + profile.user_last_name
+      profile.user_first_name + ' ' + profile.user_last_name
     end
   end
 
   def full_name
-    profile.user_first_name + " " + profile.user_last_name
+    profile.user_first_name + ' ' + profile.user_last_name
   end
 
   # Set Users Current Status as active by default
   def default_current_status
-    current_status ||= "Active"
+    current_status ||= 'Active'
   end
 
   # Returns delivery option of user
@@ -54,13 +54,12 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
      # user.username = auth.info.nickname
       user.email = auth.info.email
-      p ' +++++++++++++++++++ ' + user.email.to_s
     end
   end
 
   def self.new_with_session(params, session)
-    if session["devise.user_attributes"]
-      new(session["devise.user_attributes"], without_protection: true) do |user|
+    if session['devise.user_attributes']
+      new(session['devise.user_attributes'], without_protection: true) do |user|
         user.attributes = params
         user.valid?
       end
@@ -84,9 +83,9 @@ class User < ActiveRecord::Base
   # Function to return the role assigned
   def checkrole
     if roles_mask == 4
-      "User"
+      'User'
     elsif roles_mask == 6
-      "Administrator"
+      'Administrator'
     end      
   end
 
