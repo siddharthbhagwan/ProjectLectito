@@ -62,7 +62,7 @@ ProjectLectito::Application.routes.draw do
   post 'transaction/update_request_status_receive_lender' => 'transaction#update_request_status_receive_lender'
   post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
 
-  devise_for :users, :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :profile, :address, :home_page, :book, :inventory, :transaction, :chat
 
 end
