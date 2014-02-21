@@ -265,10 +265,15 @@ $(document).ready ->
           # Get id of each object and strip it of the 'online_' text, leaving just the transaction id
           $.each id_elements_on_page, (index, value) ->
             online_id = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
+            # User is offline, hide dot
+            console.log 'here'
             if msg.indexOf(online_id) is -1
-              $("#" + id_elements_on_page[index].id).hide()
+              if $("#" + id_elements_on_page[index].id).is(':visible')
+                $("#" + id_elements_on_page[index].id).parent().width($("#" + id_elements_on_page[index].id).parent().width())
+                $("#" + id_elements_on_page[index].id).hide()
             else
-              $("#" + id_elements_on_page[index].id).show()
+              if !$("#" + id_elements_on_page[index].id).is(':visible')
+                $("#" + id_elements_on_page[index].id).show()
 
         else if window.location.pathname.indexOf("/transaction/history") isnt -1
           id_elements_on_page = $('[id^="online_"]')
@@ -284,6 +289,7 @@ $(document).ready ->
             # performed on it, only the first one would work, remaining elements stay untouched
             # in history.html, class and id have been given the same value 
             if msg.indexOf(ids_list[index]) is -1
+              
               $(".online_" + ids_list[index]).hide()
             else
               $(".online_" + ids_list[index]).show()
