@@ -156,7 +156,7 @@ $(document).ready ->
   $("#book_name").autocomplete( 
     source: (request, response) ->
       $.ajax
-        url: "/autocomplete_book_details"
+        url: "/inventory/autocomplete_book_details"
         dataType: "json"
         data:
           book_name: $("#book_name").val()
