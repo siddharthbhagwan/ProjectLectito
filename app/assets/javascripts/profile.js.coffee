@@ -9,7 +9,6 @@ $(document).ready ->
     changeYear: true
     inline: true
     
-
 #----------------------------------------------------------------------------------------------------------------------
   $(document).on "click", "i[id^='public_rating_']", ->
     tr_id = $(this).attr('id').substring(14).toString()
@@ -49,4 +48,11 @@ $(document).ready ->
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()
 
-      
+#----------------------------------------------------------------------------------------------------------------------
+
+  # If lender/borrower name is clicked, open chat box by clicking the corresponding green dot
+  $(document).on 'click', "a[id^='name_chat_']", ->
+    id = $(this).attr('id')
+    tr_id = id.substring(id.lastIndexOf('_') + 1, id.length)
+    $('#online_' + tr_id).click()
+

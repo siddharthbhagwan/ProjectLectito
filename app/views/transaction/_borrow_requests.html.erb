@@ -20,7 +20,7 @@
 
 							<td>
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= b.id %>'>&nbsp;</i>
-								<%= link_to User.find(b.lender_id).full_name, "javascript:void(0)", id: "public_rating_#{b.id}" %>
+								<%= User.find(b.lender_id).full_name %>
 							</td>
 
 							<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>

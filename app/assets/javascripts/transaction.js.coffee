@@ -21,7 +21,7 @@ $(document).ready ->
 
   $(document).on 'mouseenter', '.fa-user', ->
     $(this).css('cursor', 'pointer')
-    return
+
 
 #--------------------------------------------------------------------------------------------------------------------
   # Modal Dialog for 403 Errors
@@ -831,7 +831,7 @@ $(document).ready ->
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
-            td_borrower = " <a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+            td_borrower = " " + pData[1].borrower + "</td>"
             td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
             # if pData[1].delivery_mode
@@ -859,7 +859,7 @@ $(document).ready ->
               $("#lend_requests_div").show(500)
 
         # Summary of Requests for Books you've lent out (lender)
-        # Changes on borrowers page after lender accepts the request
+        # Changes on lenders page after lender accepts the request
         else if pData[0] == "accepted_lender"
           if !$("#accepted_" + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
@@ -876,8 +876,8 @@ $(document).ready ->
             td_b_title = "data-title='" + pData[1].title + "' "
             online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + "/>"
             td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
-            profile_link = " <a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
-            td_borrower = profile_link + "&nbsp;&nbsp;" + online_dot
+            name_chat_link = " <a href='javascript:void(0)' id='name_chat_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
+            td_borrower = name_chat_link + "&nbsp;&nbsp;" + online_dot
 
             # if pData[1].delivery_mode
             #   td_delivery_mode = "<td>Delivery</td>"
@@ -901,7 +901,7 @@ $(document).ready ->
 
         
         # Summary of Books currently with you (borrower)
-        # Changes on the lenders page after lender accepts the request
+        # Changes on the borrowers page after lender accepts the request
         else if pData[0] == "accepted_borrower"
           if !$("#current_" + pData[1].id).length
             noty
@@ -928,7 +928,7 @@ $(document).ready ->
             td_c_title = "data-title='" + pData[1].title + "' "
             online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + "/>"
             td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
-            lender_link = " <a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
+            lender_link = " <a href='javascript:void(0)' id='name_chat_" + pData[1].id + "'>" + pData[1].lender + "</a>"
             td_lender = lender_link + "&nbsp;&nbsp;" + online_dot
 
             # if pData[1].delivery_mode
@@ -958,7 +958,7 @@ $(document).ready ->
 
             $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")
 
-        #Summary of Requests for Books you've lent out ( recvd button activates )
+        # Summary of Requests for Books you've lent out ( recvd button activates )
         else if pData[0] == "returned" #FIXME
           if $("#received_lender_" + pData[1].id).attr("disabled") == "disabled"
             noty
