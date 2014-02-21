@@ -6,7 +6,7 @@ gem 'rails', '4.0.0'
 gem 'activesupport', '~> 4.0.0'
 
 # Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# gem 'rails', git: 'git://github.com/rails/rails.git'
 
 gem 'devise'
 gem 'omniauth-twitter'
@@ -21,7 +21,7 @@ gem "jquery-rails"
 gem 'jquery-datatables-rails'
 gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails','2.3.3'
-gem 'blockuijs-rails', :git => 'git://github.com/rusanu/blockuijs-rails.git'
+gem 'blockuijs-rails', git: 'git://github.com/rusanu/blockuijs-rails.git'
 gem 'jquery-ui-rails'
 gem 'sidekiq'
 gem 'redis'
@@ -30,7 +30,6 @@ gem 'puma'
 gem 'rubocop'
 gem 'bigbertha'
 gem 'bootstrap-sass', '~> 3.0.3.0'
-gem 'postmark-rails'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
@@ -56,8 +55,8 @@ group :development do
 end
 
 group :production do
-  gem 'rails_log_stdout',           :github => 'heroku/rails_log_stdout'
-  gem 'rails3_serve_static_assets', :github => 'heroku/rails3_serve_static_assets'
+  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
+  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 end
 
 gem 'pg'
