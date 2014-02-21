@@ -4,6 +4,7 @@
 
 $(document).ready ->
   
+# Modal dialog for Sign in . Title bar is removed. And toggle code added  
   $('.modal_login').click ->
     # Remove Title Bar
     $('#sign_in_div').parent().find('.ui-dialog-titlebar').remove();
@@ -21,6 +22,6 @@ $(document).ready ->
     minWidth: 600
     height: 230
 
-
+# Code to add padding to jumbotron in case any label appears
   if ($('.label-success') || $('.label-important') || $('.label-info') || $('.label-error'))
     $('.jumbotron').addClass('jtp')
