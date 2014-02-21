@@ -1,12 +1,14 @@
 $(document).ready ->
 	
-	$("#profile_DoB").datepicker
-  	  changeMonth: true
-  	  changeYear: true
-  	  yearRange: '1950:2000'
-  	  inline: true
-  	  dateFormat: 'dd-MM-yy'
-  	  class: 'ui-widget-date'
+	$('#profile_DoB').datepicker
+    dateFormat: 'MM dd, yy'
+    yearRange:  '1964:2007'
+    defaultDate: 'January 01, 2000'
+    class: 'ui-widget-date'
+    changeMonth: true
+    changeYear: true
+    inline: true
+    
 
 #----------------------------------------------------------------------------------------------------------------------
   $(document).on "click", "a[id^='public_rating_']", ->

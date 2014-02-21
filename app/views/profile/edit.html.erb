@@ -34,7 +34,7 @@
       -->
 
       <%= f.label 'Date', 'Date Of Birth' %>
-      <%= f.text_field :DoB, :placeholder => 'Select Date of Birth', :required => :true, :class => 'dob_class form-control'%>
+      <%= f.text_field :DoB, :placeholder => 'Select Date of Birth', :value => @profile.DoB.to_s(:long), :required => :true, :class => 'dob_class form-control'%>
 
       </br>
       <!-- <%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br> -->
