@@ -90,7 +90,7 @@ $colHighlight   : #96ccff;
         &:hover,  &:focus {
           color: $colHighlight;
           background-color: $bgHighlight;
-          border-radius: 8px;
+          border-radius: 4px;
           border-style: solid;
           border-width: 1px;
           border-color: $bgDefault;
@@ -101,7 +101,7 @@ $colHighlight   : #96ccff;
       > a, > a:hover, > a:focus {
         color: $colHighlight;
         background-color: $bgHighlight;
-        border-radius: 8px;
+        border-radius: 4px;
         border-style: solid;
         border-width: 1px;
         border-color: $bgDefault;
@@ -111,7 +111,7 @@ $colHighlight   : #96ccff;
       > a, > a:hover, > a:focus {
         color: $colHighlight;
         background-color: $bgHighlight;
-        border-radius: 8px;
+        border-radius: 4px;
         border-style: solid;
         border-width: 1px;
         border-color: $bgDefault;
@@ -136,6 +136,10 @@ $colHighlight   : #96ccff;
     &:hover {
       color: $colHighlight;
     }
+  }
+
+  .dropdown-menu{
+    border-radius: 4px;
   }
 }
 
