@@ -4,15 +4,15 @@
 
   <div class='form_padding'>
 
-    <%= form_for @profile, :url => profile_path, :method => :put do |f| %>
+    <%= form_for @profile, url: profile_path, method: :put do |f| %>
 
       <%= render 'error_messages' %>
 
-      <%= f.text_field :user_first_name, :placeholder => 'First Name', :required => :true, class: 'form-control' %>
+      <%= f.text_field :user_first_name, placeholder: 'First Name', required: :true, class: 'form-control' %>
 
-      <%= f.text_field :user_last_name, :placeholder => 'Last Name', :required => :true, class: 'form-control' %>
+      <%= f.text_field :user_last_name, placeholder: 'Last Name', required: :true, class: 'form-control' %>
 
-      <%= f.text_field :user_phone_no, :placeholder => '10 Digit Phone Number', :maxlength => '10', :required => :true, numericality: true, class: 'form-control' %>
+      <%= f.text_field :user_phone_no, placeholder: '10 Digit Phone Number', maxlength: '10', required: :true, numericality: true, class: 'form-control' %>
 
       <%= f.label 'Gender', 'Gender' %>
       
@@ -29,12 +29,12 @@
 
       <!-- 
       Mode of Delivery &nbsp; &nbsp;
-      <%= f.radio_button :delivery, 'true', :checked => 'checked' %>&nbsp; &nbsp; &nbsp;Delivery &nbsp; &nbsp;
+      <%= f.radio_button :delivery, 'true', checked: 'checked' %>&nbsp; &nbsp; &nbsp;Delivery &nbsp; &nbsp;
       <%= f.radio_button :delivery, 'false' %>&nbsp; &nbsp; Self Pick/Drop</br></br>
       -->
 
       <%= f.label 'Date', 'Date Of Birth' %>
-      <%= f.text_field :DoB, :placeholder => 'Select Date of Birth', :value => @profile.DoB.to_s(:long), :required => :true, :class => 'dob_class form-control'%>
+      <%= f.text_field :DoB, placeholder: 'Select Date of Birth', value: @profile.DoB.to_s(:long), required: :true, class: 'dob_class form-control'%>
 
       </br>
       <!-- <%= f.check_box :contact_via_sms %>  Send me SMS alerts</br></br> -->
