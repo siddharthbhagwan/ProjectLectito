@@ -266,7 +266,6 @@ $(document).ready ->
           $.each id_elements_on_page, (index, value) ->
             online_id = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
             # User is offline, hide dot
-            console.log 'here'
             if msg.indexOf(online_id) is -1
               if $("#" + id_elements_on_page[index].id).is(':visible')
                 $("#" + id_elements_on_page[index].id).parent().width($("#" + id_elements_on_page[index].id).parent().width())

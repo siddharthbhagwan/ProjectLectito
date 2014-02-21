@@ -182,7 +182,7 @@ class ProfileController < ApplicationController
     online = User.find(current_user.id).profile
     time_now = DateTime.now
     online.last_seen_at = time_now
-    p 'Updating ' + User.find(current_user.id).full_name.upcase + ' to ' + time_now.to_time.to_s
+    # p 'Updating ' + User.find(current_user.id).full_name.upcase + ' to ' + time_now.to_time.to_s
     online.save
 
     # Array to store the id's whose online status needs to be visible to current user
@@ -199,7 +199,7 @@ class ProfileController < ApplicationController
           # check for duplication
           if !active_trans_ids.include? at.borrower_id
             lsa = User.find(at.borrower_id).profile.last_seen_at
-            # p 'Last seen ' + User.find(at.borrower_id).full_name + ' at ' + lsa.to_time.to_s
+            # p 'Last seen ' + User.find(at.borrower_id).full_name + ' at ' + lsa.to_s
             # p 'Time now is  ' + time_now_update.to_s
             # p ' Difference is 1 ' + (time_now_update - lsa).seconds.to_s
             if !lsa.nil? && (time_now_update - lsa).seconds < 6.5
@@ -210,7 +210,7 @@ class ProfileController < ApplicationController
           # current user is the borrower
           # check for duplication
           if !active_trans_ids.include? at.lender_id
-            # p 'Last seen ' + User.find(at.lender_id).full_name + ' at ' + lsa.to_time.to_s
+            # p 'Last seen ' + User.find(at.lender_id).full_name + ' at ' + lsa.to_s
             # p 'Time now is  ' + time_now_update.now.to_s
             # p ' Difference is 2 ' + (time_now_update.now - lsa).seconds.to_s
             if !lsa.nil? && (Time.now - lsa).seconds < 6.5
@@ -230,7 +230,7 @@ class ProfileController < ApplicationController
         time_now_update = Time.now
         if ct.lender_id == current_user.id
           lsa = User.find(ct.borrower_id).profile.last_seen_at
-          # p 'Last seen ' + User.find(ct.borrower_id).full_name + ' at ' + lsa.to_time.to_s
+          # p 'Last seen ' + User.find(ct.borrower_id).full_name + ' at ' + lsa.to_s
           # p 'Time now is  ' + time_now_update.to_s
           # p ' Difference is 3 ' + (time_now_update - lsa).seconds.to_s
           if !lsa.nil? && (time_now_update - lsa).seconds < 6
@@ -239,7 +239,7 @@ class ProfileController < ApplicationController
         else
           # current user is the borrower
           lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
-          # p 'Last seen ' + User.find(ct.lender_id).full_name + ' at ' + lsa.to_time.to_s
+          # p 'Last seen ' + User.find(ct.lender_id).full_name + ' at ' + lsa.to_s
           # p 'Time now is  ' + time_now_update.to_s
           # p ' Difference is 4 ' + (time_now_update - lsa).seconds.to_s
           if !lsa.nil? && (time_now_update - lsa).seconds < 6.5
