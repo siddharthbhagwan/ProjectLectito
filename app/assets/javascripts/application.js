@@ -26,7 +26,7 @@ $(document).ready(function() {
 
   /* When entering the menu, set a flag to show its open and current hover is on it. Classes for all three menus are the same
      No Id differentiation, thus the current flag is required */
-  $(".header_hover").mouseenter(function() {
+  $('.header_hover').mouseenter(function() {
     if (!$(this).hasClass('open')) {
       $(this).click();
       $(this).addClass('header_hover_current');
@@ -39,16 +39,16 @@ $(document).ready(function() {
      The delay is so that we give time for the mouseenter for sub menu or other menu. If this isnt done, if the mouse pointer moves 
      slowly from menu to sub menu, in the tiny border where it isnt in either classes, the mouseleave for main menu is called, which
      closes the sub before sub is entered */
-  $(".header_hover").mouseleave(function() {
+  $('.header_hover').mouseleave(function() {
     var $this = $(this);
     setTimeout(function() {
       // OnMenu Signifies that pointer has moved to sub menu
-      if (!$this.hasClass("onMenu")) {
+      if (!$this.hasClass('onMenu')) {
         // Since not in sub menu, remove current
         $this.removeClass('header_hover_current');
         /* If theres isn't a current else where, means case 2, so click and blur
            If case 3, nothing to do as its enter would have called a click, which anyways removed the previous sub menu */
-        if(!$(".header_hover_current").length) {
+        if(!$('.header_hover_current').length) {
           $this.click();
           $this.blur();
         }
@@ -57,12 +57,12 @@ $(document).ready(function() {
   });
 
   // On Entering a Sub Menu, set a flag
-  $(".header_hover_sub").mouseenter(function() {
+  $('.header_hover_sub').mouseenter(function() {
       $(this).prev().addClass('onMenu');
   });
 
   // On leaving a sub menu, close it, blur it, and remove the flags
-  $(".header_hover_sub").mouseleave(function() {
+  $('.header_hover_sub').mouseleave(function() {
     $(this).prev().click();
     $(this).prev().blur();
     $(this).prev().removeClass('onMenu');
