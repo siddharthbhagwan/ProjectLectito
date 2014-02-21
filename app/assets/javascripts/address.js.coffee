@@ -1,38 +1,38 @@
 # Code to auto complete and populate remainder address/locality fields
 $(document).ready ->
 
-  $("#address_locality").autocomplete(
-    source: (request, response) ->
-      $.ajax
-        url: "/autocomplete_area"
-        dataType: "json"
-        data:
-          area: $("#address_locality").val()
+  # $("#address_locality").autocomplete(
+  #   source: (request, response) ->
+  #     $.ajax
+  #       url: "/autocomplete_area"
+  #       dataType: "json"
+  #       data:
+  #         area: $("#address_locality").val()
           
-        success: (data) ->
-          response $.map(data, (item) ->
-            label: item.area
-            state: item.state
-            city: item.city
-            pin: item.pincode
-            ) 
+  #       success: (data) ->
+  #         response $.map(data, (item) ->
+  #           label: item.area
+  #           state: item.state
+  #           city: item.city
+  #           pin: item.pincode
+  #           ) 
 
-    response: (e, ui) ->
-      if ui.content.length is 0
-        $("#locality_empty").fadeIn(300)
-        $("#address_state").val("")
-        $("#address_city").val("")
-        $("#address_pin").val("")
-      else
-        $("#locality_empty").hide()
+  #   response: (e, ui) ->
+  #     if ui.content.length is 0
+  #       $("#locality_empty").fadeIn(300)
+  #       $("#address_state").val("")
+  #       $("#address_city").val("")
+  #       $("#address_pin").val("")
+  #     else
+  #       $("#locality_empty").hide()
 
-    select: (e, ui) ->
-      $("#address_locality").val(ui.item.area)
-      $("#address_state").val(ui.item.state)
-      $("#address_city").val(ui.item.city)
-      $("#address_pin").val(ui.item.pin)
+  #   select: (e, ui) ->
+  #     $("#address_locality").val(ui.item.area)
+  #     $("#address_state").val(ui.item.state)
+  #     $("#address_city").val(ui.item.city)
+  #     $("#address_pin").val(ui.item.pin)
       
-  ).blur ->
+  # ).blur ->
   # ).blur ->
   #   value_typed = $("#address_locality").val()
   #   value_selected = $("#address_locality").data("selected_item")
