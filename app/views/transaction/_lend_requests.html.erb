@@ -17,7 +17,10 @@
 						<tr id='lend_<%= l.id %>'>
 							<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>
 
-							<td><%= link_to User.find(l.borrower_id).full_name,  "javascript:void(0)", :id => "public_rating_#{l.id}" %></td>
+							<td>
+								&nbsp;<i class='fa fa-user' id='public_rating_<%= a.id %>'>&nbsp;</i>
+								<%= link_to User.find(l.borrower_id).full_name, "javascript:void(0)", :id => "public_rating_#{l.id}" %>
+							</td>
 
 							<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>
 

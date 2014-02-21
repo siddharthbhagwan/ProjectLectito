@@ -4,7 +4,8 @@
 		if (!$("#current_<%= b.id %>").length) {
 			td_id = "raw(<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>"
 			td_address = "<td><%= simple_format(Address.where(:id => Inventory.where(:id => b.inventory_id).take.available_in_city).take.address_summary) %></td>"
-			td_lender_name = "<td><a target='_blank' href=/profile/public_rating/<%= b.id %> ><%= User.find(b.lender_id).full_name %></td>"
+			td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_<%= b.id %>'>&nbsp;</i>"
+			td_lender_name = " <a target='_blank' href=/profile/public_rating/<%= b.id %> ><%= User.find(b.lender_id).full_name %></td>"
 			td_book_name = '<td><%= Book.find(Inventory.where(:id => b.inventory_id).take.book.id).book_name %></td>'
 			td_delivery_mode = '<td><% if (User.find(b.lender_id).is_delivery or User.find(b.borrower_id).is_delivery) %>Delivery<% else %>Self Pick/Drop<% end %></td>'
 			td_request_date = '<td><%= b.request_date.to_s(:long) %></td>'
@@ -12,7 +13,7 @@
 			td_borrow_button = "<td><input type='button' value='Cancel' class='btn btn-default cancel_trans'  data-trid='<%= b.id %>'/></td>"
 			content = "<div style='font-size:90%;'><u>Accepted</u><br/><%= b.request_date.to_s(:long) %><br/></div>"
 			td_timeline_button = "<td><input type='button' class='btn btn-default' id='timeline_<%= b.id %>' data-title='Timeline' value='View' rel='popover' data-content='<div style=font-size:90%;><u>Accepted</u><br/><%= b.request_date.to_s(:long) %><br/></div>'></td></tr>)"
-			$("#borrow_requests_table > tbody:last").append(td_id + td_book_name + td_lender_name + td_address + td_status + td_borrow_button + td_timeline_button);
+			$("#borrow_requests_table > tbody:last").append(td_id + td_book_name + td_fa_user + td_lender_name + td_address + td_status + td_borrow_button + td_timeline_button);
 		}
 	<% end %>
 	$("#borrow_requests_div").show(500);

@@ -18,6 +18,12 @@ $(document).ready ->
       $("#current_books_div").hide()
 
 #--------------------------------------------------------------------------------------------------------------------
+
+  $(document).on 'mouseenter', '.fa-user', ->
+    $(this).css('cursor', 'pointer')
+    return
+
+#--------------------------------------------------------------------------------------------------------------------
   # Modal Dialog for 403 Errors
   $("#error_message_403").dialog
     autoOpen: false
@@ -824,7 +830,8 @@ $(document).ready ->
 
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
             td_book_name = "<td>" + pData[1].book_name + "</td>"
-            td_borrower = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</td>"
+            td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
+            td_borrower = " <a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</td>"
             td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
             # if pData[1].delivery_mode
@@ -839,7 +846,7 @@ $(document).ready ->
             td_reject = "<td><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td>"
             td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/></div>'></td></tr>"
-            table_row_data = tr_id + td_book_name + td_borrower + td_requested_from + td_status + td_accept + td_reject + td_timeline_button
+            table_row_data = tr_id + td_book_name + td_fa_user + td_borrower + td_requested_from + td_status + td_accept + td_reject + td_timeline_button
             $("#lend_requests_table > tbody:last").append(table_row_data);
 
             $("#timeline_" + pData[1].id).popover
@@ -868,7 +875,8 @@ $(document).ready ->
             td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
             td_b_title = "data-title='" + pData[1].title + "' "
             online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + "/>"
-            profile_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
+            td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
+            profile_link = " <a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].borrower + "</a>"
             td_borrower = profile_link + "&nbsp;&nbsp;" + online_dot
 
             # if pData[1].delivery_mode
@@ -883,7 +891,7 @@ $(document).ready ->
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
-            table_row_data = tr_id + td_book_name + td_borrower + td_status_text + td_status_button + td_timeline_button
+            table_row_data = tr_id + td_book_name + td_fa_user + td_borrower + td_status_text + td_status_button + td_timeline_button
             $("#accepted_requests_table > tbody:last").append(table_row_data)
 
             if (!$("#accepted_requests_div").is(":visible"))
@@ -919,7 +927,8 @@ $(document).ready ->
             td_c_lcn = "data-lendercn='" + pData[1].lendercn + "' "
             td_c_title = "data-title='" + pData[1].title + "' "
             online_dot = td_c_base + td_c_ccn + td_c_bcn + td_c_lcn + td_c_title + "/>"
-            lender_link = "<td><a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
+            td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
+            lender_link = " <a href='javascript:void(0)' id='public_rating_" + pData[1].id + "'>" + pData[1].lender + "</a>"
             td_lender = lender_link + "&nbsp;&nbsp;" + online_dot
 
             # if pData[1].delivery_mode
@@ -934,7 +943,7 @@ $(document).ready ->
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
-            table_row_data = tr_id + td_book_name + td_lender + td_status_text + td_status_button + td_timeline_button      
+            table_row_data = tr_id + td_book_name + td_fa_user + td_lender + td_status_text + td_status_button + td_timeline_button      
             $("#current_books_table > tbody:last").append(table_row_data)
 
             $("#timeline_" + pData[1].id).popover('destroy')

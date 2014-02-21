@@ -11,7 +11,7 @@ $(document).ready ->
     
 
 #----------------------------------------------------------------------------------------------------------------------
-  $(document).on "click", "a[id^='public_rating_']", ->
+  $(document).on "click", "i[id^='public_rating_']", ->
     tr_id = $(this).attr('id').substring(14).toString()
     $.ajax
       url: "/profile/public_rating/" + tr_id + ".json"
