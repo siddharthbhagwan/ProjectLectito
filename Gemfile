@@ -30,6 +30,7 @@ gem 'puma'
 gem 'rubocop'
 gem 'bigbertha'
 gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'font-awesome-sass'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
