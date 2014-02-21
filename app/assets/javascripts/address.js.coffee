@@ -44,21 +44,22 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
 # TODO Check how to propagate modal confirm accept/reject into html comfirm
+# Unimplemented code
+  
+  # $('#delete_button').click ->
+  #   $('#delete_confirm').dialog 'open'
 
-  $("#delete_buttonn").click ->
-    $("#delete_confirm").dialog "open"
 
+  # $('#delete_confirm').dialog
+  #   autoOpen: false
+  #   modal: true
+  #   resizable: false
+  #   draggable: false
+  #   buttons:
+  #     'Ok': ->
+  #       $(this).dialog 'close'
 
-  $("#delete_confirm").dialog
-    autoOpen: false
-    modal: true
-    resizable: false
-    draggable: false
-    buttons:
-      "Ok": ->
-        $(this).dialog "close"
-
-      Cancel: ->
-        $(this).dialog "close"
+  #     Cancel: ->
+  #       $(this).dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
