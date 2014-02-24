@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery-1.10.1.min
+//= require bootstrap
 //= require dataTables/jquery.dataTables
 //= require jquery.blockUI
 //= require_tree .
