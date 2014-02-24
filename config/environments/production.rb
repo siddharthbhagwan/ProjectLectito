@@ -25,9 +25,6 @@
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  # Redis URL
-  # ENV["REDISTOGO_URL"] = 'redis://redistogo:b986f2cc11d14bf93c8bc1bb98ee8918@cod.redistogo.com:10271/'
-
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 

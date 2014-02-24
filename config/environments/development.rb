@@ -36,12 +36,6 @@ ProjectLectito::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = false
 
-  #Redis Config
-  #ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/' 
-
-  #DB Pool
-  #ENV["DB_POOL"] = '20'
-
   # Firebase Cinfig
   ENV['firebase_url'] = 'https://projectlectito.firebaseio.com/'
 
