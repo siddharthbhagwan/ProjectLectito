@@ -31,10 +31,10 @@ ProjectLectito::Application.configure do
   config.active_support.deprecation = :log
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = true
+  config.serve_static_assets = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   #Redis Config
   #ENV["REDISTOGO_URL"] = 'redis://127.0.0.1:6379/' 
