@@ -12,6 +12,7 @@
 //
 //= require jquery-1.10.1.min
 //= require bootstrap/button
+//= require bootstrap/dropdown
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require dataTables/jquery.dataTables
