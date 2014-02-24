@@ -40,7 +40,6 @@ class TransactionController < ApplicationController
 			}
 
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
-			# Firebase.push(publish_channel, transaction_details.to_json)
 			bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_channel)
 			bigBertha_ref.push(transaction_details.to_json)
 
@@ -387,7 +386,6 @@ class TransactionController < ApplicationController
         type: params[:type]
       }
 
-      # response = Firebase.push(publish_to_channel, chat_data.to_json)
       bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_to_channel)
       bigBertha_ref.push(chat_data.to_json)
 
