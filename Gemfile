@@ -17,7 +17,7 @@ gem 'role_model'
 gem 'rack'
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem "jquery-rails"
+# gem 'jquery-rails'
 gem 'jquery-datatables-rails'
 gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'less-rails','2.3.3'

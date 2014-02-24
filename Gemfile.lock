@@ -287,7 +287,6 @@ DEPENDENCIES
   devise
   font-awesome-sass
   jquery-datatables-rails
-  jquery-rails
   kaminari
   kaminari-bootstrap (~> 3.0.1)
   less-rails (= 2.3.3)
