@@ -63,20 +63,20 @@ class InventoryController < ApplicationController
 
 	def search_books
 		if params[:search_by_book_name] == ""
-			@books = Book.where("author LIKE ?", "%#{params[:search_by_author]}%")
+			@books = Book.where('author LIKE ?', "%#{params[:search_by_author]}%")
 		elsif params[:search_by_author] == ""
-			@books = Book.where("book_name LIKE ?", "%#{params[:search_by_book_name]}%")
+			@books = Book.where('book_name LIKE ?', "%#{params[:search_by_book_name]}%")
 		else
-			@books = Book.where("book_name LIKE ? AND author LIKE ? ", "%#{params[:search_by_book_name]}%", "%#{params[:search_by_author]}%")
+			@books = Book.where('book_name LIKE ? AND author LIKE ? ', "%#{params[:search_by_book_name]}%", "%#{params[:search_by_author]}%")
 		end
 
 		@book_array = []
 
 		@books.each do |book|
 			if user_signed_in?
-				@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? AND deleted = ?", book, current_user.id, "Available", false).take
+				@users_with_book = Inventory.where('book_id = ? AND user_id != ? AND status = ? AND deleted = ?', book, current_user.id, "Available", false).take
 			else
-				@users_with_book = Inventory.where("book_id = ? AND status = ? AND deleted = ?", book, "Available", false).take
+				@users_with_book = Inventory.where('book_id = ? AND status = ? AND deleted = ?', book, "Available", false).take
 			end
 
 			if !@users_with_book.nil?
@@ -115,9 +115,9 @@ class InventoryController < ApplicationController
 	def search_books_city
 		# Find all users apart from self, who have the book
 	 	if user_signed_in?
-			@users_with_book = Inventory.where("book_id = ? AND user_id != ? AND status = ? AND deleted = ?", params[:book_id], current_user.id, "Available", false)
+			@users_with_book = Inventory.where('book_id = ? AND user_id != ? AND status = ? AND deleted = ?', params[:book_id], current_user.id, "Available", false)
 		else
-			@users_with_book = Inventory.where("book_id = ? AND status = ? AND deleted = ?", params[:book_id], "Available", false)
+			@users_with_book = Inventory.where('book_id = ? AND status = ? AND deleted = ?', params[:book_id], 'Available', false)
 		end
 		
 		@users_with_book_in_city = []
@@ -129,7 +129,7 @@ class InventoryController < ApplicationController
 		# Merge this list with the address of each user who meets the criteria.
 		@users_with_book.each do |u_wb|
 			#address of user who has the book
-			@address_uwb_in_city = u_wb.user.addresses.where(:id => u_wb.available_in_city).take
+			@address_uwb_in_city = u_wb.user.addresses.where(id: u_wb.available_in_city).take
 
 			#delivery mode of user who was the book
 			@delivery_uwb = u_wb.user.is_delivery
@@ -141,7 +141,7 @@ class InventoryController < ApplicationController
 				if @address_uwb_in_city.city == params[:city]
 					@users_and_address << u_wb.clone	
 					@users_and_address << @address_uwb_in_city
-					@transactions_requested << Transaction.where(:borrower_id => current_user.id, status: "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
+					@transactions_requested << Transaction.where(borrower_id: current_user.id, status: 'Pending', inventory_id: u_wb.id).pluck(:inventory_id)
 				end
 				# if current_user.is_delivery
 		 	# 		if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
@@ -179,9 +179,9 @@ class InventoryController < ApplicationController
 		if user_signed_in?
 			@borrow = Transaction.where(borrower_id: current_user.id, status: 'Pending').last(5)
 			@lend = Transaction.where(lender_id: current_user.id, status: 'Pending')
-			@accept = Transaction.where("lender_id = ? AND ( status = ? OR status = ? OR status = ?)", current_user.id, "Accepted", "Returned", "Received Borrower" )
-			@current = Transaction.where("borrower_id = ? AND ( status = ? OR status = ?)", current_user.id, "Accepted", "Received Borrower" )
-			@received = Transaction.where(lender_id: current_user.id, status: "Returned")
+			@accept = Transaction.where('lender_id = ? AND ( status = ? OR status = ? OR status = ?)', current_user.id, 'Accepted', 'Returned', 'Received Borrower' )
+			@current = Transaction.where('borrower_id = ? AND ( status = ? OR status = ?)', current_user.id, 'Accepted', 'Received Borrower' )
+			@received = Transaction.where(lender_id: current_user.id, status: 'Returned')
 
 			chatbox  
 		else
@@ -195,9 +195,9 @@ class InventoryController < ApplicationController
 
 	def autocomplete_author
 		if params[:book_name].nil?
-			@authors_books = Book.where("lower(author) like ? ", "%#{params[:author].downcase}%").pluck(:author).uniq
+			@authors_books = Book.where('lower(author) like ? ', "%#{params[:author].downcase}%").pluck(:author).uniq
 		else
-			@authors_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name]}%").pluck(:author).uniq
+			@authors_books = Book.where('lower(author) like ? AND lower(book_name) like ?', "%#{params[:author].downcase}%", "%#{params[:book_name]}%").pluck(:author).uniq
 		end
 
 		respond_to do |format|
@@ -207,7 +207,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_book_name
-		@book_name_books = Book.where("lower(author) like ? AND lower(book_name) like ?", "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:book_name)
+		@book_name_books = Book.where('lower(author) like ? AND lower(book_name) like ?', "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:book_name)
 
 		respond_to do |format|
   		format.html  
@@ -216,7 +216,7 @@ class InventoryController < ApplicationController
 	end
 
 	def autocomplete_book_details
-		@books = Book.where("lower(book_name) like ?", "%#{params[:book_name].downcase}%")
+		@books = Book.where('lower(book_name) like ?', "%#{params[:book_name].downcase}%")
 
 		respond_to do |format|
   		format.html  
