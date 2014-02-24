@@ -57,11 +57,11 @@
     <tfoot>
       <tr>
         <%= form_tag do %>
-          <th><%= text_field_tag('search_id', nil, placeholder: 'Id') %></th>
-          <th><%= text_field_tag('search_book_name', nil, placeholder: 'Book Name') %></th>
-          <th><%= text_field_tag('search_lb', nil, placeholder: 'Lender/Borrower') %></th>
-          <th><%= text_field_tag('search_rating', nil, placeholder: 'Rating') %></th>
-          <th><%= text_field_tag('search_req_date', nil, placeholder: 'Req Date') %></th>
+          <th><%= text_field_tag('search_id', nil, placeholder: 'Id', class: 'form-control') %></th>
+          <th><%= text_field_tag('search_book_name', nil, placeholder: 'Book Name', class: 'form-control') %></th>
+          <th><%= text_field_tag('search_lb', nil, placeholder: 'Lender/Borrower', class: 'form-control') %></th>
+          <th><%= text_field_tag('search_rating', nil, placeholder: 'Rating', class: 'form-control') %></th>
+          <th><%= text_field_tag('search_req_date', nil, placeholder: 'Req Date', class: 'form-control') %></th>
         <% end %>
       </tr>
     </tfoot>
