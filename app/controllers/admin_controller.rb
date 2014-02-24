@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
 	include ApplicationHelper
 
-	load_and_authorize_resource :class => User
+	load_and_authorize_resource class: User
 
 	def index
 		@user = User.all
@@ -17,23 +17,23 @@ class AdminController < ApplicationController
 		@user = User.find(params[:user_id])
 		chatbox()
 
-		if @user.current_status == "Locked"
+		if @user.current_status == 'Locked'
 			@locked = true
 		end
 	end
 
 	def user_transaction_history
-		@t_history =  Transaction.where("((borrower_id = ? OR lender_id = ? ) AND status = ? )", params[:id] , params[:id], "Complete").order("request_date desc")
+		@t_history =  Transaction.where('((borrower_id = ? OR lender_id = ? ) AND status = ? )', params[:id] , params[:id], 'Complete').order('request_date desc')
 	end
 
 	def bar_user
 		@bar_user = User.find(params[:bar_user_id])
 
-		if @bar_user.current_status != "Locked"
-			@bar_user.current_status  = "Locked"
+		if @bar_user.current_status != 'Locked'
+			@bar_user.current_status  = 'Locked'
 
 			if !@bar_user.save
-				raise "error"
+				raise 'error'
 			end
 
 			respond_to do |format|
@@ -49,10 +49,10 @@ class AdminController < ApplicationController
 
 	def unbar_user
 		@unbar_user = User.find(params[:unbar_user_id])
-		@unbar_user.current_status  = "Active"
+		@unbar_user.current_status  = 'Active'
 
 		if !@unbar_user.save
-			raise "error"
+			raise 'error'
 		end
 
 		respond_to do |format|
