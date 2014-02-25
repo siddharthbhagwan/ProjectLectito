@@ -832,7 +832,7 @@ $(document).ready ->
             td_book_name = "<td>" + pData[1].book_name + "</td>"
             td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
             td_borrower = " " + pData[1].borrower + "</td>"
-            td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
+            td_accept = "<td class='manage'><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
             # if pData[1].delivery_mode
             #   td_delivery_mode = "<td>Delivery</td>"
