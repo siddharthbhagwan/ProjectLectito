@@ -1,17 +1,21 @@
 <h3>Add a book</h3><br/>
 	
 	<div class='col-md-4'>
-
+	<p hidden='true' id='book_name_empty'><i><b>No Such Book Found, Please enter the details</b></i></p>
 		<div class='form_padding'>
 
 			<%= form_tag inventory_index_path, id: 'add_book_form' do %>
 
 				<div id='new_inventory'>
-						<%= text_field_tag :book_name, nil, placeholder: 'Book Name', required: :true, width: '10', class: 'form-control' %>				
-						<%= collection_select :inventory, :available_in_city, @address, :id, :address_summary, {}, { class: 'form-control' } %>
-						<%= select_tag :status, options_for_select(['Available','Unavailable'], 'Available'), placeholder: 'Current Status', class: 'form-control' %>
+					<%= text_field_tag :book_name, nil, placeholder: 'Book Name', required: :true, width: '10', class: 'form-control' %>				
+					<%= collection_select :inventory, :available_in_city, @address, :id, :address_summary, {}, { class: 'form-control' } %>
+					<%= select_tag :status, options_for_select(['Available','Unavailable'], 'Available'), placeholder: 'Current Status', class: 'form-control' %>
 					</br>
-					<%= hidden_field_tag :book_id %>
+
+					<div class='book_elements'>
+						<%= hidden_field_tag :book_id %>
+					</div>
+
 				</div>
 
 				<div>
@@ -25,17 +29,16 @@
 
 	<div class='col-md-4'>
 		<div class='form_padding'>
-			<p hidden='true' id='book_name_empty'><i><b>No Such Book Found</b></i></p>
 			<ul style='list-style-type: none'>
-				<li><%= text_field_tag :isbn, nil, disabled: true, placeholder: :ISBN, class: 'form-control' %></li>
-				<li><%= text_field_tag :author , nil, disabled: true, placeholder: :Author, class: 'form-control' %></li>
-				<li><%= text_field_tag :language, nil, disabled: true, placeholder: :Language, class: 'form-control' %></li>
-				<li><%= text_field_tag :genre, nil, disabled: true, placeholder: :Genre, class: 'form-control' %></li>	
-				<li><%= text_field_tag :version, nil, disabled: true, placeholder: :Version, class: 'form-control' %></li>	
-				<li><%= text_field_tag :edition, nil, disabled: true, placeholder: :Edition, class: 'form-control' %></li>	
-				<li><%= text_field_tag :publisher, nil, disabled: true, placeholder: :Publisher, class: 'form-control' %></li>	
-				<li><%= text_field_tag :pages, nil, disabled: true, placeholder: :Pages, class: 'form-control' %></li>	
-				<li><%= text_field_tag :mrp, nil, disabled: true, placeholder: :MRP, class: 'form-control' %></li>				
+				<li><%= text_field_tag :isbn, nil, disabled: true, placeholder: :ISBN, required: true, class: 'form-control new_book_element' %></li>
+				<li><%= text_field_tag :author , nil, disabled: true, placeholder: :Author, required: true, class: 'form-control new_book_element' %></li>
+				<li><%= text_field_tag :language, nil, disabled: true, placeholder: :Language, class: 'form-control new_book_element' %></li>
+				<li><%= text_field_tag :genre, nil, disabled: true, placeholder: :Genre, class: 'form-control new_book_element' %></li>	
+				<li><%= text_field_tag :version, nil, disabled: true, placeholder: :Version, class: 'form-control new_book_element' %></li>	
+				<li><%= text_field_tag :edition, nil, disabled: true, placeholder: :Edition, class: 'form-control new_book_element' %></li>	
+				<li><%= text_field_tag :publisher, nil, disabled: true, placeholder: :Publisher, class: 'form-control new_book_element' %></li>	
+				<li><%= text_field_tag :pages, nil, disabled: true, placeholder: :Pages, class: 'form-control new_book_element' %></li>	
+				<li><%= text_field_tag :mrp, nil, disabled: true, placeholder: :MRP, class: 'form-control new_book_element' %></li>				
 			</ul>
 		</div>
 	</div>	

@@ -17,18 +17,46 @@ class InventoryController < ApplicationController
 	end
 
 	def create
-		@inventory = Inventory.new
-		@inventory.user_id = current_user.id
-		@inventory.book_id = params[:book_id]
-		@inventory.available_in_city = params[:inventory][:available_in_city]
-		#@inventory.rental_price = params[:rental_price]
-		@inventory.status = params[:status]
- 		if @inventory.save!
-			redirect_to inventory_index_path
-			flash[:notice] = 'The book has been added to your inventory'
+
+		if params[:book_id] == '0'
+			new_book = Book.new
+			new_book.book_name = params[:book_name]
+			new_book.isbn = params[:isbn_h]
+			new_book.author = params[:author_h]
+			new_book.language = params[:language_h]
+			new_book.version = params[:version_h]
+			new_book.edition = params[:edition_h]
+			new_book.publisher = params[:publisher_h]
+			new_book.pages = params[:pages_h]
+
+			if new_book.save!
+				@inventory = Inventory.new
+				@inventory.user_id = current_user.id
+				@inventory.book_id = new_book.id
+				@inventory.available_in_city = params[:inventory][:available_in_city]
+				@inventory.status = params[:status]
+				if @inventory.save!
+					redirect_to inventory_index_path
+					flash[:notice] = 'The book has been added to your inventory'
+				else
+					render 'new'
+				end
+			end	
 		else
-			render 'new'
+			@inventory = Inventory.new
+			@inventory.user_id = current_user.id
+			@inventory.book_id = params[:book_id]
+			@inventory.available_in_city = params[:inventory][:available_in_city]
+			#@inventory.rental_price = params[:rental_price]
+			@inventory.status = params[:status]
+	 		if @inventory.save!
+				redirect_to inventory_index_path
+				flash[:notice] = 'The book has been added to your inventory'
+			else
+				render 'new'
+			end
 		end
+		
 		chatbox
 	end
 

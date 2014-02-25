@@ -178,18 +178,20 @@ $(document).ready ->
 
     response: (e, ui) ->
       if ui.content.length is 0
-        $("#mrp").hide()
-        $("#isbn").hide()
-        $("#author").hide()
-        $("#language").hide()
-        $("#genre").hide()
-        $("#version").hide()
-        $("#pages").hide()
-        $("#publisher").hide()
-        $("#edition").hide()
-        $("#book_name_empty").hide()
+        $("#isbn").attr('disabled', false).val('').fadeIn(500)
+        $("#author").attr('disabled', false).val('').fadeIn(500)
+        $("#language").attr('disabled', false).val('').fadeIn(500)
+        $("#genre").attr('disabled', false).val('').fadeIn(500)
+        $("#version").attr('disabled', false).val('').fadeIn(500)
+        $("#pages").attr('disabled', false).val('').fadeIn(500)
+        $("#publisher").attr('disabled', false).val('').fadeIn(500)
+        $("#edition").attr('disabled', false).val('').fadeIn(500)
+        $("#book_name_empty").attr('disabled', false).val('').fadeIn(500)
+        $("#mrp").attr('disabled', false).val('').fadeIn(500)
         $("#book_name_empty").fadeIn(600)
-        $("#add_book").attr('disabled', true)
+        $("#book_id").val(0)
+        $("#add_book").attr('disabled', false)
+
       else 
         $("#book_name_empty").hide()
 
@@ -208,8 +210,18 @@ $(document).ready ->
       $("#add_book").attr('disabled', false)
 
   ).blur ->
-    $("#book_name").trigger("autocompleteselect")   
+    $("#book_name").trigger("autocompleteselect")
 
+#--------------------------------------------------------------------------------------------------------------------
+  # Dynamically add hidden fields to the form with their values as entered in the text boxes
+  $('.new_book_element').keyup ->
+    id = $(this).attr('id')
+    console.log $('#' + id + '_h').length
+    if $('#' + id + '_h').length
+      $('#' + id + '_h').val($(this).val())
+
+    else
+      $('.book_elements').append("<input id='" + id + "_h' name='" + id + "_h' type='hidden' value='" + $(this).val() + "'>")
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
