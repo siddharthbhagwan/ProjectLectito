@@ -20,11 +20,11 @@
 							<!-- Lender -->
 							<td>
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= c.id %>'>&nbsp;</i>
-								<%= link_to(User.find(c.lender_id).full_name, "javascript:void(0)", :id => "name_chat_#{c.id}") %> &nbsp;
-								<% if (DateTime.now.to_time - Profile.where(:user_id => c.lender_id).first.last_seen_at < 6.5 ) %>
-									<%= image_tag("online_dot.png", :size => "12x12", class: 'img-circle', :id => "online_" + c.id.to_s, "data-trid" => c.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(c.lender_id).profile.chat_name, "data-borrowercn" => User.find(c.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => c.inventory_id).take.book_id).take.book_name) %>
+								<%= link_to(User.find(c.lender_id).full_name, "javascript:void(0)", id: "name_chat_#{c.id}") %> &nbsp;
+								<% if (DateTime.now.to_time - Profile.where(user_id: c.lender_id).first.last_seen_at < 6.5 ) %>
+									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => User.find(current_user.id).profile.chat_name, 'data-lendercn' => User.find(c.lender_id).profile.chat_name, 'data-borrowercn' => User.find(c.borrower_id).profile.chat_name, 'data-title' => Book.where(id: Inventory.where(id: c.inventory_id).take.book_id).take.book_name) %>
 									<% else %>
-										<%= image_tag("online_dot.png", :hidden => :true, :size => "12x12", class: 'img-circle', :id => "online_" + c.id.to_s, "data-trid" => c.id, "data-currentcn" => User.find(current_user.id).profile.chat_name, "data-lendercn" => User.find(c.lender_id).profile.chat_name, "data-borrowercn" => User.find(c.borrower_id).profile.chat_name, "data-title" => Book.where(:id => Inventory.where(:id => c.inventory_id).take.book_id).take.book_name) %>
+										<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => User.find(current_user.id).profile.chat_name, 'data-lendercn' => User.find(c.lender_id).profile.chat_name, 'data-borrowercn' => User.find(c.borrower_id).profile.chat_name, 'data-title' => Book.where(id: Inventory.where(id: c.inventory_id).take.book_id).take.book_name) %>
 									<% end %>
 							</td>
 
@@ -32,30 +32,30 @@
 							<% if c.status == 'Accepted' %>
 								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
 									<td>
-										<span id="p_current_<%= c.id %>">Sent by Lender</span>
+										<span id='p_current_<%= c.id %>'>Sent by Lender</span>
 									</td>
 									<td class='manage'>	
-										<input class='btn btn-default' type='button' value='Received' id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
+										<input class='btn btn-default' type='button' value='Received' id='received_borrower_<%= c.id %>' data-trid=<%= c.id %> />
 									</td>
 								<% else %>
 									<td>
-										<span id="p_current_<%= c.id %>">Meetup as decided</span>
+										<span id='p_current_<%= c.id %>'>Meetup as decided</span>
 									</td>
 									<td class='manage'>
-										<input class='btn btn-default' type='button' value='Received' id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
+										<input class='btn btn-default' type='button' value='Received' id='received_borrower_<%= c.id %>' data-trid=<%= c.id %> />
 									</td>
 								<% end %>
 							<% elsif c.status == 'Received Borrower' %>
 								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
 									<td>
-										<span id="p_current_<%= c.id %>">Received by You</span>
+										<span id='p_current_<%= c.id %>'>Received by You</span>
 									</td>
 									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Return' id='return_delivery' data-trid=<%= c.id %> />
 									</td>
 								<% else %>
 									<td>
-										<span id="p_current_<%= c.id %>">Received by You. Meetup to Return</span>
+										<span id='p_current_<%= c.id %>'>Received by You. Meetup to Return</span>
 									</td>
 									<td class='manage'>	
 										<input class='btn btn-default' type='button' value='Returned' id='return_self' data-trid=<%= c.id %> />
