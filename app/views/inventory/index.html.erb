@@ -20,14 +20,14 @@
           <td><%= inventory.user.addresses.find(inventory.available_in_city).address_summary %></td>
           <td><%= inventory.status %></td>
           <% if inventory.status == "Rented Out" %>
-            <td><%= link_to "Edit", edit_inventory_path(inventory.id),:disabled => :true, class: "btn btn-default "%></td>
+            <td class='manage'><%= link_to "Edit", edit_inventory_path(inventory.id),:disabled => :true, class: "btn btn-default "%></td>
           <% else %>
-            <td><%= link_to "Edit", edit_inventory_path(inventory.id), class: "btn btn-default "%></td>
+            <td class='manage'><%= link_to "Edit", edit_inventory_path(inventory.id), class: "btn btn-default "%></td>
           <% end %>
           <% if inventory.status == "Rented Out" %>
-            <td><%= link_to "Delete", inventory_path(inventory.id), :disabled => :true, :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You sure?' }%></td>
+            <td class='manage'><%= link_to "Delete", inventory_path(inventory.id), :disabled => :true, :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You sure?' }%></td>
           <% else %>
-            <td><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You sure?' }%></td>
+            <td class='manage'><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You sure?' }%></td>
           <% end %>
         </tr>
       <% end %>

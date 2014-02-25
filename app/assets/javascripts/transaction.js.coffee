@@ -843,8 +843,8 @@ $(document).ready ->
 
             td_requested_from = "<td>" + pData[1].requested_from + "</td>"
             td_status = "<td>" + pData[1].status + "</td>"
-            td_reject = "<td><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td>"
-            td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+            td_reject = "<td class='manage'><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td>"
+            td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_fa_user + td_borrower + td_requested_from + td_status + td_accept + td_reject + td_timeline_button
             $("#lend_requests_table > tbody:last").append(table_row_data);
@@ -887,9 +887,9 @@ $(document).ready ->
             #   td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
             td_status_text = "<td><p id='p_accepted_" + pData[1].id + "'>Meetup as decided</p></td>"
-            td_status_button = "<td><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
+            td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-            td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+            td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_fa_user + td_borrower + td_status_text + td_status_button + td_timeline_button
             $("#accepted_requests_table > tbody:last").append(table_row_data)
@@ -939,9 +939,9 @@ $(document).ready ->
             #   td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
             td_status_text = "<td><p id='p_current_" + pData[1].id + "'>Meetup as decided</p></td>"
-            td_status_button = "<td><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
+            td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-            td_timeline_button = "<td><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+            td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_fa_user + td_lender + td_status_text + td_status_button + td_timeline_button      
             $("#current_books_table > tbody:last").append(table_row_data)

@@ -41,11 +41,11 @@
 							<% end %>
 							-->
 							
-							<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=<%= l.id %> /></td>
+							<td class='manage'><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=<%= l.id %> /></td>
 
-							<td><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=<%= l.id %> /></td>
+							<td class='manage'><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=<%= l.id %> /></td>
 
-							<td>
+							<td class='manage'>
 								<%= tag 'input', type: :button, id: "timeline_#{l.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
 									title: 'Timeline', 
 									content: "

@@ -30,6 +30,11 @@ body { padding-top: 80px; }
   }
 }
 
+// Site wide centralization of buttons in tables
+.manage {
+  text-align: center;
+}
+
 
 // Site wide text areas made non resizable
 textarea {

@@ -27,9 +27,9 @@
 
 							<td><%= b.status %></td>
 
-							<td><%= tag 'input', type: :button, 'data-trid' => b.id.to_s, class: 'btn btn-default cancel_trans' , value: 'Cancel' %></td>
+							<td class='manage'><%= tag 'input', type: :button, 'data-trid' => b.id.to_s, class: 'btn btn-default cancel_trans' , value: 'Cancel' %></td>
 
-							<td>
+							<td class='manage'>
 								<%= tag 'input', type: :button, id: "timeline_#{b.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
 									title: 'Timeline', 
 									content: "

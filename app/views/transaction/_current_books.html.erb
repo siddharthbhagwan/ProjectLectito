@@ -34,14 +34,14 @@
 									<td>
 										<p id="p_current_<%= c.id %>">Sent by Lender</p>
 									</td>
-									<td>	
+									<td class='manage'>	
 										<input class='btn btn-default' type='button' value='Received' id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
 									</td>
 								<% else %>
 									<td>
 										<p id="p_current_<%= c.id %>">Meetup as decided</p>
 									</td>
-									<td>
+									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Received' id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
 									</td>
 								<% end %>
@@ -50,20 +50,20 @@
 									<td>
 										<p id="p_current_<%= c.id %>">Received by You</p>
 									</td>
-									<td>
+									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Return' id='return_delivery' data-trid=<%= c.id %> />
 									</td>
 								<% else %>
 									<td>
 										<p id="p_current_<%= c.id %>">Received by You. Meetup to Return</p>
 									</td>
-									<td>	
+									<td class='manage'>	
 										<input class='btn btn-default' type='button' value='Returned' id='return_self' data-trid=<%= c.id %> />
 									</td>
 								<% end %>
 							<% end %>
 
-							<td>
+							<td class='manage'>
 								<%= tag 'input', type: :button, id: "timeline_#{c.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
 									title: 'Timeline', 
 									content: "

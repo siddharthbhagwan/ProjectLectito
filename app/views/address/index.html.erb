@@ -17,8 +17,8 @@
                 </td>
               </tr>
               <tr>
-                <td><%= link_to "Edit", edit_address_path(@address[k].id), class: "btn btn-default "%></td>
-                <td><%= link_to "Delete", address_path(@address[k].id), method: "delete", class: "btn btn-default ", data: { confirm: 'Are You Sure' }%>
+                <td class='manage'><%= link_to "Edit", edit_address_path(@address[k].id), class: "btn btn-default "%></td>
+                <td class='manage'><%= link_to "Delete", address_path(@address[k].id), method: "delete", class: "btn btn-default ", data: { confirm: 'Are You Sure' }%>
                 </td>                
               </tr>
             </tbody>
