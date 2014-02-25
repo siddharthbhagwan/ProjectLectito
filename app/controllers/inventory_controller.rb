@@ -35,6 +35,7 @@ class InventoryController < ApplicationController
 				@inventory.book_id = new_book.id
 				@inventory.available_in_city = params[:inventory][:available_in_city]
 				@inventory.status = params[:status]
+				@inventory.no_of_borrows = 0
 				if @inventory.save!
 					redirect_to inventory_index_path
 					flash[:notice] = 'The book has been added to your inventory'
@@ -49,6 +50,7 @@ class InventoryController < ApplicationController
 			@inventory.available_in_city = params[:inventory][:available_in_city]
 			#@inventory.rental_price = params[:rental_price]
 			@inventory.status = params[:status]
+			@inventory.no_of_borrows = 0
 	 		if @inventory.save!
 				redirect_to inventory_index_path
 				flash[:notice] = 'The book has been added to your inventory'

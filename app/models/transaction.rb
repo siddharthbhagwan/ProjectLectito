@@ -124,6 +124,7 @@ class Transaction < ActiveRecord::Base
 
 					received_inventory = Inventory.where(id: self.inventory_id).take
 					received_inventory.status = 'Available'
+					received_inventory.no_of_borrows = received_inventory.no_of_borrows + 1.to_i
 					received_inventory.save
 
 					self.status = 'Complete'
