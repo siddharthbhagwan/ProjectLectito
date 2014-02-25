@@ -15,7 +15,7 @@
                 <td colspan='4'>User has not uploaded any books as of now </td>
             </tr>
         <% else %>    
-            <% @user.inventories.each do |inventory| %>
+            <% @user.inventories.where(deleted: false).each do |inventory| %>
                 <tr>
                     <td><%= inventory.book.book_name %></td>
                     <td><%= inventory.book.author %></td>
