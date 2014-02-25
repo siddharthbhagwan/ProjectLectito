@@ -1,7 +1,7 @@
 <h3>My Books</h3>
 
 <% if !@inventory.empty? %>
-  <table class="table table-striped table-bordered table-condensed">
+  <table class='table table-striped table-bordered table-condensed'>
     <thead>
       <tr>
         <th>Book Name</th>
@@ -19,15 +19,15 @@
           <td><%= inventory.book.author %></td>
           <td><%= inventory.user.addresses.find(inventory.available_in_city).address_summary %></td>
           <td><%= inventory.status %></td>
-          <% if inventory.status == "Rented Out" %>
-            <td class='manage'><%= link_to "Edit", edit_inventory_path(inventory.id),:disabled => :true, class: "btn btn-default "%></td>
+          <% if inventory.status == 'Rented Out' %>
+            <td class='manage'><%= link_to 'Edit', edit_inventory_path(inventory.id), disabled: :true, class: 'btn btn-default '%></td>
           <% else %>
-            <td class='manage'><%= link_to "Edit", edit_inventory_path(inventory.id), class: "btn btn-default "%></td>
+            <td class='manage'><%= link_to 'Edit', edit_inventory_path(inventory.id), class: 'btn btn-default '%></td>
           <% end %>
-          <% if inventory.status == "Rented Out" %>
-            <td class='manage'><%= link_to "Delete", inventory_path(inventory.id), :disabled => :true, :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You sure?' }%></td>
+          <% if inventory.status == 'Rented Out' %>
+            <td class='manage'><%= link_to 'Delete', inventory_path(inventory.id), disabled: :true, method: 'delete', class: 'btn btn-default ', data: { confirm: 'Are You sure?' }%></td>
           <% else %>
-            <td class='manage'><%= link_to "Delete", inventory_path(inventory.id), :method => "delete", class: "btn btn-default ", data: { confirm: 'Are You sure?' }%></td>
+            <td class='manage'><%= link_to 'Delete', inventory_path(inventory.id), method: 'delete', class: 'btn btn-default ', data: { confirm: 'Are You sure?' }%></td>
           <% end %>
         </tr>
       <% end %>
@@ -37,4 +37,4 @@
 
 <br />
 
-<%= link_to 'Add a Book', new_inventory_path, class: "btn btn-default" %>
+<%= link_to 'Add a Book', new_inventory_path, class: 'btn btn-default' %>

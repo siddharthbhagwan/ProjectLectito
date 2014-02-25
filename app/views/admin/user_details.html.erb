@@ -1,8 +1,8 @@
 <% if current_user.id !=  @user.id %>
 	<% if @locked %>
-		<%= tag 'input', :type => 'button', :id => 'unbar_user', :class => 'btn btn-danger' , 'data-uid' =>@user.id, :value => 'Un Bar User' %>
+		<%= tag 'input', type: 'button', id: 'unbar_user', :class => 'btn btn-danger' , 'data-uid' => @user.id, value: 'Un Bar User' %>
 	<% else %>
-		<%= tag 'input', :type => 'button', :id => 'bar_user', :class => 'btn btn-danger' , 'data-uid' =>@user.id, :value => 'Bar User' %>
+		<%= tag 'input', type: 'button', id: 'bar_user', :class => 'btn btn-danger' , 'data-uid' => @user.id, value: 'Bar User' %>
 	<% end %>
 <% end %>
 
