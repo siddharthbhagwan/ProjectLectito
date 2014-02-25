@@ -24,7 +24,6 @@ gem 'sidekiq'
 gem 'redis'
 gem 'rspec'
 gem 'puma'
-gem 'rubocop'
 gem 'bigbertha'
 gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'font-awesome-sass'
@@ -50,6 +49,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'debugger'
+  gem 'rubocop'
 end
 
 group :production do
