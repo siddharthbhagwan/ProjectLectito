@@ -9,14 +9,14 @@ $table.append('<thead>').children('thead').append('<tr />').children('tr').appen
 $tbody = $table.append('<tbody />').children('tbody');
 
 if (<%= @book_array.empty? %>) {
-	rental_data = '<td colspan='2'> Sorry, this book/books by this author arent available in your city </td>';
+	rental_data = "<td colspan='2'> Sorry, this book/books by this author arent available in your city </td>";
 	table_row_id = '<tr>';
 	$tbody.append(table_row_id).children('tr:last').append(rental_data);
 } else {	
-		
+
 	<% @book_array.each do |b| %>
-		author_data = '<td id='author_<%= b.id %>'><%= b.author %></td><td><%= b.book_name %></td>';
-		table_row_id = '<tr id='<%= b.id %>' data-status='closed'>';
+		author_data = "<td id=author_<%= b.id %>'><%= b.author %></td><td><%= b.book_name %></td>";
+		table_row_id = "<tr id='<%= b.id %>' data-status='closed'>";
 		$tbody.append(table_row_id).children('tr:last').append(author_data).append(book_name_data);		
 	<% end %>
 }
