@@ -28,6 +28,7 @@ $(document).ready ->
 
     if search_city
       if search_by_author.length or search_by_book_name.length
+        $("#book_name_empty").hide()
         fetch_search_data()
       else
         $("#author_book_validation").html("<h5>Please Enter either a Book Name, or an Author, or Both</h5>").hide()
