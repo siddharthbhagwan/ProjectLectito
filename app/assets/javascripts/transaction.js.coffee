@@ -881,12 +881,12 @@ $(document).ready ->
 
             # if pData[1].delivery_mode
             #   td_delivery_mode = "<td>Delivery</td>"
-            #   td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Sent to Borrower</p><input class='btn btn-default' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+            #   td_status = "<td><span id='p_accepted_" + pData[1].id + "'> Sent to Borrower</span><input class='btn btn-default' type='button' disabled='true' value='Received' id='received_lender_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
             # else
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
-            #   td_status = "<td><p id='p_accepted_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
+            #   td_status = "<td><span id='p_accepted_" + pData[1].id + "'> Meetup as decided</span><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
-            td_status_text = "<td><p id='p_accepted_" + pData[1].id + "'>Meetup as decided</p></td>"
+            td_status_text = "<td><span id='p_accepted_" + pData[1].id + "'>Meetup as decided</span></td>"
             td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
@@ -933,12 +933,12 @@ $(document).ready ->
 
             # if pData[1].delivery_mode
             #   td_delivery_mode = "<td>Delivery</td>"
-            #   td_status = "<td><p id='p_current_" + pData[1].id + "'> Sent by Lender</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            #   td_status = "<td><span id='p_current_" + pData[1].id + "'> Sent by Lender</span><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
             # else
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
-            #   td_status = "<td><p id='p_current_" + pData[1].id + "'> Meetup as decided</p><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
+            #   td_status = "<td><span id='p_current_" + pData[1].id + "'> Meetup as decided</span><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
-            td_status_text = "<td><p id='p_current_" + pData[1].id + "'>Meetup as decided</p></td>"
+            td_status_text = "<td><span id='p_current_" + pData[1].id + "'>Meetup as decided</span></td>"
             td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 

@@ -32,14 +32,14 @@
 							<% if c.status == 'Accepted' %>
 								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
 									<td>
-										<p id="p_current_<%= c.id %>">Sent by Lender</p>
+										<span id="p_current_<%= c.id %>">Sent by Lender</span>
 									</td>
 									<td class='manage'>	
 										<input class='btn btn-default' type='button' value='Received' id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
 									</td>
 								<% else %>
 									<td>
-										<p id="p_current_<%= c.id %>">Meetup as decided</p>
+										<span id="p_current_<%= c.id %>">Meetup as decided</span>
 									</td>
 									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Received' id="received_borrower_<%= c.id %>" data-trid=<%= c.id %> />
@@ -48,14 +48,14 @@
 							<% elsif c.status == 'Received Borrower' %>
 								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
 									<td>
-										<p id="p_current_<%= c.id %>">Received by You</p>
+										<span id="p_current_<%= c.id %>">Received by You</span>
 									</td>
 									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Return' id='return_delivery' data-trid=<%= c.id %> />
 									</td>
 								<% else %>
 									<td>
-										<p id="p_current_<%= c.id %>">Received by You. Meetup to Return</p>
+										<span id="p_current_<%= c.id %>">Received by You. Meetup to Return</span>
 									</td>
 									<td class='manage'>	
 										<input class='btn btn-default' type='button' value='Returned' id='return_self' data-trid=<%= c.id %> />
