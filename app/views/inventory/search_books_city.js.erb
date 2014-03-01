@@ -1,22 +1,22 @@
-var $tbody, button_element, rental_available_at, $rental_data ="<tbody>", table_row_id, row_number, delivery_charges;
+var $tbody, button_element, rental_available_at, $rental_data ='<tbody>', table_row_id, row_number, delivery_charges;
 
 
-city = $("#city").val()
-$table = $("<table>")
-sub_table_id = "sub_search_results_table_" + <%= params[:book_id] %>
-sub_table_id_s = "#" + sub_table_id
+city = $('#city').val()
+$table = $('<table>')
+sub_table_id = 'sub_search_results_table_' + <%= params[:book_id] %>
+sub_table_id_s = '#' + sub_table_id
 row_number = <%= params[:row_number] %>
 $(sub_table_id_s).remove()
 
 <% #TODO: add table expand retract (toggle)%>
 
 $final_table ="<tr id='city_<%= params[:book_id] %>'><td colspan='2'><table id='sub_search_results_table_<%= params[:book_id] %>' class='table table-hover table-condensed table-bordered'>"
-$table_ending = "</tbody></table></td></tr>"
+$table_ending = '</tbody></table></td></tr>'
 $table_header1 = "<thead><tr id='sub_search_results_table_header'><th>Lender</th>"
-$table_header2 = "<th>Avail@</th>"
-$table_header3 = "<th>Delivery Mode</th>"
-$table_header4 = "<th>Delivery Charges ( &#8377; )</th>"
-$table_header5 = "<th>Borrow</th></tr></thead>"
+$table_header2 = '<th>Avail@</th>'
+$table_header3 = '<th>Delivery Mode</th>'
+$table_header4 = '<th>Delivery Charges ( &#8377; )</th>'
+$table_header5 = '<th>Borrow</th></tr></thead>'
 
 <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
   $table_header = $table_header1 + $table_header2 + $table_header5; //+ $table_header3 + $table_header5; // + $table_header4;
@@ -26,7 +26,7 @@ $table_header5 = "<th>Borrow</th></tr></thead>"
 $final_table = $final_table + $table_header;
 
 if (<%= @users_and_address.length %> === 0) {
-  $("#city_<%= params[:book_id] %>").remove();
+  $('#city_<%= params[:book_id] %>').remove();
   $rental_data += "<tr><td colspan='4'> Sorry, this book isnt available in your city </td></tr>";
   $final_table = $final_table + $rental_data + $table_ending;
 
@@ -48,28 +48,28 @@ if (<%= @users_and_address.length %> === 0) {
         <% end %>
       }
     <% end %>
-    delivery_charges = "<td>60</td>"
-    rental_available_at = "<td>" + "<%= @users_and_address[j].locality %>" + "/" + "<%= @users_and_address[j].city %>" + "</td>";
-    lender_name = "<td>" + "<%= @users_and_address[i].user.full_name %>"  + "</td>";
+    delivery_charges = '<td>60</td>'
+    rental_available_at = '<td>' + '<%= @users_and_address[j].locality %>' + '/' + '<%= @users_and_address[j].city %>' + '</td>';
+    lender_name = '<td>' + '<%= @users_and_address[i].user.full_name %>'  + '</td>';
     <% if @users_and_address[i].user.is_delivery %>{
-      delivery_mode = "<td>Delivery</td>";
+      delivery_mode = '<td>Delivery</td>';
     }
     <% else %>{
-      delivery_mode = "<td>Self Pick/Drop</td>";
+      delivery_mode = '<td>Self Pick/Drop</td>';
     }
     <% end %>
     <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
       $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + button_element; // + delivery_mode + button_element + "</tr>"; //+ delivery_charges 
     <% else %>
-      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + button_element + "</tr>";
+      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + button_element + '</tr>';
     <% end %>
 
     <%= i = i + 2 %>
   <% end %>
   
-  $("#city_<%= params[:book_id] %>").remove();
+  $('#city_<%= params[:book_id] %>').remove();
   $final_table = $final_table + $rental_data + $table_ending
 }
 
-$("#book_count").text(<%= ((@users_and_address.length.to_i)/2).to_s %> +  " book(s) found");
-$("#search_results_table > tbody > tr").eq(row_number).after($final_table);
+$('#book_count').text(<%= ((@users_and_address.length.to_i)/2).to_s %> +  ' book(s) found');
+$('#search_results_table > tbody > tr').eq(row_number).after($final_table);
