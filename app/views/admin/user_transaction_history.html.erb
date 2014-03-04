@@ -39,14 +39,14 @@
 
             <!-- feedback -->
             <td>
-              <%= th.borrower_feedback.capitalize %>
+              <%= th.borrower_feedback %>
             </td>
           <% else %>
             <td>
               <%= link_to User.find(th.lender_id).full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
             </td>
             <td>
-              <%= th.lender_feedback.capitalize %>
+              <%= th.lender_feedback %>
             </td>
           <% end %>
 
