@@ -17,8 +17,8 @@
         <td><%= Inventory.where(book_id: book.id).count %></td>
         <td><%= Inventory.where(book_id: book.id, status: 'Available').count %></td>
         <td><%= Inventory.where(book_id: book.id).where.not(status: 'Available').count %></td>
-        <td><%= link_to 'Edit', edit_book_path(book.id), class: 'btn btn-default' %></td>
-        <td><%= link_to 'Delete', book_path(book.id), method: 'delete', data: { confirm: 'Are You Sure' }, class: 'btn btn-default', disabled: :true %></td>
+        <td class='manage'><%= link_to 'Edit', edit_book_path(book.id), class: 'btn btn-default' %></td>
+        <td class='manage'><%= link_to 'Delete', book_path(book.id), method: 'delete', data: { confirm: 'Are You Sure' }, class: 'btn btn-default', disabled: :true %></td>
       </tr>
     <% end %>
   </tbody>

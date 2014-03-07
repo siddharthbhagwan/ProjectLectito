@@ -21,13 +21,14 @@ class InventoryController < ApplicationController
 		if params[:book_id] == '0'
 			new_book = Book.new
 			new_book.book_name = params[:book_name]
-			new_book.isbn = params[:isbn_h]
-			new_book.author = params[:author_h]
-			new_book.language = params[:language_h]
-			new_book.version = params[:version_h]
-			new_book.edition = params[:edition_h]
-			new_book.publisher = params[:publisher_h]
-			new_book.pages = params[:pages_h]
+			new_book.isbn = params[:isbn]
+			new_book.author = params[:author]
+			new_book.language = params[:language]
+			new_book.version = params[:version]
+			new_book.edition = params[:edition]
+			new_book.publisher = params[:publisher]
+			new_book.pages = params[:pages]
+			new_book.genre = params[:genre]
 
 			if new_book.save!
 				@inventory = Inventory.new

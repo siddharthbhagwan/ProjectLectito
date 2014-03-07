@@ -217,14 +217,14 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
   # Dynamically add hidden fields to the form with their values as entered in the text boxes
-  $('.new_book_element').keyup ->
-    id = $(this).attr('id')
-    console.log $('#' + id + '_h').length
-    if $('#' + id + '_h').length
-      $('#' + id + '_h').val($(this).val())
+  # $('.new_book_element').keyup ->
+  #   id = $(this).attr('id')
+  #   console.log $('#' + id + '_h').length
+  #   if $('#' + id + '_h').length
+  #     $('#' + id + '_h').val($(this).val())
 
-    else
-      $('.book_elements').append("<input id='" + id + "_h' name='" + id + "_h' type='hidden' value='" + $(this).val() + "'>")
+  #   else
+  #     $('.book_elements').append("<input id='" + id + "_h' name='" + id + "_h' type='hidden' value='" + $(this).val() + "'>")
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
