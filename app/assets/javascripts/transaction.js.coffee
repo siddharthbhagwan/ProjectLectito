@@ -301,8 +301,8 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
-            $(tr_id_s).fadeOut(500).remove()
             $('#timeline_' + tr_id).popover('destroy')
+            $(tr_id_s).fadeOut(500).remove()
             empty_table_checks()
             setTimeout $.unblockUI
 
@@ -346,8 +346,8 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
-            $("#borrow_" + tr_id).fadeOut(500).remove()
             $('#timeline_' + tr_id).popover('destroy')
+            $("#borrow_" + tr_id).fadeOut(500).remove()
             empty_table_checks()
             setTimeout $.unblockUI
 
@@ -470,8 +470,8 @@ $(document).ready ->
                 onClose: ->
                   noty_confirm()
 
-            $(tr_id_s).remove()
             $('#timeline_' + tr_id).popover('destroy')
+            $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
             $("#borrower_comments").val("")
             if $("#current_books_table tr").length == 1
@@ -608,8 +608,8 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
-            $(tr_id_s).remove()
             $('#timeline_' + tr_id).popover('destroy')
+            $(tr_id_s).remove()
             $("#lender_comments").val("")
             $('input:radio[name=lender_feedback]').val(['neutral'])
             if $("#accepted_requests_table tr").length == 1
@@ -912,6 +912,7 @@ $(document).ready ->
                 onClose: ->
                   noty_confirm()
 
+            $("#timeline_" + pData[1].id).popover('destroy')
             $("#borrow_" + pData[1].id).remove()
             empty_table_checks()
             tr_id = "<tr id='current_" + pData[1].id + "'>"
@@ -977,12 +978,13 @@ $(document).ready ->
             $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
 
         else if pData[0] == "rejected_lender"
+          $("#timeline_" + pData[1].id).popover('destroy')
           $("#lend_" + pData[1].id).remove()
           empty_table_checks()
 
         else if pData[0] == "rejected_borrower"
-          $("#borrow_" + pData[1].id).remove()
           $('#timeline_' + pData[1].id).popover('destroy')
+          $("#borrow_" + pData[1].id).remove()
           empty_table_checks()
 
           noty
@@ -1004,11 +1006,12 @@ $(document).ready ->
               onClose: ->
                 noty_confirm()
 
-          $("#lend_" + pData[1].id).remove()
           $("#timeline_" + pData[1].id).popover('destroy')
+          $("#lend_" + pData[1].id).remove()          
           empty_table_checks()
 
         else if pData[0] == "rejected"
+          alert 'here'
           if pData[1].reason == "Unavailable"
             noty
               text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as " + pData[1].name + " is Unavailable"
@@ -1027,6 +1030,7 @@ $(document).ready ->
                 onClose: ->
                   noty_confirm()
 
+          $("#timeline_" + pData[1].id).popover('destroy')
           $("#borrow_" + pData[1].id).remove()
           empty_table_checks()
 

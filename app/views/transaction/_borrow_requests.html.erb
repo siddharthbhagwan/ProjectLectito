@@ -34,8 +34,8 @@
 									title: 'Timeline', 
 									content: "
 										<div style='font-size:90%;'>
-											#{ if !b.request_date.blank? then '<u>Accepted</u><br/>' + b.request_date.to_s(:long) + '<br/>' end } 
-											#{ if !b.acceptance_date.blank? then '<u>Requested</u><br/>' + b.acceptance_date.to_s(:long) + '<br/>' end }
+											#{ if !b.request_date.blank? then '<u>Requested</u><br/>' + b.request_date.to_s(:long) + '<br/>' end } 
+											#{ if !b.acceptance_date.blank? then '<u>Accepted</u><br/>' + b.acceptance_date.to_s(:long) + '<br/>' end }
 											#{ if !b.received_date.blank? then '<u>Received</u><br/>' + b.received_date.to_s(:long) + '<br/>' end }
 											#{ if !b.returned_date.blank? then '<u>Returned</u><br/>' + b.returned_date.to_s(:long) + '<br/>' end }
 										</div>"
