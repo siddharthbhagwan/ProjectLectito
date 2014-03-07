@@ -29,11 +29,11 @@
 
           <div id='author_book_validation'></div>
 
-          <p hidden='true' id='author_empty'><i><b>No Such Author Found</b></i></p>
+          <p hidden='true' id='author_empty'><i>No Such Author Found</i></p>
 
           <%= text_field_tag :search_by_author, nil, placeholder: 'Search By Author', class: 'form-control' %>  
 
-          <p hidden='true' id='book_name_empty'><i><b>No Such Book Found</b></i></p>
+          <p hidden='true' id='book_name_empty'><i>No Such Book Found</i></p>
 
           <%= text_field_tag :search_by_book_name, nil, placeholder: 'Search By Book Name', class: 'form-control' %>  
 
@@ -74,11 +74,6 @@
 <div class='sbg rounded-corners'>
 
   <div class='row'>
-  
-    
-  </div>
-
-  <div class='row'>
     <div class='col-md-11'>
       <div>
         <h5 id='book_count'></h5>
@@ -101,4 +96,3 @@
   </div>
 
 </div>
-
