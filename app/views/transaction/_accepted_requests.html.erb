@@ -63,19 +63,19 @@
 							<% end %>
 							<td class='manage'>
 								<%= tag 'input', type: :button, id: "timeline_#{a.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
-									title: 'Timeline', 
+									title: 'Timeline',
 									content: "
 										<div style='font-size:90%;'>
+											#{ if !a.request_date.blank? then '<u>Requested</u><br/>' + a.request_date.to_s(:long) + '<br/>' end }
 											#{ if !a.acceptance_date.blank? then '<u>Accepted</u><br/>' + a.acceptance_date.to_s(:long) + '<br/>' end }
-											#{ if !a.request_date.blank? then '<u>Requested</u><br/>' + a.request_date.to_s(:long) + '<br/>' end } 
 											#{ if !a.received_date.blank? then '<u>Received</u><br/>' + a.received_date.to_s(:long) + '<br/>' end }
 											#{ if !a.returned_date.blank? then '<u>Returned</u><br/>' + a.returned_date.to_s(:long) + '<br/>' end }
 										</div>"
 								} %>
 							</td>
 						</tr>
-					<% end %>		
-				<% end %>	
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>

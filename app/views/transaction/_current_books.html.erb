@@ -34,7 +34,7 @@
 									<td>
 										<span id='p_current_<%= c.id %>'>Sent by Lender</span>
 									</td>
-									<td class='manage'>	
+									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Received' id='received_borrower_<%= c.id %>' data-trid=<%= c.id %> />
 									</td>
 								<% else %>
@@ -57,7 +57,7 @@
 									<td>
 										<span id='p_current_<%= c.id %>'>Received by You. Meetup to Return</span>
 									</td>
-									<td class='manage'>	
+									<td class='manage'>
 										<input class='btn btn-default' type='button' value='Returned' id='return_self' data-trid=<%= c.id %> />
 									</td>
 								<% end %>
@@ -65,10 +65,10 @@
 
 							<td class='manage'>
 								<%= tag 'input', type: :button, id: "timeline_#{c.id}", class: 'btn btn-default', value: 'View', rel: :popover, data: { 
-									title: 'Timeline', 
+									title: 'Timeline',
 									content: "
 										<div style='font-size:90%;'>
-											#{ if !c.request_date.blank? then '<u>Requested</u><br/>' + c.request_date.to_s(:long) + '<br/>' end } 
+											#{ if !c.request_date.blank? then '<u>Requested</u><br/>' + c.request_date.to_s(:long) + '<br/>' end }
 											#{ if !c.acceptance_date.blank? then '<u>Accepted</u><br/>' + c.acceptance_date.to_s(:long) + '<br/>' end }
 											#{ if !c.received_date.blank? then '<u>Received</u><br/>' + c.received_date.to_s(:long) + '<br/>' end }
 											#{ if !c.returned_date.blank? then '<u>Returned</u><br/>' + c.returned_date.to_s(:long) + '<br/>' end }
@@ -81,4 +81,4 @@
 			</tbody>
 		</table>
 	</div>
-</div>	
+</div>
