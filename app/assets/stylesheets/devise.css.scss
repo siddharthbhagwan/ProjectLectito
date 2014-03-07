@@ -24,6 +24,7 @@
     }
   }
 }
+
 // Sign In modal
 .sign_in_modal {
   padding-bottom: 15px;
@@ -58,4 +59,10 @@
     border-left: thin solid grey;
     height: 120px;
     margin-top: 60px;
+}
+
+.vertical_divider {
+  border-left: thin solid grey;
+  height: 300px;
+  margin-top: 20px;
 }
