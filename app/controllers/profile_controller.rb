@@ -50,9 +50,16 @@ class ProfileController < ApplicationController
     # Not verfied, send SMS
     if !User.find(current_user.id).otp_verification
       user = User.find(current_user.id)
+      @mobile_number  = user.profile.user_phone_no
       otp_failed_attempts = user.otp_failed_attempts
-      time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
-      if !(0..1).include?(otp_failed_attempts) && time_lapse > 1
+
+      if user.otp_failed_timestamp == nil
+        time_lapse = 0
+      else
+        time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+      end
+
+      if ( !(0..1).include?(otp_failed_attempts) && time_lapse > 1 )
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
