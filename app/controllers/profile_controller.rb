@@ -53,13 +53,24 @@ class ProfileController < ApplicationController
       @mobile_number  = user.profile.user_phone_no
       otp_failed_attempts = user.otp_failed_attempts
 
-      if user.otp_failed_timestamp == nil
-        time_lapse = 2
+      if ((user.otp_failed_timestamp == nil) && (otp_failed_attempts == 0))
+        new_user = true
       else
-        time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+        new_user = false
       end
 
-      if (( time_lapse > 0 ) || !(0..2).include?(otp_failed_attempts))
+      if !user.otp_failed_timestamp == nil
+        time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+        if time_lapse > 0
+          day_old_user = true
+        else
+          day_old_user = false
+        end
+      else
+        day_old_user = false    
+      end
+
+      if (new_user || day_old_user)
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
