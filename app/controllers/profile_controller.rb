@@ -54,13 +54,13 @@ class ProfileController < ApplicationController
       otp_failed_attempts = user.otp_failed_attempts
 
       if user.otp_failed_timestamp == nil
-        time_lapse = 0
+        time_lapse = 2
       else
         time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
       end
       p 'Failed Attempts ' + otp_failed_attempts.to_s
       p 'Time lapse ' + time_lapse.to_s
-      if ( !(0..1).include?(otp_failed_attempts) && ( time_lapse > 1 || time_lapse == 0 ))
+      if (( time_lapse > 1 ) || !(0..1).include?(otp_failed_attemp))
         p 'yohoo'
         require 'net/http'
         verification_code = rand(100000..999999) 
