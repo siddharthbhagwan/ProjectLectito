@@ -70,7 +70,13 @@ class ProfileController < ApplicationController
         day_old_user = false    
       end
 
-      if (new_user || day_old_user)
+      if @mobile_number != params[:number]
+        mobile_number_updated = true
+      else
+        mobile_number_updated = false
+      end
+
+      if (new_user || day_old_user || mobile_number_updated)
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
