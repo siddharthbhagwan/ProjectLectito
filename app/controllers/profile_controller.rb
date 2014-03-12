@@ -32,11 +32,23 @@ class ProfileController < ApplicationController
         flash[:notice] = 'Your Profile has been updated'
       else
         user = User.find(current_user.id)
-        user.otp_verification = false
-        user.otp_failed_attempts = 0
-        user.otp_failed_timestamp = nil
-        user.save
-        redirect_to profile_verification_path(number: old_number)
+        otp_failed_attempts = user.otp_failed_attempts
+        time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+
+        if (( time_lapse < 1 ) && ((0..2).include?(otp_failed_attempts))) 
+          user = User.find(current_user.id)
+          user.otp_verification = false
+          user.otp_failed_attempts = 0
+          user.otp_failed_timestamp = nil
+          user.save
+          redirect_to profile_verification_path(number: old_number)
+        else
+          profile = user.profile
+          profile.user_phone_no = params[:number].to_i
+          profile.save
+          redirect_to edit_profile_path(current_user.profile.id)
+          flash[:notice] = 'Your Phone Number Could Not be Updated. Please try again after 24 hours '
+        end
       end
      else
       render 'edit'
@@ -119,7 +131,7 @@ class ProfileController < ApplicationController
 
       # Verification code doesn't match
       # Number of attempts < 3
-      if (0..2).include?(otp_failed_attempts)
+      if (0..1).include?(otp_failed_attempts)
         user.otp_failed_attempts = user.otp_failed_attempts + 1
         user.otp_failed_timestamp = DateTime.now
         user.save
