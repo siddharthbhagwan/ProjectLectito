@@ -85,6 +85,17 @@ class ProfileController < ApplicationController
         day_old_user = false    
       end
 
+      if (otp_failed_attempts == 0)
+        if !user.otp_failed_timestamp == nil
+          time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+          if time_lapse < 1
+            just_reload = true
+          end
+        end
+      else
+        just_reload = false
+      end
+
       if @mobile_number != params[:number]
         mobile_number_updated = true
       else
