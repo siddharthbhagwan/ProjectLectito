@@ -36,9 +36,11 @@ ProjectLectito::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = false
 
-  # Firebase Cinfig
+  # Firebase Config
   ENV['firebase_url'] = 'https://projectlectito.firebaseio.com/'
 
+  # MSG91 URL
+  ENV['msg91_url'] = 'https://control.msg91.com/api/sendhttp.php?authkey=64435AVXoM3F6kL4532011ef'
 
   #Default Url
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }

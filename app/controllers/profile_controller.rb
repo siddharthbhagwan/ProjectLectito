@@ -1,4 +1,5 @@
 # Profile Controller
+require 'net/http'
 class ProfileController < ApplicationController
   include ApplicationHelper
   load_and_authorize_resource class: Profile
@@ -11,20 +12,30 @@ class ProfileController < ApplicationController
     @profile = Profile.new(params[:profile])
     @profile.user_id = current_user.id
     @profile.profile_status = 'Online'
-    @profile.delivery = 'true'
+    @profile.delivery = 'false'
+    @profile.otp_failed_attempts = 0
     if @profile.save
-      flash[:notice] = 'Your Profile has been created'
-      redirect_to new_address_path
+      redirect_to profile_verification_path
+      # flash[:notice] = 'Your Profile has been created'
+      # redirect_to new_address_path
     else
       redirect_to new_profile_path
     end
   end
 
   def update
+    old_number = Profile.where(user_id: current_user.id).take.user_phone_no
     @profile = Profile.where(user_id: current_user.id).take
     if @profile.update_attributes(params[:profile])
-      redirect_to edit_profile_path
-      flash[:notice] = 'Your Profile has been updated'
+      if old_number == @profile.user_phone_no
+        redirect_to edit_profile_path
+        flash[:notice] = 'Your Profile has been updated'
+      else
+        user = User.find(current_user.id)
+        user.otp_verification = false
+        user.save
+        redirect_to profile_verification_path(number: old_number)
+      end
      else
       render 'edit'
     end
@@ -33,6 +44,84 @@ class ProfileController < ApplicationController
   def edit
     @profile = Profile.where(id: params[:id]).take
     chatbox
+  end
+
+  def otp
+    # Not verfied, send SMS
+    if !User.find(current_user.id).otp_verification
+      user = User.find(current_user.id)
+      otp_failed_attempts = user.otp_failed_attempts
+      time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+      if !(0..1).include?(otp_failed_attempts) && time_lapse > 1
+        require 'net/http'
+        verification_code = rand(100000..999999) 
+        current_user.otp = verification_code
+        if current_user.save!
+          message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
+          mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
+          msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
+          encoded_url = URI.encode(msg91_url)
+          uri = URI.parse(encoded_url)
+          msg91_url_reponse = Net::HTTP.get(uri)
+          parsed_response = JSON.parse(msg91_url_reponse)
+          
+          user = User.find(current_user.id)
+          user.response_code = parsed_response['message']
+          user.otp_verification = false
+          user.otp_failed_attempts = 0
+          user.save!
+        end
+      end
+    else
+      # Verified, no need of any action
+      redirect_to '/inventory/search'
+    end
+  end
+
+  def otp_verification
+    user = User.find(current_user.id)
+    otp_failed_attempts = user.otp_failed_attempts
+
+    # Verification code matches
+    if params[:verification_code].to_i == user.otp
+      user.otp_verification = true
+      user.otp_failed_attempts = 0
+      user.save
+      redirect_to edit_profile_path(current_user.profile.id)
+      flash[:notice] = 'Your Profile has been updated '
+    else
+
+      # Verification code doesn't match
+      # Number of attempts < 3
+      if (0..1).include?(otp_failed_attempts)
+        user.otp_failed_attempts = user.otp_failed_attempts + 1
+        user.otp_failed_timestamp = DateTime.now
+        user.save
+        redirect_to profile_verification_path(current_user.profile.id, number: params[:number])
+        flash[:notice] = 'Invalid Code. Failed attemptss - ' + user.otp_failed_attempts.to_s
+      else
+
+        # Number of attempts > 3
+        time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
+
+        # Last attempt was more than a day before
+        if time_lapse > 1
+          user.otp_failed_attempts = user.otp_failed_attempts = 1
+          user.otp_failed_timestamp = DateTime.now
+          user.save
+          redirect_to edit_profile_path(current_user.profile.id, number: params[:number])
+          flash[:notice] = 'Invalid Code. Failed attempts - ' + user.otp_failed_attempts.to_s
+        else
+
+          # Last attempt was less than a day before
+          profile = user.profile
+          profile.user_phone_no = params[:number].to_i
+          profile.save
+          redirect_to edit_profile_path(current_user.profile.id)
+          flash[:notice] = 'Your Phone Number Could Not be Updated. Please try again after 24 hours '
+        end
+      end
+    end
   end
 
   def rating

@@ -4,6 +4,9 @@
   # Firebase URL
   ENV['firebase_url'] = 'https://projectlectito.firebaseio.com/'
 
+  # MSG91 URL
+  ENV['msg91_url'] = 'https://control.msg91.com/api/sendhttp.php?authkey=64435AVXoM3F6kL4532011ef'
+
   config.eager_load = true
 
   # Code is not reloaded between requests

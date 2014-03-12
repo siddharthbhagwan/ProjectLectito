@@ -1,0 +1,25 @@
+<h4> SMS Validation </h4>
+<em> Please don't refresh this page</em><br/>
+
+
+Please enter the 6 digit code sent to you on your registered mobile number <br/>
+
+<br/><br/>
+
+<div class='col-md-2'>
+
+  <div class='form_padding'>
+
+    <%= form_tag profile_otp_verification_path, method: :get do %>
+
+      <%= text_field_tag :verification_code, nil, placeholder: 'Enter Code', reuired: :true, autofocus: true, class: 'form-control' %><br/>
+
+      <%= hidden_field_tag :number, params[:number] %><br/>
+
+      <%= submit_tag 'Confirm', class: 'btn btn-default' %>
+
+    <% end %>
+
+  </div>
+
+</div>
