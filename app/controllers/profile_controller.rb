@@ -102,7 +102,7 @@ class ProfileController < ApplicationController
         mobile_number_updated = false
       end
 
-      if (new_user || day_old_user)
+      if (new_user || day_old_user || !just_reload)
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
