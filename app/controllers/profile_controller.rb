@@ -100,7 +100,7 @@ class ProfileController < ApplicationController
 
       # Verification code doesn't match
       # Number of attempts < 3
-      if (0..1).include?(otp_failed_attempts)
+      if (0..2).include?(otp_failed_attempts)
         user.otp_failed_attempts = user.otp_failed_attempts + 1
         user.otp_failed_timestamp = DateTime.now
         user.save
