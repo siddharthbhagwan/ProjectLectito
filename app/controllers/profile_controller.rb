@@ -33,6 +33,8 @@ class ProfileController < ApplicationController
       else
         user = User.find(current_user.id)
         user.otp_verification = false
+        user.otp_failed_attempts = 0
+        user.otp_failed_timestamp = nil
         user.save
         redirect_to profile_verification_path(number: old_number)
       end
@@ -76,7 +78,7 @@ class ProfileController < ApplicationController
         mobile_number_updated = false
       end
 
-      if (new_user || day_old_user || mobile_number_updated)
+      if (new_user || day_old_user)
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
