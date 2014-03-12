@@ -59,7 +59,7 @@ class ProfileController < ApplicationController
         time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
       end
 
-      if ( !(0..1).include?(otp_failed_attempts) && ( time_lapse > 1 || time_lapse == 0 )
+      if ( !(0..1).include?(otp_failed_attempts) && ( time_lapse > 1 || time_lapse == 0 ))
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
