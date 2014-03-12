@@ -58,10 +58,8 @@ class ProfileController < ApplicationController
       else
         time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
       end
-      p 'Failed Attempts ' + otp_failed_attempts.to_s
-      p 'Time lapse ' + time_lapse.to_s
-      if (( time_lapse > 1 ) || !(0..2).include?(otp_failed_attempts))
-        p 'yohoo'
+
+      if (( time_lapse > 0 ) || !(0..2).include?(otp_failed_attempts))
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
@@ -114,7 +112,7 @@ class ProfileController < ApplicationController
         time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
 
         # Last attempt was more than a day before
-        if time_lapse > 1
+        if time_lapse > 0
           user.otp_failed_attempts = user.otp_failed_attempts = 1
           user.otp_failed_timestamp = DateTime.now
           user.save
