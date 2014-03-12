@@ -60,7 +60,7 @@ class ProfileController < ApplicationController
       end
       p 'Failed Attempts ' + otp_failed_attempts.to_s
       p 'Time lapse ' + time_lapse.to_s
-      if (( time_lapse > 1 ) || !(0..1).include?(otp_failed_attemp))
+      if (( time_lapse > 1 ) || !(0..1).include?(otp_failed_attempts))
         p 'yohoo'
         require 'net/http'
         verification_code = rand(100000..999999) 
