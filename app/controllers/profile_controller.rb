@@ -37,7 +37,7 @@ class ProfileController < ApplicationController
         otp_failed_attempts = user.otp_failed_attempts
         time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
 
-        # if (( time_lapse > 0 ) && ((0..1).include?(otp_failed_attempts))) 
+        if (( time_lapse > 0 ) && ((0..1).include?(otp_failed_attempts))) 
           user = User.find(current_user.id)
           user.otp_verification = false
           user.otp_failed_attempts = 0
