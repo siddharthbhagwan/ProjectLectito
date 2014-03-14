@@ -34,15 +34,10 @@ class ApplicationController < ActionController::Base
   end
 
   def otp_verified?
-    p 'CALLED CHECK'
     if user_signed_in?
-      p 'CALLED CHECK 5'
       if params[:controller] != 'devise/sessions'
-        p 'CALLED CHECK 2'
         if !current_user.otp_verification
-          p 'CALLED CHECK 3'
           if current_user.profile.nil?
-            p 'CALLED CHECK 4'
             redirect_to new_profile_path
           else
             redirect_to profile_verification_path
