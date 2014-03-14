@@ -85,8 +85,7 @@ class ProfileController < ApplicationController
         day_old_user = false    
       end
 
-      if (otp_failed_attempts == 0)
-        if !user.otp_failed_timestamp == nil
+      if ((otp_failed_attempts == 0) and (user.otp_failed_timestamp == nil))
           time_lapse = (DateTime.now - user.otp_failed_timestamp.to_datetime).to_i
           if time_lapse < 1
             just_reload = true
@@ -102,7 +101,7 @@ class ProfileController < ApplicationController
         mobile_number_updated = false
       end
 
-      if (new_user || day_old_user || !just_reload)
+      if (new_user || day_old_user || !just_reload  )
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
