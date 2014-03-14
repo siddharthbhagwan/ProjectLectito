@@ -1,8 +1,8 @@
 # Address Controller
 class AddressController < ApplicationController
   include ApplicationHelper
-  before_action :otp_verified?
   before_action :require_profile
+  before_action :otp_verified?
 
   # CanCan for authorization on controller actions
   load_and_authorize_resource class: Address

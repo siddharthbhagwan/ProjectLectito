@@ -14,6 +14,7 @@ class ProfileController < ApplicationController
     @profile.profile_status = 'Online'
     @profile.delivery = 'false'
     @profile.user.otp_failed_attempts = 0
+    @profile.user.save
     if @profile.save
       redirect_to profile_verification_path
       # flash[:notice] = 'Your Profile has been created'
@@ -29,7 +30,7 @@ class ProfileController < ApplicationController
     if @profile.update_attributes(params[:profile])
       # If Phone number hasn't been updated
       if old_number == @profile.user_phone_no
-        redirect_to edit_profile_path
+        redirect_to edit_profile_path(current_user.id)
         flash[:notice] = 'Your Profile has been updated'
       else
         # Phone number has been updated
@@ -90,7 +91,7 @@ class ProfileController < ApplicationController
         time_lapse_sent = ((DateTime.now - user.otp_sent.to_datetime) * 24 * 60 * 60).to_i
       end
 
-      if ((otp_failed_attempts > 2) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
+      if ((otp_failed_attempts > 2) && (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
         @locked = true
       else
         @locked = false
@@ -118,13 +119,13 @@ class ProfileController < ApplicationController
       # Just reload - If no attempts,no failed timestamp , its just a reload
       # If he has tried before more than thrice, a day before, send code
       # If he has tried less than thrice, within a day
-      if ((otp_failed_attempts == 0) and (otp_failed_timestamp.nil?))
+      if ((otp_failed_attempts == 0) && (otp_failed_timestamp.nil?))
         just_reload = true
-      elsif ((otp_failed_attempts < 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
+      elsif ((otp_failed_attempts < 3) && (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
         just_reload = true
-      elsif ((otp_failed_attempts >= 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
+      elsif ((otp_failed_attempts >= 3) && (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
         just_reload = true
-      elsif ((otp_failed_attempts >= 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) > 0))
+      elsif ((otp_failed_attempts >= 3) && (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) > 0))
         just_reload = false
       end
 

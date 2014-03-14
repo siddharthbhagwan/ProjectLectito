@@ -2,8 +2,9 @@ class InventoryController < ApplicationController
 	include ApplicationHelper
 	#before_action :require_profile, :require_address
 	if :authenticate_user!
-		before_action :require_profile, :require_address
+		before_action :require_profile
 		before_action :otp_verified?
+		before_action :require_address
 	end
 
 	def index
@@ -271,12 +272,14 @@ class InventoryController < ApplicationController
 
 	def require_address
 		if user_signed_in?
-    	if current_user.addresses.empty?
-    		flash[:notice] = 'Please Enter at least one Address'
-    		redirect_to new_address_path
-    	else
-    		return false
-    	end
+			if !current_user.profile.nil? && current_user.top_verification
+	    	if current_user.addresses.empty?
+	    		flash[:notice] = 'Please Enter at least one Address'
+	    		redirect_to new_address_path
+	    	else
+	    		return false
+	    	end
+	    end
     end
 	end	
 end

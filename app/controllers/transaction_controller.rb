@@ -1,8 +1,8 @@
 class TransactionController < ApplicationController
 	include ApplicationHelper, TransactionHelper
-	
-	before_action :require_profile, :require_address
+	before_action :require_profile
 	before_action :otp_verified?, except: [:user_id]
+	before_action :require_address
 
 	def create
 		@transaction = Transaction.new
@@ -424,18 +424,23 @@ class TransactionController < ApplicationController
   def require_profile
   	if current_user.profile.nil?
   		flash[:notice] = 'Please complete your profile'
-  		redirect_to profile_edit_path
+  		redirect_to new_profile_path
   	else
   		return false
   	end
   end
 
   def require_address
-    if current_user.addresses.empty?
-      flash[:notice] = 'Please Enter at least one Address'
-      redirect_to new_address_path
-    else
-      return false
-    end
+  	if user_signed_in?
+	  	if !current_user.profile.nil? && current_user.otp_verification
+		    if current_user.addresses.empty?
+		      flash[:notice] = 'Please Enter at least one Address'
+		      redirect_to new_address_path
+		    else
+		      return false
+		    end
+		  end
+		end
   end
+
 end
