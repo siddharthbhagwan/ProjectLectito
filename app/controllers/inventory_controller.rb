@@ -3,6 +3,7 @@ class InventoryController < ApplicationController
 	#before_action :require_profile, :require_address
 	if :authenticate_user!
 		before_action :require_profile, :require_address
+		before_action :otp_verified?
 	end
 
 	def index

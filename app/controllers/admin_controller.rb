@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
 	include ApplicationHelper
+	before_action :otp_verified?
 
 	load_and_authorize_resource class: User
 

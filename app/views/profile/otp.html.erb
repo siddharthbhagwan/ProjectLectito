@@ -12,11 +12,24 @@ Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b>
 
     <%= form_tag profile_otp_verification_path, method: :get do %>
 
+    <% if @locked %>
+
+      <%= text_field_tag :verification_code, nil, placeholder: 'Enter Code', disabled: :true, reuired: :true, autofocus: true, class: 'form-control' %>
+
+      <%= hidden_field_tag :number, params[:number] %><br/>
+
+      <%= submit_tag 'Confirm', class: 'btn btn-default', disabled: :true %>
+
+    <% else %>
+
       <%= text_field_tag :verification_code, nil, placeholder: 'Enter Code', reuired: :true, autofocus: true, class: 'form-control' %>
 
       <%= hidden_field_tag :number, params[:number] %><br/>
 
       <%= submit_tag 'Confirm', class: 'btn btn-default' %>
+
+    <% end %>
+      
 
     <% end %>
 

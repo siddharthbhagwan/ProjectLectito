@@ -1,5 +1,6 @@
 class ChatController < ApplicationController
   include ApplicationHelper
+  before_action :otp_verified?
 
   def show
     @transaction = Transaction.where(id: params[:id]).take
