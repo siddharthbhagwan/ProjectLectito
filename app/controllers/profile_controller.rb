@@ -184,7 +184,7 @@ class ProfileController < ApplicationController
         user.otp_failed_timestamp = DateTime.now
         user.save
         redirect_to profile_verification_path(current_user.profile.id, number: params[:number])
-        flash[:notice] = 'Invalid Code. Failed attemptss - ' + user.otp_failed_attempts.to_s
+        flash[:alert] = 'Invalid Code. Failed attemptss - ' + user.otp_failed_attempts.to_s + ' '
       else
 
         # Number of attempts > 3
@@ -197,7 +197,7 @@ class ProfileController < ApplicationController
         user.save
         profile.save
         redirect_to profile_verification_path(current_user.profile.id, number: params[:number])
-        flash[:notice] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours '
+        flash[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours '
       end
     end
   end
