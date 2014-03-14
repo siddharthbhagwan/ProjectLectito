@@ -92,7 +92,7 @@ class ProfileController < ApplicationController
         @locked = false
       end
 
-      
+
       # new user
       if ((otp_failed_timestamp.nil?) && (otp_failed_attempts == 0) && (otp_response_code.nil?))
         new_user = true
@@ -117,12 +117,10 @@ class ProfileController < ApplicationController
       # If he has tried less than thrice, within a day
       if ((otp_failed_attempts == 0) and (otp_failed_timestamp.nil?))
         just_reload = true
-      else
-        if ((otp_failed_attempts < 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
-          just_reload = true
-        else
-          just_reload = false
-        end
+      elsif ((otp_failed_attempts < 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
+        just_reload = true
+      elsif ((otp_failed_attempts == 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) > 0))
+        just_reload = false
       end
 
       p ' new user ' + new_user.to_s
