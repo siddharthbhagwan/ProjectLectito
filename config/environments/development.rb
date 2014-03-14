@@ -42,9 +42,6 @@ ProjectLectito::Application.configure do
   # MSG91 URL
   ENV['msg91_url'] = 'https://control.msg91.com/api/sendhttp.php?authkey=64435AVXoM3F6kL4532011ef'
 
-  # Online Ping interval
-  ENV['updateComments_interval'] = 400000
-
   #Default Url
   config.action_mailer.default_url_options = { :host => 'localhost:3006' }
 

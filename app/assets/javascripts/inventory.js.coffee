@@ -310,9 +310,9 @@ $(document).ready ->
 
       error: (jqXHR, textStatus, errorThrown) ->
 
-    setTimeout updateComments, ENV['updateComments_interval']
+    setTimeout updateComments, 4000
 
-  setTimeout updateComments, ENV['updateComments_interval']
+  setTimeout updateComments, 4000
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
