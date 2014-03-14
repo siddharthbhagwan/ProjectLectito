@@ -310,9 +310,9 @@ $(document).ready ->
 
       error: (jqXHR, textStatus, errorThrown) ->
 
-    setTimeout updateComments, 4000
+    setTimeout updateComments, 400000
 
-  setTimeout updateComments, 4000
+  setTimeout updateComments, 400000
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable

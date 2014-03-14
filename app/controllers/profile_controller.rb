@@ -237,6 +237,7 @@ class ProfileController < ApplicationController
         user.otp_sent = DateTime.now
         
         if user.save!
+          p ' I WAS HERER!'
           redirect_to profile_verification_path(current_user.profile.id, number: params[:number])
           flash[:notice] = 'The code has been resent to ' + user.profile.user_phone_no.to_s + ' '
         end

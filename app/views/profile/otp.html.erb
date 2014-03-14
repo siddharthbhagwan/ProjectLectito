@@ -11,7 +11,7 @@
   <% end %>
 <% end %>
 
-Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b> <u><%= link_to "Din't receive code?Click here to resend", profile_otp_resend_path, { :style => 'font-size:85%;' } %></u>
+Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b> <u><%= link_to "Din't receive code?Click here to resend", profile_otp_resend_path(number: params[:number]), { style: 'font-size:85%;' } %></u>
 
 <br/><br/>
 
