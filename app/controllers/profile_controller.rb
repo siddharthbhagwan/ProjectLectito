@@ -234,7 +234,7 @@ class ProfileController < ApplicationController
         parsed_response = JSON.parse(msg91_url_reponse)
         user.response_code = parsed_response['message']
         user.otp_verification = false
-        user.otp_sent = DateTime.now
+        # user.otp_sent = DateTime.now
         
         if user.save!
           p ' I WAS HERER!'
