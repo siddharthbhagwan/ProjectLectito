@@ -78,6 +78,7 @@ class ProfileController < ApplicationController
 
       user = User.find(current_user.id)
       @mobile_number  = user.profile.user_phone_no
+      @otp_failed_attempts = user.otp_failed_attempts
       otp_failed_attempts = user.otp_failed_attempts
       otp_failed_timestamp = user.otp_failed_timestamp
       otp_response_code = user.response_code
@@ -119,7 +120,9 @@ class ProfileController < ApplicationController
         just_reload = true
       elsif ((otp_failed_attempts < 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
         just_reload = true
-      elsif ((otp_failed_attempts == 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) > 0))
+      elsif ((otp_failed_attempts >= 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
+        just_reload = true
+      elsif ((otp_failed_attempts >= 3) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) > 0))
         just_reload = false
       end
 
@@ -131,23 +134,23 @@ class ProfileController < ApplicationController
       if (new_user || day_old_user || !just_reload )
         p ' VERIFICATION CODE SENT '
         # require 'net/http'
-        verification_code = rand(100000..999999) 
-        current_user.otp = verification_code
-        if current_user.save!
-          message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
-          mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
-          msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
-          encoded_url = URI.encode(msg91_url)
-          uri = URI.parse(encoded_url)
-          msg91_url_reponse = Net::HTTP.get(uri)
-          parsed_response = JSON.parse(msg91_url_reponse)
+        # verification_code = rand(100000..999999) 
+        # current_user.otp = verification_code
+        # if current_user.save!
+        #   message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
+        #   mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
+        #   msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
+        #   encoded_url = URI.encode(msg91_url)
+        #   uri = URI.parse(encoded_url)
+        #   msg91_url_reponse = Net::HTTP.get(uri)
+        #   parsed_response = JSON.parse(msg91_url_reponse)
           
-          user = User.find(current_user.id)
-          user.response_code = parsed_response['message']
-          user.otp_verification = false
-          user.otp_failed_attempts = 0
-          user.save!
-        end
+        #   user = User.find(current_user.id)
+        #   user.response_code = parsed_response['message']
+        #   user.otp_verification = false
+        #   user.otp_failed_attempts = 0
+        #   user.save!
+        # end
       end
     else
       # Verified, no need of any action

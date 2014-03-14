@@ -1,6 +1,16 @@
 <h4> SMS Verification </h4>
-<em> Please don't refresh this page</em><br/><br/>
 
+<b><i> Please don't refresh this page</i></b><br/><br/>
+
+<% if @otp_failed_attempts > 0 %>
+  <b>Failed attempts : <%= @otp_failed_attempts %></b>
+  <% if @otp_failed_attempts == 3 %>
+    <% if !flash[:notice] %>
+      <% flash.now[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours ' %>
+    <% end %>  
+  <% end %>
+<% end %>
+<br/><br/>
 
 Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b>
 
