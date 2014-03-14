@@ -19,7 +19,7 @@ ProjectLectito::Application.routes.draw do
   # Profile Routes
   get 'profile/rating' => 'profile#rating'
   get 'profile/verification' => 'profile#otp'
-  get 'profile/verified' => 'profile#verified'
+  get 'profile/otp_verified' => 'profile#otp_verified'
   get 'profile/otp_verification' => 'profile#otp_verification'
   get 'profile/public_rating/:tr_id' => 'profile#public_rating'
   post 'profile/online' => 'profile#online'
