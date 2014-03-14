@@ -56,6 +56,7 @@ class ProfileController < ApplicationController
         user.otp_verification = false
         user.otp_failed_attempts = 0
         user.otp_failed_timestamp = nil
+        user.otp_sent = DateTime.now
         user.save
         redirect_to profile_verification_path(number: old_number)
 
@@ -74,6 +75,7 @@ class ProfileController < ApplicationController
     # Not verfied, send SMS
     p ' Reached OTP '
     if !User.find(current_user.id).otp_verification
+      p ' VERIFICATION IS FALSE'
 
       user = User.find(current_user.id)
       @mobile_number  = user.profile.user_phone_no
@@ -81,6 +83,12 @@ class ProfileController < ApplicationController
       otp_failed_attempts = user.otp_failed_attempts
       otp_failed_timestamp = user.otp_failed_timestamp
       otp_response_code = user.response_code
+      otp_sent = user.otp_sent
+      if otp_sent.nil?
+        time_lapse_sent = -1
+      else
+        time_lapse_sent = ((DateTime.now - user.otp_sent.to_datetime) * 24 * 60 * 60).to_i
+      end
 
       if ((otp_failed_attempts > 2) and (((DateTime.now - otp_failed_timestamp.to_datetime).to_i) < 1))
         @locked = true
@@ -89,7 +97,7 @@ class ProfileController < ApplicationController
       end
 
       # new user
-      if ((otp_failed_timestamp.nil?) && (otp_failed_attempts == 0) && (otp_response_code.nil?))
+      if ((otp_failed_timestamp.nil?) && (otp_failed_attempts == 0) && (otp_response_code.nil?) && (otp_sent.nil?))
         new_user = true
       else
         new_user = false
@@ -120,10 +128,27 @@ class ProfileController < ApplicationController
         just_reload = false
       end
 
+      if ((@mobile_number != params[:number]) && (time_lapse_sent < 2))
+        number_changed = true
+      else
+        number_changed = false
+      end
 
-      if (new_user || day_old_user || !just_reload )
+      p ' Failed Attempts ' + otp_failed_attempts.to_s
+      p ' Failed Timestamp ' + otp_failed_timestamp.to_s
+      p ' Response Code ' + otp_response_code.to_s
+      p ' Params ' + params[:number].to_s
+      p ' Time Lapse Sent ' + time_lapse_sent.to_s
+      p ' new user ' + new_user.to_s
+      p ' day_old_user ' + day_old_user.to_s
+      p ' just_reload ' + just_reload.to_s
+      p ' number changed ' + number_changed.to_s
+
+
+      if (new_user || day_old_user || !just_reload || number_changed)
+        p ' VERIFICATION CODE SENT '
         require 'net/http'
-        verification_code = rand(100000..999999)
+        verification_code = rand(100000..999999) 
         current_user.otp = verification_code
         if current_user.save!
           message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
@@ -138,13 +163,17 @@ class ProfileController < ApplicationController
           user.response_code = parsed_response['message']
           user.otp_verification = false
           user.otp_failed_attempts = 0
+          user.otp_sent = DateTime.now
           user.save!
         end
       end
+      p ' OTP 1 '
     else
+      p ' OTP 2 '
       # Verified, no need of any action
       redirect_to '/inventory/search'
     end
+    p ' OTP 3 '
   end
 
   def otp_verification
@@ -205,6 +234,7 @@ class ProfileController < ApplicationController
         parsed_response = JSON.parse(msg91_url_reponse)
         user.response_code = parsed_response['message']
         user.otp_verification = false
+        user.otp_sent = DateTime.now
         
         if user.save!
           redirect_to profile_verification_path(current_user.profile.id, number: params[:number])

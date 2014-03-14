@@ -2,7 +2,7 @@ class TransactionController < ApplicationController
 	include ApplicationHelper, TransactionHelper
 	
 	before_action :require_profile, :require_address
-	before_action :otp_verified?
+	before_action :otp_verified?, except: [:user_id]
 
 	def create
 		@transaction = Transaction.new
