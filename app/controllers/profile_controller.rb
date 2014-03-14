@@ -173,6 +173,10 @@ class ProfileController < ApplicationController
     end
   end
 
+  def otp_verified
+    current_user.otp_verification
+  end
+
   def rating
     @name = User.find(current_user.id).full_name
 
