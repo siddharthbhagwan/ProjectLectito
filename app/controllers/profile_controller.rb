@@ -30,7 +30,7 @@ class ProfileController < ApplicationController
     if @profile.update_attributes(params[:profile])
       # If Phone number hasn't been updated
       if old_number == @profile.user_phone_no
-        redirect_to edit_profile_path(current_user.profile.id)
+        redirect_to edit_profile_path(current_user.id)
         flash[:notice] = 'Your Profile has been updated'
       else
         # Phone number has been updated
@@ -59,7 +59,10 @@ class ProfileController < ApplicationController
         user.otp_failed_timestamp = nil
         user.otp_sent = DateTime.now
         user.save
-        redirect_to profile_verification_path(number: old_number)
+
+        @profile.old_phone_no = old_number
+        @profile.save
+        redirect_to profile_verification_path
 
       end
      else
@@ -86,6 +89,8 @@ class ProfileController < ApplicationController
       otp_failed_timestamp = user.otp_failed_timestamp
       otp_response_code = user.response_code
       otp_sent = user.otp_sent
+      old_number = user.profile.old_phone_no
+
       if otp_sent.nil?
         time_lapse_sent = -1
       else
@@ -139,35 +144,35 @@ class ProfileController < ApplicationController
       p ' Failed Attempts ' + otp_failed_attempts.to_s
       p ' Failed Timestamp ' + otp_failed_timestamp.to_s
       p ' Response Code ' + otp_response_code.to_s
-      p ' Params ' + params[:number].to_s
+      p ' Old  number' + old_number.to_s
       p ' Time Lapse Sent ' + time_lapse_sent.to_s
       p ' new user ' + new_user.to_s
-      p ' day_old_user ' + day_old_user.to_s
-      p ' just_reload ' + just_reload.to_s
+      p ' day old_user ' + day_old_user.to_s
+      p ' just reload ' + just_reload.to_s
       p ' number changed ' + number_changed.to_s
 
 
       if (new_user || day_old_user || !just_reload || number_changed)
         p ' VERIFICATION CODE SENT '
-        require 'net/http'
-        verification_code = rand(100000..999999) 
-        current_user.otp = verification_code
-        if current_user.save!
-          message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
-          mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
-          msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
-          encoded_url = URI.encode(msg91_url)
-          uri = URI.parse(encoded_url)
-          msg91_url_reponse = Net::HTTP.get(uri)
-          parsed_response = JSON.parse(msg91_url_reponse)
+        # require 'net/http'
+        # verification_code = rand(100000..999999) 
+        # current_user.otp = verification_code
+        # if current_user.save!
+        #   message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
+        #   mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
+        #   msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
+        #   encoded_url = URI.encode(msg91_url)
+        #   uri = URI.parse(encoded_url)
+        #   msg91_url_reponse = Net::HTTP.get(uri)
+        #   parsed_response = JSON.parse(msg91_url_reponse)
           
-          user = User.find(current_user.id)
-          user.response_code = parsed_response['message']
-          user.otp_verification = false
-          user.otp_failed_attempts = 0
-          user.otp_sent = DateTime.now
-          user.save!
-        end
+        #   user = User.find(current_user.id)
+        #   user.response_code = parsed_response['message']
+        #   user.otp_verification = false
+        #   user.otp_failed_attempts = 0
+        #   user.otp_sent = DateTime.now
+        #   user.save!
+        # end
       end
       p ' OTP 1 '
     else
@@ -203,20 +208,28 @@ class ProfileController < ApplicationController
         user.otp_failed_attempts = user.otp_failed_attempts + 1
         user.otp_failed_timestamp = DateTime.now
         user.save
-        redirect_to profile_verification_path(number: params[:number])
+        redirect_to profile_verification_path
         flash[:alert] = 'Invalid Code. Failed attemptss - ' + user.otp_failed_attempts.to_s + ' '
       else
 
         # Number of attempts > 3
         # Last attempt was less than a day before
         profile = user.profile
-        profile.user_phone_no = params[:number].to_i
         user.otp_failed_attempts = user.otp_failed_attempts + 1
         user.otp_failed_timestamp = DateTime.now
-        user.save
-        profile.save
-        redirect_to profile_verification_path(number: params[:number])
-        flash[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours '
+
+        if !profile.old_phone_no.nil?
+          profile.user_phone_no = profile.old_phone_no
+          user.save
+          profile.save
+          redirect_to profile_verification_path
+          flash[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours '
+        else
+          user.save
+          profile.save
+          redirect_to profile_verification_path
+          flash[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours '
+        end        
       end
     end
   end
@@ -225,26 +238,26 @@ class ProfileController < ApplicationController
     user = User.find(current_user.id)
     if !user.otp_verification
       if user.otp_failed_attempts < 3
-        require 'net/http'        
-        verification_code = user.otp
-        message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
-        mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
-        msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
-        encoded_url = URI.encode(msg91_url)
-        uri = URI.parse(encoded_url)
-        msg91_url_reponse = Net::HTTP.get(uri)
-        parsed_response = JSON.parse(msg91_url_reponse)
-        user.response_code = parsed_response['message']
-        user.otp_verification = false
-        user.otp_sent = DateTime.now
+        # require 'net/http'        
+        # verification_code = user.otp
+        # message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
+        # mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
+        # msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
+        # encoded_url = URI.encode(msg91_url)
+        # uri = URI.parse(encoded_url)
+        # msg91_url_reponse = Net::HTTP.get(uri)
+        # parsed_response = JSON.parse(msg91_url_reponse)
+        # user.response_code = parsed_response['message']
+        # user.otp_verification = false
+        # user.otp_sent = DateTime.now
         
         if user.save!
           p ' I WAS HERER!'
-          redirect_to profile_verification_path(number: params[:number])
+          redirect_to profile_verification_path
           flash[:notice] = 'The code has been resent to ' + user.profile.user_phone_no.to_s + ' '
         end
       else
-        redirect_to profile_verification_path(number: params[:number])
+        redirect_to profile_verification_path
       end
     else
       redirect_to '/inventory/search'

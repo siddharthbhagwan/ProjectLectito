@@ -8,7 +8,7 @@ gem 'activesupport', '4.0.3'
 # Bundle edge Rails instead:
 # gem 'rails', git: 'git://github.com/rails/rails.git'
 
-gem 'devise'
+gem 'devise', '3.1.0'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -58,7 +58,7 @@ group :production do
   gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 end
 
-gem 'pg'
+gem 'pg', '0.17.1'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

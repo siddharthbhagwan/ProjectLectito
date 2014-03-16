@@ -4,7 +4,7 @@
 
 <% if @otp_failed_attempts > 0 %>
   <b>Failed attempts : <%= @otp_failed_attempts %></b><br/>
-  <b>Last Failed attempts : <%= @otp_failed_timestamp.to_s(:long) %></b><br/><br/>
+  <b>Last Failed attempt : <%= @otp_failed_timestamp.to_s(:long) %></b><br/><br/>
   <% if @locked %>
     <% if !flash[:notice] %>
       <% flash.now[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours ' %>
@@ -12,9 +12,11 @@
   <% end %>
 <% end %>
 
-Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b> <u><%= link_to "Din't receive code?Click here to resend", profile_otp_resend_path(number: params[:number]), { style: 'font-size:85%;' } %></u>
+<% if !@locked %>
+  Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b> <u><%= link_to "Din't receive code?Click here to resend", profile_otp_resend_path(number: params[:number]), { style: 'font-size:85%;' } %></u><br/><br/>
 
-<br/><br/>
+<% end %>
+
 
 <div class='col-md-2'>
 
@@ -26,15 +28,11 @@ Please enter the 6 digit code sent to you on <b><%= @mobile_number %></b> <u><%=
 
       <%= text_field_tag :verification_code, nil, placeholder: 'Enter Code', disabled: :true, required: :true, autofocus: true, class: 'form-control' %>
 
-      <%= hidden_field_tag :number, params[:number] %><br/>
-
       <%= submit_tag 'Confirm', class: 'btn btn-default', disabled: :true %>
 
     <% else %>
 
       <%= text_field_tag :verification_code, nil, placeholder: 'Enter Code', required: :true, autocomplete: :off, autofocus: true, class: 'form-control' %>
-
-      <%= hidden_field_tag :number, params[:number] %><br/>
 
       <%= submit_tag 'Confirm', class: 'btn btn-default' %>
 

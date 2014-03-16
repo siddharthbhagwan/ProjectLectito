@@ -40,8 +40,17 @@ class ApplicationController < ActionController::Base
           if current_user.profile.nil?
             redirect_to new_profile_path
           else
-            redirect_to profile_verification_path
-            flash[:alert] = 'Please complete the verification to continue '
+            # Verification had failed for a number change, more than a day before, Account lock removed
+            if (( !current_user.profile.old_phone_no.nil? ) && (((DateTime.now - current_user.otp_failed_timestamp.to_datetime).to_i) > 0))
+              current_user.otp_verification = true
+              current_user.save
+              redirect_to edit_profile_path(current_user.profile.id)
+              flash[:alert] = 'You can try updating your phone number again '
+            else 
+              # Verification failed for new number, or verification failed for number change, less than a day before
+              redirect_to profile_verification_path
+              flash[:alert] = 'Please complete the verification to continue '
+            end
           end
         end
       end
