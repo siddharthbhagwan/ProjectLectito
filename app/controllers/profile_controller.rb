@@ -30,7 +30,7 @@ class ProfileController < ApplicationController
     if @profile.update_attributes(params[:profile])
       # If Phone number hasn't been updated
       if old_number == @profile.user_phone_no
-        redirect_to edit_profile_path(current_user.id)
+        redirect_to edit_profile_path(current_user.profile.id)
         flash[:notice] = 'Your Profile has been updated'
       else
         # Phone number has been updated
