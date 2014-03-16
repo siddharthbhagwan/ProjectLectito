@@ -3,8 +3,9 @@
 <b><i> Please don't refresh this page</i></b><br/><br/>
 
 <% if @otp_failed_attempts > 0 %>
-  <b>Failed attempts : <%= @otp_failed_attempts %></b><br/><br/>
-  <% if @otp_failed_attempts == 3 %>
+  <b>Failed attempts : <%= @otp_failed_attempts %></b><br/>
+  <b>Last Failed attempts : <%= @otp_failed_timestamp.to_s(:long) %></b><br/><br/>
+  <% if @locked %>
     <% if !flash[:notice] %>
       <% flash.now[:alert] = 'You have exceeded the number of attempts. Your account has been locked. You can try again after 24 hours ' %>
     <% end %>
