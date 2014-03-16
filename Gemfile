@@ -27,6 +27,7 @@ gem 'puma'
 gem 'bigbertha'
 gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'font-awesome-sass'
+gem 'newrelic_rpm'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

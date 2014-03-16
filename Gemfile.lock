@@ -148,6 +148,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.4)
     multipart-post (1.2.0)
+    newrelic_rpm (3.7.3.204)
     oauth (0.4.7)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -287,6 +288,7 @@ DEPENDENCIES
   kaminari-bootstrap (~> 3.0.1)
   less-rails (= 2.3.3)
   meta_request
+  newrelic_rpm
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
