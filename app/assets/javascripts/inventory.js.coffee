@@ -268,36 +268,36 @@ $(document).ready ->
 
   updateComments = ->
     $.ajax
-      url: "/profile/online.json"
-      type: "post"
-      dataType: "script"
+      url: '/profile/online.json'
+      type: 'post'
+      dataType: 'script'
       data:
         page: window.location.pathname
 
       beforeSend: (jqXHR, settings) ->
-        jqXHR.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+        jqXHR.setRequestHeader 'X-CSRF-Token', $("meta[name=\"csrf-token\"]").attr('content')
 
       success: (msg) ->
-        if (window.location.pathname is "/home" ) || (window.location.pathname is "/" ) || (window.location.pathname is "/inventory/search" ) 
+        if (window.location.pathname is '/home' ) || (window.location.pathname is '/' ) || (window.location.pathname is '/inventory/search' ) 
           id_elements_on_page = $('[id^="online_"]')
           # Get id of each object and strip it of the 'online_' text, leaving just the transaction id
           $.each id_elements_on_page, (index, value) ->
             online_id = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
             # User is offline, hide dot
             if msg.indexOf(online_id) is -1
-              if $("#" + id_elements_on_page[index].id).is(':visible')
-                $("#" + id_elements_on_page[index].id).parent().width($("#" + id_elements_on_page[index].id).parent().width())
-                $("#" + id_elements_on_page[index].id).hide()
+              if $('#' + id_elements_on_page[index].id).is(':visible')
+                $('#' + id_elements_on_page[index].id).parent().width($('#' + id_elements_on_page[index].id).parent().width())
+                $('#' + id_elements_on_page[index].id).hide()
             else
-              if !$("#" + id_elements_on_page[index].id).is(':visible')
-                $("#" + id_elements_on_page[index].id).show()
+              if !$('#' + id_elements_on_page[index].id).is(':visible')
+                $('#' + id_elements_on_page[index].id).show()
 
-        else if window.location.pathname.indexOf("/transaction/history") isnt -1
+        else if window.location.pathname.indexOf('/transaction/history') isnt -1
           id_elements_on_page = $('[id^="online_"]')
           ids_list = new Array
           # Get id of each object, and strip it of the 'online_' text, leaving just the user id (lender or borrower)
           $.each id_elements_on_page, (index, value) ->
-            id_without_text = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf("_") + 1)
+            id_without_text = id_elements_on_page[index].id.substring(id_elements_on_page[index].id.indexOf('_') + 1)
             if ids_list.indexOf(id_without_text) is -1
               ids_list.push(id_without_text)
 
@@ -307,9 +307,9 @@ $(document).ready ->
             # in history.html, class and id have been given the same value 
             if msg.indexOf(ids_list[index]) is -1
               
-              $(".online_" + ids_list[index]).hide()
+              $('.online_' + ids_list[index]).hide()
             else
-              $(".online_" + ids_list[index]).show()
+              $('.online_' + ids_list[index]).show()
 
       error: (jqXHR, textStatus, errorThrown) ->
 
