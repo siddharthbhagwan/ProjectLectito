@@ -30,11 +30,17 @@ class ChatController < ApplicationController
       @you =  User.find(@transaction.borrower_id).profile.chat_name
     end
 
-    last_5_chats = Chat.where(transaction_id: params[:trid]).last(5)
+    if params[:id].blank?
+      last_5_chats = Chat.where(transaction_id: params[:trid]).last(5)
+    else
+      last_5_chats = Chat.where(transaction_id: params[:trid]).where('id < ?', params[:id]).order(id: :desc).limit(5).reverse
+    end
+
     chat_history = Array.new
     last_5_chats.each do |l|
       chat_history << User.find(l.from_user).profile.chat_name
       chat_history << l.body
+      chat_history << l.id
     end
 
     respond_to do |format|

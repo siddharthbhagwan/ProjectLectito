@@ -379,6 +379,7 @@ class TransactionController < ApplicationController
       chat_data = []
       chat_data << 'chat'
       chat_data << {
+      	id: chat.id,
 				text: params[:chat],
         trid: params[:ref],
         title: params[:title],
@@ -390,7 +391,10 @@ class TransactionController < ApplicationController
       bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_to_channel)
       bigBertha_ref.push(chat_data.to_json)
 
-      render nothing: true
+      # render nothing: true
+      respond_to do |format|
+    		format.json  { render json: { id: chat.id.to_json } }
+			end
     else
     		raise 'error'
   	end

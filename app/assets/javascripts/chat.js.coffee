@@ -104,10 +104,10 @@ $(document).ready ->
               type: 'box'
 
             success: (msg) ->
-              
+
             error: (jqXHR, textStatus, errorThrown) ->
 
-          $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg you, msg
+          $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg you, msg, '', false
         
         # When the box is closed, move each box after it to the left to fill in the gap     
         boxClosed: ->
@@ -126,7 +126,7 @@ $(document).ready ->
       )
 
       # here
-      if $("#chat_div_" + trid).children().length == 0
+      if $("#chat_div_" + trid + " #chat_history_div").children().length == 0
         $.ajax
           url: "/chat/box_chat_history.json"
           type: "get"
@@ -140,8 +140,8 @@ $(document).ready ->
             while i < msg.length
               # Trim last 2 characters from each chat => \n
               # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
-              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2)
-              i = i + 2
+              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2), "ct_" + msg[i+2], true
+              i = i + 3
 
           complete: (jqXHR, textStatus) ->  
 
@@ -158,175 +158,154 @@ $(document).ready ->
     dataType: "json"
     #TODO Remove duplication on code - if and else for initiated and initiating box chat
     success: (msg) ->
-        id = msg.user_id
-        myFirebase = new Firebase("https://projectlectito.firebaseio.com/transaction_listener_" + id)
-        myFirebase.on "child_added", (childSnapshot, prevChildName) ->
-          pData = $.parseJSON(childSnapshot.val())
-          # Listener for Firebase messages
-          if pData[0] == "chat"
-            # Box Type Chat
-            if pData[1].type == 'box'
-              # Check if div for this particular transaction id exists, if not, create it
-              if !$("#chat_div_" + pData[1].trid).length
-                $("#chat_divs").append("<div id='chat_div_" + pData[1].trid + "'></div>")
+      id = msg.user_id
+      myFirebase = new Firebase("https://projectlectito.firebaseio.com/transaction_listener_" + id)
+      # Listener for Firebase messages
+      myFirebase.on "child_added", (childSnapshot, prevChildName) ->
+        pData = $.parseJSON(childSnapshot.val())
+        # Listening for chat messages [ other cold be accepted_self, borrow_request etc]
+        if pData[0] == "chat"
+          # Box Type Chat [ other could be message ]
+          if pData[1].type == 'box'
+            # Check if div for this particular transaction id exists, if not, create it
+            if !$("#chat_div_" + pData[1].trid).length
+              $("#chat_divs").append("<div id='chat_div_" + pData[1].trid + "'></div>")
 
-              # Check if chat box for this transaction already Inititated
-              if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
-                # Chat box isnt initialzed , initalize it
-                exports.chat_boxes.push(pData[1].trid)
-                $("#chat_div_" + pData[1].trid).chatbox(
-                  id: "chatbox_" + pData[1].trid
-                  offset: (exports.chat_boxes.length-1) * 315
-                  title: "Chat - " + pData[1].title
-                  messageSent: (id, user, msg) ->
-                    $.ajax
-                      url: "/transaction/new_chat"
-                      type: "post"
-                      context: "this"
-                      dataType: "json"
-                      data:
-                        chat: msg
-                        ref: pData[1].trid
-                        title: pData[1].title
-                        you: pData[1].other
-                        other: pData[1].you
-                        type: 'box'
+            # Check if chat box for this transaction already Inititated or not
+            if jQuery.inArray(pData[1].trid, exports.chat_boxes) is -1
 
-                      success: (msg) ->
-                        
-                      error: (jqXHR, textStatus, errorThrown) ->
-
-                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
-
-                  # When the box is closed, move each box after it to the left to fill in the gap
-                  boxClosed: ->
-                    closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
-                    exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
-                      value isnt pData[1].trid
-                    )
-                    i = 0
-                    while i < exports.chat_boxes.length
-                      current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
-                      if current_offset > closed_offset
-                        $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
-                      i++
-
-                    $("#chat_div_" + pData[1].trid).remove()
-                )
-
-                # If no child elements i.e, no texts displayed in the box (box is newly initialized), retrieve history along with last ping, else just display last ping
-                if $("#chat_div_" + pData[1].trid).children().length == 0
+              # Chat box isnt initialzed , initalize it
+              # Box Intitialize start
+              exports.chat_boxes.push(pData[1].trid)
+              $("#chat_div_" + pData[1].trid).chatbox(
+                id: "chatbox_" + pData[1].trid
+                offset: (exports.chat_boxes.length-1) * 315
+                title: "Chat - " + pData[1].title
+                messageSent: (id, user, msg) ->
                   $.ajax
-                    url: "/chat/box_chat_history.json"
-                    type: "get"
+                    url: "/transaction/new_chat"
+                    type: "post"
                     context: "this"
                     dataType: "json"
                     data:
-                      trid: pData[1].trid
+                      chat: msg
+                      ref: pData[1].trid
+                      title: pData[1].title
+                      you: pData[1].other
+                      other: pData[1].you
+                      type: 'box'
 
                     success: (msg) ->
-                      i = 0
-                      while i < msg.length
-                        # Trim last 2 characters from each chat => \n
-                        # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
-                        $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2)
-                        i = i + 2
-
-                    complete: (jqXHR, textStatus) ->  
-
+                      
                     error: (jqXHR, textStatus, errorThrown) ->
 
-                else
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg, '', false
 
-                # If another chat box is active, dont focus on new one, focus stays on old one
-                if $("div[id^='chat_div_']").length is 1
-                  $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
+                # When the box is closed, move each box after it to the left to fill in the gap
+                boxClosed: ->
+                  closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
+                  exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
+                    value isnt pData[1].trid
+                  )
+                  i = 0
+                  while i < exports.chat_boxes.length
+                    current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
+                    if current_offset > closed_offset
+                      $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
+                    i++
 
-              # Chat box already initialized 
-              else
-                $("#chat_div_" + pData[1].trid).chatbox(
-                  id: "chatbox_" + pData[1].trid
-                  title: "Chat - " + pData[1].title
-                  # Ajax Request when message is sent
-                  messageSent: (id, user, msg) ->
-                    $.ajax
-                      url: "/transaction/new_chat"
-                      type: "post"
-                      context: "this"
-                      dataType: "json"
-                      data:
-                        chat: msg
-                        ref: pData[1].trid
-                        title: pData[1].title
-                        you: pData[1].other
-                        other: pData[1].you
-                        type: 'box'
+                  $("#chat_div_" + pData[1].trid).remove()
+              )
+              # Box Initialize end
 
-                      success: (msg) ->
-                        
-                      error: (jqXHR, textStatus, errorThrown) ->
+              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text, pData[1].id, false
 
-                    # Display the sent message with your initials
-                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg
+              # No child elements i.e, no texts displayed in the box ( since box is newly initialized), retrieve history along with last ping, else just display last ping
+              $.ajax
+                url: "/chat/box_chat_history.json"
+                type: "get"
+                context: "this"
+                dataType: "json"
+                data:
+                  trid: pData[1].trid
+                  id: pData[1].id
 
-                  # When the box is closed, move each box after it to the left to fill in the gap
-                  boxClosed: ->
-                    closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
-                    exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
-                      value isnt pData[1].trid
-                    )
-                    i = 0
-                    while i < exports.chat_boxes.length
-                      current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
-                      if current_offset > closed
-                        $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
-                      i++
+                success: (msg) ->
+                  i = 0
+                  while i < msg.length
+                    # Trim last 2 characters from each chat => \n
+                    # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
+                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2), "ct_" + msg[i+2], true
+                    i = i + 3
 
-                    $("#chat_div_" + pData[1].trid).remove()
-                )
+                complete: (jqXHR, textStatus) -> 
 
-                # If no child elements i.e, no text already present in window (window is newly opened), retrieve history
-                # along with last ping, else just display last ping
-                # FIXME - chances are, there would be no need for the history part if the box is already initialized
-                if $("#chat_div_" + pData[1].trid).children().length == 0
-                  console.log 'c1'
+                error: (jqXHR, textStatus, errorThrown) ->
+
+              # If another chat box is active, dont focus on new one, focus stays on old one
+              if $("div[id^='chat_div_']").length is 1
+                $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
+
+            # Chat box already initialized 
+            else
+              $("#chat_div_" + pData[1].trid).chatbox(
+                id: "chatbox_" + pData[1].trid
+                title: "Chat - " + pData[1].title
+                # Ajax Request when message is sent
+                messageSent: (id, user, msg) ->
                   $.ajax
-                    url: "/chat/box_chat_history.json"
-                    type: "get"
+                    url: "/transaction/new_chat"
+                    type: "post"
                     context: "this"
                     dataType: "json"
                     data:
-                      trid: pData[1].trid
+                      chat: msg
+                      ref: pData[1].trid
+                      title: pData[1].title
+                      you: pData[1].other
+                      other: pData[1].you
+                      type: 'box'
 
                     success: (msg) ->
-                      i = 0
-                      while i < msg.length
-                        $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1]
-                        i = i + 2
-
-                    complete: (jqXHR, textStatus) ->
-
+                      
                     error: (jqXHR, textStatus, errorThrown) ->
 
-                else
-                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text
+                  # Display the sent message with your initials
+                  $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].other, msg, '', false
 
-                # If another chat box is active, dont focus on new one, focus stays on old one
-                if $("div[id^='chat_div_']").length is 1
-                  $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
+                # When the box is closed, move each box after it to the left to fill in the gap
+                boxClosed: ->
+                  closed_offset = $("#chat_div_" + pData[1].trid).chatbox("option", "offset")
+                  exports.chat_boxes = jQuery.grep(exports.chat_boxes, (value) ->
+                    value isnt pData[1].trid
+                  )
+                  i = 0
+                  while i < exports.chat_boxes.length
+                    current_offset = $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset")
+                    if current_offset > closed
+                      $("#chat_div_" + exports.chat_boxes[i]).chatbox("option", "offset", current_offset - 315)
+                    i++
 
-            else #if pData[1].type == 'page'
-              console.log 'here'
-              $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text)
-              psconsole = $("#chat_box")
-              psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
+                  $("#chat_div_" + pData[1].trid).remove()
+              )
+              
+              # if $("#chat_div_" + pData[1].trid).has("#" + pData[1].id).length
+              $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg pData[1].you, pData[1].text, "ct_" + pData[1].id, false
 
-            myFirebase.child(childSnapshot.bc.path.m[1]).remove()
-            # If myFirebase.remove() is called, -> If there are multiple calues udner a single key, only the last value
-            # is delivered, the others are read from Firebase, but dont reach. So instead of removing the entire parent,
-            # traverse the above path and find the key, and individually remove each. Strangely, placing this comment
-            # Above the line causes the code to stop working, so be careful.
+              # If another chat box is active, dont focus on new one, focus stays on old one
+              if $("div[id^='chat_div_']").length is 1
+                $("#chat_div_" + pData[1].trid).next().find('textarea').eq(0).focus()
+
+          else #if pData[1].type == 'page'
+            $('#chat_box').val($('#chat_box').val() + "\n" + pData[1].you + " : " + pData[1].text)
+            psconsole = $("#chat_box")
+            psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
+
+          myFirebase.child(childSnapshot.bc.path.m[1]).remove()
+          # If myFirebase.remove() is called, -> If there are multiple calues udner a single key, only the last value
+          # is delivered, the others are read from Firebase, but dont reach. So instead of removing the entire parent,
+          # traverse the above path and find the key, and individually remove each. Strangely, placing this comment
+          # Above the line causes the code to stop working, so be careful.
               
     complete: (jqXHR, textStatus) ->
 
