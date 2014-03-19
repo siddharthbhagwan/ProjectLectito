@@ -274,6 +274,9 @@ $(document).ready ->
       data:
         page: window.location.pathname
 
+      beforeSend: (jqXHR, settings) ->
+        jqXHR.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+
       success: (msg) ->
         if (window.location.pathname is "/home" ) || (window.location.pathname is "/" ) || (window.location.pathname is "/inventory/search" ) 
           id_elements_on_page = $('[id^="online_"]')
