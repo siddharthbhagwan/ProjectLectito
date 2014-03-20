@@ -51,7 +51,7 @@ class ChatController < ApplicationController
   def new_chat
     chat = Chat.new
     chat.transaction_id = params[:ref]
-    chat.body = params[:chat] + '\n'
+    chat.body = params[:chat]
     chat.from_user = current_user.id
 
     if chat.save

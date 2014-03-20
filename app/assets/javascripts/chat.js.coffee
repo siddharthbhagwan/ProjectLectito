@@ -140,7 +140,7 @@ $(document).ready ->
             while i < msg.length
               # Trim last 2 characters from each chat => \n
               # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
-              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2), "ct_" + msg[i+2], true
+              $("#chat_div_" + trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1], "ct_" + msg[i+2], true
               i = i + 3
 
           complete: (jqXHR, textStatus) ->  
@@ -235,7 +235,7 @@ $(document).ready ->
                   while i < msg.length
                     # Trim last 2 characters from each chat => \n
                     # FIXME - check if \n is being appended in controller. If so, dont append , so no need to trim
-                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1].substring(0, msg[i+1].length - 2), "ct_" + msg[i+2], true
+                    $("#chat_div_" + pData[1].trid).chatbox("option", "boxManager").addMsg msg[i], msg[i+1], "ct_" + msg[i+2], true
                     i = i + 3
 
                 complete: (jqXHR, textStatus) -> 
