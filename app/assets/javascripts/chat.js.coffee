@@ -17,7 +17,7 @@ $(document).ready ->
     psconsole = $("#chat_box")
     psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
     $.ajax
-      url: "/transaction/new_chat"
+      url: "/chat/new_chat"
       type: "post"
       context: "this"
       dataType: "json"
@@ -42,7 +42,7 @@ $(document).ready ->
       psconsole = $("#chat_box")
       psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
       $.ajax
-        url: "/transaction/new_chat"
+        url: "/chat/new_chat"
         type: "post"
         context: "this"
         dataType: "json"
@@ -91,7 +91,7 @@ $(document).ready ->
         title: "Chat - " + title
         messageSent: (id, user, msg) ->
           $.ajax
-            url: "/transaction/new_chat"
+            url: "/chat/new_chat"
             type: "post"
             context: "this"
             dataType: "json"
@@ -183,7 +183,7 @@ $(document).ready ->
                 title: "Chat - " + pData[1].title
                 messageSent: (id, user, msg) ->
                   $.ajax
-                    url: "/transaction/new_chat"
+                    url: "/chat/new_chat"
                     type: "post"
                     context: "this"
                     dataType: "json"
@@ -254,7 +254,7 @@ $(document).ready ->
                 # Ajax Request when message is sent
                 messageSent: (id, user, msg) ->
                   $.ajax
-                    url: "/transaction/new_chat"
+                    url: "/chat/new_chat"
                     type: "post"
                     context: "this"
                     dataType: "json"

@@ -15,6 +15,7 @@ ProjectLectito::Application.routes.draw do
 
   # Chat Routes
   get 'chat/box_chat_history' => 'chat#box_chat_history'
+  post 'chat/new_chat' => 'chat#new_chat'
 
   # Profile Routes
   get 'profile/rating' => 'profile#rating'
@@ -58,7 +59,7 @@ ProjectLectito::Application.routes.draw do
   get 'transaction/user_id' => 'transaction#user_id'
   get 'transaction/history' => 'transaction#history'
   get 'transaction/details/:id' => 'transaction#details', as: 'transaction_details'
-  post 'transaction/new_chat' => 'transaction#new_chat'
+  # post 'transaction/new_chat' => 'transaction#new_chat'
   post 'transaction/update_request_status_accept' => 'transaction#update_request_status_accept'
   post 'transaction/update_request_status_reject' => 'transaction#update_request_status_reject'
   post 'transaction/update_request_status_cancel' => 'transaction#update_request_status_cancel'

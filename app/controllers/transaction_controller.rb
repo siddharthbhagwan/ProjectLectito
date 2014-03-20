@@ -360,46 +360,6 @@ class TransactionController < ApplicationController
 		end
 	end
 
-	def new_chat
-		chat = Chat.new
-    chat.transaction_id = params[:ref]
-    chat.body = params[:chat] + '\n'
-    chat.from_user = current_user.id
-
-    if chat.save
-      transaction = Transaction.where(id: params[:ref]).take
-      if current_user.id == transaction.lender_id	  
-        publish_from_channel = 'transaction_listener_' + transaction.lender_id.to_s
-        publish_to_channel = 'transaction_listener_' + transaction.borrower_id.to_s
-      else
-        publish_from_channel = 'transaction_listener_' + transaction.borrower_id.to_s
-        publish_to_channel = 'transaction_listener_' + transaction.lender_id.to_s
-      end
-
-      chat_data = []
-      chat_data << 'chat'
-      chat_data << {
-      	id: chat.id,
-				text: params[:chat],
-        trid: params[:ref],
-        title: params[:title],
-        you: params[:you],
-        other: params[:other],
-        type: params[:type]
-      }
-
-      bigBertha_ref = Bigbertha::Ref.new(ENV['firebase_url'] + publish_to_channel)
-      bigBertha_ref.push(chat_data.to_json)
-
-      # render nothing: true
-      respond_to do |format|
-    		format.json  { render json: { id: chat.id.to_json } }
-			end
-    else
-    		raise 'error'
-  	end
-	end
-
 	def details
 		if current_user.admin? || is_my_transaction(trans_id)
 			@details = Transaction.find(params[:id])
