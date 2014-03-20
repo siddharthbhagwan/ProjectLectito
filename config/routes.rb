@@ -59,7 +59,6 @@ ProjectLectito::Application.routes.draw do
   get 'transaction/user_id' => 'transaction#user_id'
   get 'transaction/history' => 'transaction#history'
   get 'transaction/details/:id' => 'transaction#details', as: 'transaction_details'
-  # post 'transaction/new_chat' => 'transaction#new_chat'
   post 'transaction/update_request_status_accept' => 'transaction#update_request_status_accept'
   post 'transaction/update_request_status_reject' => 'transaction#update_request_status_reject'
   post 'transaction/update_request_status_cancel' => 'transaction#update_request_status_cancel'
