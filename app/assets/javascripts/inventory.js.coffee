@@ -118,20 +118,21 @@ $(document).ready ->
     select: (e, ui) ->
       $("#search_by_author").data("selected_item", ui.item.label)
 
-  ).blur ->
+  ).blur( ->
     value_typed = $("#search_by_author").val()
     value_selected = $("#search_by_author").data("selected_item")
     if value_typed != value_selected
       $("#search_by_author").val("")
 
     if value_selected == "No Matching Results Found"
-      $("#search_by_author").val("")       
+      $("#search_by_author").val("")
+      ).autocomplete("widget").addClass("ddl-fixed-height");
 
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Book Name
 
-  $("#search_by_book_name").autocomplete( 
+  $("#search_by_book_name").autocomplete(
     source: (request, response) ->
       $.ajax
         url: "/inventory/autocomplete_book_name"
@@ -152,14 +153,15 @@ $(document).ready ->
     select: (e, ui) ->
       $("#search_by_book_name").data("selected_item", ui.item.label)
 
-  ).blur ->
+  ).blur( ->
     value_typed = $("#search_by_book_name").val()
     value_selected = $("#search_by_book_name").data("selected_item")
     if value_typed != value_selected
       $("#search_by_book_name").val("")
 
     if value_selected == "No Matching Results Found"
-      $("#search_by_book_name").val("")  
+      $("#search_by_book_name").val("")
+      ).autocomplete("widget").addClass("ddl-fixed-height");
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -220,9 +222,9 @@ $(document).ready ->
       $("#book_name").data("selected_item",ui.item.label)
       $("#add_book").attr('disabled', false)
 
-  ).blur(->
+  ).blur( ->
     $("#book_name").trigger("autocompleteselect")
-    ).addClass("ddl-fixed_height")
+    ).autocomplete("widget").addClass("ddl-fixed-height");
 
 #--------------------------------------------------------------------------------------------------------------------
   # Dynamically add hidden fields to the form with their values as entered in the text boxes
