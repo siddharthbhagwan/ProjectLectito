@@ -1,5 +1,13 @@
 $(document).ready ->
 
+# Popover for timeline
+  $("input[id^='timeline_']").popover 
+    placement: 'right'
+    html: true
+    trigger: 'hover'
+    container: 'body'
+
+
 # Search by book/author
   $("#search_books").on "click", ->
     search_city = $("#city").val()

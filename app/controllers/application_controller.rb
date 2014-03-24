@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_action :authenticate_user!, except: [:search_books, :search_books_city, :search, :autocomplete_book_name, :autocomplete_author]
-  before_action :user_barred?, except: [:barred, :destroy, :search, :sub_search]
+  before_action :user_barred?, except: [:destroy, :user_barred_signout]
   # Online makes its own update as it is
   after_action :update_timestamp, except: [:online]
 
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       unless params[:controller] == 'devise/sessions'
         unless current_user.profile.nil?
           if current_user.current_status == 'Locked'
-            redirect_to profile_barred_path
+            redirect_to profile_user_barred_signout_path
             flash[:alert] = ' Account Locked '
           end
         end

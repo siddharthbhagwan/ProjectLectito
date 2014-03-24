@@ -146,10 +146,10 @@ jQuery ->
       'Un-Bar': ->
         $(this).dialog 'close'
         $.ajax
-          url: 'admin/unbar_user.js'
+          url: '/admin/unbar_user.json'
           type: 'post'
           context: 'this'
-          dataType: 'script'
+          dataType: 'json'
           data:
             unbar_user_id: $('#unbar_user').attr('data-uid')
 

@@ -2,7 +2,10 @@
 class ProfileController < ApplicationController
   include ApplicationHelper
   load_and_authorize_resource class: Profile
-  before_action :otp_verified?, except: [:otp, :otp_verification, :online, :new, :create, :otp_resend]
+  before_action :otp_verified?, except: [:otp, :otp_verification, :online, :new, :create, :otp_resend, :user_barred_signout]
+
+  def user_barred_signout
+  end
 
   def new
     @profile = Profile.new

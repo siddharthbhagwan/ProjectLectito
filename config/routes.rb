@@ -24,6 +24,7 @@ ProjectLectito::Application.routes.draw do
   get 'profile/otp_verified' => 'profile#otp_verified'
   get 'profile/otp_verification' => 'profile#otp_verification'
   get 'profile/public_rating/:tr_id' => 'profile#public_rating'
+  get 'profile/user_barred_signout' => 'profile#user_barred_signout'
   post 'profile/online' => 'profile#online'
 
   # Address Routes
@@ -38,7 +39,6 @@ ProjectLectito::Application.routes.draw do
   post 'admin/unbar_user' => 'admin#unbar_user'
 
   get 'devise/User'
-  get 'home_page/barred' => 'home_page#user_barred'
 
   # Book Routes
   get 'book/history/:id' => 'book#history', as: 'book_history'
@@ -67,6 +67,6 @@ ProjectLectito::Application.routes.draw do
   post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  resources :profile, :address, :home_page, :book, :inventory, :transaction, :chat
+  resources :profile, :address, :book, :inventory, :transaction, :chat
 
 end
