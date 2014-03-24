@@ -92,7 +92,7 @@ jQuery ->
         $(this).dialog 'close'
         $.ajax
           url: '/admin/bar_user'
-          type: 'POST'
+          type: 'patch'
           context: 'this'
           dataType: 'json'
           data:
@@ -147,7 +147,7 @@ jQuery ->
         $(this).dialog 'close'
         $.ajax
           url: '/admin/unbar_user.json'
-          type: 'post'
+          type: 'patch'
           context: 'this'
           dataType: 'json'
           data:

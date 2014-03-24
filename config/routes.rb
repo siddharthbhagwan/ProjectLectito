@@ -25,6 +25,7 @@ ProjectLectito::Application.routes.draw do
   get 'profile/otp_verification' => 'profile#otp_verification'
   get 'profile/public_rating/:tr_id' => 'profile#public_rating'
   get 'profile/user_barred_signout' => 'profile#user_barred_signout'
+  #FIXME - Patch gives FF Popup error
   post 'profile/online' => 'profile#online'
 
   # Address Routes
@@ -35,8 +36,8 @@ ProjectLectito::Application.routes.draw do
   get 'admin' => 'admin#index', as: 'admin_index'
   get 'admin/user_details' => 'admin#user_details'
   get 'admin/user_transaction_history/:id' => 'admin#user_transaction_history', as: 'user_transaction_history'
-  post 'admin/bar_user' => 'admin#bar_user'
-  post 'admin/unbar_user' => 'admin#unbar_user'
+  patch 'admin/bar_user' => 'admin#bar_user'
+  patch 'admin/unbar_user' => 'admin#unbar_user'
 
   get 'devise/User'
 
@@ -59,12 +60,12 @@ ProjectLectito::Application.routes.draw do
   get 'transaction/user_id' => 'transaction#user_id'
   get 'transaction/history' => 'transaction#history'
   get 'transaction/details/:id' => 'transaction#details', as: 'transaction_details'
-  post 'transaction/update_request_status_accept' => 'transaction#update_request_status_accept'
-  post 'transaction/update_request_status_reject' => 'transaction#update_request_status_reject'
-  post 'transaction/update_request_status_cancel' => 'transaction#update_request_status_cancel'
-  post 'transaction/update_request_status_return' => 'transaction#update_request_status_return'
-  post 'transaction/update_request_status_receive_lender' => 'transaction#update_request_status_receive_lender'
-  post 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
+  patch 'transaction/update_request_status_accept' => 'transaction#update_request_status_accept'
+  patch 'transaction/update_request_status_reject' => 'transaction#update_request_status_reject'
+  patch 'transaction/update_request_status_cancel' => 'transaction#update_request_status_cancel'
+  patch 'transaction/update_request_status_return' => 'transaction#update_request_status_return'
+  patch 'transaction/update_request_status_receive_lender' => 'transaction#update_request_status_receive_lender'
+  patch 'transaction/update_request_status_receive_borrower' => 'transaction#update_request_status_receive_borrower'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :profile, :address, :book, :inventory, :transaction, :chat

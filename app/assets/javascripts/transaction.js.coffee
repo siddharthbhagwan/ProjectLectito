@@ -180,7 +180,7 @@ $(document).ready ->
         tr_id_s = $("#accept_request_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_accept.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -230,7 +230,7 @@ $(document).ready ->
         tr_id_s = $("#accept_self_confirm").data "trids"
         $.ajax
           url: "/transaction/update_request_status_accept.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -288,7 +288,7 @@ $(document).ready ->
         reject_reason = $('input[name=rejectReason]:radio:checked').val()
         $.ajax
           url: "/transaction/update_request_status_reject.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -334,7 +334,7 @@ $(document).ready ->
         tr_id = $("#cancel_transaction").data("tr_id")
         $.ajax
           url: "/transaction/update_request_status_cancel.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -448,7 +448,7 @@ $(document).ready ->
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_return.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -594,7 +594,7 @@ $(document).ready ->
         tr_id_s = $("#lender_received_book_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_receive_lender.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -735,7 +735,7 @@ $(document).ready ->
         tr_id = $("#handed_over_confirm").data "trid"
         $.ajax
           url: "/transaction/update_request_status_receive_borrower.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -1011,7 +1011,6 @@ $(document).ready ->
           empty_table_checks()
 
         else if pData[0] == "rejected"
-          alert 'here'
           if pData[1].reason == "Unavailable"
             noty
               text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as " + pData[1].name + " is Unavailable"
