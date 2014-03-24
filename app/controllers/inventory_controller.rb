@@ -31,6 +31,7 @@ class InventoryController < ApplicationController
 			new_book.publisher = params[:publisher]
 			new_book.pages = params[:pages]
 			new_book.genre = params[:genre]
+			new_book.mrp = params[:mrp]
 
 			if new_book.save!
 				@inventory = Inventory.new(inventory_params)
