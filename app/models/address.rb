@@ -1,6 +1,5 @@
 class Address < ActiveRecord::Base
-  attr_accessible :address_line1, :pin
-  validates :address_line1, :pin, presence: { message: "can not be empty"}
+  validates :address_line1, :pin, presence: { message: "can not be empty" }
   #validates :pin, :numericality => true
 
   belongs_to :user

@@ -22,7 +22,8 @@ $(document).ready ->
       context: "this"
       dataType: "json"
       data:
-        chat: chat_text
+        chat:
+          body: chat_text
         ref: window.location.pathname.replace('/chat/','')
         type: 'page'
         you: you
@@ -47,7 +48,8 @@ $(document).ready ->
         context: "this"
         dataType: "json"
         data:
-          chat: chat_text
+          chat:
+            body: chat_text
           ref: window.location.pathname.replace('/chat/','')
           type: 'page'
           you: you
@@ -96,7 +98,8 @@ $(document).ready ->
             context: "this"
             dataType: "json"
             data:
-              chat: msg
+              chat:
+                body: msg
               ref: trid
               title: title
               you: you
@@ -188,7 +191,8 @@ $(document).ready ->
                     context: "this"
                     dataType: "json"
                     data:
-                      chat: msg
+                      chat:
+                        body: msg
                       ref: pData[1].trid
                       title: pData[1].title
                       you: pData[1].other
@@ -259,7 +263,8 @@ $(document).ready ->
                     context: "this"
                     dataType: "json"
                     data:
-                      chat: msg
+                      chat:
+                        body: msg
                       ref: pData[1].trid
                       title: pData[1].title
                       you: pData[1].other

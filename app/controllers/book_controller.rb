@@ -11,9 +11,10 @@ class BookController < ApplicationController
   end
 
   def create
-    @book = Book.new(params[:book])
+    @book = Book.new(book_params)
     if @book.save
       redirect_to book_index_path
+      flash[:notice] = 'The Book has been added '
     else
       render 'new'
     end
@@ -33,14 +34,14 @@ class BookController < ApplicationController
     @book = Book.find(params[:id])
     @book.destroy
     redirect_to book_index_path
-    flash[:info] = 'The Book has been deleted'
+    flash[:info] = 'The Book has been deleted '
   end
 
   def update
     @book = Book.find(params[:id])
-    @book.update_attributes(params[:book])
+    @book.update_attributes(book_params)
     redirect_to book_index_path
-    flash[:info] = 'The Book details have been updated'
+    flash[:info] = 'The Book details have been updated '
   end
 
   def history
@@ -78,5 +79,11 @@ class BookController < ApplicationController
     @borrowed_list = Inventory.where(deleted: :false,
                                      status: 'Unavailable',
                                      book_id: params[:book_id])
+  end
+
+  private
+
+  def book_params
+    params.require(:book).permit(:isbn, :author, :book_name, :edition, :genre, :language, :mrp, :pages, :publisher, :version)
   end
 end

@@ -19,7 +19,7 @@ class InventoryController < ApplicationController
 	end
 
 	def create
-
+	#TODO - Send New book params in a form so strong params can be updated
 		if params[:book_id] == '0'
 			new_book = Book.new
 			new_book.book_name = params[:book_name]
@@ -33,10 +33,9 @@ class InventoryController < ApplicationController
 			new_book.genre = params[:genre]
 
 			if new_book.save!
-				@inventory = Inventory.new
+				@inventory = Inventory.new(inventory_params)
 				@inventory.user_id = current_user.id
 				@inventory.book_id = new_book.id
-				@inventory.available_in_city = params[:inventory][:available_in_city]
 				@inventory.status = params[:status]
 				@inventory.no_of_borrows = 0
 				if @inventory.save!
@@ -74,7 +73,7 @@ class InventoryController < ApplicationController
 	def update
 		#FIXME Update_attributes needs to be done individually :S
 		@inventory = Inventory.where(id: params[:id]).take
-   		@inventory.available_in_city = params[:inventory][:available_in_city]
+   		@inventory.update_attributes(inventory_params)
    		#@inventory.rental_price = params[:rental_price]
    		@inventory.status = params[:status]
    		
@@ -258,6 +257,10 @@ class InventoryController < ApplicationController
 	end
 
 	private
+
+	def inventory_params
+		params.require(:inventory).permit(:available_in_city)
+	end
 
 	def require_profile
 		if user_signed_in?

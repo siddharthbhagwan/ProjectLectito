@@ -49,9 +49,8 @@ class ChatController < ApplicationController
   end
 
   def new_chat
-    chat = Chat.new
+    chat = Chat.new(chat_params)
     chat.transaction_id = params[:ref]
-    chat.body = params[:chat]
     chat.from_user = current_user.id
 
     if chat.save
@@ -68,7 +67,7 @@ class ChatController < ApplicationController
       chat_data << 'chat'
       chat_data << {
         id: chat.id,
-        text: params[:chat],
+        text: params[:chat][:body],
         trid: params[:ref],
         title: params[:title],
         you: params[:you],
@@ -91,4 +90,11 @@ class ChatController < ApplicationController
   def index
   	chatbox()
   end
-end  
+
+  private
+
+  def chat_params
+    params.require(:chat).permit(:body)
+  end
+
+end

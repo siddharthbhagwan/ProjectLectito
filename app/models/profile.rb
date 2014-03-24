@@ -1,8 +1,6 @@
 # Describes the profile Model
 class Profile < ActiveRecord::Base
-  attr_accessible :DoB, :user_first_name, :gender, :user_last_name,
-                  :user_phone_no, :last_update, :contact_via_sms, :delivery
-
+  
   belongs_to :user
 
   validates :user_first_name, :user_last_name, :gender, :user_phone_no,

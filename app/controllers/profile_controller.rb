@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
   end
 
   def create
-    @profile = Profile.new(params[:profile])
+    @profile = Profile.new(profile_params)
     @profile.user_id = current_user.id
     @profile.profile_status = 'Online'
     @profile.delivery = 'false'
@@ -27,7 +27,7 @@ class ProfileController < ApplicationController
   def update
     old_number = Profile.where(user_id: current_user.id).take.user_phone_no
     @profile = Profile.where(user_id: current_user.id).take
-    if @profile.update_attributes(params[:profile])
+    if @profile.update_attributes(profile_params)
       # If Phone number hasn't been updated
       if old_number == @profile.user_phone_no
         redirect_to edit_profile_path(current_user.id)
@@ -483,4 +483,11 @@ class ProfileController < ApplicationController
       format.json { render json: active_trans_ids.to_json }
     end
   end
+
+  private
+
+  def profile_params
+    params.require(:profile).permit(:user_first_name, :user_last_name, :DoB, :gender, :user_phone_no)
+  end
+
 end

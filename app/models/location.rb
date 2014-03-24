@@ -1,3 +1,3 @@
 class Location < ActiveRecord::Base
-  attr_accessible :area, :city, :pincode, :state
+  # attr_accessible :area, :city, :pincode, :state
 end

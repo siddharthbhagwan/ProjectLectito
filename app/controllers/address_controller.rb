@@ -15,8 +15,8 @@ class AddressController < ApplicationController
   def update
     @address = Address.where(id: params[:id]).first
     chatbox
-    if @address.update_attributes(params[:address])
-      flash[:notice] = 'The address has been updated'
+    if @address.update_attributes(address_params)
+      flash[:notice] = 'The address has been updated '
       redirect_to address_index_path
     end
   end
@@ -26,7 +26,7 @@ class AddressController < ApplicationController
     chatbox
     if  @address.user_id != current_user.id
       redirect_to address_path
-      flash[:alert] = 'You are not authorized to view that address'
+      flash[:alert] = 'You are not authorized to view that address '
     end
   end
 
@@ -43,10 +43,10 @@ class AddressController < ApplicationController
 
   # Create a New Address
   def create
-    @address = Address.new(params[:address])
+    @address = Address.create(address_params)
     @address.user_id = current_user.id
     if @address.save
-      flash[:notice] = 'The address has been added'
+      flash[:notice] = 'The address has been added '
       if current_user.addresses.count == 1
         redirect_to inventory_search_path
       else 
@@ -62,11 +62,11 @@ class AddressController < ApplicationController
     @address = Address.where(id: params[:id]).first
     if  @address.user_id != current_user.id
       redirect_to address_index_path
-      flash[:alert] = 'You are not authorized to delete that address'
+      flash[:alert] = 'You are not authorized to delete that address '
     else
       @address.destroy
       redirect_to address_index_path
-      flash[:info] = 'The Address has been deleted'
+      flash[:info] = 'The Address has been deleted '
     end
   end
 
@@ -80,9 +80,13 @@ class AddressController < ApplicationController
 
   private
 
+  def address_params
+    params.require(:address).permit(:address_line1, :pin)
+  end
+
   def require_profile
     if current_user.profile.nil?
-      flash[:notice] = 'Please complete your profile'
+      flash[:notice] = 'Please complete your profile '
       redirect_to new_profile_path
     else
       return false

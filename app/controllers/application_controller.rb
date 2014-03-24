@@ -10,6 +10,13 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: exception.message
   end
 
+  # Code for CanCan Compatibility with Strong Params
+  before_filter do
+    resource = controller_name.singularize.to_sym
+    method = "#{resource}_params"
+    params[resource] &&= send(method) if respond_to?(method, true)
+  end
+
   def user_barred?
     if user_signed_in?
       unless params[:controller] == 'devise/sessions'
