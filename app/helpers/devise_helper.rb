@@ -30,7 +30,7 @@ module DeviseHelper
         <div class='alert alert-info'>
           <strong>#{sentence}</strong>
           <ul>
-            Please enter an Email Id
+            Please enter an Email Id to complete the registration
           </ul>
         </div>
         HTML
@@ -46,7 +46,6 @@ module DeviseHelper
       end
 
     end
-
 
     html.html_safe
   end
