@@ -220,8 +220,9 @@ $(document).ready ->
       $("#book_name").data("selected_item",ui.item.label)
       $("#add_book").attr('disabled', false)
 
-  ).blur ->
+  ).blur(->
     $("#book_name").trigger("autocompleteselect")
+    ).addClass("ddl-fixed_height")
 
 #--------------------------------------------------------------------------------------------------------------------
   # Dynamically add hidden fields to the form with their values as entered in the text boxes
