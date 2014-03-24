@@ -396,7 +396,7 @@ $(document).ready ->
         tr_id_s = $("#return_request_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_return.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -489,7 +489,7 @@ $(document).ready ->
         tr_id_s = $("#borrower_returned_book_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_return.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -627,7 +627,7 @@ $(document).ready ->
         tr_id_s = $("#lender_received_book_confirm").data("trids")
         $.ajax
           url: "/transaction/update_request_status_receive_lender.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
@@ -683,7 +683,7 @@ $(document).ready ->
         tr_id = $("#received_borrower_confirm").data("trid")
         $.ajax
           url: "/transaction/update_request_status_receive_borrower.json"
-          type: "post"
+          type: "patch"
           context: "this"
           dataType: "json"
           data:
