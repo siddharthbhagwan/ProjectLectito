@@ -1,16 +1,11 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-
 asInitVals = new Array()
-
 
 # Fn to decide what error to display
 display_error = (statusCode) ->
   if statusCode is 403
-    $("#error_message_403").dialog "open"
+    $('#error_message_403').dialog 'open'
   else
-    $("#error_message_generic").dialog "open"
+    $('#error_message_generic').dialog 'open'
 
 #--------------------------------------------------------------------------------------------------------------------
 
@@ -60,170 +55,151 @@ $.fn.dataTableExt.afnFiltering.push (oSettings, aData, iDataIndex) ->
 $(document).ready ->
 
 # DataTables For All tables with class as datatable
-  oTable_admin_view = $(".datatable").dataTable(
-    oLanguage: sSearch: "Search All : "    
+  oTable_admin_view = $('.datatable').dataTable(
+    oLanguage: sSearch: 'Search All : '    
   )
 
-  $("tfoot input").keyup ->    
+  $('tfoot input').keyup ->    
     # Filter on the column (the index) of this element 
-    oTable_admin_view.fnFilter @value, $("tfoot input").index(this)
+    oTable_admin_view.fnFilter @value, $('tfoot input').index(this)
 
-  $("#min_req").keyup ->
+  $('#min_req').keyup ->
     oTable_admin_view.fnDraw()
 
-  $("#max_req").keyup ->
+  $('#max_req').keyup ->
     oTable_admin_view.fnDraw()
-    
-  
-  #
-  #	 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
-  #	 * the footer
-  #	 
-  # $("tfoot input").each (i) ->
-  #   asInitVals[i] = @value
-
-
-  # $("tfoot input").focus ->
-  #   if @className is "search_init"
-  #     @className = ""
-  #     @value = ""
-
-  # $("tfoot input").blur (i) ->
-  #   if @value is ""
-  #     @className = "search_init"
-  #     @value = asInitVals[$("tfoot input").index(this)]
 
 #--------------------------------------------------------------------------------------------------------------------
 jQuery ->
-  $("#dates_filter_toggle").click ->
-    $("#dates_filter_div").slideToggle "slow", ->
+  $('#dates_filter_toggle').click ->
+    $('#dates_filter_div').slideToggle 'slow', ->
 
 #--------------------------------------------------------------------------------------------------------------------
 
 jQuery ->
-  $(document).on "click", "#bar_user", ->
-    $("#bar_user_confirm").dialog "open"
+  $(document).on 'click', '#bar_user', ->
+    $('#bar_user_confirm').dialog 'open'
 
 
 jQuery ->
-  $("#bar_user_confirm").dialog
+  $('#bar_user_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Bar": ->
-        $(this).dialog "close"
+      'Bar': ->
+        $(this).dialog 'close'
         $.ajax
-          url: "/bar_user"
-          type: "POST"
-          context: "this"
-          dataType: "json"
+          url: '/admin/bar_user'
+          type: 'POST'
+          context: 'this'
+          dataType: 'json'
           data:
-            bar_user_id: $("#bar_user").attr("data-uid")
+            bar_user_id: $('#bar_user').attr('data-uid')
 
           beforeSend: ->
             before_send()
             
           success: (data, textStatus, XHR) ->
-            $("#bar_user_success").dialog "open"
-            $("#bar_user").val("Un Bar User").attr("id","unbar_user")
-            $("#user_current_status").text("Locked").fadeIn(500)
+            $('#bar_user_success').dialog 'open'
+            $('#bar_user').val('Un Bar User').attr('id','unbar_user')
+            $('#user_current_status').text('Locked').fadeIn(500)
 
           complete: (jqXHR, textStatus) ->
             setTimeout $.unblockUI
 
-          error: (XHR, textStatus, errorThrown) ->
+          error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
             display_error(jqXHR.status)
 
       Cancel: ->
-        $(this).dialog "close"  
+        $(this).dialog 'close'  
 
 #--------------------------------------------------------------------------------------------------------------------
 # Bar User Success Modal
 jQuery ->
-  $("#bar_user_success").dialog
+  $('#bar_user_success').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close" 
+      'Ok': ->
+        $(this).dialog 'close' 
 
 
 #--------------------------------------------------------------------------------------------------------------------
 # Un bar User
 jQuery ->
-  $(document).on "click", "#unbar_user", ->
-    $("#unbar_user_confirm").dialog "open"
+  $(document).on 'click', '#unbar_user', ->
+    $('#unbar_user_confirm').dialog 'open'
 
 
 jQuery ->
-  $("#unbar_user_confirm").dialog
+  $('#unbar_user_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Un-Bar": ->
-        $(this).dialog "close"
+      'Un-Bar': ->
+        $(this).dialog 'close'
         $.ajax
-          url: "/unbar_user.js"
-          type: "post"
-          context: "this"
-          dataType: "script"
+          url: 'admin/unbar_user.js'
+          type: 'post'
+          context: 'this'
+          dataType: 'script'
           data:
-            unbar_user_id: $("#unbar_user").attr("data-uid")
+            unbar_user_id: $('#unbar_user').attr('data-uid')
 
           beforeSend: ->
             before_send()
             
           success: (msg) ->
-            $("#unbar_user_success").dialog "open"
-            $("#unbar_user").val("Bar User").attr("id","bar_user")
-            $("#user_current_status").text("Active").fadeIn(500)
+            $('#unbar_user_success').dialog 'open'
+            $('#unbar_user').val('Bar User').attr('id','bar_user')
+            $('#user_current_status').text('Active').fadeIn(500)
 
           complete: (jqXHR, textStatus) ->
             setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown)  ->
             setTimeout $.unblockUI
-            $("#custom_error").html("Unblocking Unsuccessful. Please contact admin")
-            $("#error_message").dialog "open"
+            $('#custom_error').html('Unblocking Unsuccessful. Please contact admin')
+            $('#error_message').dialog 'open'
 
       Cancel: ->
-        $(this).dialog "close"         
+        $(this).dialog 'close'         
 
 #--------------------------------------------------------------------------------------------------------------------
 # UnBar User modal
 jQuery ->
-  $("#unbar_user_success").dialog
+  $('#unbar_user_success').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
+      'Ok': ->
+        $(this).dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
 # Error Message
 jQuery ->
-  $("#error_message_generic").dialog
+  $('#error_message_generic').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close" 
+      'Ok': ->
+        $(this).dialog 'close' 
 
          
 #--------------------------------------------------------------------------------------------------------------------
 # Span fix for sign in page
 jQuery ->
-  if $(".jumbotron").length
-    $(".col-md-12").removeClass("col-md-offset-1")
+  if $('.jumbotron').length
+    $('.col-md-12').removeClass('col-md-offset-1')
 
