@@ -25,35 +25,35 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
   # Modal Dialog for 403 Errors
-  $("#error_message_403").dialog
+  $('#error_message_403').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
+      'Ok': ->
+        $(this).dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
 
   # Modal Dialog for Generic Errors
-  $("#error_message_generic").dialog
+  $('#error_message_generic').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
+      'Ok': ->
+        $(this).dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
 
   # Fn to decide what error to display
   display_error = (statusCode) ->
     if statusCode is 403
-      $("#error_message_403").dialog "open"
+      $('#error_message_403').dialog 'open'
     else
-      $("#error_message_generic").dialog "open"
+      $('#error_message_generic').dialog 'open'
 
 #--------------------------------------------------------------------------------------------------------------------
 
@@ -168,25 +168,25 @@ $(document).ready ->
     $("#accept_request_confirm").data "dispatch_time", $("input[type='radio'][name='dispatchTime']:checked").val()
 
 
-  $("#accept_request_confirm").dialog
+  $('#accept_request_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#accept_request_confirm").data("trid")
-        tr_id_s = $("#accept_request_confirm").data("trids")
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#accept_request_confirm').data('trid')
+        tr_id_s = $('#accept_request_confirm').data('trids')
         $.ajax
-          url: "/transaction/update_request_status_accept.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_accept.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
-            dispatch_date: $("#accept_request_confirm").data "dispatch_date"
-            dispatch_time: $("#accept_request_confirm").data "dispatch_time"
+            dispatch_date: $('#accept_request_confirm').data 'dispatch_date'
+            dispatch_time: $('#accept_request_confirm').data 'dispatch_time'
 
           beforeSend: ->
             before_send()
@@ -203,7 +203,7 @@ $(document).ready ->
             display_error(jqXHR.status)     
 
       Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()  
@@ -218,21 +218,21 @@ $(document).ready ->
     $("#accept_self_confirm").data "trids", tr_id_s
     $("#accept_self_confirm").dialog "open"
     
-  $("#accept_self_confirm").dialog
+  $('#accept_self_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#accept_self_confirm").data "trid"
-        tr_id_s = $("#accept_self_confirm").data "trids"
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#accept_self_confirm').data 'trid'
+        tr_id_s = $('#accept_self_confirm').data 'trids'
         $.ajax
-          url: "/transaction/update_request_status_accept.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_accept.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
 
@@ -246,8 +246,8 @@ $(document).ready ->
             empty_table_checks()
             # Destroy popover with same id, which was referring to the old button, which has been removed,
             # recreate the popover
-            $("#timeline_" + tr_id).popover('destroy')
-            $("#timeline_" + tr_id).popover
+            $('#timeline_' + tr_id).popover('destroy')
+            $('#timeline_' + tr_id).popover
               placement: 'right'
               html: true
               trigger: 'hover'
@@ -260,7 +260,7 @@ $(document).ready ->
             display_error(jqXHR.status)
 
       Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()       
@@ -275,22 +275,22 @@ $(document).ready ->
     $("#reject_request_confirm").dialog "open"
 
 
-  $("#reject_request_confirm").dialog
+  $('#reject_request_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#reject_request_confirm").data("trid")
-        tr_id_s = $("#reject_request_confirm").data("trids")
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#reject_request_confirm').data('trid')
+        tr_id_s = $('#reject_request_confirm').data('trids')
         reject_reason = $('input[name=rejectReason]:radio:checked').val()
         $.ajax
-          url: "/transaction/update_request_status_reject.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_reject.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
             reject_reason: reject_reason
@@ -311,32 +311,32 @@ $(document).ready ->
             display_error(jqXHR.status)
 
       Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()
 
 #--------------------------------------------------------------------------------------------------------------------
 #Update transaction on request being cancelled
-  $(document).on "click", ".cancel_trans", ->
-    $("#cancel_transaction").data "tr_id", $(this).attr "data-trid"
-    $("#cancel_transaction").dialog "open"      
+  $(document).on 'click', '.cancel_trans', ->
+    $('#cancel_transaction').data 'tr_id', $(this).attr 'data-trid'
+    $('#cancel_transaction').dialog 'open'      
 
 
-  $("#cancel_transaction").dialog
+  $('#cancel_transaction').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#cancel_transaction").data("tr_id")
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#cancel_transaction').data('tr_id')
         $.ajax
-          url: "/transaction/update_request_status_cancel.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_cancel.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
 
@@ -347,7 +347,7 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $('#timeline_' + tr_id).popover('destroy')
-            $("#borrow_" + tr_id).fadeOut(500).remove()
+            $('#borrow_' + tr_id).fadeOut(500).remove()
             empty_table_checks()
             setTimeout $.unblockUI
 
@@ -356,7 +356,7 @@ $(document).ready ->
             display_error(jqXHR.status)                    
 
       Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
            
 #--------------------------------------------------------------------------------------------------------------------
@@ -372,37 +372,37 @@ $(document).ready ->
     # ).get()
     # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
     # $("#accept_info").html(html_data)
-    $("#borrower_returned_book_confirm").data "trid", tr_id
-    $("#borrower_returned_book_confirm").data "trids", tr_id_s
-    $("#borrower_returned_book_confirm").data "mode", "delivery"
-    $("#borrower_returned_book_confirm").dialog "open"
-    $("#return_pickup_date").datepicker
+    $('#borrower_returned_book_confirm').data 'trid', tr_id
+    $('#borrower_returned_book_confirm').data 'trids', tr_id_s
+    $('#borrower_returned_book_confirm').data 'mode', 'delivery'
+    $('#borrower_returned_book_confirm').dialog 'open'
+    $('#return_pickup_date').datepicker
       showOn: "button"
       buttonImageOnly: true
-    $("#return_request_confirm").dialog "open"
-    $("#return_request_confirm").data "return_date", $("#dispatch_date").val()
-    $("#return_request_confirm").data "return_time", $("input[type='radio'][name='return_time']:checked").val()
+    $('#return_request_confirm').dialog 'open'
+    $('#return_request_confirm').data 'return_date', $('#dispatch_date').val()
+    $('#return_request_confirm').data 'return_time', $("input[type='radio'][name='return_time']:checked").val()
 
 
-  $("#return_request_confirm").dialog
+  $('#return_request_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#return_request_confirm").data("trid")
-        tr_id_s = $("#return_request_confirm").data("trids")
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#return_request_confirm').data('trid')
+        tr_id_s = $('#return_request_confirm').data('trids')
         $.ajax
-          url: "/transaction/update_request_status_return.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_return.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
-            return_date: $("#return_request_confirm").data "return_date"
-            return_time: $("#return_request_confirm").data "return_time"
+            return_date: $('#return_request_confirm').data 'return_date'
+            return_time: $('#return_request_confirm').data 'return_time'
 
           beforeSend: ->
             before_send()
@@ -417,40 +417,40 @@ $(document).ready ->
             display_error(jqXHR.status)
 
       Cancel: ->
-        $(this).dialog "close"
-        $("#borrower_returned_book_confirm").dialog "close"
+        $(this).dialog 'close'
+        $('#borrower_returned_book_confirm').dialog 'close'
 
     beforeClose: (event) ->
       if event.keyCode is $.ui.keyCode.ESCAPE
-        $(this).dialog "close"
-        $("#borrower_returned_book_confirm").dialog "close"    
+        $(this).dialog 'close'
+        $('#borrower_returned_book_confirm').dialog 'close'    
 
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Return from borrowers side in self delivery mode
-  $(document).on "click", "#return_self", ->  
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#current_" + tr_id
-    $("#borrower_returned_book_confirm").data "trid", tr_id
-    $("#borrower_returned_book_confirm").data "trids", tr_id_s
-    $("#borrower_returned_book_confirm").data "mode", "self"
-    $("#borrower_returned_book_confirm").dialog "open"
+  $(document).on 'click', '#return_self', ->  
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#current_' + tr_id
+    $('#borrower_returned_book_confirm').data 'trid', tr_id
+    $('#borrower_returned_book_confirm').data 'trids', tr_id_s
+    $('#borrower_returned_book_confirm').data 'mode', 'self'
+    $('#borrower_returned_book_confirm').dialog 'open'
 
 
-  $("#borrower_returned_book_confirm").dialog
+  $('#borrower_returned_book_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#borrower_returned_book_confirm").data("trid")
-        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#borrower_returned_book_confirm').data('trid')
+        tr_id_s = $('#borrower_returned_book_confirm').data('trids')
         $.ajax
-          url: "/transaction/update_request_status_return.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_return.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
             borrower_feedback: $("input[type='radio'][name='borrower_feedback']:checked").val()
@@ -463,9 +463,9 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "' " 
-              layout: "topRight"
-              closeWith: ["click"]
+              text: "You have initiated the return of '" + $('#current_' + tr_id + " td:nth-last-child(5)").text() + "' " 
+              layout: 'topRight'
+              closeWith: ['click']
               callback:
                 onClose: ->
                   noty_confirm()
@@ -473,9 +473,9 @@ $(document).ready ->
             $('#timeline_' + tr_id).popover('destroy')
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
-            $("#borrower_comments").val("")
-            if $("#current_books_table tr").length == 1
-              $("#current_books_div").hide()  
+            $('#borrower_comments').val('')
+            if $('#current_books_table tr').length == 1
+              $('#current_books_div').hide()  
 
             setTimeout $.unblockUI  
 
@@ -483,19 +483,19 @@ $(document).ready ->
             setTimeout $.unblockUI
             display_error(jqXHR.status)      
 
-      "Skip": ->
-        $(this).dialog "close"
-        tr_id = $("#borrower_returned_book_confirm").data("trid")
-        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+      'Skip': ->
+        $(this).dialog 'close'
+        tr_id = $('#borrower_returned_book_confirm').data('trid')
+        tr_id_s = $('#borrower_returned_book_confirm').data('trids')
         $.ajax
-          url: "/transaction/update_request_status_return.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_return.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
-            borrower_feedback: ""
-            borrower_comments: ""
+            borrower_feedback: '
+            borrower_comments: '
 
           beforeSend: ->
             before_send()
@@ -504,18 +504,18 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             noty
-              text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "'" 
-              layout: "topRight"
-              closeWith: ["click"]
+              text: "You have initiated the return of '" + $('#current_' + tr_id + " td:nth-last-child(5)").text() + "'" 
+              layout: 'topRight'
+              closeWith: ['click']
               callback:
                 onClose: ->
                   noty_confirm()
                   
             $(tr_id_s).remove()
             $('input:radio[name=borrower_feedback]').val(['neutral']);
-            $("#borrower_comments").val("")
-            if $("#current_books_table tr").length == 1
-              $("#current_books_div").hide()
+            $('#borrower_comments').val('')
+            if $('#current_books_table tr').length == 1
+              $('#current_books_div').hide()
 
             setTimeout $.unblockUI  
 
@@ -525,41 +525,41 @@ $(document).ready ->
   
 
       Cancel: ->
-        tr_id = $("#borrower_returned_book_confirm").data("trid")
-        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+        tr_id = $('#borrower_returned_book_confirm').data('trid')
+        tr_id_s = $('#borrower_returned_book_confirm').data('trids')
         noty
-          text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "'" 
-          layout: "topRight"  
-          closeWith: ["click"]
+          text: "You have initiated the return of '" + $('#current_' + tr_id + " td:nth-last-child(5)").text() + "'" 
+          layout: 'topRight'  
+          closeWith: ['click']
           callback:
             onClose: ->
               noty_confirm()
 
-        $(this).dialog "close"
-        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+        $(this).dialog 'close'
+        tr_id_s = $('#borrower_returned_book_confirm').data('trids')
         $(tr_id_s).remove()
-        if $("#current_books_table tr").length == 1
-          $("#current_books_div").hide()
+        if $('#current_books_table tr').length == 1
+          $('#current_books_div').hide()
 
 
     beforeClose: (event) ->
       if event.keyCode is $.ui.keyCode.ESCAPE
-        mode = $("#borrower_returned_book_confirm").data("mode")
-        tr_id = $("#borrower_returned_book_confirm").data("trid")
-        tr_id_s = $("#borrower_returned_book_confirm").data("trids")
-        if mode == "delivery"
+        mode = $('#borrower_returned_book_confirm').data('mode')
+        tr_id = $('#borrower_returned_book_confirm').data('trid')
+        tr_id_s = $('#borrower_returned_book_confirm').data('trids')
+        if mode == 'delivery'
           noty
-            text: "You have initiated the return of '" + $("#current_" + tr_id + " td:nth-last-child(5)").text() + "'" 
-            layout: "topRight"
-            closeWith: ["click"]
+            text: "You have initiated the return of '" + $('#current_' + tr_id + " td:nth-last-child(5)").text() + "'" 
+            layout: 'topRight'
+            closeWith: ['click']
             callback:
               onClose: ->
                 noty_confirm()
 
-          tr_id_s = $("#borrower_returned_book_confirm").data("trids")
+          tr_id_s = $('#borrower_returned_book_confirm').data('trids')
           $(tr_id_s).remove()
-          if $("#current_books_table tr").length == 1
-            $("#current_books_div").hide()
+          if $('#current_books_table tr').length == 1
+            $('#current_books_div').hide()
 
 
     open: (event, ui) ->
@@ -568,39 +568,39 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Compelte transaction from lender side
 
-  $(document).on "click", "input[id^='received_lender_']", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#accepted_" + tr_id
-    $("#lender_received_book_confirm").data "trid", tr_id
-    $("#lender_received_book_confirm").data "trids", tr_id_s
+  $(document).on 'click', "input[id^='received_lender_']", ->
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#accepted_' + tr_id
+    $('#lender_received_book_confirm').data 'trid', tr_id
+    $('#lender_received_book_confirm').data 'trids', tr_id_s
     # arr = []
-    # arr = $(tr_id_s).find("td").map(->
+    # arr = $(tr_id_s).find('td').map(->
     #   @innerHTML
     # ).get()
     # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
     # $("#accept_info").html(html_data)
-    $("#lender_received_book_confirm").dialog "open"
+    $('#lender_received_book_confirm').dialog 'open'
 
 #TODO write a fn for ajax call
-  $("#lender_received_book_confirm").dialog
+  $('#lender_received_book_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
-        tr_id = $("#lender_received_book_confirm").data("trid")
-        tr_id_s = $("#lender_received_book_confirm").data("trids")
+      'Ok': ->
+        $(this).dialog 'close'
+        tr_id = $('#lender_received_book_confirm').data('trid')
+        tr_id_s = $('#lender_received_book_confirm').data('trids')
         $.ajax
-          url: "/transaction/update_request_status_receive_lender.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_receive_lender.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
             lender_feedback: $("input[type='radio'][name='lender_feedback']:checked").val()
-            lender_comments: $("#lender_comments").val()
+            lender_comments: $('#lender_comments').val()
 
           beforeSend: ->
             before_send()
@@ -610,10 +610,10 @@ $(document).ready ->
           complete: (jqXHR, textStatus) ->
             $('#timeline_' + tr_id).popover('destroy')
             $(tr_id_s).remove()
-            $("#lender_comments").val("")
+            $('#lender_comments').val('')
             $('input:radio[name=lender_feedback]').val(['neutral'])
-            if $("#accepted_requests_table tr").length == 1
-              $("#accepted_requests_div").hide()
+            if $('#accepted_requests_table tr').length == 1
+              $('#accepted_requests_div').hide()
 
             setTimeout $.unblockUI  
 
@@ -621,19 +621,19 @@ $(document).ready ->
             setTimeout $.unblockUI
             display_error(jqXHR.status)
 
-      "Skip": ->
-        $(this).dialog "close"
-        tr_id = $("#lender_received_book_confirm").data("trid")
-        tr_id_s = $("#lender_received_book_confirm").data("trids")
+      'Skip': ->
+        $(this).dialog 'close'
+        tr_id = $('#lender_received_book_confirm').data('trid')
+        tr_id_s = $('#lender_received_book_confirm').data('trids')
         $.ajax
-          url: "/transaction/update_request_status_receive_lender.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_receive_lender.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
-            lender_feedback: ""
-            lender_comments: ""
+            lender_feedback: ''
+            lender_comments: ''
             
           beforeSend: ->
             before_send()
@@ -642,8 +642,8 @@ $(document).ready ->
 
           complete: (jqXHR, textStatus) ->
             $(tr_id_s).remove()
-            if $("#accepted_requests_table tr").length == 1
-              $("#accepted_requests_div").hide()
+            if $('#accepted_requests_table tr').length == 1
+              $('#accepted_requests_div').hide()
 
             setTimeout $.unblockUI  
 
@@ -652,40 +652,40 @@ $(document).ready ->
             display_error(jqXHR.status)
             
       Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()      
 
 #-------------------------------------------------------------------------------------------------------------------- 
-  $(document).on "click", "input[id^='received_borrower_']", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#received_borrower_" + tr_id
-    $("#received_borrower_confirm").data "trid", tr_id
-    $("#received_borrower_confirm").data "trids", tr_id_s
+  $(document).on 'click', "input[id^='received_borrower_']", ->
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#received_borrower_' + tr_id
+    $('#received_borrower_confirm').data 'trid', tr_id
+    $('#received_borrower_confirm').data 'trids', tr_id_s
     # arr = []
-    # arr = $(tr_id_s).find("td").map(->
+    # arr = $(tr_id_s).find('td').map(->
     #   @innerHTML
     # ).get()
     # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
     # $("#accept_info").html(html_data)
-    $("#received_borrower_confirm").dialog "open"
+    $('#received_borrower_confirm').dialog 'open'
 
 
-  $("#received_borrower_confirm").dialog
+  $('#received_borrower_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Yes": ->
-        $(this).dialog "close"
-        tr_id = $("#received_borrower_confirm").data("trid")
+      'Yes': ->
+        $(this).dialog 'close'
+        tr_id = $('#received_borrower_confirm').data('trid')
         $.ajax
-          url: "/transaction/update_request_status_receive_borrower.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_receive_borrower.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
             called_by: 'borrower'
@@ -695,14 +695,14 @@ $(document).ready ->
 
           success: (msg) ->
             if msg
-              $("#received_borrower_" + tr_id).attr("value","Return")
-              $("#received_borrower_" + tr_id).attr("id","return_delivery")
-              $("#p_current_" + tr_id).text("Received by You")
+              $('#received_borrower_' + tr_id).attr('value','Return')
+              $('#received_borrower_' + tr_id).attr('id','return_delivery')
+              $('#p_current_' + tr_id).text('Received by You')
 
             else
-              $("#received_borrower_" + tr_id).attr("value","Returned")
-              $("#received_borrower_" + tr_id).attr("id","return_self")
-              $("#p_current_" + tr_id).text("Received by You. Meetup to Return")
+              $('#received_borrower_' + tr_id).attr('value','Returned')
+              $('#received_borrower_' + tr_id).attr('id','return_self')
+              $('#p_current_' + tr_id).text('Received by You. Meetup to Return')
 
           complete: (jqXHR, textStatus) ->
 
@@ -711,33 +711,33 @@ $(document).ready ->
             display_error(jqXHR.status)
             
       Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()      
 
 #-------------------------------------------------------------------------------------------------------------------- 
-  $(document).on "click", "input[id^='handed_over_']", ->
+  $(document).on 'click', "input[id^='handed_over_']", ->
     tr_id = $(this).attr("data-trid")
-    tr_id_s = "#accepted_" + tr_id
-    $("#handed_over_confirm").data "trid", tr_id
-    $("#handed_over_confirm").dialog "open"
+    tr_id_s = '#accepted_' + tr_id
+    $('#handed_over_confirm').data 'trid', tr_id
+    $('#handed_over_confirm').dialog 'open'
 
 
-  $("#handed_over_confirm").dialog
+  $('#handed_over_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Yes": ->
-        $(this).dialog "close"
-        tr_id = $("#handed_over_confirm").data "trid"
+      'Yes': ->
+        $(this).dialog 'close'
+        tr_id = $('#handed_over_confirm').data 'trid'
         $.ajax
-          url: "/transaction/update_request_status_receive_borrower.json"
-          type: "patch"
-          context: "this"
-          dataType: "json"
+          url: '/transaction/update_request_status_receive_borrower.json'
+          type: 'patch'
+          context: 'this'
+          dataType: 'json'
           data:
             tr_id: tr_id
             called_by: 'lender'
@@ -748,10 +748,10 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
-            $("#p_accepted_" + tr_id).text("Received by Borrower")
-            $("#handed_over_" + tr_id).attr("value","Received")
-            $("#handed_over_" + tr_id).attr("disabled","true")
-            $("#handed_over_" + tr_id).attr("id","received_lender_" + tr_id)
+            $('#p_accepted_' + tr_id).text('Received by Borrower')
+            $('#handed_over_' + tr_id).attr('value','Received')
+            $('#handed_over_' + tr_id).attr('disabled','true')
+            $('#handed_over_' + tr_id).attr('id','received_lender_' + tr_id)
             setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
@@ -759,17 +759,17 @@ $(document).ready ->
             display_error(jqXHR.status)
 
        Cancel: ->
-        $(this).dialog "close"
+        $(this).dialog 'close'
 
     open: (event, ui) ->
       $(":button:contains('Ok')").focus()
 
 #-------------------------------------------------------------------------------------------------------------------- 
-  $(document).on "click", ".borrow_button_offline" ,->
-    $("#sign_in_or_sign_up").dialog "open"
+  $(document).on 'click', '.borrow_button_offline' ,->
+    $('#sign_in_or_sign_up').dialog 'open'
 
 
-  $("#sign_in_or_sign_up").dialog
+  $('#sign_in_or_sign_up').dialog
     autoOpen: false
     modal: true
     resizable: false
@@ -778,7 +778,7 @@ $(document).ready ->
 
   # Fn to check of current page has any editing activity, and prompt with a second conformation noty
   noty_confirm = ->
-    if (window.location.pathname isnt "/home") and (window.location.pathname isnt "/") and (window.location.pathname isnt "/inventory/search")
+    if (window.location.pathname isnt '/home') and (window.location.pathname isnt '/') and (window.location.pathname isnt '/inventory/search')
       profile_edit = (/^\/profile\/\d+\/edit$/.test(window.location.pathname))
       address_edit = (/^\/address\/\d+\/edit$/.test(window.location.pathname))
       inventory_edit = (/^\/inventory\/\d+\/edit$/.test(window.location.pathname))
@@ -786,52 +786,52 @@ $(document).ready ->
       inventory_new  = (/^\/inventory\/new$/.test(window.location.pathname))
       if profile_edit or address_edit  or inventory_edit or address_new or inventory_new
         noty
-          text: "Unsaved changes will be lost. Proceed?"
-          layout: "topRight"
+          text: 'Unsaved changes will be lost. Proceed?'
+          layout: 'topRight'
           buttons: [
-            addClass: "btn btn-primary"
-            text: "Ok"
+            addClass: 'btn btn-primary'
+            text: 'Ok'
             onClick: ($noty) ->
-              window.location.replace($("#home_link").attr("href"))
+              window.location.replace($('#home_link').attr('href'))
           ,
-            addClass: "btn btn-danger"
-            text: "Cancel"
+            addClass: 'btn btn-danger'
+            text: 'Cancel'
             onClick: ($noty) ->
               $noty.close()
           ]
       else
-        window.location.replace($("#home_link").attr("href"))
+        window.location.replace($('#home_link').attr('href'))
 
 #--------------------------------------------------------------------------------------------------------------------
   # SSE Listener for creating a transaction
   #TODO Remove bracket element so its no more an element
   $.ajax
-    url: "/transaction/user_id.json"
-    type: "get"
-    context: "this"
-    dataType: "json"
+    url: '/transaction/user_id.json'
+    type: 'get'
+    context: 'this'
+    dataType: 'json'
     data:
       fbhandle: true
 
     success: (msg) ->
       id = msg.user_id
-      myFirebase = new Firebase(msg.fburl.replace(/\"/g, "") + "transaction_listener_" + id)
-      # myChild = myFirebase.child("transaction_listener_" + id)
-      myFirebase.on "child_added", (childSnapshot, prevChildName) ->
+      myFirebase = new Firebase(msg.fburl.replace(/\"/g, "") + 'transaction_listener_' + id)
+      # myChild = myFirebase.child('transaction_listener_' + id)
+      myFirebase.on 'child_added', (childSnapshot, prevChildName) ->
         pData = $.parseJSON(childSnapshot.val())
         # Summary of Requests for Books users want to borrow from you (lender)
-        if pData[0] == "create"
-          if !$("#lend_" + pData[1].id).length and !$("#accepted_" + pData[1].id).length
+        if pData[0] == 'create'
+          if !$('#lend_' + pData[1].id).length and !$('#accepted_' + pData[1].id).length
             noty
               text: pData[1].name + " would like to borrow '" + pData[1].book_name + "' from you"
-              layout: "topRight"
-              closeWith: ["click"]
+              layout: 'topRight'
+              closeWith: ['click']
               callback:
                 onClose: ->
                   noty_confirm()
 
             tr_id = "<tr id='lend_" + pData[1].id + "'>"
-            td_book_name = "<td>" + pData[1].book_name + "</td>"
+            td_book_name = '<td>' + pData[1].book_name + '</td>'
             td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
             td_borrower = " " + pData[1].borrower + "</td>"
             td_accept = "<td class='manage'><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
@@ -843,8 +843,8 @@ $(document).ready ->
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
             #   td_accept = "<td><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=" + pData[1].id + "></td>"
 
-            td_requested_from = "<td>" + pData[1].requested_from + "</td>"
-            td_status = "<td>" + pData[1].status + "</td>"
+            td_requested_from = '<td>' + pData[1].requested_from + '</td>'
+            td_status = '<td>' + pData[1].status + '</td>'
             td_reject = "<td class='manage'><input class='btn btn-default' type='button' value='Reject' id='reject' data-trid=" + pData[1].id + "></td>"
             td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/></div>'></td></tr>"
@@ -857,17 +857,17 @@ $(document).ready ->
               trigger: 'hover'
               container: 'body'
 
-            if (!$("#lend_requests_div").is(":visible"))
-              $("#lend_requests_div").show(500)
+            if (!$('#lend_requests_div').is(':visible'))
+              $('#lend_requests_div').show(500)
 
         # Summary of Requests for Books you've lent out (lender)
         # Changes on lenders page after lender accepts the request
-        else if pData[0] == "accepted_lender"
-          if !$("#accepted_" + pData[1].id).length
+        else if pData[0] == 'accepted_lender'
+          if !$('#accepted_' + pData[1].id).length
             tr_id = "<tr id='accepted_" + pData[1].id + "'>"
-            td_book_name = "<td>" + pData[1].book_name + "</td>"
+            td_book_name = '<td>' + pData[1].book_name + '</td>'
             
-            if pData[1].online == "Online"
+            if pData[1].online == 'Online'
               td_b_base = "<img width='10' height='10' class='img-cirlce' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
             else
               td_b_base = "<img width='10' height='10' class='img-circle' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
@@ -894,18 +894,18 @@ $(document).ready ->
             td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_fa_user + td_borrower + td_status_text + td_status_button + td_timeline_button
-            $("#accepted_requests_table > tbody:last").append(table_row_data)
+            $('#accepted_requests_table > tbody:last').append(table_row_data)
 
-            if (!$("#accepted_requests_div").is(":visible"))
-              $("#accepted_requests_div").show(500)
+            if (!$('#accepted_requests_div').is(':visible'))
+              $('#accepted_requests_div').show(500)
 
-            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")
+            $('#chat_divs').append("<div id='chat_div_" + pData[1].id + "''></div>")
 
         
         # Summary of Books currently with you (borrower)
         # Changes on the borrowers page after lender accepts the request
-        else if pData[0] == "accepted_borrower"
-          if !$("#current_" + pData[1].id).length
+        else if pData[0] == 'accepted_borrower'
+          if !$('#current_' + pData[1].id).length
             noty
               text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
               layout: "topRight"
@@ -914,13 +914,13 @@ $(document).ready ->
                 onClose: ->
                   noty_confirm()
 
-            $("#timeline_" + pData[1].id).popover('destroy')
-            $("#borrow_" + pData[1].id).remove()
+            $('#timeline_' + pData[1].id).popover('destroy')
+            $('#borrow_' + pData[1].id).remove()
             empty_table_checks()
             tr_id = "<tr id='current_" + pData[1].id + "'>"
-            td_book_name = "<td>" + pData[1].book_name + "</td>"
+            td_book_name = '<td>' + pData[1].book_name + '</td>'
 
-            if pData[1].online == "Online"
+            if pData[1].online == 'Online'
               td_c_base = "<img width='10' height='10' class='img-circle' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
             else
               td_c_base = "<img width='10' height='10' class='img-circle' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
@@ -949,75 +949,75 @@ $(document).ready ->
             table_row_data = tr_id + td_book_name + td_fa_user + td_lender + td_status_text + td_status_button + td_timeline_button      
             $("#current_books_table > tbody:last").append(table_row_data)
 
-            $("#timeline_" + pData[1].id).popover('destroy')
-            $("#timeline_" + pData[1].id).popover
+            $('#timeline_' + pData[1].id).popover('destroy')
+            $('#timeline_' + pData[1].id).popover
               placement: 'right'
               html: true
               trigger: 'hover'
               container: 'body'
 
-            if (!$("#current_books_div").is(":visible"))
-              $("#current_books_div").show(500)
+            if (!$('#current_books_div').is(':visible'))
+              $('#current_books_div').show(500)
 
-            $("#chat_divs").append("<div id='chat_div_" + pData[1].id + "''></div>")
+            $('#chat_divs').append("<div id='chat_div_" + pData[1].id + "''></div>")
 
         # Summary of Requests for Books you've lent out ( recvd button activates )
-        else if pData[0] == "returned" #FIXME
-          if $("#received_lender_" + pData[1].id).attr("disabled") == "disabled"
+        else if pData[0] == 'returned' #FIXME
+          if $('#received_lender_' + pData[1].id).attr('disabled') == 'disabled'
             noty
                 text: pData[1].name + " has initiated the return of '" + pData[1].book_name + "'"
-                layout: "topRight"
-                closeWith: ["click"]
+                layout: 'topRight'
+                closeWith: ['click']
                 callback:
                   onClose: ->
                     noty_confirm()
 
-            timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+            timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content')
             timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
-            timeline_data_content = timeline_data_content + "<u>Returned</u><br/>" + pData[1].returned_date + "</div>"
-            timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
-            $("#received_lender_" + pData[1].id).removeAttr("disabled")
-            $("#p_accepted_" + pData[1].id).text("Returned by Borrower ").fadeIn(300)
+            timeline_data_content = timeline_data_content + '<u>Returned</u><br/>' + pData[1].returned_date + '</div>'
+            timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
+            $('#received_lender_' + pData[1].id).removeAttr('disabled')
+            $('#p_accepted_' + pData[1].id).text('Returned by Borrower ').fadeIn(300)
 
-        else if pData[0] == "rejected_lender"
-          $("#timeline_" + pData[1].id).popover('destroy')
-          $("#lend_" + pData[1].id).remove()
+        else if pData[0] == 'rejected_lender'
+          $('#timeline_' + pData[1].id).popover('destroy')
+          $('#lend_' + pData[1].id).remove()
           empty_table_checks()
 
-        else if pData[0] == "rejected_borrower"
+        else if pData[0] == 'rejected_borrower'
           $('#timeline_' + pData[1].id).popover('destroy')
-          $("#borrow_" + pData[1].id).remove()
+          $('#borrow_' + pData[1].id).remove()
           empty_table_checks()
 
           noty
             text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as the book has been lent out"
-            layout: "topRight"
-            closeWith: ["click"]
+            layout: 'topRight'
+            closeWith: ['click']
             callback:
               onClose: ->
                 noty_confirm()
 
         # Request has been cancelled by borrower. On lenders page, the entry is removed, empty table check is called,
         # and popover is destroyed
-        else if pData[0] == "cancelled"
+        else if pData[0] == 'cancelled'
           noty
             text: "A request to borrow '" + pData[1].book_name + "' from you has been cancelled"
-            layout: "topRight"
-            closeWith: ["click"]
+            layout: 'topRight'
+            closeWith: ['click']
             callback:
               onClose: ->
                 noty_confirm()
 
-          $("#timeline_" + pData[1].id).popover('destroy')
-          $("#lend_" + pData[1].id).remove()          
+          $('#timeline_' + pData[1].id).popover('destroy')
+          $('#lend_' + pData[1].id).remove()          
           empty_table_checks()
 
-        else if pData[0] == "rejected"
-          if pData[1].reason == "Unavailable"
+        else if pData[0] == 'rejected'
+          if pData[1].reason == 'Unavailable'
             noty
               text: "Your request to borrow '" + pData[1].book_name + "' has been rejected as " + pData[1].name + " is Unavailable"
-              layout: "topRight"
-              closeWith: ["click"]
+              layout: 'topRight'
+              closeWith: ['click']
               callback:
                 onClose: ->
                   noty_confirm()
@@ -1025,89 +1025,89 @@ $(document).ready ->
           else
             noty
               text: "Your request to borrow '" + pData[1].book_name + "' has been rejected"
-              layout: "topRight"
-              closeWith: ["click"]
+              layout: 'topRight'
+              closeWith: ['click']
               callback:
                 onClose: ->
                   noty_confirm()
 
-          $("#timeline_" + pData[1].id).popover('destroy')
-          $("#borrow_" + pData[1].id).remove()
+          $('#timeline_' + pData[1].id).popover('destroy')
+          $('#borrow_' + pData[1].id).remove()
           empty_table_checks()
 
-        else if pData[0] == "received_lender"
+        else if pData[0] == 'received_lender'
           noty
             text: pData[1].name + " has received '" + pData[1].book_name + "'"
-            layout: "topRight"
-            closeWith: ["click"]
+            layout: 'topRight'
+            closeWith: ['click']
             callback:
               onClose: ->
                 noty_confirm()
 
-          $("chat_div_" + pData[1].id).remove()
+          $('chat_div_' + pData[1].id).remove()
 
         # Lender triggers that book's been handed over in self/pick drop.
         # Notifiation for borrower
-        else if pData[0] == "received_borrower_by_lender"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+        else if pData[0] == 'received_borrower_by_lender'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content')
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
-          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "<br/></div>"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
+          timeline_data_content = timeline_data_content + '<u>Received</u><br/>' + pData[1].received_date + '<br/></div>'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
 
           noty
             text: pData[1].name + " has handed over '" + pData[1].book_name + "'"
-            layout: "topRight"
-            closeWith: ["click"]
+            layout: 'topRight'
+            closeWith: ['click']
             callback:
               onClose: ->
                 noty_confirm()
 
             if pData[1].delivery_mode
-              $("#received_borrower_" + pData[1].id).attr("value", "Return")
-              $("#received_borrower_" + pData[1].id).attr("id", "return_delivery")
+              $('#received_borrower_' + pData[1].id).attr('value', 'Return')
+              $('#received_borrower_' + pData[1].id).attr('id', 'return_delivery')
 
             else
-              $("#p_current_" + pData[1].id).text("Received by You. Meetup to Return")
-              $("#received_borrower_" + pData[1].id).attr("value", "Returned")
-              $("#received_borrower_" + pData[1].id).attr("id", "return_self")
+              $('#p_current_' + pData[1].id).text('Received by You. Meetup to Return')
+              $('#received_borrower_' + pData[1].id).attr('value', 'Returned')
+              $('#received_borrower_' + pData[1].id).attr('id', 'return_self')
 
 
         # Borrower triggers that the books been received. If its by self Pic and drop, coln change on lender's side
         # Called when borrower clicks on received, push notification for lender
-        else if pData[0] == "received_borrower_by_borrower"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+        else if pData[0] == 'received_borrower_by_borrower'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content')
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
-          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "</div>"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
-          $("#p_accepted_" + pData[1].id).text("Received by Borrower")
+          timeline_data_content = timeline_data_content + '<u>Received</u><br/>' + pData[1].received_date + '</div>'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
+          $('#p_accepted_' + pData[1].id).text('Received by Borrower')
           noty
             text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
-            layout: "topRight"
-            closeWith: ["click"]
+            layout: 'topRight'
+            closeWith: ['click']
             callback:
               onClose: ->
                 noty_confirm()
 
           if !pData[1].delivery_mode
-            $("#handed_over_" + pData[1].id).attr("value", "Received")
-            $("#handed_over_" + pData[1].id).attr("disabled", "true")
-            $("#handed_over_" + pData[1].id).attr("id", "received_lender_" + pData[1].id)
+            $('#handed_over_' + pData[1].id).attr('value', 'Received')
+            $('#handed_over_' + pData[1].id).attr('disabled', 'true')
+            $('#handed_over_' + pData[1].id).attr('id', 'received_lender_' + pData[1].id)
 
         # Called when borrower clicks received, push notification for borrower himself
-        else if pData[0] == "received_borrower_by_borrower_lender"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+        else if pData[0] == 'received_borrower_by_borrower_lender'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content')
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
-          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "<br/></div>"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
+          timeline_data_content = timeline_data_content + '<u>Received</u><br/>' + pData[1].received_date + '<br/></div>'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
           # Block set in ajax is removed here because after controller updates, theres a push back to the caller itself
           setTimeout $.unblockUI
 
         # Lender clicks 'Handed Over', Controller updates data, action to be carried out on lenders page itself
-        else if pData[0] == "received_borrower_by_lender_borrower"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content')
+        else if pData[0] == 'received_borrower_by_lender_borrower'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content')
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
-          timeline_data_content = timeline_data_content + "<u>Received</u><br/>" + pData[1].received_date + "<br/></div>"
-          timeline_data_content = $("#timeline_" + pData[1].id).attr('data-content', timeline_data_content)
+          timeline_data_content = timeline_data_content + '<u>Received</u><br/>' + pData[1].received_date + '<br/></div>'
+          timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
           
 
         myFirebase.child(childSnapshot.bc.path.m[1]).remove()
@@ -1117,5 +1117,5 @@ $(document).ready ->
 
     error: (jqXHR, textStatus, errorThrown) ->
       # setTimeout $.unblockUI
-      # $("#error_message").dialog "open" 
+      # $('#error_message').dialog 'open' 
 
