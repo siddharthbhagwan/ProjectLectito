@@ -372,9 +372,16 @@ class TransactionController < ApplicationController
 	end
 
 	def user_id
-		respond_to do |format|
-			format.html  
-			format.json { render json: { user_id: current_user.id.to_json } }
+		if params[:fbhandle]
+			respond_to do |format|
+				format.html  
+				format.json { render json: { user_id: current_user.id.to_json, fburl: ENV['firebase_url'].to_json } }
+			end
+		else
+			respond_to do |format|
+				format.html  
+				format.json { render json: { user_id: current_user.id.to_json } }
+			end
 		end
 	end
 

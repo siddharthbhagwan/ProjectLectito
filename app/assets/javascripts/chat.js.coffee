@@ -159,10 +159,12 @@ $(document).ready ->
     type: "get"
     context: "this"
     dataType: "json"
+    data:
+      fbhandle: true
     #TODO Remove duplication on code - if and else for initiated and initiating box chat
     success: (msg) ->
       id = msg.user_id
-      myFirebase = new Firebase("https://projectlectito.firebaseio.com/transaction_listener_" + id)
+      myFirebase = new Firebase(msg.fburl.replace(/\"/g, "") + "transaction_listener_" + id)
       # Listener for Firebase messages
       myFirebase.on "child_added", (childSnapshot, prevChildName) ->
         pData = $.parseJSON(childSnapshot.val())

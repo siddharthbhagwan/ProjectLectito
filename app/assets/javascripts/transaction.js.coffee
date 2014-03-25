@@ -810,10 +810,12 @@ $(document).ready ->
     type: "get"
     context: "this"
     dataType: "json"
+    data:
+      fbhandle: true
 
     success: (msg) ->
       id = msg.user_id
-      myFirebase = new Firebase("https://projectlectito.firebaseio.com/transaction_listener_" + id)
+      myFirebase = new Firebase(msg.fburl.replace(/\"/g, "") + "transaction_listener_" + id)
       # myChild = myFirebase.child("transaction_listener_" + id)
       myFirebase.on "child_added", (childSnapshot, prevChildName) ->
         pData = $.parseJSON(childSnapshot.val())
