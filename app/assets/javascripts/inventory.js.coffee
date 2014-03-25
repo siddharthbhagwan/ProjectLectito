@@ -178,15 +178,10 @@ $(document).ready ->
           response $.map(data, (item) ->
             label: item.book_name
             id: item.id
-            mrp: item.mrp
             isbn: item.isbn
             author: item.author
             language: item.language
             genre: item.genre
-            version: item.version
-            pages: item.pages
-            publisher: item.publisher
-            edition: item.edition
             ) 
 
     response: (e, ui) ->
@@ -195,12 +190,7 @@ $(document).ready ->
         $("#author").attr('disabled', false).val('').fadeIn(500)
         $("#language").attr('disabled', false).val('').fadeIn(500)
         $("#genre").attr('disabled', false).val('').fadeIn(500)
-        $("#version").attr('disabled', false).val('').fadeIn(500)
-        $("#pages").attr('disabled', false).val('').fadeIn(500)
-        $("#publisher").attr('disabled', false).val('').fadeIn(500)
-        $("#edition").attr('disabled', false).val('').fadeIn(500)
         $("#book_name_empty").attr('disabled', false).val('').fadeIn(500)
-        $("#mrp").attr('disabled', false).val('').fadeIn(500)
         $("#book_name_empty").fadeIn(600)
         $("#book_id").val(0)
         $("#add_book").attr('disabled', false)
@@ -209,15 +199,10 @@ $(document).ready ->
         $("#book_name_empty").hide()
 
     select: (e, ui) ->
-      $("#mrp").val(ui.item.mrp).fadeIn(500).attr("disabled", true)
       $("#isbn").val(ui.item.isbn).fadeIn(500).attr("disabled", true)
       $("#author").val(ui.item.author).fadeIn(500).attr("disabled", true)
       $("#language").val(ui.item.language).fadeIn(500).attr("disabled", true)
       $("#genre").val(ui.item.genre).fadeIn(500).attr("disabled", true)
-      $("#version").val(ui.item.version).fadeIn(500).attr("disabled", true)
-      $("#pages").val(ui.item.pages).fadeIn(500).attr("disabled", true)
-      $("#publisher").val(ui.item.publisher).fadeIn(500).attr("disabled", true)
-      $("#edition").val(ui.item.edition).fadeIn(500).attr("disabled", true)
       $("#book_id").val(ui.item.id)
       $("#book_name").data("selected_item",ui.item.label)
       $("#add_book").attr('disabled', false)
@@ -258,11 +243,6 @@ $(document).ready ->
   $("#author").hide()
   $("#language").hide()
   $("#genre").hide()
-  $("#version").hide()
-  $("#edition").hide()
-  $("#publisher").hide()
-  $("#pages").hide()
-  $("#mrp").hide()
 
 #--------------------------------------------------------------------------------------------------------------------
 

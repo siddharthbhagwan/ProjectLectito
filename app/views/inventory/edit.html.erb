@@ -30,11 +30,6 @@
 					<li><%= text_field_tag :author , Book.where(id: @inventory.book_id).take.author, disabled: true, placeholder: :Author , class: 'edit_inventory form-control' %></li>
 					<li><%= text_field_tag :language, Book.where(id: @inventory.book_id).take.language, disabled: true, placeholder: :Language , class: 'edit_inventory form-control' %></li>
 					<li><%= text_field_tag :genre, Book.where(id: @inventory.book_id).take.genre, disabled: true, placeholder: :Genre , class: 'edit_inventory form-control' %></li>
-					<li><%= text_field_tag :version, Book.where(id: @inventory.book_id).take.version, disabled: true, placeholder: :Version , class: 'edit_inventory form-control' %></li>
-					<li><%= text_field_tag :edition, Book.where(id: @inventory.book_id).take.edition, disabled: true, placeholder: :Edition , class: 'edit_inventory form-control' %></li>
-					<li><%= text_field_tag :publisher, Book.where(id: @inventory.book_id).take.publisher, disabled: true, placeholder: :Publisher , class: 'edit_inventory form-control' %></li>
-					<li><%= text_field_tag :pages, Book.where(id: @inventory.book_id).take.pages, disabled: true, placeholder: :Pages , class: 'edit_inventory form-control' %></li>
-					<li><%= text_field_tag :mrp, Book.where(id: @inventory.book_id).take.mrp, disabled: true, placeholder: :MRP , class: 'edit_inventory form-control' %></li>
 				</ul>
 			</div>
 		</div>
