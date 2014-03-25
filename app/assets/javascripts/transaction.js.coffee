@@ -5,17 +5,17 @@
 $(document).ready ->
   # Hide tables if no data
   empty_table_checks = ->
-    if $("#borrow_requests_table tr").length == 1
-      $("#borrow_requests_div").hide()
+    if $('#borrow_requests_table tr').length == 1
+      $('#borrow_requests_div').hide()
 
-    if $("#lend_requests_table tr").length == 1
-      $("#lend_requests_div").hide()
+    if $('#lend_requests_table tr').length == 1
+      $('#lend_requests_div').hide()
 
-    if $("#accepted_requests_table tr").length == 1
-      $("#accepted_requests_div").hide()
+    if $('#accepted_requests_table tr').length == 1
+      $('#accepted_requests_div').hide()
 
-    if $("#current_books_table tr").length == 1
-      $("#current_books_div").hide()
+    if $('#current_books_table tr').length == 1
+      $('#current_books_div').hide()
 
 #--------------------------------------------------------------------------------------------------------------------
 
