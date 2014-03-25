@@ -21,7 +21,7 @@ class BookController < ApplicationController
   end
 
   def index
-    @book = Book.all
+    @book = Book.all.page(params[:page]).per(10)
     chatbox
   end
 
