@@ -16,7 +16,7 @@ class ChatController < ApplicationController
     last_10_chats = Chat.where(transaction_id: params[:id]).last(10)
     @chat_history = String.new
     last_10_chats.each do |l|
-      @chat_history << User.find(l.from_user).profile.chat_name + " : " + l.body[0..-3] + "\n"
+      @chat_history << User.find(l.from_user).profile.chat_name + " : " + l.body + "\n"
     end
   end
 
