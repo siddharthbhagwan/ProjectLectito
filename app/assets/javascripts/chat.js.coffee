@@ -8,33 +8,9 @@ exports.chat_boxes = chat_boxes
 
 $(document).ready ->
   
-  # Send chat on clicking send
-  $("#chat_send").click ->
-    you = $("#chat_text").attr("data-you")
-    chat_text = $("#chat_text").val()
-    $("#chat_text").val("")
-    $("#chat_box").val($('#chat_box').val() +  '\n' + you + " : " + chat_text)
-    psconsole = $("#chat_box")
-    psconsole.scrollTop psconsole[0].scrollHeight - psconsole.height()
-    $.ajax
-      url: "/chat/new_chat"
-      type: "post"
-      context: "this"
-      dataType: "json"
-      data:
-        chat:
-          body: chat_text
-        ref: window.location.pathname.replace('/chat/','')
-        type: 'page'
-        you: you
-
-      success: (msg) ->
-                
-      error: (jqXHR, textStatus, errorThrown) ->
-
-#--------------------------------------------------------------------------------------------------------------------- 
   # Press Enter key to send chat
   $("#chat_text").keydown (e) ->
+    console.log 'yo'
     if e.keyCode is 13
       you = $("#chat_text").attr("data-you")
       chat_text = $("#chat_text").val()
