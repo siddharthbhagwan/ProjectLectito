@@ -16,6 +16,10 @@
   padding-top: 15px;
 }
 
+.cbg {
+  background-color: #F7F7F7
+}
+
 // Sign Up Text in Search Result Pop up (when offline) text white
 #sign_in_or_sign_up {
   .col-md-offset-3 {
@@ -27,7 +31,12 @@
 
 .steps_border {
   border-right: 2px solid grey;
-  height: 150px;
+  height: 250px;
+}
+
+.uf {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: x-large;
 }
 
 // Sign In modal
