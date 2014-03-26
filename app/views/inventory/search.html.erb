@@ -8,7 +8,7 @@
   <div id='borrow_requests_div'>
     <%= render 'transaction/borrow_requests' %>
   </div>
-<% end %>  
+<% end %>
 
 <% if @lend.blank? %>
   <div id='lend_requests_div' hidden='true'>
@@ -18,7 +18,7 @@
   <div id='lend_requests_div'>
       <%= render 'transaction/lend_requests' %>
     </div>
-<% end %> 
+<% end %>
 
 <% if @accept.blank? %>
   <div id='accepted_requests_div' hidden='true'>
@@ -28,7 +28,7 @@
   <div id='accepted_requests_div'>
     <%= render 'transaction/accepted_requests' %>
   </div>
-<% end %>   
+<% end %>
 
 <% if @current.blank? %>
   <div id='current_books_div' hidden='true'>
@@ -38,7 +38,7 @@
   <div id='current_books_div'>
     <%= render 'transaction/current_books' %>
   </div>
-<% end %>   
+<% end %>
 
 <h5>Search for a book that you'd like to borrow in your city!</h5>
 

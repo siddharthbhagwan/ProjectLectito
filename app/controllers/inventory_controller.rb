@@ -8,7 +8,7 @@ class InventoryController < ApplicationController
 	end
 
 	def index
-		@inventory = User.where(id: current_user.id).take.inventories.where(deleted: :false)
+		@inventory = User.where(id: current_user.id).take.inventories.where(deleted: :false).page(params[:page]).per(8)
 		chatbox
 	end
 
