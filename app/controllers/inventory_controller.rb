@@ -141,51 +141,37 @@ class InventoryController < ApplicationController
 	end
 
 	def search_books_city
-		# Find all users apart from self, who have the book
-	 	if user_signed_in?
-			@users_with_book = Inventory.where('book_id = ? AND user_id != ? AND status = ? AND deleted = ?', params[:book_id], current_user.id, "Available", false)
-		else
-			@users_with_book = Inventory.where('book_id = ? AND status = ? AND deleted = ?', params[:book_id], 'Available', false)
-		end
-		
+
 		@users_with_book_in_city = []
 		@addresses_with_book_in_city = []
 		@users_and_address = []
 		@transactions_requested = []
 
-		# Of all Users who have the book, check who all are in the city as selected by user
-		# Merge this list with the address of each user who meets the criteria.
-		@users_with_book.each do |u_wb|
-			#address of user who has the book
-			@address_uwb_in_city = u_wb.user.addresses.where(id: u_wb.available_in_city).take
+		# Find all users apart from self, who have the book
+	 	if user_signed_in?
+			@users_with_book = Inventory.where('book_id = ? AND user_id != ? AND status = ? AND deleted = ?', params[:book_id], current_user.id, 'Available', false)
+			# Of all Users who have the book, check who all are in the city as selected by user
+			# Merge this list with the address of each user who meets the criteria.
+			@users_with_book.each do |u_wb|
+				#address of user who has the book
+				@address_uwb_in_city = u_wb.user.addresses.where(id: u_wb.available_in_city).take
 
-			#delivery mode of user who was the book
-			@delivery_uwb = u_wb.user.is_delivery
-
-			#If current User's Delivery mode is delivery only, look for lenders with delivery only
-			#If current user's Delivery mode is pickup, look for both, delivery and pick up
-			#TODO make the if more efficient
-			if user_signed_in?
+				#TODO make the if more efficient
 				if @address_uwb_in_city.city == params[:city]
 					@users_and_address << u_wb.clone	
 					@users_and_address << @address_uwb_in_city
 					@transactions_requested << Transaction.where(borrower_id: current_user.id, status: 'Pending', inventory_id: u_wb.id).pluck(:inventory_id)
 				end
-				# if current_user.is_delivery
-		 	# 		if ((@address_uwb_in_city.city == params[:city]) and (current_user.is_delivery == @delivery_uwb))
-		 	# 			# If criteria matches, store Inventory Details woth corresponding Address in an array
-				# 		@users_and_address << u_wb.clone	
-				# 		@users_and_address << @address_uwb_in_city
-				# 		@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
-				# 	end
-				# else
-				# 	if @address_uwb_in_city.city == params[:city]
-				# 		@users_and_address << u_wb.clone	
-				# 		@users_and_address << @address_uwb_in_city
-				# 		@transactions_requested << Transaction.where(:borrower_id => current_user.id, :status => "Pending", :inventory_id => u_wb.id).pluck(:inventory_id)
-				# 	end
-				# end
-			else
+			end
+		else
+			@users_with_book = Inventory.where('book_id = ? AND status = ? AND deleted = ?', params[:book_id], 'Available', false)
+			# Of all Users who have the book, check who all are in the city as selected by user
+			# Merge this list with the address of each user who meets the criteria.
+			@users_with_book.each do |u_wb|
+				#address of user who has the book
+				@address_uwb_in_city = u_wb.user.addresses.where(id: u_wb.available_in_city).take
+
+				#TODO make the if more efficient
 				if @address_uwb_in_city.city == params[:city]
 					@users_and_address << u_wb.clone	
 					@users_and_address << @address_uwb_in_city
