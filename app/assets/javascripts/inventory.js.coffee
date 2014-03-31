@@ -9,68 +9,68 @@ $(document).ready ->
 
 
 # Search by book/author
-  $("#search_books").on "click", ->
-    search_city = $("#city").val()
-    search_by_author = $("#search_by_author").val()
-    search_by_book_name = $("#search_by_book_name").val()
-    $("#search_results_table").remove() 
-    $("#city_validation").empty()
-    $("#author_book_validation").empty()
-    $("#search_text").hide()
+  $('#search_books').on 'click', ->
+    search_city = $('#city').val()
+    search_by_author = $('#search_by_author').val()
+    search_by_book_name = $('#search_by_book_name').val()
+    $('#search_results_table').remove() 
+    $('#city_validation').empty()
+    $('#author_book_validation').empty()
+    $('#search_text').hide()
     fetch_search_data = ->
       $.ajax
-        url: "/inventory/search_books.js"
-        type: "get"
-        dataType: "script"
+        url: '/inventory/search_books.js'
+        type: 'get'
+        dataType: 'script'
         data:
           city: search_city
           search_by_author: search_by_author
           search_by_book_name: search_by_book_name
 
         success: (msg) ->
-          $("#search_text").html("<h5>Click on one of the titles to check availability</h5>").hide()
-          $("#search_text").fadeIn(500)
-          $('html, body').animate({scrollTop:$("#search_text").offset().top}, 750)
+          $('#search_text').html('<h5>Click on one of the titles to check availability</h5>').hide()
+          $('#search_text').fadeIn(500)
+          $('html, body').animate({scrollTop:$('#search_text').offset().top}, 750)
 
         error: (jqXHR, textStatus, errorThrown) ->
-          $("#error_message").dialog "open"
+          $('#error_message').dialog 'open'
           
 
     if search_city
       if search_by_author.length or search_by_book_name.length
-        $("#book_name_empty").hide()
+        $('#book_name_empty').hide()
         fetch_search_data()
       else
-        $("#author_book_validation").html("<h5>Please Enter either a Book Name, or an Author, or Both</h5>").hide()
-        $("#author_book_validation").fadeIn(500)
-        $("#author_empty").hide()
-        $("#book_name_empty").hide()
+        $('#author_book_validation').html('<h5>Please Enter either a Book Name, or an Author, or Both</h5>').hide()
+        $('#author_book_validation').fadeIn(500)
+        $('#author_empty').hide()
+        $('#book_name_empty').hide()
     else
-      $("#city_validation").html("<h5>Please Select your city</h5>").hide()
-      $("#city_validation").fadeIn(500)
+      $('#city_validation').html('<h5>Please Select your city</h5>').hide()
+      $('#city_validation').fadeIn(500)
 
 
 #--------------------------------------------------------------------------------------------------------------------
 # Search for book within the city
-  $(document).on "click", "#search_results_table tbody tr", (event) ->
+  $(document).on 'click', '#search_results_table tbody tr', (event) ->
     book_id = undefined
     fetch_sub_search_data = undefined
     row_number = undefined
     city = undefined
     sub_table_id = undefined
     sub_table_id_s = undefined
-    book_id = $(this).attr("id")
-    row_number = $(this).closest("tr")[0].rowIndex - 1
+    book_id = $(this).attr('id')
+    row_number = $(this).closest('tr')[0].rowIndex - 1
     fetch_sub_search_data = ->
-      city = $("#city").val()
-      sub_table_id = "sub_search_results_table_" + book_id
-      sub_table_id_s = "#" + sub_table_id
+      city = $('#city').val()
+      sub_table_id = 'sub_search_results_table_' + book_id
+      sub_table_id_s = '#' + sub_table_id
       $(sub_table_id_s).remove()
       $.ajax
-        url: "/inventory/search_books_city.js"
-        type: "get"
-        context: "this"
-        dataType: "script"
+        url: '/inventory/search_books_city.js'
+        type: 'get'
+        context: 'this'
+        dataType: 'script'
         data:
           book_id: book_id
           city: city
@@ -79,102 +79,102 @@ $(document).ready ->
         success: (msg) ->
          
         error: (jqXHR, textStatus, errorThrown) ->
-          $("#error_message").dialog "open"
+          $('#error_message').dialog 'open'
 
 
     #TODO Check Why && not working
-    if $(this).attr("data-status") == "closed"
+    if $(this).attr('data-status') == 'closed'
       if book_id != undefined
-        if book_id != "sub_search"
-          if book_id != "sub_search_results_table_header"
-            if book_id.indexOf("city_") is -1
-              $(this).attr("data-status", "open")
+        if book_id != 'sub_search'
+          if book_id != 'sub_search_results_table_header'
+            if book_id.indexOf('city_') is -1
+              $(this).attr('data-status', 'open')
               fetch_sub_search_data()
     else
-      $(this).attr("data-status", "closed")
-      $("#city_" + book_id).hide()      
+      $(this).attr('data-status', 'closed')
+      $('#city_' + book_id).hide()      
 
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Author
 
-  $("#search_by_author").autocomplete(
+  $('#search_by_author').autocomplete(
     source: (request, response) ->
       $.ajax
-        url: "/inventory/autocomplete_author"
-        dataType: "json"
+        url: '/inventory/autocomplete_author'
+        dataType: 'json'
         data:
-          author: $("#search_by_author").val()
+          author: $('#search_by_author').val()
           
         success: (data) ->
           response(data)
 
     response: (e, ui) ->
       if ui.content.length is 0
-        $("#author_empty").fadeIn(300)
+        $('#author_empty').fadeIn(300)
       else
-        $("#author_empty").hide()
-        $("#book_name_empty").hide()
+        $('#author_empty').hide()
+        $('#book_name_empty').hide()
 
     select: (e, ui) ->
-      $("#search_by_author").data("selected_item", ui.item.label)
+      $('#search_by_author').data('selected_item', ui.item.label)
 
   ).blur( ->
-    value_typed = $("#search_by_author").val()
-    value_selected = $("#search_by_author").data("selected_item")
+    value_typed = $('#search_by_author').val()
+    value_selected = $('#search_by_author').data('selected_item')
     if value_typed != value_selected
-      $("#search_by_author").val("")
+      $('#search_by_author').val('')
 
-    if value_selected == "No Matching Results Found"
-      $("#search_by_author").val("")
-      ).autocomplete("widget").addClass("ddl-fixed-height");
+    if value_selected == 'No Matching Results Found'
+      $('#search_by_author').val('')
+      ).autocomplete('widget').addClass('ddl-fixed-height');
 
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Book Name
 
-  $("#search_by_book_name").autocomplete(
+  $('#search_by_book_name').autocomplete(
     source: (request, response) ->
       $.ajax
-        url: "/inventory/autocomplete_book_name"
-        dataType: "json"
+        url: '/inventory/autocomplete_book_name'
+        dataType: 'json'
         data:
-          author: $("#search_by_author").val()
-          book_name: $("#search_by_book_name").val()
+          author: $('#search_by_author').val()
+          book_name: $('#search_by_book_name').val()
           
         success: (data) ->
           response(data)
 
     response: (e, ui) ->
       if ui.content.length is 0
-        $("#book_name_empty").fadeIn(300)
+        $('#book_name_empty').fadeIn(300)
       else
-        $("#book_name_empty").hide()
-        $("#author_empty").hide()
+        $('#book_name_empty').hide()
+        $('#author_empty').hide()
 
     select: (e, ui) ->
-      $("#search_by_book_name").data("selected_item", ui.item.label)
+      $('#search_by_book_name').data('selected_item', ui.item.label)
 
   ).blur( ->
-    value_typed = $("#search_by_book_name").val()
-    value_selected = $("#search_by_book_name").data("selected_item")
+    value_typed = $('#search_by_book_name').val()
+    value_selected = $('#search_by_book_name').data('selected_item')
     if value_typed != value_selected
-      $("#search_by_book_name").val("")
+      $('#search_by_book_name').val('')
 
-    if value_selected == "No Matching Results Found"
-      $("#search_by_book_name").val("")
-      ).autocomplete("widget").addClass("ddl-fixed-height");
+    if value_selected == 'No Matching Results Found'
+      $('#search_by_book_name').val('')
+      ).autocomplete('widget').addClass('ddl-fixed-height');
 
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Adding Inventory
-  $("#book_name").autocomplete( 
+  $('#book_name').autocomplete( 
     source: (request, response) ->
       $.ajax
-        url: "/inventory/autocomplete_book_details"
-        dataType: "json"
+        url: '/inventory/autocomplete_book_details'
+        dataType: 'json'
         data:
-          book_name: $("#book_name").val()
+          book_name: $('#book_name').val()
           
         success: (data) ->
           response $.map(data, (item) ->
@@ -188,73 +188,62 @@ $(document).ready ->
 
     response: (e, ui) ->
       if ui.content.length is 0
-        $("#isbn").attr('disabled', false).val('').fadeIn(500)
-        $("#author").attr('disabled', false).val('').fadeIn(500)
-        $("#language").attr('disabled', false).val('').fadeIn(500)
-        $("#genre").attr('disabled', false).val('').fadeIn(500)
-        $("#book_name_empty").attr('disabled', false).val('').fadeIn(500)
-        $("#book_name_empty").fadeIn(600)
-        $("#book_id").val(0)
-        $("#add_book").attr('disabled', false)
+        $('#isbn').attr('disabled', false).val('').fadeIn(500)
+        $('#author').attr('disabled', false).val('').fadeIn(500)
+        $('#language').attr('disabled', false).val('').fadeIn(500)
+        $('#genre').attr('disabled', false).val('').fadeIn(500)
+        $('#book_name_empty').attr('disabled', false).val('').fadeIn(500)
+        $('#book_name_empty').fadeIn(600)
+        $('#book_id').val(0)
+        $('#add_book').attr('disabled', false)
 
       else 
-        $("#book_name_empty").hide()
+        $('#book_name_empty').hide()
 
     select: (e, ui) ->
-      $("#isbn").val(ui.item.isbn).fadeIn(500).attr("disabled", true)
-      $("#author").val(ui.item.author).fadeIn(500).attr("disabled", true)
-      $("#language").val(ui.item.language).fadeIn(500).attr("disabled", true)
-      $("#genre").val(ui.item.genre).fadeIn(500).attr("disabled", true)
-      $("#book_id").val(ui.item.id)
-      $("#book_name").data("selected_item",ui.item.label)
-      $("#add_book").attr('disabled', false)
+      $('#isbn').val(ui.item.isbn).fadeIn(500).attr('disabled', true)
+      $('#author').val(ui.item.author).fadeIn(500).attr('disabled', true)
+      $('#language').val(ui.item.language).fadeIn(500).attr('disabled', true)
+      $('#genre').val(ui.item.genre).fadeIn(500).attr('disabled', true)
+      $('#book_id').val(ui.item.id)
+      $('#book_name').data('selected_item',ui.item.label)
+      $('#add_book').attr('disabled', false)
 
   ).blur( ->
-    $("#book_name").trigger("autocompleteselect")
-    ).autocomplete("widget").addClass("ddl-fixed-height");
-
-#--------------------------------------------------------------------------------------------------------------------
-  # Dynamically add hidden fields to the form with their values as entered in the text boxes
-  # $('.new_book_element').keyup ->
-  #   id = $(this).attr('id')
-  #   console.log $('#' + id + '_h').length
-  #   if $('#' + id + '_h').length
-  #     $('#' + id + '_h').val($(this).val())
-
-  #   else
-  #     $('.book_elements').append("<input id='" + id + "_h' name='" + id + "_h' type='hidden' value='" + $(this).val() + "'>")
+    $('#book_name').trigger('autocompleteselect')
+    ).autocomplete('widget').addClass('ddl-fixed-height');
 
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
 
-  $(document).on "mouseenter", "#search_results_table tbody tr", ->
-    if ($(this).attr("id") != undefined && $(this).attr("id") != 'sub_search_results_table_header')
-      if ($(this).attr("id").indexOf("city_") == -1 )
+  $(document).on 'mouseenter', '#search_results_table tbody tr', ->
+    if ($(this).attr('id') != undefined && $(this).attr('id') != 'sub_search_results_table_header')
+      if ($(this).attr('id').indexOf('city_') == -1 )
         $(this).css('cursor', 'pointer');
         $(this).css('font-size', '14.5px')
 
 
-  $(document).on "mouseleave", "#search_results_table tbody tr", ->
+  $(document).on 'mouseleave', '#search_results_table tbody tr', ->
     $(this).css('textDecoration', 'none')
     $(this).css('font-size', '14px')
 
 #--------------------------------------------------------------------------------------------------------------------
 # Hide Book Details by default till book name is selected
 
-  $("#isbn").hide()
-  $("#author").hide()
-  $("#language").hide()
-  $("#genre").hide()
+  $('#isbn').hide()
+  $('#author').hide()
+  $('#language').hide()
+  $('#genre').hide()
 
 #--------------------------------------------------------------------------------------------------------------------
 
-  $(".edit_inventory").show() 
+  $('.edit_inventory').show() 
 
 #--------------------------------------------------------------------------------------------------------------------
-  $("#add_book").click ->
-    if ("#book_name").length isnt 0
-      if !$("#book_name_empty").is(":visible")
-        $("#add_book_form").submit()
+  $('#add_book').click ->
+    if ('#book_name').length isnt 0
+      if !$('#book_name_empty').is(':visible')
+        $('#add_book_form').submit()
 
 #--------------------------------------------------------------------------------------------------------------------
   # Online Status Updater
