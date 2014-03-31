@@ -54,7 +54,10 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
       user.email = auth.info.email
       if (auth.provider == 'facebook') || (auth.provider == 'google_oauth2')
-        user.encrypted_password = auth.info.first_name << ' ' << auth.info.last_name << ' ' << auth.extra.raw_info.gender
+        user.encrypted_password = auth.info.first_name << ' ' << auth.info.last_name << ' '
+        unless auth.extra.raw_info.gender.nil?
+          user.encrypted_password << auth.extra.raw_info.gender
+        end
       elsif auth.provider == 'twitter'
         social_name = auth.info.name.split
         user.encrypted_password = social_name[0] << ' ' << social_name[social_name.length-1]        
