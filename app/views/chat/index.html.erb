@@ -3,8 +3,8 @@
 <table class='table table-striped table-bordered table-hover table-condensed' id='conversations_table'>
   <thead>
     <tr>
-      <th>Book Name</th>
-      <th>Lender/Borrower</th>
+      <th><i class='fa fa-book'>&nbsp;&nbsp;</i>Book Name</th>
+      <th><i class='fa fa-user'>&nbsp;&nbsp;</i>Lender/Borrower</th>
       <th><i class='fa fa-envelope-o'>&nbsp;&nbsp;</i>Message</th>
       <th><i class='fa fa-comment-o'>&nbsp;&nbsp;</i>Chat</th>
     </tr>
@@ -12,7 +12,7 @@
   <tbody>
     <% if @current_transactions.empty? %>
       <tr>
-        <td colspan='4'>You have no active transactions as of now</td>
+        <td colspan='4' class='text-center'>Oops..You can't chat or message anyone since you haven't lent or brrowed any book right now</td>
       </tr>
     <% else %>
       <% @current_transactions.each do |t| %>

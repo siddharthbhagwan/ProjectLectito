@@ -114,6 +114,7 @@ $(document).ready ->
         $("#author_empty").fadeIn(300)
       else
         $("#author_empty").hide()
+        $("#book_name_empty").hide()
 
     select: (e, ui) ->
       $("#search_by_author").data("selected_item", ui.item.label)
@@ -149,6 +150,7 @@ $(document).ready ->
         $("#book_name_empty").fadeIn(300)
       else
         $("#book_name_empty").hide()
+        $("#author_empty").hide()
 
     select: (e, ui) ->
       $("#search_by_book_name").data("selected_item", ui.item.label)
