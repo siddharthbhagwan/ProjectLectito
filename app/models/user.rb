@@ -52,8 +52,13 @@ class User < ActiveRecord::Base
     where(auth.slice(:provider, :uid, :email)).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
-     # user.username = auth.info.nickname
       user.email = auth.info.email
+      if (auth.provider == 'facebook') || (auth.provider == 'google_oauth2')
+        user.encrypted_password = auth.info.first_name << ' ' << auth.info.last_name << ' ' << auth.extra.raw_info.gender
+      elsif auth.provider == 'twitter'
+        social_name = auth.info.name.split
+        user.encrypted_password = social_name[0] << ' ' << social_name[social_name.length-1]        
+      end
     end
   end
 
@@ -86,7 +91,7 @@ class User < ActiveRecord::Base
       'User'
     elsif roles_mask == 6
       'Administrator'
-    end      
+    end
   end
 
 end
