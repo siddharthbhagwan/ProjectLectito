@@ -1,6 +1,5 @@
 class Transaction < ActiveRecord::Base
-	#FIXME check for security of ids => primary key for users	
-  # attr_accessible :borrower_id, :lender_id, :status, :inventory_id
+	#FIXME check for security of ids => primary key for users
 
   validates :borrower_id, :lender_id, :status, :inventory_id , presence: true
 

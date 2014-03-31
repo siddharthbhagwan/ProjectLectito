@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     if profile.nil? or (profile.user_first_name.nil? and profile.user_last_name.nil?)
       email 
     else
-      profile.user_first_name + ' ' + profile.user_last_name
+      self.full_name
     end
   end
 
