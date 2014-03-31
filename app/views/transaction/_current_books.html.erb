@@ -38,11 +38,11 @@
 										<input class='btn btn-default' type='button' value='Received' id='received_borrower_<%= c.id %>' data-trid=<%= c.id %> />
 									</td>
 								<% else %>
-									<td>
+									<td class='text-center'>
 										<span id='p_current_<%= c.id %>'>Meetup as decided</span>
 									</td>
 									<td class='manage'>
-										<input class='btn btn-default' type='button' value='Received' id='received_borrower_<%= c.id %>' data-trid=<%= c.id %> />
+										<input class='btn btn-default' type='button' value="I've Received the book" id='received_borrower_<%= c.id %>' data-trid=<%= c.id %> />
 									</td>
 								<% end %>
 							<% elsif c.status == 'Received Borrower' %>

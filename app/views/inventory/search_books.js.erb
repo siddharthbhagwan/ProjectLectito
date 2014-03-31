@@ -9,7 +9,7 @@ $table.append('<thead>').children('thead').append('<tr />').children('tr').appen
 $tbody = $table.append('<tbody />').children('tbody');
 
 if (<%= @book_array.empty? %>) {
-	rental_data = "<td colspan='2'> Sorry, this book/books by this author arent available in your city </td>";
+	rental_data = "<td colspan='2' class='text-center'> Sorry, this book/books by this author arent available in your city, or have been lent out </td>";
 	table_row_id = '<tr>';
 	$tbody.append(table_row_id).children('tr:last').append(rental_data);
 } else {	
