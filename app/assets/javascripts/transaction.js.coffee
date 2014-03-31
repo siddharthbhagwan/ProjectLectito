@@ -700,9 +700,9 @@ $(document).ready ->
               $('#p_current_' + tr_id).text('Received by You')
 
             else
-              $('#received_borrower_' + tr_id).attr('value','Returned')
+              $('#received_borrower_' + tr_id).attr('value',"I've Returned the Book")
               $('#received_borrower_' + tr_id).attr('id','return_self')
-              $('#p_current_' + tr_id).text('Received by You. Meetup to Return')
+              $('#p_current_' + tr_id).text("You've got the book. Meetup to Return")
 
           complete: (jqXHR, textStatus) ->
 
@@ -748,8 +748,8 @@ $(document).ready ->
           success: (msg) ->
 
           complete: (jqXHR, textStatus) ->
-            $('#p_accepted_' + tr_id).text('Received by Borrower')
-            $('#handed_over_' + tr_id).attr('value','Received')
+            $('#p_accepted_' + tr_id).text("Borrower has it. Meetup once he's done reading")
+            $('#handed_over_' + tr_id).attr('value',"I've Received the Book")
             $('#handed_over_' + tr_id).attr('disabled','true')
             $('#handed_over_' + tr_id).attr('id','received_lender_' + tr_id)
             setTimeout $.unblockUI
@@ -888,8 +888,8 @@ $(document).ready ->
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
             #   td_status = "<td><span id='p_accepted_" + pData[1].id + "'> Meetup as decided</span><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td></tr>"
 
-            td_status_text = "<td><span id='p_accepted_" + pData[1].id + "'>Meetup as decided</span></td>"
-            td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='Handed Over' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
+            td_status_text = "<td class='text-center'><span id='p_accepted_" + pData[1].id + "'>Meetup as decided</span></td>"
+            td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='I&apos;ve Handed Over the book' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
@@ -941,8 +941,8 @@ $(document).ready ->
             #   td_delivery_mode = "<td>Self Pick/Drop</td>"
             #   td_status = "<td><span id='p_current_" + pData[1].id + "'> Meetup as decided</span><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td></tr>"
 
-            td_status_text = "<td><span id='p_current_" + pData[1].id + "'>Meetup as decided</span></td>"
-            td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='Received' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
+            td_status_text = "<td class='text-center'><span id='p_current_" + pData[1].id + "'>Meetup as decided</span></td>"
+            td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='I&apos;ve Received the book' id='received_borrower_" + pData[1].id + "' data-trid='" +  pData[1].id + "'/></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
             td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
@@ -1067,8 +1067,8 @@ $(document).ready ->
               $('#received_borrower_' + pData[1].id).attr('id', 'return_delivery')
 
             else
-              $('#p_current_' + pData[1].id).text('Received by You. Meetup to Return')
-              $('#received_borrower_' + pData[1].id).attr('value', 'Returned')
+              $('#p_current_' + pData[1].id).text("You've got the book. Meetup to Return")
+              $('#received_borrower_' + pData[1].id).attr('value', "I've Returned the book")
               $('#received_borrower_' + pData[1].id).attr('id', 'return_self')
 
 
@@ -1079,7 +1079,7 @@ $(document).ready ->
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
           timeline_data_content = timeline_data_content + '<u>Received</u><br/>' + pData[1].received_date + '</div>'
           timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
-          $('#p_accepted_' + pData[1].id).text('Received by Borrower')
+          $('#p_accepted_' + pData[1].id).text("Borrower has it. Meetup once he's done reading")
           noty
             text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
             layout: 'topRight'
@@ -1089,7 +1089,7 @@ $(document).ready ->
                 noty_confirm()
 
           if !pData[1].delivery_mode
-            $('#handed_over_' + pData[1].id).attr('value', 'Received')
+            $('#handed_over_' + pData[1].id).attr('value', "I've Received the Book")
             $('#handed_over_' + pData[1].id).attr('disabled', 'true')
             $('#handed_over_' + pData[1].id).attr('id', 'received_lender_' + pData[1].id)
 

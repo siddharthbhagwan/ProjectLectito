@@ -48,15 +48,15 @@
 							<% else %>
 
 								<% if a.returned_date.nil? %>
-									<td>
-										<span id='p_accepted_<%= a.id %>'>Received by Borrower</span>
+									<td class='text-center'>
+										<span id='p_accepted_<%= a.id %>'>Borrower has it. Meetup once he's done reading</span>
 									</td>
 									<td class='manage'>	
-										<input class='btn btn-default' type='button' value='Received' id='received_lender_<%= a.id %>' disabled='true' data-trid=<%= a.id %> />
+										<input class='btn btn-default' type='button' value="I've Received the Book" id='received_lender_<%= a.id %>' disabled='true' data-trid=<%= a.id %> />
 									</td>
 								<% else %>
-									<td>Returned by Borrower</td>
-									<td class='manage'><input class='btn btn-default' type='button' value='Received' id='received_lender_<%= a.id %>' data-trid=<%= a.id %> />
+									<td class='text-center'>Returned by Borrower</td>
+									<td class='manage'><input class='btn btn-default' type='button' value="I've Received the Book" id='received_lender_<%= a.id %>' data-trid=<%= a.id %> />
 									</td>
 								<% end %>
 
