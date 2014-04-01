@@ -24,22 +24,7 @@
 
 							<td><%= Address.find(Inventory.find(l.inventory_id).available_in_city).address_summary %></td>
 
-							<!-- Delivery Mode
-							<% if User.find(l.lender_id).is_delivery %>
-								<td>Delivery</td>
-							<% else %>
-								<td>Self Pick/Drop</td>
-							<% end %> -->
-
 							<td><%= l.status %></td>
-
-							<!-- 
-							<% if User.find(l.lender_id).is_delivery or User.find(l.borrower_id).is_delivery %>
-								<td><input class="btn btn-default" type="button" value="Accept" id="accept_delivery" data-trid=<%= l.id %> /></td>
-							<% else %>
-								<td><input class="btn btn-default" type="button" value="Accept" id="accept_self" data-trid=<%= l.id %> /></td>
-							<% end %>
-							-->
 							
 							<td class='manage'><input class='btn btn-default' type='button' value='Accept' id='accept_self' data-trid=<%= l.id %> /></td>
 
