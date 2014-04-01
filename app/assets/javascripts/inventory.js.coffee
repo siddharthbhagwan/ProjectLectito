@@ -28,9 +28,12 @@ $(document).ready ->
           search_by_book_name: search_by_book_name
 
         success: (msg) ->
+          if $('.frontpagesb').length
+            $('.frontpagesb').show()
           $('#search_text').html('<h5>Click on one of the titles to check availability</h5>').hide()
           $('#search_text').fadeIn(500)
-          $('html, body').animate({scrollTop:$('#search_text').offset().top}, 750)
+          $('html, body').animate({scrollTop:$('#search_text').offset().top-100}, 750)
+
 
         error: (jqXHR, textStatus, errorThrown) ->
           $('#error_message').dialog 'open'

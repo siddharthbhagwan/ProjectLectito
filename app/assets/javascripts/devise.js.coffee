@@ -25,3 +25,6 @@ $(document).ready ->
 # Code to add padding to jumbotron in case any label appears
   if ($('.label-success') || $('.label-important') || $('.label-info') || $('.label-error'))
     $('.jumbotron').addClass('jtp')
+
+# Hide Frontpage Div
+  $('.frontpagesb').hide()

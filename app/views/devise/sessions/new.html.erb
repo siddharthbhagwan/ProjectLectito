@@ -47,6 +47,18 @@
   </div>
 </div>
 
+<div class='sbg rounded-corners frontpagesb' id='loo'>
+  <div class='row'>
+    <div class='col-md-11'>
+      <div>
+        <h5 id='book_count'></h5>
+      </div>
+      <div id='search_text'></div>
+      <div id='dynamicTable'></div>
+    </div>
+  </div>
+</div>
+
 <br/><br/><br/>
 
 <div class='row'>
@@ -74,31 +86,17 @@
     <p class='text-center'>Great! Now meet up and get your book</p>
   </div>
 </div>
-<br/>
-<br/>
+<br/><br/>
 
-<div class='sbg rounded-corners'>
-
-  <div class='row'>
-    <div class='col-md-11'>
-      <div>
-        <h5 id='book_count'></h5>
-      </div>
-      <div id='search_text'></div>
-      <div id='dynamicTable'></div>
+<div id='sign_in_or_sign_up' title='Sign In'>
+  <div>
+    <p>Please select one to continue</p>
+    <div class='col-md-2 col-md-offset-1'>
+      <%= tag 'input', type: 'button', id: 'sign_in', class: 'btn btn-default btn-primary modal_login', value: 'Sign In' %>
+    </div>
+    <div class='col-md-2 col-md-offset-3'>
+      <%= link_to 'Sign-Up', new_user_registration_path, class: 'btn btn-success'%>
     </div>
   </div>
-
-  <div id='sign_in_or_sign_up' title='Sign In'>
-    <div>
-      <p>Please select one to continue</p>
-      <div class='col-md-2 col-md-offset-1'>
-        <%= tag 'input', type: 'button', id: 'sign_in', class: 'btn btn-default btn-primary modal_login', value: 'Sign In' %>
-      </div>
-      <div class='col-md-2 col-md-offset-3'>
-        <%= link_to 'Sign-Up', new_user_registration_path, class: 'btn btn-success'%>
-      </div>
-    </div>
-  </div>
-
 </div>
+
