@@ -72,51 +72,51 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
   # Create a Transaction on borrowing a book
-  $(document).on "click", ".borrow_button" ,->
-    $("#borrow_confirm").data "inventory_id", $(this).attr("data-ubid")
-    $("#borrow_confirm").data "city_id", $(this).attr("data-cityid")
-    $("#borrow_confirm").data "user_id", $(this).attr("data-uid")
-    $("#borrow_confirm").data "button_id", $(this).attr("id")
-    $("#borrow_confirm").data "row_number", button_id = $(this).closest("tr")[0].rowIndex - 1
-    $("#borrow_confirm_title").text($("#" + $(this).attr("data-cityid") + " td:nth-last-child(1)").text())
-    selftodel = $(this).attr("data-selftodel")
+  $(document).on 'click', '.borrow_button' ,->
+    $('#borrow_confirm').data 'inventory_id', $(this).attr('data-ubid')
+    $('#borrow_confirm').data 'city_id', $(this).attr('data-cityid')
+    $('#borrow_confirm').data 'user_id', $(this).attr('data-uid')
+    $('#borrow_confirm').data 'button_id', $(this).attr('id')
+    $('#borrow_confirm').data 'row_number', button_id = $(this).closest('tr')[0].rowIndex - 1
+    $('#borrow_confirm_title').text($('#' + $(this).attr('data-cityid') + ' td:nth-last-child(1)').text())
+    selftodel = $(this).attr('data-selftodel')
     if selftodel == 'true'
-      $("#selftodel").html("<b>Kindly note that a delivery charge of &#8377; 60 will be applicable<b>")
+      $('#selftodel').html('<b>Kindly note that a delivery charge of &#8377; 60 will be applicable<b>')
 
-    $("#borrow_confirm").dialog "open"
+    $('#borrow_confirm').dialog 'open'
 
 
-  $("#borrow_confirm").dialog
+  $('#borrow_confirm').dialog
     autoOpen: false
     modal: true
     resizable: false
     draggable: false
     buttons:
-      "Ok": ->
-        $(this).dialog "close"
+      'Ok': ->
+        $(this).dialog 'close'
         i = 0
         j = 0
-        inventory_id = $("#borrow_confirm").data("inventory_id")   
-        rental_data = $("#borrow_confirm").data("rental_data")
-        row_number = $("#borrow_confirm").data("row_number")
-        button_id = $("#borrow_confirm").data("button_id")
-        user_id = $("#borrow_confirm").data("user_id")
-        city_id = $("#borrow_confirm").data("city_id")
-        if $("#borrow_requests_table tr").length == 1
-          after_b = "0"
+        inventory_id = $('#borrow_confirm').data('inventory_id')   
+        rental_data = $('#borrow_confirm').data('rental_data')
+        row_number = $('#borrow_confirm').data('row_number')
+        button_id = $('#borrow_confirm').data('button_id')
+        user_id = $('#borrow_confirm').data('user_id')
+        city_id = $('#borrow_confirm').data('city_id')
+        if $('#borrow_requests_table tr').length == 1
+          after_b = '0'
         else
-          after_b = $("#borrow_requests_table tbody tr:last-child").attr("data-time")
+          after_b = $('#borrow_requests_table tbody tr:last-child').attr('data-time')
           
-        if $("#lend_requests_table tr").length == 1
-            after_l = "0"
+        if $('#lend_requests_table tr').length == 1
+            after_l = '0'
         else
-          after_l = $("#lend_requests_table tbody tr:last-child").attr("data-time")
+          after_l = $('#lend_requests_table tbody tr:last-child').attr('data-time')
 
         $.ajax
-            url: "/transaction.js"
-            type: "post"
-            context: "this"
-            dataType: "script"
+            url: '/transaction.js'
+            type: 'post'
+            context: 'this'
+            dataType: 'script'
             data:
               inventory_id: inventory_id
               user_id: user_id
@@ -129,9 +129,9 @@ $(document).ready ->
             success: (msg) ->
 
             complete: (jqXHR, textStatus) ->
-              $("#" + button_id).attr("disabled","true").attr("value","Request Sent...")
-              $("#city_" + city_id).hide()
-              $("#" + city_id).attr("data-status","closed")
+              $('#' + button_id).attr('disabled','true').attr('value','Request Sent...')
+              $('#city_' + city_id).hide()
+              $('#' + city_id).attr('data-status','closed')
               $("input[id^='timeline_']").popover
                 placement: 'right'
                 html: true
@@ -145,27 +145,27 @@ $(document).ready ->
               display_error(jqXHR.status) 
 
       Cancel: ->
-        $(this).dialog "close"       
+        $(this).dialog 'close'       
 
 #----------------------------------------------------------------------------------------------------------------------
 # Update a transaction on request being Accepted in delivery mode
-  $(document).on "click", "#accept_delivery", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#lend_" + tr_id
-    $("#accept_request_confirm").data "trid", tr_id
-    $("#accept_request_confirm").data "trids", tr_id_s
+  $(document).on 'click', '#accept_delivery', ->
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#lend_' + tr_id
+    $('#accept_request_confirm').data 'trid', tr_id
+    $('#accept_request_confirm').data 'trids', tr_id_s
     arr = []
     arr = $(tr_id_s).find("td").map(->
       @innerHTML
     ).get()
     html_data = "You are about to accept a request to borrow '" + arr[0] + "' from " + arr[1]
-    $("#accept_info").html(html_data)
-    $("#dispatch_date").datepicker
-      showOn: "button"
+    $('#accept_info').html(html_data)
+    $('#dispatch_date').datepicker
+      showOn: 'button'
       buttonImageOnly: true
-    $("#accept_request_confirm").dialog "open"
-    $("#accept_request_confirm").data "dispatch_date", $("#dispatch_date").val()
-    $("#accept_request_confirm").data "dispatch_time", $("input[type='radio'][name='dispatchTime']:checked").val()
+    $('#accept_request_confirm').dialog 'open'
+    $('#accept_request_confirm').data 'dispatch_date', $('#dispatch_date').val()
+    $('#accept_request_confirm').data 'dispatch_time', $("input[type='radio'][name='dispatchTime']:checked").val()
 
 
   $('#accept_request_confirm').dialog
