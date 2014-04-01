@@ -211,12 +211,12 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------
 
 # Update a transaction on request being Accepted in self pick/drop mode
-  $(document).on "click", "#accept_self", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#lend_" + tr_id
-    $("#accept_self_confirm").data "trid", tr_id
-    $("#accept_self_confirm").data "trids", tr_id_s
-    $("#accept_self_confirm").dialog "open"
+  $(document).on 'click', '#accept_self', ->
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#lend_' + tr_id
+    $('#accept_self_confirm').data 'trid', tr_id
+    $('#accept_self_confirm').data 'trids', tr_id_s
+    $('#accept_self_confirm').dialog 'open'
     
   $('#accept_self_confirm').dialog
     autoOpen: false
@@ -267,12 +267,12 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
 # Update a transaction on request being rejected
-  $(document).on "click", "#reject", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#lend_" + tr_id
-    $("#reject_request_confirm").data "trid", tr_id
-    $("#reject_request_confirm").data "trids", tr_id_s
-    $("#reject_request_confirm").dialog "open"
+  $(document).on 'click', '#reject', ->
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#lend_' + tr_id
+    $('#reject_request_confirm').data 'trid', tr_id
+    $('#reject_request_confirm').data 'trids', tr_id_s
+    $('#reject_request_confirm').dialog 'open'
 
 
   $('#reject_request_confirm').dialog
@@ -361,23 +361,23 @@ $(document).ready ->
            
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Return from borrowers side with pickup time
-  $(document).on "click", "#return_delivery", ->
-    tr_id = $(this).attr("data-trid")
-    tr_id_s = "#current_" + tr_id
-    $("#return_request_confirm").data "trid", tr_id
-    $("#return_request_confirm").data "trids", tr_id_s
+  $(document).on 'click', '#return_delivery', ->
+    tr_id = $(this).attr('data-trid')
+    tr_id_s = '#current_' + tr_id
+    $('#return_request_confirm').data 'trid', tr_id
+    $('#return_request_confirm').data 'trids', tr_id_s
     # arr = []
-    # arr = $(tr_id_s).find("td").map(->
+    # arr = $(tr_id_s).find('td').map(->
     #   @innerHTML
     # ).get()
-    # html_data = "You are about to accept a request to borrow " + arr[0] + " from " + arr[1]
-    # $("#accept_info").html(html_data)
+    # html_data = 'You are about to accept a request to borrow ' + arr[0] + ' from ' + arr[1]
+    # $('#accept_info').html(html_data)
     $('#borrower_returned_book_confirm').data 'trid', tr_id
     $('#borrower_returned_book_confirm').data 'trids', tr_id_s
     $('#borrower_returned_book_confirm').data 'mode', 'delivery'
     $('#borrower_returned_book_confirm').dialog 'open'
     $('#return_pickup_date').datepicker
-      showOn: "button"
+      showOn: 'button'
       buttonImageOnly: true
     $('#return_request_confirm').dialog 'open'
     $('#return_request_confirm').data 'return_date', $('#dispatch_date').val()
@@ -494,8 +494,8 @@ $(document).ready ->
           dataType: 'json'
           data:
             tr_id: tr_id
-            borrower_feedback: '
-            borrower_comments: '
+            borrower_feedback: ''
+            borrower_comments: ''
 
           beforeSend: ->
             before_send()
@@ -908,8 +908,8 @@ $(document).ready ->
           if !$('#current_' + pData[1].id).length
             noty
               text: pData[1].lender + " has agreed to lend you '" + pData[1].book_name + "'"
-              layout: "topRight"
-              closeWith: ["click"]
+              layout: 'topRight'
+              closeWith: ['click']
               callback:
                 onClose: ->
                   noty_confirm()
