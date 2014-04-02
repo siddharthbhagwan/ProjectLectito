@@ -694,7 +694,8 @@ $(document).ready ->
             before_send()
 
           success: (msg) ->
-            if msg
+            console.log msg.result
+            if msg.result
               $('#received_borrower_' + tr_id).attr('value','Return')
               $('#received_borrower_' + tr_id).attr('id','return_delivery')
               $('#p_current_' + tr_id).text('Received by You')
@@ -746,13 +747,16 @@ $(document).ready ->
             before_send()  
             
           success: (msg) ->
-
-          complete: (jqXHR, textStatus) ->
-            $('#p_accepted_' + tr_id).text("Borrower has it. Meetup once he's done reading")
+            if msg.gender is 'M'
+              $('#p_accepted_' + tr_id).text( msg.name + " has it. Meetup once he's done reading")
+            else
+              $('#p_accepted_' + tr_id).text( msg.name + " has it. Meetup once she's done reading")
             $('#handed_over_' + tr_id).attr('value',"I've Received the Book")
             $('#handed_over_' + tr_id).attr('disabled','true')
             $('#handed_over_' + tr_id).attr('id','received_lender_' + tr_id)
             setTimeout $.unblockUI
+
+          complete: (jqXHR, textStatus) ->
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -977,7 +981,7 @@ $(document).ready ->
             timeline_data_content = timeline_data_content + '<u>Returned</u><br/>' + pData[1].returned_date + '</div>'
             timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
             $('#received_lender_' + pData[1].id).removeAttr('disabled')
-            $('#p_accepted_' + pData[1].id).text('Returned by Borrower ').fadeIn(300)
+            $('#p_accepted_' + pData[1].id).text( pData[1].first_name + ' has returned it').fadeIn(300)
 
         else if pData[0] == 'rejected_lender'
           $('#timeline_' + pData[1].id).popover('destroy')
@@ -1079,7 +1083,10 @@ $(document).ready ->
           timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
           timeline_data_content = timeline_data_content + '<u>Received</u><br/>' + pData[1].received_date + '</div>'
           timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
-          $('#p_accepted_' + pData[1].id).text("Borrower has it. Meetup once he's done reading")
+          if pData[1].gender is 'M'
+            $('#p_accepted_' + pData[1].id).text( pData[1].first_name + " has it. Meetup once he's done reading")
+          else
+            $('#p_accepted_' + pData[1].id).text( pData[1].first_name + " has it. Meetup once she's done reading")
           noty
             text: pData[1].name + " has successfully received '" + pData[1].book_name + "'"
             layout: 'topRight'

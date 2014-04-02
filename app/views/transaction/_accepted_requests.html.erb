@@ -49,13 +49,17 @@
 
 								<% if a.returned_date.nil? %>
 									<td class='text-center'>
-										<span id='p_accepted_<%= a.id %>'>Borrower has it. Meetup once he's done reading</span>
+										<% if User.find(a.borrower_id).profile.gender == 'M' %>
+											<span id='p_accepted_<%= a.id %>'><%= User.find(a.borrower_id).profile.user_first_name %> has it. Meetup once he's done reading</span>
+										<% else %>
+											<span id='p_accepted_<%= a.id %>'><%= User.find(a.borrower_id).profile.user_first_name %> has it. Meetup once she's done reading</span>
+										<% end %>
 									</td>
 									<td class='manage'>	
 										<input class='btn btn-default' type='button' value="I've Received the Book" id='received_lender_<%= a.id %>' disabled='true' data-trid=<%= a.id %> />
 									</td>
 								<% else %>
-									<td class='text-center'>Returned by Borrower</td>
+									<td class='text-center'><%= User.find(a.borrower_id).profile.user_first_name %> has returned it</td>
 									<td class='manage'><input class='btn btn-default' type='button' value="I've Received the Book" id='received_lender_<%= a.id %>' data-trid=<%= a.id %> />
 									</td>
 								<% end %>

@@ -242,6 +242,7 @@ class TransactionController < ApplicationController
 		transaction_data = []
 		transaction_data << params[:borrower_feedback].to_s << params[:borrower_comments].to_s << params[:returned_date].to_s << params[:return_time].to_s
 		returned_transaction_status = returned_transaction.update_transaction('Returned', current_user.id, *transaction_data)
+		full_name = User.find(returned_transaction.borrower_id).full_name
 
 		if returned_transaction_status
 			returned_transaction_details = []
@@ -250,7 +251,8 @@ class TransactionController < ApplicationController
 				id: returned_transaction.id,
 				returned_date: returned_transaction.returned_date.to_s(:long),
 				book_name: Book.find(Inventory.find(returned_transaction.inventory_id).book_id).book_name,
-				name: User.find(returned_transaction.borrower_id).full_name
+				name: full_name,
+				first_name: full_name.split[0]
 			}
 
 			publish_channel = 'transaction_listener_' + returned_transaction.lender_id.to_s
@@ -297,6 +299,7 @@ class TransactionController < ApplicationController
 	def update_request_status_receive_borrower
 		borrower_received_transaction = Transaction.where(id: params[:tr_id]).take
 		borrower_received_transaction_status = borrower_received_transaction.update_transaction('Received Borrower', current_user.id, nil)
+		full_name = User.find(borrower_received_transaction.borrower_id).full_name
 
 		if borrower_received_transaction_status
 			# If action initiated by borrower, push notification to lender, and vice versa
@@ -308,7 +311,9 @@ class TransactionController < ApplicationController
 					book_name: Book.find(Inventory.find(borrower_received_transaction.inventory_id).book_id).book_name,
 					delivery_mode: (User.find(borrower_received_transaction.lender_id).is_delivery or User.find(borrower_received_transaction.borrower_id).is_delivery),
 					received_date: borrower_received_transaction.received_date.to_s(:long),
-					name: User.find(borrower_received_transaction.borrower_id).full_name
+					name: full_name,
+					first_name: full_name.split[0],
+					gender: User.find(borrower_received_transaction.borrower_id).profile.gender
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.lender_id.to_s
@@ -356,7 +361,9 @@ class TransactionController < ApplicationController
 		end
 
 		respond_to do |format|
-    		format.json  { render json: (User.find(borrower_received_transaction.lender_id).is_delivery or User.find(borrower_received_transaction.borrower_id).is_delivery).to_json }
+    		format.json  { render json: { result: (User.find(borrower_received_transaction.lender_id).is_delivery or User.find(borrower_received_transaction.borrower_id).is_delivery),
+    																name: User.find(borrower_received_transaction.borrower_id).profile.user_first_name,
+    																gender: User.find(borrower_received_transaction.borrower_id).profile.gender } }
 		end
 	end
 
