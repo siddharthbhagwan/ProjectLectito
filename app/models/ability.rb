@@ -13,6 +13,7 @@ class Ability
     	can :manage, Address
       can :manage, Transaction
       can :manage, Inventory
+      can :manage, Chat
     end
   end
 end
