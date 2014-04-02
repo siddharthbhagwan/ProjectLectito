@@ -15,8 +15,8 @@ if (<%= @book_array.empty? %>) {
 } else {	
 
 	<% @book_array.each do |b| %>
-		author_data = "<td id=author_<%= b.id %>'><%= b.author %></td><td><%= b.book_name %></td>";
-		table_row_id = "<tr id='<%= b.id %>' data-status='closed'>";
+		author_data = '<td id=author_<%= b.id %>><%= b.author %></td><td><%= b.book_name %></td>';
+		table_row_id = '<tr id=<%= b.id %> data-status=closed>';
 		$tbody.append(table_row_id).children('tr:last').append(author_data).append(book_name_data);		
 	<% end %>
 }

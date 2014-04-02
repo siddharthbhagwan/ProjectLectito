@@ -11,11 +11,11 @@ $(sub_table_id_s).remove()
 
 $final_table ="<tr id='city_<%= params[:book_id] %>'><td colspan='2'><table id='sub_search_results_table_<%= params[:book_id] %>' class='table table-hover table-condensed table-bordered'>"
 $table_ending = '</tbody></table></td></tr>'
-$table_header1 = "<thead><tr id='sub_search_results_table_header'><th>Lender</th>"
-$table_header2 = '<th>Avail@</th>'
+$table_header1 = "<thead><tr id='sub_search_results_table_header'><th><i class='fa fa-user'>&nbsp;&nbsp;</i>Who has the book</th>"
+$table_header2 = "<th><i class='fa fa-globe'>&nbsp;&nbsp;</i>Where is it</th>"
 $table_header3 = '<th>Delivery Mode</th>'
 $table_header4 = '<th>Delivery Charges ( &#8377; )</th>'
-$table_header5 = '<th>Borrow</th></tr></thead>'
+$table_header5 = "<th><i class='fa fa-hand-o-right'>&nbsp;&nbsp;</i>I'd like to borrow it!</th></tr></thead>"
 
 <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
   $table_header = $table_header1 + $table_header2 + $table_header5; //+ $table_header3 + $table_header5; // + $table_header4;
