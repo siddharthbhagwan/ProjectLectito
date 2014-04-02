@@ -66,7 +66,7 @@ class ProfileController < ApplicationController
     # Not verfied, send SMS
     p ' Reached OTP '
     if !User.find(current_user.id).otp_verification
-      p ' VERIFICATION IS FALSE'
+      # p ' VERIFICATION IS FALSE'
 
       user = User.find(current_user.id)
       @mobile_number  = user.profile.user_phone_no
@@ -128,19 +128,19 @@ class ProfileController < ApplicationController
         number_changed = false
       end
 
-      p ' Failed Attempts ' + otp_failed_attempts.to_s
-      p ' Failed Timestamp ' + otp_failed_timestamp.to_s
-      p ' Response Code ' + otp_response_code.to_s
-      p ' Old  number' + old_number.to_s
-      p ' Time Lapse Sent ' + time_lapse_sent.to_s
-      p ' new user ' + new_user.to_s
-      p ' day old_user ' + day_old_user.to_s
-      p ' just reload ' + just_reload.to_s
-      p ' number changed ' + number_changed.to_s
+      # p ' Failed Attempts ' + otp_failed_attempts.to_s
+      # p ' Failed Timestamp ' + otp_failed_timestamp.to_s
+      # p ' Response Code ' + otp_response_code.to_s
+      # p ' Old  number' + old_number.to_s
+      # p ' Time Lapse Sent ' + time_lapse_sent.to_s
+      # p ' new user ' + new_user.to_s
+      # p ' day old_user ' + day_old_user.to_s
+      # p ' just reload ' + just_reload.to_s
+      # p ' number changed ' + number_changed.to_s
 
 
       if (new_user || day_old_user || !just_reload || number_changed)
-        p ' VERIFICATION CODE SENT '
+        # p ' VERIFICATION CODE SENT '
         require 'net/http'
         verification_code = rand(100000..999999) 
         current_user.otp = verification_code
@@ -161,13 +161,13 @@ class ProfileController < ApplicationController
           user.save!
         end
       end
-      p ' OTP 1 '
+      # p ' OTP 1 '
     else
-      p ' OTP 2 '
+      # p ' OTP 2 '
       # Verified, no need of any action
       redirect_to '/inventory/search'
     end
-    p ' OTP 3 '
+    # p ' OTP 3 '
   end
 
   def otp_verification
@@ -239,7 +239,7 @@ class ProfileController < ApplicationController
         user.otp_sent = DateTime.now
         
         if user.save!
-          p ' I WAS HERER!'
+          # p ' I WAS HERER!'
           redirect_to profile_verification_path
           flash[:notice] = 'The code has been resent to ' + user.profile.user_phone_no.to_s + ' '
         end
