@@ -1,3 +1,5 @@
+<%= title('User History') %>
+
 <h3><%= User.find(params[:id]).full_name %>'s Transaction History</h3>
 
 <%= content_tag 'a', 'Filter By Date Range ->', id: :dates_filter_toggle %><br/><br/>

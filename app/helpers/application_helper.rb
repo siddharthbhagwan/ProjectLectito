@@ -1,5 +1,10 @@
 # Application Helper
 module ApplicationHelper
+
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
+
   def check_admin!
     current_user.check_admin
   end
