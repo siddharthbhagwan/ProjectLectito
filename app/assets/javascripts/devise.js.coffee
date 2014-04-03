@@ -4,7 +4,7 @@
 
 $(document).ready ->
   
-# Modal dialog for Sign in . Title bar is removed. And toggle code added  
+# Modal dialog for Sign in . Title bar is removed. And toggle code added
   $('.modal_login').click ->
     # Remove Title Bar
     $('#sign_in_div').parent().find('.ui-dialog-titlebar').remove();

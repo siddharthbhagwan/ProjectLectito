@@ -8,8 +8,8 @@ $(document).ready ->
     container: 'body'
 
 #--------------------------------------------------------------------------------------------------------------------
-
 # Search by book/author
+
   $('#search_books').on 'click', ->
     search_city = $('#city').val()
     search_by_author = $('#search_by_author').val()
@@ -36,7 +36,7 @@ $(document).ready ->
           $('html, body').animate({scrollTop:$('#search_text').offset().top-100}, 750)
 
         error: (jqXHR, textStatus, errorThrown) ->
-          $('#error_message').dialog 'open'          
+          $('#error_message').dialog 'open'
 
     if search_city
       if search_by_author.length or search_by_book_name.length
@@ -237,7 +237,7 @@ $(document).ready ->
 
 #--------------------------------------------------------------------------------------------------------------------
 
-  $('.edit_inventory').show() 
+  $('.edit_inventory').show()
 
 #--------------------------------------------------------------------------------------------------------------------
   $('#add_book').click ->

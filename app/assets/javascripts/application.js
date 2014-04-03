@@ -71,5 +71,4 @@ $(document).ready(function() {
     $(this).prev().removeClass('header_hover_current');
   });
 
-
 });

@@ -15,7 +15,7 @@ before_send = ->
     theme:     true,
     title:    'Please Wait',
     message:  '<p>Your request is being processed</p>'
-    draggable: false  
+    draggable: false
 
 #--------------------------------------------------------------------------------------------------------------------    
 
@@ -56,7 +56,7 @@ $(document).ready ->
 
 # DataTables For All tables with class as datatable
   oTable_admin_view = $('.datatable').dataTable(
-    oLanguage: sSearch: 'Search All : '    
+    oLanguage: sSearch: 'Search All : '
   )
 
   $('tfoot input').keyup ->    
@@ -114,7 +114,7 @@ jQuery ->
             display_error(jqXHR.status)
 
       Cancel: ->
-        $(this).dialog 'close'  
+        $(this).dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
 # Bar User Success Modal
@@ -126,7 +126,7 @@ jQuery ->
     draggable: false
     buttons:
       'Ok': ->
-        $(this).dialog 'close' 
+        $(this).dialog 'close'
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ jQuery ->
             $('#error_message').dialog 'open'
 
       Cancel: ->
-        $(this).dialog 'close'         
+        $(this).dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
 # UnBar User modal
@@ -194,12 +194,10 @@ jQuery ->
     draggable: false
     buttons:
       'Ok': ->
-        $(this).dialog 'close' 
-
+        $(this).dialog 'close'
          
 #--------------------------------------------------------------------------------------------------------------------
 # Span fix for sign in page
 jQuery ->
   if $('.jumbotron').length
     $('.col-md-12').removeClass('col-md-offset-1')
-

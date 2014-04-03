@@ -22,7 +22,6 @@ $(document).ready ->
   $(document).on 'mouseenter', '.fa-user', ->
     $(this).css('cursor', 'pointer')
 
-
 #--------------------------------------------------------------------------------------------------------------------
   # Modal Dialog for 403 Errors
   $('#error_message_403').dialog
@@ -69,7 +68,6 @@ $(document).ready ->
 
   empty_table_checks()
 
-
 #--------------------------------------------------------------------------------------------------------------------
   # Create a Transaction on borrowing a book
   $(document).on 'click', '.borrow_button' ,->
@@ -96,7 +94,7 @@ $(document).ready ->
         $(this).dialog 'close'
         i = 0
         j = 0
-        inventory_id = $('#borrow_confirm').data('inventory_id')   
+        inventory_id = $('#borrow_confirm').data('inventory_id')
         rental_data = $('#borrow_confirm').data('rental_data')
         row_number = $('#borrow_confirm').data('row_number')
         button_id = $('#borrow_confirm').data('button_id')
@@ -145,7 +143,7 @@ $(document).ready ->
               display_error(jqXHR.status) 
 
       Cancel: ->
-        $(this).dialog 'close'       
+        $(this).dialog 'close'
 
 #----------------------------------------------------------------------------------------------------------------------
 # Update a transaction on request being Accepted in delivery mode
@@ -155,7 +153,7 @@ $(document).ready ->
     $('#accept_request_confirm').data 'trid', tr_id
     $('#accept_request_confirm').data 'trids', tr_id_s
     arr = []
-    arr = $(tr_id_s).find("td").map(->
+    arr = $(tr_id_s).find('td').map(->
       @innerHTML
     ).get()
     html_data = "You are about to accept a request to borrow '" + arr[0] + "' from " + arr[1]
@@ -200,13 +198,13 @@ $(document).ready ->
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            display_error(jqXHR.status)     
+            display_error(jqXHR.status)
 
       Cancel: ->
         $(this).dialog 'close'
 
     open: (event, ui) ->
-      $(":button:contains('Ok')").focus()  
+      $(":button:contains('Ok')").focus()
 
 #--------------------------------------------------------------------------------------------------------------------
 
@@ -263,7 +261,7 @@ $(document).ready ->
         $(this).dialog 'close'
 
     open: (event, ui) ->
-      $(":button:contains('Ok')").focus()       
+      $(":button:contains('Ok')").focus()
 
 #--------------------------------------------------------------------------------------------------------------------
 # Update a transaction on request being rejected
@@ -296,7 +294,7 @@ $(document).ready ->
             reject_reason: reject_reason
 
           beforeSend: ->
-            before_send()  
+            before_send()
 
           success: (msg) ->
 
@@ -320,7 +318,7 @@ $(document).ready ->
 #Update transaction on request being cancelled
   $(document).on 'click', '.cancel_trans', ->
     $('#cancel_transaction').data 'tr_id', $(this).attr 'data-trid'
-    $('#cancel_transaction').dialog 'open'      
+    $('#cancel_transaction').dialog 'open'
 
 
   $('#cancel_transaction').dialog
@@ -353,12 +351,11 @@ $(document).ready ->
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            display_error(jqXHR.status)                    
+            display_error(jqXHR.status)
 
       Cancel: ->
         $(this).dialog 'close'
 
-           
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Return from borrowers side with pickup time
   $(document).on 'click', '#return_delivery', ->
@@ -423,11 +420,11 @@ $(document).ready ->
     beforeClose: (event) ->
       if event.keyCode is $.ui.keyCode.ESCAPE
         $(this).dialog 'close'
-        $('#borrower_returned_book_confirm').dialog 'close'    
+        $('#borrower_returned_book_confirm').dialog 'close'
 
 #--------------------------------------------------------------------------------------------------------------------
 # Initiate Return from borrowers side in self delivery mode
-  $(document).on 'click', '#return_self', ->  
+  $(document).on 'click', '#return_self', ->
     tr_id = $(this).attr('data-trid')
     tr_id_s = '#current_' + tr_id
     $('#borrower_returned_book_confirm').data 'trid', tr_id
@@ -457,7 +454,7 @@ $(document).ready ->
             borrower_comments: $("#borrower_comments").val()
 
           beforeSend: ->
-            before_send()  
+            before_send()
 
           success: (msg) ->
 
@@ -477,11 +474,11 @@ $(document).ready ->
             if $('#current_books_table tr').length == 1
               $('#current_books_div').hide()  
 
-            setTimeout $.unblockUI  
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            display_error(jqXHR.status)      
+            display_error(jqXHR.status)
 
       'Skip': ->
         $(this).dialog 'close'
@@ -517,11 +514,11 @@ $(document).ready ->
             if $('#current_books_table tr').length == 1
               $('#current_books_div').hide()
 
-            setTimeout $.unblockUI  
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
-            display_error(jqXHR.status)       
+            display_error(jqXHR.status)
   
 
       Cancel: ->
@@ -529,7 +526,7 @@ $(document).ready ->
         tr_id_s = $('#borrower_returned_book_confirm').data('trids')
         noty
           text: "You have initiated the return of '" + $('#current_' + tr_id + " td:nth-last-child(5)").text() + "'" 
-          layout: 'topRight'  
+          layout: 'topRight'
           closeWith: ['click']
           callback:
             onClose: ->
@@ -615,7 +612,7 @@ $(document).ready ->
             if $('#accepted_requests_table tr').length == 1
               $('#accepted_requests_div').hide()
 
-            setTimeout $.unblockUI  
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -645,7 +642,7 @@ $(document).ready ->
             if $('#accepted_requests_table tr').length == 1
               $('#accepted_requests_div').hide()
 
-            setTimeout $.unblockUI  
+            setTimeout $.unblockUI
 
           error: (jqXHR, textStatus, errorThrown) ->
             setTimeout $.unblockUI
@@ -655,7 +652,7 @@ $(document).ready ->
         $(this).dialog 'close'
 
     open: (event, ui) ->
-      $(":button:contains('Ok')").focus()      
+      $(":button:contains('Ok')").focus()
 
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on 'click', "input[id^='received_borrower_']", ->
@@ -715,7 +712,7 @@ $(document).ready ->
         $(this).dialog 'close'
 
     open: (event, ui) ->
-      $(":button:contains('Ok')").focus()      
+      $(":button:contains('Ok')").focus()
 
 #-------------------------------------------------------------------------------------------------------------------- 
   $(document).on 'click', "input[id^='handed_over_']", ->
@@ -872,13 +869,13 @@ $(document).ready ->
             td_book_name = '<td>' + pData[1].book_name + '</td>'
             
             if pData[1].online == 'Online'
-              td_b_base = "<img width='10' height='10' class='img-cirlce' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
+              td_b_base = "<img width='10' height='10' class='img-cirlce' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
             else
-              td_b_base = "<img width='10' height='10' class='img-circle' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "  
+              td_b_base = "<img width='10' height='10' class='img-circle' hidden='true' src='/assets/online_dot.png' data-trid='" + pData[1].id + "' id='online_" + pData[1].id + "' "
 
             td_b_ccn = "data-currentcn='" + pData[1].currentcn + "' "
             td_b_bcn = "data-borrowercn='" + pData[1].borrowercn + "' "
-            td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "  
+            td_b_lcn = "data-lendercn='" + pData[1].lendercn + "' "
             td_b_title = "data-title='" + pData[1].title + "' "
             online_dot = td_b_base + td_b_ccn + td_b_bcn + td_b_lcn + td_b_title + "/>"
             td_fa_user = "<td>&nbsp;<i class='fa fa-user' id='public_rating_" + pData[1].id + "'>&nbsp;</i>"
@@ -895,7 +892,7 @@ $(document).ready ->
             td_status_text = "<td class='text-center'><span id='p_accepted_" + pData[1].id + "'>Meetup as decided</span></td>"
             td_status_button = "<td class='manage'><input class='btn btn-default' type='button' value='I&apos;ve Handed Over the book' id='handed_over_" + pData[1].id + "' data-trid=" + pData[1].id + "></td>"
             td_acceptance_date = "<td>" + pData[1].acceptance_date + "</td>"
-            td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover' 
+            td_timeline_button = "<td class='manage'><input class='btn btn-default' type='button' value='View' id='timeline_" + pData[1].id + "' data-title='Timeline' rel='popover'
               data-content='<div style=font-size:90%;><u>Requested</u><br/>" + pData[1].requested_date + "<br/><u>Accepted</u><br/>" + pData[1].acceptance_date + "<br/></div>'></td></tr>"
             table_row_data = tr_id + td_book_name + td_fa_user + td_borrower + td_status_text + td_status_button + td_timeline_button
             $('#accepted_requests_table > tbody:last').append(table_row_data)
@@ -1013,7 +1010,7 @@ $(document).ready ->
                 noty_confirm()
 
           $('#timeline_' + pData[1].id).popover('destroy')
-          $('#lend_' + pData[1].id).remove()          
+          $('#lend_' + pData[1].id).remove()
           empty_table_checks()
 
         else if pData[0] == 'rejected'
@@ -1124,5 +1121,4 @@ $(document).ready ->
 
     error: (jqXHR, textStatus, errorThrown) ->
       # setTimeout $.unblockUI
-      # $('#error_message').dialog 'open' 
-
+      # $('#error_message').dialog 'open'
