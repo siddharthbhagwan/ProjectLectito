@@ -22,13 +22,13 @@
               <tr>
                 <td class='manage'><%= link_to 'Edit', edit_address_path(@address[k].id), class: 'btn btn-default '%></td>
                 <td class='manage'><%= link_to 'Delete', address_path(@address[k].id), method: 'delete', class: 'btn btn-default ', data: { confirm: 'Are You Sure' }%>
-                </td>                
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
         <% j+=1 %>
-      <% end %>    
+      <% end %>
     </div>  
     <% i = i + 1 %>
   <% end %>

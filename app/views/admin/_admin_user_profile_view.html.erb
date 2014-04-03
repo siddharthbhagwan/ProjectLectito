@@ -16,7 +16,7 @@
 				<td colspan='6'> This User has not yet built his profile </td>
 			<% else %>
 				<td><%= @user.welcome_name %></td>
-				<td><%= @user.profile.DoB.to_formatted_s(:long) %></td>    
+				<td><%= @user.profile.DoB.to_formatted_s(:long) %></td>
 				<td><%= @user.profile.gender %></td>
 				<td id='user_current_status'><%= @user.current_status %></td>
 				<td><%= @user.profile.user_phone_no %></td>

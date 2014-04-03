@@ -1,27 +1,27 @@
 <h4>Current Books</h4>
 
 <table class='table table-striped table-bordered table-condensed'>
-    <thead>
-        <tr>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Current Status</th>
-        </tr>
-    </thead>
+  <thead>
+    <tr>
+      <th>Book Name</th>
+      <th>Author</th>
+      <th>Current Status</th>
+    </tr>
+  </thead>
 
-    <tbody>
-        <% if @user.inventories.empty? %>
-            <tr>
-                <td colspan='4'>User has not uploaded any books as of now </td>
-            </tr>
-        <% else %>    
-            <% @user.inventories.where(deleted: false).each do |inventory| %>
-                <tr>
-                    <td><%= inventory.book.book_name %></td>
-                    <td><%= inventory.book.author %></td>
-                    <td><%= inventory.status %></td>
-                </tr>
-            <% end %>
-        <% end %>
-    </tbody>
+  <tbody>
+    <% if @user.inventories.empty? %>
+      <tr>
+        <td colspan='4'>User has not uploaded any books as of now </td>
+      </tr>
+    <% else %>
+      <% @user.inventories.where(deleted: false).each do |inventory| %>
+        <tr>
+          <td><%= inventory.book.book_name %></td>
+          <td><%= inventory.book.author %></td>
+          <td><%= inventory.status %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
 </table>

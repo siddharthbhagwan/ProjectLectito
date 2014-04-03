@@ -12,8 +12,7 @@ if (<%= @book_array.empty? %>) {
 	rental_data = "<td colspan='2' class='text-center'> Sorry, this book/books by this author arent available in your city, or have been lent out </td>";
 	table_row_id = '<tr>';
 	$tbody.append(table_row_id).children('tr:last').append(rental_data);
-} else {	
-
+} else {
 	<% @book_array.each do |b| %>
 		author_data = '<td id=author_<%= b.id %>><%= b.author %></td><td><%= b.book_name %></td>';
 		table_row_id = '<tr id=<%= b.id %> data-status=closed>';
