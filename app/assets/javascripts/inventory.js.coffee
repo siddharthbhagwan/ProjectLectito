@@ -1,12 +1,13 @@
 $(document).ready ->
 
 # Popover for timeline
-  $("input[id^='timeline_']").popover 
+  $("input[id^='timeline_']").popover
     placement: 'right'
     html: true
     trigger: 'hover'
     container: 'body'
 
+#--------------------------------------------------------------------------------------------------------------------
 
 # Search by book/author
   $('#search_books').on 'click', ->
@@ -34,10 +35,8 @@ $(document).ready ->
           $('#search_text').fadeIn(500)
           $('html, body').animate({scrollTop:$('#search_text').offset().top-100}, 750)
 
-
         error: (jqXHR, textStatus, errorThrown) ->
-          $('#error_message').dialog 'open'
-          
+          $('#error_message').dialog 'open'          
 
     if search_city
       if search_by_author.length or search_by_book_name.length
@@ -52,9 +51,9 @@ $(document).ready ->
       $('#city_validation').html('<h5>Please Select your city</h5>').hide()
       $('#city_validation').fadeIn(500)
 
-
 #--------------------------------------------------------------------------------------------------------------------
 # Search for book within the city
+
   $(document).on 'click', '#search_results_table tbody tr', (event) ->
     book_id = undefined
     fetch_sub_search_data = undefined
@@ -95,8 +94,7 @@ $(document).ready ->
               fetch_sub_search_data()
     else
       $(this).attr('data-status', 'closed')
-      $('#city_' + book_id).hide()      
-
+      $('#city_' + book_id).hide()
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Author
@@ -131,7 +129,6 @@ $(document).ready ->
     if value_selected == 'No Matching Results Found'
       $('#search_by_author').val('')
       ).autocomplete('widget').addClass('ddl-fixed-height');
-
 
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Book Name
@@ -168,9 +165,9 @@ $(document).ready ->
       $('#search_by_book_name').val('')
       ).autocomplete('widget').addClass('ddl-fixed-height');
 
-
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Adding Inventory
+
   $('#book_name').autocomplete( 
     source: (request, response) ->
       $.ajax
@@ -305,7 +302,5 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------
 # Highlight rows and make pointer clickable
 
-  $(document).on "mouseenter", "img[id^='online_']", ->
+  $(document).on 'mouseenter', "img[id^='online_']", ->
     $(this).css('cursor', 'pointer');
-
-#--------------------------------------------------------------------------------------------------------------------
