@@ -774,6 +774,7 @@ $(document).ready ->
     autoOpen: false
     modal: true
     resizable: false
+    draggable: false
 
 #---------------------------------------------------------------------------------------------------------------------
 
