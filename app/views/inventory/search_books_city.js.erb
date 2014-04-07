@@ -1,55 +1,54 @@
-var $tbody, button_element, rental_available_at, $rental_data ='<tbody>', table_row_id, row_number, delivery_charges;
+var $tbody, button_element, rental_available_at, $rental_data ='<tbody>', table_row_id, row_number, delivery_charges, $final_table='';
 
 city = $('#city').val()
-$table = $('<table>')
 sub_table_id = 'sub_search_results_table_' + <%= params[:book_id] %>
 sub_table_id_s = '#' + sub_table_id
 row_number = <%= params[:row_number] %>
-$(sub_table_id_s).remove()
+$(sub_table_id_s).remove();
 
-<% #TODO: add table expand retract (toggle)%>
+$sub_tr_beg = "<tr id='city_<%= params[:book_id] %>'><td colspan='2' style='overflow-x:scroll; white-space:nowrap; text-align:center'>"
+$sub_tr_end = '</td></tr>'
 
-$final_table ="<tr id='city_<%= params[:book_id] %>'><td colspan='2'><table id='sub_search_results_table_<%= params[:book_id] %>' class='table table-hover table-condensed table-bordered'>"
-$table_ending = '</tbody></table></td></tr>'
-$table_header1 = "<thead><tr id='sub_search_results_table_header'><th><i class='fa fa-user'>&nbsp;&nbsp;</i>Who has the book</th>"
-$table_header2 = "<th><i class='fa fa-globe'>&nbsp;&nbsp;</i>Where is it</th>"
-$table_header3 = '<th>Delivery Mode</th>'
-$table_header4 = '<th>Delivery Charges ( &#8377; )</th>'
-$table_header5 = "<th><i class='fa fa-hand-o-right'>&nbsp;&nbsp;</i>I'd like to borrow it!</th></tr></thead>"
-
-<% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
-  $table_header = $table_header1 + $table_header2 + $table_header5; //+ $table_header3 + $table_header5; // + $table_header4;
-<% else %>
-  $table_header = $table_header1 + $table_header2 + $table_header3 + $table_header5;
-<% end %>  
-$final_table = $final_table + $table_header;
+$sub_table_beg = "<table id='sub_search_results_table_<%= params[:book_id] %>' class='table table-hover table-condensed table-bordered table-striped' style='display:inline-table; margin-right:20px; width:200px; margin-bottom:0px;'><tbody style='white-space:normal;'>"
+$sub_table_end = '</tbody></table>'
 
 if (<%= @users_and_address.length %> === 0) {
   $('#city_<%= params[:book_id] %>').remove();
   $rental_data += "<tr><td colspan='4'> Sorry, this book isnt available in your city </td></tr>";
-  $final_table = $final_table + $rental_data + $table_ending;
+  $final_table = $sub_table_beg + $rental_data + $sub_table_end;
 
 } else {
+// Button Element
   <%= i = 0 %>
   <% while i < @users_and_address.length %>
     <%= j = i + 1 %>
+
+    // Button Element
     <% if !user_signed_in? %>
-      button_element = "<td class='manage'><input type='button' value='Send Request' class='btn btn-default borrow_button_offline' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
+      button_element = "<tr><td class='manage'>&nbsp;&nbsp;</i><input type='button' value='I&apos;d like to borrow it!' class='btn btn-default borrow_button_offline' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td></tr>";
     <% else %>
       if (<%= @transactions_requested.include?@users_and_address[i].id.to_s %>){
-        button_element = "<td class='manage'><input type='button' value='Request Sent' disabled = 'true' class='btn btn-default borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td>";
+        button_element = "<tr><td class='manage'><input type='button' value='Request Sent' disabled = 'true' class='btn btn-default borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>'/></td></tr>";
       }
       else {
         <% if !current_user.is_delivery and User.find(@users_and_address[i].user_id).is_delivery  %>
-          button_element = "<td class='manage'><input type='button' value='Send Request' class='btn btn-default borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-selftodel='true' data-cityid ='<%= params[:book_id] %>' /></td>";
+          button_element = "<tr><td class='manage' colspan='2'><input type='button' value='I&apos;d like to borrow it!' class='btn btn-default borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-selftodel='true' data-cityid ='<%= params[:book_id] %>' /></td></tr>";
         <% else %>
-          button_element = "<td class='manage'><input type='button' value='Send Request' class='btn btn-default borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-selftodel='false' data-cityid ='<%= params[:book_id] %>' /></td>";
+          button_element = "<tr><td class='manage' colspan='2'><input type='button' value='I&apos;d like to borrow it!' class='btn btn-default borrow_button' id='borrow_<%= @users_and_address[i].id %>' data-uid='<%= @users_and_address[i].user_id %>' data-ubid='<%= @users_and_address[i].id %>' data-selftodel='false' data-cityid ='<%= params[:book_id] %>' /></td></tr>";
         <% end %>
       }
     <% end %>
+
+    // Delivery
     delivery_charges = '<td>60</td>'
-    rental_available_at = '<td>' + '<%= @users_and_address[j].locality %>' + '/' + '<%= @users_and_address[j].city %>' + '</td>';
-    lender_name = '<td>' + '<%= @users_and_address[i].user.full_name %>'  + '</td>';
+
+    // Address
+    rental_available_at = "<tr><td colspan='2'>" + "<i class='fa fa-globe'>&nbsp;&nbsp;</i><%= @users_and_address[j].address_summary %>" + '</td></tr>';
+
+    // Lender Name
+    lender_name = '<td>' + "<i class='fa fa-user'>&nbsp;&nbsp;</i><%= @users_and_address[i].user.full_name %>" + '</td>';
+
+    // Delivery Mode
     <% if @users_and_address[i].user.is_delivery %>{
       delivery_mode = '<td>Delivery</td>';
     }
@@ -57,17 +56,21 @@ if (<%= @users_and_address.length %> === 0) {
       delivery_mode = '<td>Self Pick/Drop</td>';
     }
     <% end %>
+
+    // Rental Data
     <% if !user_signed_in? || current_user.is_delivery || @delivery_uwb %>
-      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + button_element; // + delivery_mode + button_element + "</tr>"; //+ delivery_charges 
+      $rental_data = rental_available_at + button_element; // + delivery_mode + button_element + "</tr>"; //+ delivery_charges 
     <% else %>
-      $rental_data += "<tr id='sub_search'>" + lender_name + rental_available_at + delivery_mode + button_element + '</tr>';
+      $rental_data = lender_name + rental_available_at + button_element;
     <% end %>
+
+    $final_table += $sub_table_beg + $rental_data + $sub_table_end
 
     <%= i = i + 2 %>
   <% end %>
-  
+
   $('#city_<%= params[:book_id] %>').remove();
-  $final_table = $final_table + $rental_data + $table_ending
+  $final_table = $sub_tr_beg + $final_table + $sub_tr_end
 }
 
 $('#book_count').text(<%= ((@users_and_address.length.to_i)/2).to_s %> +  ' book(s) found');

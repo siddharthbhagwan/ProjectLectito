@@ -2,7 +2,7 @@
 
 var $table, $tbody, author_data, book_name_data, rental_data, table_row_id;
 
-$table = $('<table>');
+$table = $("<table style='table-layout:fixed;'>");
 $table.attr('class', 'table table-hover table-bordered');
 $table.attr('id', 'search_results_table');
 $table.append('<thead>').children('thead').append('<tr />').children('tr').append('<th>Author</th><th>Book Name</th>');
@@ -20,3 +20,4 @@ if (<%= @book_array.empty? %>) {
 	<% end %>
 }
 	$table.fadeIn(500).appendTo('#dynamicTable');
+  
