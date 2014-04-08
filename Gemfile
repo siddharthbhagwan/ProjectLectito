@@ -50,6 +50,12 @@ group :development do
   gem 'meta_request'
   gem 'debugger'
   gem 'rubocop'
+
+  gem 'rspec-rails', '2.14.1'
+  gem 'shoulda-matchers', '1.5.4'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  
 end
 
 group :production do
