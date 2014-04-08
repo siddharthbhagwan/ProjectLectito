@@ -9,13 +9,6 @@ describe User do
     new_user.should have(1).error_on(:email)
   end
 
-  # Model Methods
-
-  it 'should return default delivery status , false' do 
-    new_user = User.new
-    new_user.is_delivery.should == 'false'
-  end
-
   # Associations
 
   it 'Should have many inventories ' do
