@@ -3,8 +3,10 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'faker'
+
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -46,4 +48,7 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  # Capybara
+  config.include Capybara::DSL
 end

@@ -4,10 +4,6 @@ ruby '2.0.0'
 
 gem 'rails', '4.0.3'
 gem 'activesupport', '4.0.3'
-
-# Bundle edge Rails instead:
-# gem 'rails', git: 'git://github.com/rails/rails.git'
-
 gem 'devise', '3.1.0'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
@@ -61,6 +57,10 @@ end
 group :production do
   gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
   gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
+end
+
+group :test do
+  gem 'capybara', '2.2.1'
 end
 
 gem 'pg', '0.17.1'

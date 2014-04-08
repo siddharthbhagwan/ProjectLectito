@@ -71,6 +71,12 @@ GEM
     builder (3.1.4)
     callsite (0.0.11)
     cancan (1.6.7)
+    capybara (2.2.1)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chronic (0.10.2)
@@ -156,6 +162,7 @@ GEM
       railties
     metaclass (0.0.4)
     mime-types (1.25.1)
+    mini_portile (0.5.2)
     minitest (4.7.5)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
@@ -163,6 +170,8 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     newrelic_rpm (3.7.3.204)
+    nokogiri (1.6.1)
+      mini_portile (~> 0.5.0)
     oauth (0.4.7)
     oauth2 (0.9.3)
       faraday (>= 0.8, < 0.10)
@@ -295,6 +304,8 @@ GEM
     values (1.5.0)
     warden (1.2.3)
       rack (>= 1.0)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -308,6 +319,7 @@ DEPENDENCIES
   blockuijs-rails!
   bootstrap-sass (~> 3.0.3.0)
   cancan (= 1.6.7)
+  capybara (= 2.2.1)
   coffee-rails (= 4.0.0)
   debugger
   devise (= 3.1.0)
