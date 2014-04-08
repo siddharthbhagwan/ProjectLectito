@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 10 Tests
+# 12 Tests
 
 describe Profile do
 
@@ -58,6 +58,18 @@ describe Profile do
 
   # Short hand
   # it { should validate_presence_of(:user_phone_no) }
+
+  # Model methods
+
+  it 'should return users intitals ' do
+    new_profile = Profile.new(user_first_name: :Siddhartha, user_last_name: :Bhagwan, DoB: Date.today, gender: :M, user_phone_no: '9637396836')
+    new_profile.chat_name.should == 'SB'
+  end
+
+  it 'should return the sms updates status as false by default ' do
+    new_profile = Profile.new(user_first_name: :Siddhartha, user_last_name: :Bhagwan, DoB: Date.today, gender: :M, user_phone_no: '9637396836')
+    new_profile.sms_updates.should == 'No'
+  end
 
   # Assocations
 
