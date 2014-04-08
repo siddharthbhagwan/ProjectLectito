@@ -14,10 +14,6 @@ class User < ActiveRecord::Base
          :token_authenticatable, :confirmable,
   		 :lockable, :timeoutable, :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
 
-  # Setup accessible (or protected) attributes for your model
-  # attr_accessible :email, :password, :password_confirmation, :remember_me, :roles_mask
-  # attr_accessible :title, :body
-
   # Active Record Associations
   has_one :profile, dependent: :destroy
   has_many :addresses, dependent: :destroy

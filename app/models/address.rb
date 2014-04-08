@@ -1,4 +1,5 @@
 class Address < ActiveRecord::Base
+  
   validates :address_line1, :pin, presence: { message: "Can't be empty" }
   validates :pin, numericality: true
 
