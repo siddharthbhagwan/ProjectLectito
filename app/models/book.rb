@@ -1,7 +1,7 @@
 # Model describing attributes of a Book
 class Book < ActiveRecord::Base
 
-  # validates :ISBN, :author, :book_name, presence: {message: "Can't be empty"}
+  validates :isbn, :author, :book_name, :language, :genre, presence: { message: "Can't be empty" }
 
   # Associations
   has_many :inventories
