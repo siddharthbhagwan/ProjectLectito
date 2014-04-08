@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 9 Tests
+# 10 Tests
 
 describe Profile do
 
@@ -58,4 +58,12 @@ describe Profile do
 
   # Short hand
   # it { should validate_presence_of(:user_phone_no) }
+
+  # Assocations
+
+  it 'Should belong to a user' do
+    user_association = Profile.reflect_on_association(:user)
+    user_association.macro.should == :belongs_to
+  end
+
 end

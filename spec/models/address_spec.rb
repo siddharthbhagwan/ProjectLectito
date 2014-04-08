@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 4 tests
+# 5 tests
 
 describe Address do
   
@@ -23,6 +23,13 @@ describe Address do
     new_address = Address.new(address_line1: 'Iris L 902', pin: '411028')
     new_address.save
     expect(Address.count).to eq 1
+  end
+
+  # Associations
+
+  it 'Should belong to a user ' do
+    user_association = Address.reflect_on_association(:user)
+    user_association.macro.should == :belongs_to
   end
 
 end
