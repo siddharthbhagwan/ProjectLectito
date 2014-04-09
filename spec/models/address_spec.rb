@@ -3,6 +3,11 @@ require 'spec_helper'
 # 7 tests
 
 describe Address do
+
+  it 'Should have a line 1' do
+    new_address = Addres.new
+    new_address.should have(1).error_on(:user_id)
+  end
   
   it 'Should have a line 1' do
     new_address = Address.new(address_line1: '')
