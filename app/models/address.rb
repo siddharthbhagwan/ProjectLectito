@@ -1,7 +1,7 @@
 class Address < ActiveRecord::Base
   
   validates :address_line1, :pin, presence: { message: "Can't be empty" }
-  validates :pin, numericality: true
+  validates :pin, numericality: true, inclusion: { in: 100000..999999 , message: 'must have 6 digits' }
 
   belongs_to :user
 

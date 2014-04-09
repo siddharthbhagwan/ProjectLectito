@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 5 tests
+# 7 tests
 
 describe Address do
   
@@ -11,11 +11,21 @@ describe Address do
 
   it 'Should have an pin' do
     new_address = Address.new(pin: '')
-    new_address.should have(2).error_on(:pin)
+    new_address.should have(3).error_on(:pin)
   end
 
   it 'Should have an pin which should be a number' do
     new_address = Address.new(pin: 'not a number')
+    new_address.should have(2).error_on(:pin)
+  end
+
+  it 'Should have an pin which should be a number less than 999999 (not more than 6 digits)' do
+    new_address = Address.new(pin: 1231231)
+    new_address.should have(1).error_on(:pin)
+  end
+
+  it 'Should have an pin which should be a number grater than 100000 (not less than 6 digits)' do
+    new_address = Address.new(pin: 123)
     new_address.should have(1).error_on(:pin)
   end
 
