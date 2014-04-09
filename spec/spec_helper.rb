@@ -18,13 +18,6 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
 
-  # Include Factory Girl
-  # config.include FactoryGirl::Syntax::Methods
-
-  # Email Spec Helpers and Matchers
-  config.include(EmailSpec::Helpers)
-  config.include(EmailSpec::Matchers)
-  
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
