@@ -11,7 +11,7 @@
     <%= render 'error_messages' %>
 
     <%= f.text_area :address_line1, size: '20x6', placeholder: 'Address', required: :true, class: 'form-control' %>
-    <%= f.number_field :pin, placeholder: :Pin, required: true, class: 'form-control' %>
+    <%= f.number_field :pin, placeholder: :Pin, required: true, numericality: :true, max: '999999', min: '100000', class: 'form-control' %>
 
     </br>
 
