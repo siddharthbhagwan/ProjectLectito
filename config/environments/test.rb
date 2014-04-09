@@ -31,4 +31,28 @@ ProjectLectito::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  ENV['firebase_url'] = 'https://devprojectlectito.firebaseio.com/'
+
+  # MSG91 URL
+  ENV['msg91_url'] = 'https://control.msg91.com/api/sendhttp.php?authkey=64435AVXoM3F6kL4532011ef'
+
+  #Default Url
+  config.action_mailer.default_url_options = { :host => 'localhost:3006' }
+
+  config.action_mailer.delivery_method = :smtp
+
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = {
+    :enable_starttls_auto => true,  
+    :address            => 'smtp.gmail.com',
+    :port               => 587,
+    :domain             => 'gmail.com', #you can also use google.com
+    :authentication     => :plain,
+    :user_name          => 'sidunderscoresss@gmail.com',
+    :password           => 'Mangalia0!'
+  }
+
 end
