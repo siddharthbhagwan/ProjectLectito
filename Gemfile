@@ -61,6 +61,7 @@ end
 
 group :test do
   gem 'capybara', '2.2.1'
+  gem 'launchy', '~> 2.4.2'
 end
 
 gem 'pg', '0.17.1'

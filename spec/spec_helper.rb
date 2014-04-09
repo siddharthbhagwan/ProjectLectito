@@ -7,6 +7,7 @@ require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'faker'
 
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -19,6 +20,10 @@ RSpec.configure do |config|
 
   # Include Factory Girl
   # config.include FactoryGirl::Syntax::Methods
+
+  # Email Spec Helpers and Matchers
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
   
   # ## Mock Framework
   #

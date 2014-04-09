@@ -12,7 +12,7 @@ describe 'user sign in' do
 
     page.find('.nfp').click
 
-    $stderr.puts '++++'
     page.should have_content('Signed in successfully')
+
   end
 end

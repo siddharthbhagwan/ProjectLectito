@@ -11,5 +11,6 @@ describe 'user registration' do
     click_button 'Sign up'
 
     page.should have_content('A message with a confirmation link has been sent to your email address. Please open the link to activate your account ')
+    
   end
 end
