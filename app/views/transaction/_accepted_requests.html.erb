@@ -15,21 +15,21 @@
 					<% @accept.each do |a| #CHECKID %>
 						<tr id='accepted_<%= a.id %>' >
 
-							<td><%= Book.find(Inventory.find(a.inventory_id).book_id).book_name %></td>
+							<td><%= a.inventory.book.book_name %></td>
 
 							<td>
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= a.id %>'>&nbsp;</i>
-								<%= link_to User.find(a.borrower_id).full_name,  "javascript:void(0)", id: "name_chat_#{a.id}" %> &nbsp;
-								<% if (DateTime.now.to_time - Profile.where(user_id: a.borrower_id).first.last_seen_at < 6.5 ) %>
-									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + a.id.to_s, 'data-trid' => a.id, 'data-currentcn' => User.find(current_user.id).profile.chat_name, 'data-lendercn' => User.find(a.lender_id).profile.chat_name, 'data-borrowercn' => User.find(a.borrower_id).profile.chat_name, 'data-title' => Book.where(id: Inventory.where(id: a.inventory_id).take.book_id).take.book_name) %>
+								<%= link_to a.borrower.full_name,  "javascript:void(0)", id: "name_chat_#{a.id}" %> &nbsp;
+								<% if (DateTime.now.to_time - a.borrower.profile.last_seen_at < 6.5 ) %>
+									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + a.id.to_s, 'data-trid' => a.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => a.lender.profile.chat_name, 'data-borrowercn' => a.borrower.profile.chat_name, 'data-title' => a.inventory.book.book_name) %>
 								<% else %>
-									<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + a.id.to_s, 'data-trid' => a.id, 'data-currentcn' => User.find(current_user.id).profile.chat_name, 'data-lendercn' => User.find(a.lender_id).profile.chat_name, 'data-borrowercn' => User.find(a.borrower_id).profile.chat_name, 'data-title' => Book.where(id: Inventory.where(id: a.inventory_id).take.book_id).take.book_name) %>
+									<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + a.id.to_s, 'data-trid' => a.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => a.lender.profile.chat_name, 'data-borrowercn' => a.borrower.profile.chat_name, 'data-title' => a.inventory.book.book_name) %>
 								<% end %>
 							</td>
 							
 							<% if a.status == 'Accepted' %>
 
-								<% if (User.find(a.lender_id).is_delivery or User.find(a.borrower_id).is_delivery) %>
+								<% if (a.lender.is_delivery or a.borrower.is_delivery) %>
 									<td>
 										<span id='p_accepted_<%= a.id %>'>Sent to Borrower</span>
 									</td>
@@ -49,17 +49,17 @@
 
 								<% if a.returned_date.nil? %>
 									<td class='text-center'>
-										<% if User.find(a.borrower_id).profile.gender == 'M' %>
-											<span id='p_accepted_<%= a.id %>'><%= User.find(a.borrower_id).profile.user_first_name %> has it. Meetup once he's done reading</span>
+										<% if a.borrower.profile.gender == 'M' %>
+											<span id='p_accepted_<%= a.id %>'><%= a.borrower.profile.user_first_name %> has it. Meetup once he's done reading</span>
 										<% else %>
-											<span id='p_accepted_<%= a.id %>'><%= User.find(a.borrower_id).profile.user_first_name %> has it. Meetup once she's done reading</span>
+											<span id='p_accepted_<%= a.id %>'><%= a.borrower.profile.user_first_name %> has it. Meetup once she's done reading</span>
 										<% end %>
 									</td>
 									<td class='manage'>	
 										<input class='btn btn-default' type='button' value="I've Received the Book" id='received_lender_<%= a.id %>' disabled='true' data-trid=<%= a.id %> />
 									</td>
 								<% else %>
-									<td class='text-center'><%= User.find(a.borrower_id).profile.user_first_name %> has returned it</td>
+									<td class='text-center'><%= a.borrower.profile.user_first_name %> has returned it</td>
 									<td class='manage'><input class='btn btn-default' type='button' value="I've Received the Book" id='received_lender_<%= a.id %>' data-trid=<%= a.id %> />
 									</td>
 								<% end %>
