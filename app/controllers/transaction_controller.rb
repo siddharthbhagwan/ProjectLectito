@@ -30,14 +30,14 @@ class TransactionController < ApplicationController
 			transaction_details << 'create'
 			transaction_details << {
 				id: @transaction.id,
-				book_name: Book.find(Inventory.find(@transaction.inventory_id).book_id).book_name,
+				book_name: @transaction.inventory.book.book_name,
 				requested_from: Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
 				requested_date: @transaction.request_date.to_s(:long),
 				status: @transaction.status,
-				borrower: User.find(@transaction.borrower_id).full_name,
-				delivery_mode: (User.find(@transaction.borrower_id).is_delivery or User.find(@transaction.lender_id).is_delivery),
+				borrower: @transaction.borrower.full_name,
+				delivery_mode: (@transaction.borrower.is_delivery or @transaction.lender.is_delivery),
 				online: online_status,
-				name: User.find(current_user.id).full_name
+				name: current_user.full_name
 			}
 
 			publish_channel = 'transaction_listener_' + @transaction.lender_id.to_s
@@ -84,7 +84,7 @@ class TransactionController < ApplicationController
 						reject_update_borrower << 'rejected_borrower'
 						reject_update_borrower << {
 							id: reject_each.id.to_s,
-							book_name: Book.find(Inventory.find(accepted_request.inventory_id).book_id).book_name
+							book_name: accepted_request.inventory.book.book_name
 						}
 
 						if reject_each.save
@@ -105,16 +105,16 @@ class TransactionController < ApplicationController
 
 			# Once saved, push notifications to fb
 	    #TODO Check for code optimization
-	    book_name = Book.find(Inventory.find(accepted_request.inventory_id).book_id).book_name
+	    book_name = accepted_request.inventory.book.book_name
 	    acceptance_date = accepted_request.acceptance_date.to_s(:long)
-	    delivery_mode = (User.find(accepted_request.borrower_id).is_delivery or User.find(accepted_request.lender_id).is_delivery)
-	    currentcn = User.find(current_user.id).profile.chat_name
-	    borrowercn = User.find(accepted_request.borrower_id).profile.chat_name
-	    lendercn = User.find(accepted_request.lender_id).profile.chat_name
-	    title = Book.where(id: Inventory.where(id: accepted_request.inventory_id).take.book_id).take.book_name
+	    delivery_mode = (accepted_request.borrower.is_delivery or accepted_request.lender.is_delivery)
+	    currentcn = current_user.profile.chat_name
+	    borrowercn = accepted_request.borrower.profile.chat_name
+	    lendercn = accepted_request.lender.profile.chat_name
+	    title = accepted_request.inventory.book.book_name
 	    request_date = accepted_request.request_date.to_s(:long)
 
-	    lsa_borrower = Profile.where(user_id: accepted_request.borrower_id).take.last_seen_at
+	    lsa_borrower = accepted_request.borrower.profile.last_seen_at
 			if (DateTime.now.to_time - lsa_borrower).seconds < 6
 				online_status_borrower = 'Online'
 			else
@@ -128,7 +128,7 @@ class TransactionController < ApplicationController
 				book_name: book_name,
 				acceptance_date: acceptance_date,
 				requested_date: request_date,
-				borrower: User.find(accepted_request.borrower_id).full_name,
+				borrower: accepted_request.borrower.full_name,
 				delivery_mode: delivery_mode,
 				borrower_id: accepted_request.borrower_id,
 				online: online_status_borrower,
@@ -138,7 +138,7 @@ class TransactionController < ApplicationController
 				title: title
 			}
 
-			lsa_lender = Profile.where(user_id: accepted_request.lender_id).take.last_seen_at
+			lsa_lender = accepted_request.lender.profile.last_seen_at
 			if (DateTime.now.to_time - lsa_lender).seconds < 6
 				online_status_lender = 'Online'
 			else
@@ -152,7 +152,7 @@ class TransactionController < ApplicationController
 				book_name: book_name,
 				acceptance_date: acceptance_date,
 				requested_date: request_date,
-				lender: User.find(accepted_request.lender_id).full_name,
+				lender: accepted_request.lender.full_name,
 				delivery_mode: delivery_mode,
 				online: online_status_lender,
 				currentcn: currentcn,
@@ -191,9 +191,9 @@ class TransactionController < ApplicationController
 			transaction_rejected << 'rejected'
 			transaction_rejected << {
 				id: rejected_transaction.id.to_s,
-				book_name: Book.find(Inventory.find(rejected_transaction.inventory_id).book_id).book_name,
+				book_name: rejected_transaction.inventory.book.book_name,
 				reason: params[:reject_reason],
-				name: User.find(rejected_transaction.lender_id).full_name
+				name: rejected_transaction.lender.full_name
 			}
 
 			publish_channel = 'transaction_listener_' + rejected_transaction.borrower_id.to_s
@@ -220,7 +220,7 @@ class TransactionController < ApplicationController
 			cancelled_transaction_details << 'cancelled'
 			cancelled_transaction_details << {
 				id: cancelled_transaction.id.to_s,
-				book_name: Book.find(Inventory.find(cancelled_transaction.inventory_id).book_id).book_name,
+				book_name: cancelled_transaction.inventory.book.book_name,
 			}
 
 			publish_channel = 'transaction_listener_' + cancelled_transaction.lender_id.to_s
@@ -242,7 +242,7 @@ class TransactionController < ApplicationController
 		transaction_data = []
 		transaction_data << params[:borrower_feedback].to_s << params[:borrower_comments].to_s << params[:returned_date].to_s << params[:return_time].to_s
 		returned_transaction_status = returned_transaction.update_transaction('Returned', current_user.id, *transaction_data)
-		full_name = User.find(returned_transaction.borrower_id).full_name
+		full_name = returned_transaction.borrower.full_name
 
 		if returned_transaction_status
 			returned_transaction_details = []
@@ -250,7 +250,7 @@ class TransactionController < ApplicationController
 			returned_transaction_details << {
 				id: returned_transaction.id,
 				returned_date: returned_transaction.returned_date.to_s(:long),
-				book_name: Book.find(Inventory.find(returned_transaction.inventory_id).book_id).book_name,
+				book_name: returned_transaction.inventory.book.book_name,
 				name: full_name,
 				first_name: full_name.split[0]
 			}
@@ -282,8 +282,8 @@ class TransactionController < ApplicationController
 			received_transaction_details << 'received_lender'
 			received_transaction_details << {
 				id: received_transaction.id,
-				book_name: Book.find(Inventory.find(received_transaction.inventory_id).book_id).book_name,
-				name: User.find(received_transaction.lender_id).full_name
+				book_name: received_transaction.inventory.book.book_name,
+				name: received_transaction.lender.full_name
 			}
 
 			publish_channel = 'transaction_listener_' + received_transaction.borrower_id.to_s
@@ -299,7 +299,7 @@ class TransactionController < ApplicationController
 	def update_request_status_receive_borrower
 		borrower_received_transaction = Transaction.where(id: params[:tr_id]).take
 		borrower_received_transaction_status = borrower_received_transaction.update_transaction('Received Borrower', current_user.id, nil)
-		full_name = User.find(borrower_received_transaction.borrower_id).full_name
+		full_name = borrower_received_transaction.borrower.full_name
 
 		if borrower_received_transaction_status
 			# If action initiated by borrower, push notification to lender, and vice versa
@@ -308,12 +308,12 @@ class TransactionController < ApplicationController
 				borrower_received_transaction_details << 'received_borrower_by_borrower'
 				borrower_received_transaction_details << {
 					id: borrower_received_transaction.id,
-					book_name: Book.find(Inventory.find(borrower_received_transaction.inventory_id).book_id).book_name,
-					delivery_mode: (User.find(borrower_received_transaction.lender_id).is_delivery or User.find(borrower_received_transaction.borrower_id).is_delivery),
+					book_name: borrower_received_transaction.inventory.book.book_name,
+					delivery_mode: (borrower_received_transaction.lender.is_delivery or borrower_received_transaction.borrower.is_delivery),
 					received_date: borrower_received_transaction.received_date.to_s(:long),
 					name: full_name,
 					first_name: full_name.split[0],
-					gender: User.find(borrower_received_transaction.borrower_id).profile.gender
+					gender: borrower_received_transaction.borrower.profile.gender
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.lender_id.to_s
@@ -336,10 +336,10 @@ class TransactionController < ApplicationController
 				borrower_received_transaction_details << 'received_borrower_by_lender'
 				borrower_received_transaction_details << {
 					id: borrower_received_transaction.id,
-					book_name: Book.find(Inventory.find(borrower_received_transaction.inventory_id).book_id).book_name,
-					delivery_mode: (User.find(borrower_received_transaction.lender_id).is_delivery or User.find(borrower_received_transaction.borrower_id).is_delivery),
+					book_name: borrower_received_transaction.inventory.book.book_name,
+					delivery_mode: (borrower_received_transaction.lender.is_delivery or borrower_received_transaction.borrower.is_delivery),
 					received_date: borrower_received_transaction.received_date.to_s(:long),
-					name: User.find(borrower_received_transaction.lender_id).full_name
+					name: borrower_received_transaction.lender.full_name
 				}
 
 				publish_channel = 'transaction_listener_' + borrower_received_transaction.borrower_id.to_s
@@ -361,9 +361,9 @@ class TransactionController < ApplicationController
 		end
 
 		respond_to do |format|
-    		format.json  { render json: { result: (User.find(borrower_received_transaction.lender_id).is_delivery or User.find(borrower_received_transaction.borrower_id).is_delivery),
-    																name: User.find(borrower_received_transaction.borrower_id).profile.user_first_name,
-    																gender: User.find(borrower_received_transaction.borrower_id).profile.gender } }
+    	format.json  { render json: { result: (borrower_received_transaction.lender.is_delivery or borrower_received_transaction.borrower.is_delivery),
+    																name: borrower_received_transaction.borrower.profile.user_first_name,
+    																gender: borrower_received_transaction.borrower.profile.gender } }
 		end
 	end
 
