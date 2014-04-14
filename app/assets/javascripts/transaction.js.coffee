@@ -976,7 +976,7 @@ $(document).ready ->
 
             timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content')
             timeline_data_content = timeline_data_content.substring(0, timeline_data_content.length - 6)
-            timeline_data_content = timeline_data_content + '<u>Returned</u><br/>' + pData[1].returned_date + '</div>'
+            timeline_data_content = timeline_data_content + '<br/><u>Returned</u><br/>' + pData[1].returned_date + '</div>'
             timeline_data_content = $('#timeline_' + pData[1].id).attr('data-content', timeline_data_content)
             $('#received_lender_' + pData[1].id).removeAttr('disabled')
             $('#p_accepted_' + pData[1].id).text( pData[1].first_name + ' has returned it').fadeIn(300)
