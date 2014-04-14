@@ -40,13 +40,12 @@ class InventoryController < ApplicationController
 				else
 					render 'new'
 				end
-			end	
+			end
 		else
 			@inventory = Inventory.new
 			@inventory.user_id = current_user.id
 			@inventory.book_id = params[:book_id]
 			@inventory.available_in_city = params[:inventory][:available_in_city]
-			#@inventory.rental_price = params[:rental_price]
 			@inventory.status = params[:status]
 			@inventory.no_of_borrows = 0
 	 		if @inventory.save!
@@ -70,7 +69,6 @@ class InventoryController < ApplicationController
 		#FIXME Update_attributes needs to be done individually :S
 		@inventory = Inventory.where(id: params[:id]).take
    		@inventory.update_attributes(inventory_params)
-   		#@inventory.rental_price = params[:rental_price]
    		@inventory.status = params[:status]
    		
    		if @inventory.save!
@@ -90,9 +88,9 @@ class InventoryController < ApplicationController
 	end
 
 	def search_books
-		if params[:search_by_book_name] == ""
+		if params[:search_by_book_name] == ''
 			@books = Book.where('author LIKE ?', "%#{params[:search_by_author]}%")
-		elsif params[:search_by_author] == ""
+		elsif params[:search_by_author] == ''
 			@books = Book.where('book_name LIKE ?', "%#{params[:search_by_book_name]}%")
 		else
 			@books = Book.where('book_name LIKE ? AND author LIKE ? ', "%#{params[:search_by_book_name]}%", "%#{params[:search_by_author]}%")
@@ -116,7 +114,7 @@ class InventoryController < ApplicationController
 				@delivery_uwb = @users_with_book.user.is_delivery
 
 				if user_signed_in?
-					if (@address_uwb_in_city.city == params[:city]) 
+					if (@address_uwb_in_city.city == params[:city])
 						@book_array << book
 					end
 					# if current_user.is_delivery
@@ -130,12 +128,11 @@ class InventoryController < ApplicationController
 					if @address_uwb_in_city.city == params[:city]
 						@book_array << book
 					end
-				end					
+				end
 			end
 		end
 
 		respond_to do |format|
-  		format.html  
   		format.js
 		end
 	end
@@ -158,7 +155,7 @@ class InventoryController < ApplicationController
 
 				#TODO make the if more efficient
 				if @address_uwb_in_city.city == params[:city]
-					@users_and_address << u_wb.clone	
+					@users_and_address << u_wb.clone
 					@users_and_address << @address_uwb_in_city
 					@transactions_requested << Transaction.where(borrower_id: current_user.id, status: 'Pending', inventory_id: u_wb.id).pluck(:inventory_id)
 				end
@@ -173,7 +170,7 @@ class InventoryController < ApplicationController
 
 				#TODO make the if more efficient
 				if @address_uwb_in_city.city == params[:city]
-					@users_and_address << u_wb.clone	
+					@users_and_address << u_wb.clone
 					@users_and_address << @address_uwb_in_city
 					@transactions_requested << Transaction.where(status: 'Pending', inventory_id: u_wb.id).pluck(:inventory_id)
 				end
@@ -184,7 +181,6 @@ class InventoryController < ApplicationController
 		@transactions_requested = @transactions_requested.map(&:inspect).join(', ')
 
 		respond_to do |format|
-  		format.html  
   		format.js
   	end
 	end
@@ -197,7 +193,7 @@ class InventoryController < ApplicationController
 			@current = Transaction.where('borrower_id = ? AND ( status = ? OR status = ?)', current_user.id, 'Accepted', 'Received Borrower' )
 			@received = Transaction.where(lender_id: current_user.id, status: 'Returned')
 
-			chatbox  
+			chatbox
 		else
 			@borrow = nil
 			@lend = nil
@@ -215,7 +211,6 @@ class InventoryController < ApplicationController
 		end
 
 		respond_to do |format|
-  		format.html  
   		format.json { render json: @authors_books.to_json }
   	end
 	end
@@ -224,7 +219,6 @@ class InventoryController < ApplicationController
 		@book_name_books = Book.where('lower(author) like ? AND lower(book_name) like ?', "%#{params[:author].downcase}%", "%#{params[:book_name].downcase}%").pluck(:book_name)
 
 		respond_to do |format|
-  		format.html  
   		format.json { render json: @book_name_books.to_json }
   	end
 	end
@@ -233,7 +227,6 @@ class InventoryController < ApplicationController
 		@books = Book.where('lower(book_name) like ?', "%#{params[:book_name].downcase}%")
 
 		respond_to do |format|
-  		format.html  
   		format.json { render json: @books.to_json }
   	end
 	end
