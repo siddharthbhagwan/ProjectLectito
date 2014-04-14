@@ -43,7 +43,7 @@ if (<%= @users_and_address.length %> === 0) {
     delivery_charges = '<td>60</td>'
 
     // Address
-    rental_available_at = "<tr><td colspan='2'>" + "<i class='fa fa-globe'>&nbsp;&nbsp;</i><%= @users_and_address[j].address_summary %>" + '</td></tr>';
+    rental_available_at = "<tr><td colspan='2' style='height:80px;'>" + "<i class='fa fa-globe'>&nbsp;&nbsp;</i><%= @users_and_address[j].address_summary %>" + '</td></tr>';
 
     // Lender Name
     lender_name = '<td>' + "<i class='fa fa-user'>&nbsp;&nbsp;</i><%= @users_and_address[i].user.full_name %>" + '</td>';
