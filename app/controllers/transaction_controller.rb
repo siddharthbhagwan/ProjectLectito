@@ -31,7 +31,7 @@ class TransactionController < ApplicationController
 			transaction_details << {
 				id: @transaction.id,
 				book_name: @transaction.inventory.book.book_name,
-				requested_from: Address.find(Inventory.find(@transaction.inventory_id).available_in_city).address_summary,
+				requested_from: @transaction.inventory.address.address_summary,
 				requested_date: @transaction.request_date.to_s(:long),
 				status: @transaction.status,
 				borrower: @transaction.borrower.full_name,

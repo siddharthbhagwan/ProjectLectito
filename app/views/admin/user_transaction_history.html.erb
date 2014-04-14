@@ -30,13 +30,13 @@
         <tr>
           <td><%= link_to th.id, transaction_details_path(th.id) %></td>
           <!-- Book Name -->
-          <% th_book = Book.find(Inventory.find(th.inventory_id).book_id) %>
+          <% th_book = th.inventory.book %>
           <td><%= link_to th_book.book_name, book_history_path(th_book.id) %></td>
         <!-- Checking If user is Lender or borrower for this transaction -->
           <% if th.lender_id == current_user.id %>
             <!-- Link To full Profile -->
             <td>
-              <%= link_to User.find(th.borrower_id).full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
+              <%= link_to th.borrower.full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
             </td>
 
             <!-- feedback -->
@@ -45,7 +45,7 @@
             </td>
           <% else %>
             <td>
-              <%= link_to User.find(th.lender_id).full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
+              <%= link_to th.lender.full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
             </td>
             <td>
               <%= th.lender_feedback %>

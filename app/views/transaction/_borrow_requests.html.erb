@@ -23,7 +23,7 @@
 								<%= User.find(b.lender_id).full_name %>
 							</td>
 
-							<td><%= Address.find(Inventory.find(b.inventory_id).available_in_city).address_summary %></td>
+							<td><%= b.inventory.address.address_summary %></td>
 
 							<td><%= b.status %></td>
 
