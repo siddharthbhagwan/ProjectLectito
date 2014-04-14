@@ -16,11 +16,11 @@
 					<% @borrow.each do |b| %>
 						<tr id='borrow_<%= b.id %>' data-time='<%= b.created_at.to_i %>'>
 
-							<td><%= Book.find(Inventory.find(b.inventory_id).book_id).book_name %></td>
+							<td><%= b.inventory.book.book_name %></td>
 
 							<td>
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= b.id %>'>&nbsp;</i>
-								<%= User.find(b.lender_id).full_name %>
+								<%= b.lender.full_name %>
 							</td>
 
 							<td><%= b.inventory.address.address_summary %></td>

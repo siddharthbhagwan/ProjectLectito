@@ -15,11 +15,11 @@
 				<% unless @lend.blank? %>
 					<% @lend.each do |l| %>
 						<tr id='lend_<%= l.id %>'>
-							<td><%= Book.find(Inventory.find(l.inventory_id).book_id).book_name %></td>
+							<td><%=l.inventory.book.book_name %></td>
 
 							<td>
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= l.id %>'>&nbsp;</i>
-								<%= User.find(l.borrower_id).full_name %>
+								<%= l.borrower.full_name %>
 							</td>
 
 							<td><%= l.inventory.address.address_summary %></td>
