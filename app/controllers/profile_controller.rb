@@ -32,15 +32,15 @@ class ProfileController < ApplicationController
   end
 
   def update
-    old_number = Profile.where(user_id: current_user.id).take.user_phone_no
-    @profile = Profile.where(user_id: current_user.id).take
+    old_number = current_user.profile.user_phone_no
+    @profile = current_user.profile
     if @profile.update_attributes(profile_params)
       # If Phone number hasn't been updated
       if old_number == @profile.user_phone_no
         redirect_to edit_profile_path(current_user.id)
         flash[:notice] = 'Your Profile has been updated'
       else
-        user = User.find(current_user.id)
+        user = current_user
         user.otp_verification = false
         user.otp_failed_attempts = 0
         user.otp_failed_timestamp = nil
@@ -65,10 +65,10 @@ class ProfileController < ApplicationController
   def otp
     # Not verfied, send SMS
     p ' Reached OTP '
-    if !User.find(current_user.id).otp_verification
+    if !current_user.otp_verification
       # p ' VERIFICATION IS FALSE'
 
-      user = User.find(current_user.id)
+      user = current_user
       @mobile_number  = user.profile.user_phone_no
       @otp_failed_attempts = user.otp_failed_attempts
       @otp_failed_timestamp = user.otp_failed_timestamp
@@ -146,14 +146,14 @@ class ProfileController < ApplicationController
         current_user.otp = verification_code
         if current_user.save!
           message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
-          mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
+          mobile_number = current_user.profile.user_phone_no
           msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
           encoded_url = URI.encode(msg91_url)
           uri = URI.parse(encoded_url)
           msg91_url_reponse = Net::HTTP.get(uri)
           parsed_response = JSON.parse(msg91_url_reponse)
           
-          user = User.find(current_user.id)
+          user = current_user
           user.response_code = parsed_response['message']
           user.otp_verification = false
           user.otp_failed_attempts = 0
@@ -171,7 +171,7 @@ class ProfileController < ApplicationController
   end
 
   def otp_verification
-    user = User.find(current_user.id)
+    user = current_user
     otp_failed_attempts = user.otp_failed_attempts
 
     # Verification code matches
@@ -228,7 +228,7 @@ class ProfileController < ApplicationController
         require 'net/http'        
         verification_code = user.otp
         message = ' Your Verification Code for Project Lectito is ' + verification_code.to_s
-        mobile_number = Profile.where(user_id: current_user.id).take.user_phone_no
+        mobile_number = current_user.profile.user_phone_no
         msg91_url = ENV['msg91_url'] + '&mobiles=' + mobile_number + '&message=' + message + '&sender=LECTIT' + '&route=4&response=json'
         encoded_url = URI.encode(msg91_url)
         uri = URI.parse(encoded_url)
@@ -252,7 +252,7 @@ class ProfileController < ApplicationController
   end
 
   def rating
-    @name = User.find(current_user.id).full_name
+    @name = current_user.full_name
 
     @good_lender = Transaction.where(lender_id: current_user.id, borrower_feedback: :good).count
     @good_borrower = Transaction.where(borrower_id: current_user.id, lender_feedback: :good).count
@@ -275,11 +275,11 @@ class ProfileController < ApplicationController
     @transactions.each do |t|
       if t.lender_id == current_user.id
         if t.borrower_comments != '' && !t.borrower_comments.nil?
-          @comment_history.push(t.borrower_comments + ' ~ ' + User.find(t.borrower_id).full_name)
+          @comment_history.push(t.borrower_comments + ' ~ ' + t.borrower.full_name)
         end
       else
         if t.lender_comments != '' && !t.lender_comments.nil?
-          @comment_history.push(t.lender_comments + ' ~ ' + User.find(t.lender_id).full_name)
+          @comment_history.push(t.lender_comments + ' ~ ' + t.lender.full_name)
         end
       end
     end
@@ -290,7 +290,7 @@ class ProfileController < ApplicationController
     id = current_user.id
 
     if pr.lender_id == id
-      @name = User.find(pr.borrower_id).full_name
+      @name = pr.borrower.full_name
 
       @good_lender = Transaction.where(lender_id: pr.borrower_id, borrower_feedback: :good).count
       @good_borrower = Transaction.where(borrower_id: pr.borrower_id, lender_feedback: :good).count
@@ -314,11 +314,11 @@ class ProfileController < ApplicationController
       @transactions.each do |t|
         if t.lender_id == pr.borrower_id
           if t.borrower_comments != '' && !t.borrower_comments.nil?
-            @comment_history.push(t.borrower_comments + ' ~ ' + User.find(t.borrower_id).full_name)
+            @comment_history.push(t.borrower_comments + ' ~ ' + t.borrower.full_name)
           end
         else
           if t.lender_comments != '' && !t.lender_comments.nil?
-            @comment_history.push(t.lender_comments + ' ~ ' + User.find(t.lender_id).full_name)
+            @comment_history.push(t.lender_comments + ' ~ ' + t.lender_id.full_name)
           end
         end
       end
@@ -339,7 +339,7 @@ class ProfileController < ApplicationController
       end
 
     elsif  pr.borrower_id == current_user.id
-      @name = User.find(pr.lender_id).full_name
+      @name = pr.lender.full_name
 
       @good_lender = Transaction.where(lender_id: pr.lender_id, borrower_feedback: :good).count
       @good_borrower = Transaction.where(borrower_id: pr.lender_id, lender_feedback: :good).count
@@ -363,11 +363,11 @@ class ProfileController < ApplicationController
       @transactions.each do |t|
         if t.lender_id == pr.lender_id
           if t.borrower_comments != '' && !t.borrower_comments.nil?
-            @comment_history.push(t.borrower_comments + ' ~ ' + User.find(t.borrower_id).full_name)
+            @comment_history.push(t.borrower_comments + ' ~ ' + t.borrower.full_name)
           end
         else
           if t.lender_comments != '' && !t.lender_comments.nil?
-            @comment_history.push(t.lender_comments + ' ~ ' + User.find(t.lender_id).full_name)
+            @comment_history.push(t.lender_comments + ' ~ ' + t.lender.full_name)
           end
         end
       end
@@ -395,7 +395,7 @@ class ProfileController < ApplicationController
 
   def online
     # Called every n seconds to update timestamp
-    online = User.find(current_user.id).profile
+    online = current_user.profile
     unless online.blank?
       time_now = DateTime.now
       online.last_seen_at = time_now
@@ -415,7 +415,7 @@ class ProfileController < ApplicationController
           if at.lender_id == current_user.id
             # check for duplication
             if !active_trans_ids.include? at.borrower_id
-              lsa = User.find(at.borrower_id).profile.last_seen_at
+              lsa = at.borrower.profile.last_seen_at
               # p 'Last seen ' + User.find(at.borrower_id).full_name + ' at ' + lsa.to_s
               # p 'Time now is  ' + time_now_update.to_s
               # p ' Difference is 1 ' + (time_now_update - lsa).seconds.to_s
@@ -446,7 +446,7 @@ class ProfileController < ApplicationController
           # current user is the lender
           time_now_update = Time.now
           if ct.lender_id == current_user.id
-            lsa = User.find(ct.borrower_id).profile.last_seen_at
+            lsa = ct.borrower.profile.last_seen_at
             # p 'Last seen ' + User.find(ct.borrower_id).full_name + ' at ' + lsa.to_s
             # p 'Time now is  ' + time_now_update.to_s
             # p ' Difference is 3 ' + (time_now_update - lsa).seconds.to_s
@@ -455,7 +455,7 @@ class ProfileController < ApplicationController
             end
           else
             # current user is the borrower
-            lsa = User.find(ct.lender_id).profile.last_seen_at.to_time
+            lsa = ct.lender.profile.last_seen_at.to_time
             # p 'Last seen ' + User.find(ct.lender_id).full_name + ' at ' + lsa.to_s
             # p 'Time now is  ' + time_now_update.to_s
             # p ' Difference is 4 ' + (time_now_update - lsa).seconds.to_s
