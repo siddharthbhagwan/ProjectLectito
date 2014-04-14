@@ -26,9 +26,9 @@
 	</div>
 	<div class='form_padding'>
 		<div class='col-md-4'>
-			<%= label_tag User.find(@details.lender_id).full_name %><br/>
-			<%= label_tag User.find(@details.borrower_id).full_name %><br/>
-			<%= label_tag Book.find(Inventory.find(@details.inventory_id).book_id).book_name %><br/>
+			<%= label_tag @details.lender.full_name %><br/>
+			<%= label_tag @details.borrower.full_name %><br/>
+			<%= label_tag @details.inventory.book.book_name %><br/>
 			<%= label_tag @details.request_date.to_s(:long) %><br/>
 			<% if @details.status == 'Rejected' %>
 				<%= label_tag @details.rejection_date.to_s(:long) %><br/>
