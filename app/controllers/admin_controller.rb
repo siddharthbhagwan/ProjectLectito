@@ -24,7 +24,7 @@ class AdminController < ApplicationController
 	end
 
 	def user_transaction_history
-		@t_history =  Transaction.where('((borrower_id = ? OR lender_id = ? ) AND status = ? )', params[:id] , params[:id], 'Complete').order('request_date desc')
+		@t_history =  Transaction.includes(:borrower, :lender).where('((borrower_id = ? OR lender_id = ? ) AND status = ? )', params[:id] , params[:id], 'Complete').order('request_date desc')
 	end
 
 	def bar_user
