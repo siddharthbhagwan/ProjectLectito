@@ -19,7 +19,7 @@ class TransactionController < ApplicationController
 			raise 'error'
 		else
 			#MailWorker.perform_borrow_request_async(@transaction.lender_id)
-			lsa = Profile.where(user_id: @transaction.borrower_id).take.last_seen_at
+			lsa = @transaction.borrower.profile.last_seen_at
 			if (DateTime.now.to_time - lsa).seconds < 6
 				online_status = 'Online'
 			else
