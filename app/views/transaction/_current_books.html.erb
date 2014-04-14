@@ -15,20 +15,20 @@
 					<% @current.each do |c| %>
 						<tr id='current_<%= c.id %>' >
 
-							<td><%= Book.find(Inventory.find(c.inventory_id).book_id).book_name %></td>
+							<td><%= c.inventory.book.book_name %></td>
 
 							<td>
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= c.id %>'>&nbsp;</i>
-								<%= link_to(User.find(c.lender_id).full_name, "javascript:void(0)", id: "name_chat_#{c.id}") %> &nbsp;
-								<% if (DateTime.now.to_time - Profile.where(user_id: c.lender_id).first.last_seen_at < 6.5 ) %>
-									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => User.find(current_user.id).profile.chat_name, 'data-lendercn' => User.find(c.lender_id).profile.chat_name, 'data-borrowercn' => User.find(c.borrower_id).profile.chat_name, 'data-title' => Book.where(id: Inventory.where(id: c.inventory_id).take.book_id).take.book_name) %>
+								<%= link_to(c.lender.full_name, "javascript:void(0)", id: "name_chat_#{c.id}") %> &nbsp;
+								<% if (DateTime.now.to_time - c.lender.profile.last_seen_at < 6.5 ) %>
+									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => c.lender.profile.chat_name, 'data-borrowercn' => c.borrower.profile.chat_name, 'data-title' => c.inventory.book.book_name) %>
 									<% else %>
-										<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => User.find(current_user.id).profile.chat_name, 'data-lendercn' => User.find(c.lender_id).profile.chat_name, 'data-borrowercn' => User.find(c.borrower_id).profile.chat_name, 'data-title' => Book.where(id: Inventory.where(id: c.inventory_id).take.book_id).take.book_name) %>
+										<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => c.lender.profile.chat_name, 'data-borrowercn' => c.borrower.profile.chat_name, 'data-title' => c.inventory.book.book_name) %>
 									<% end %>
 							</td>
 
 							<% if c.status == 'Accepted' %>
-								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
+								<% if (c.lender.is_delivery or c.borrower.is_delivery) %>
 									<td>
 										<span id='p_current_<%= c.id %>'>Sent by Lender</span>
 									</td>
@@ -44,7 +44,7 @@
 									</td>
 								<% end %>
 							<% elsif c.status == 'Received Borrower' %>
-								<% if (User.find(c.lender_id).is_delivery or User.find(c.borrower_id).is_delivery) %>
+								<% if (c.lender.is_delivery or c.borrower.is_delivery) %>
 									<td class='text-center'>
 										<span id='p_current_<%= c.id %>'>Received by You</span>
 									</td>
