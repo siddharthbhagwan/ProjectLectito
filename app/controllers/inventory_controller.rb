@@ -8,13 +8,13 @@ class InventoryController < ApplicationController
 	end
 
 	def index
-		@inventory = User.where(id: current_user.id).take.inventories.where(deleted: :false).page(params[:page]).per(8)
+		@inventory = current_user.inventories.where(deleted: :false).page(params[:page]).per(8)
 		chatbox
 	end
 
 	def new
 		@book = Book.new
-		@address = User.where(id: current_user.id).take.addresses
+		@address = current_user.addresses
 		chatbox
 	end
 
@@ -62,7 +62,7 @@ class InventoryController < ApplicationController
 
 	def edit
 		@inventory = Inventory.where(id: params[:id]).take
-		@address = User.where(id: current_user.id).take.addresses
+		@address = current_user.addresses
 		chatbox
 	end
 
