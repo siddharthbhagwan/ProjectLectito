@@ -6,5 +6,5 @@ class Inventory < ActiveRecord::Base
   has_many :transactions
   belongs_to :book
   belongs_to :user
-  
+  belongs_to :address, foreign_key: :available_in_city
 end
