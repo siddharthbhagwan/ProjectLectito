@@ -4,13 +4,13 @@ class ChatController < ApplicationController
 
   def show
     @transaction = Transaction.where(id: params[:id]).take
-    @book = Book.where(id: Inventory.where(id: @transaction.inventory_id).take.book_id).take.book_name
+    @book = @transaction.inventory.book.book_name
     if current_user.id == @transaction.lender_id
-      @lender_borrower = User.find(@transaction.borrower_id).full_name
-      @you = User.find(@transaction.lender_id).profile.chat_name
+      @lender_borrower = @transaction.borrower.full_name
+      @you = @transaction.lender.profile.chat_name
     else
-      @lender_borrower = User.find(@transaction.lender_id).full_name
-      @you =  User.find(@transaction.borrower_id).profile.chat_name
+      @lender_borrower = @transaction.lender.full_name
+      @you =  @transaction.borrower.profile.chat_name
     end
 
     last_10_chats = Chat.where(transaction_id: params[:id]).last(10)
@@ -23,11 +23,11 @@ class ChatController < ApplicationController
   def box_chat_history
     @transaction = Transaction.where(id: params[:trid]).take
     if current_user.id == @transaction.lender_id
-      @lender_borrower = User.find(@transaction.borrower_id).profile.chat_name
-      @you = User.find(@transaction.lender_id).profile.chat_name
+      @lender_borrower = @transaction.borrower.profile.chat_name
+      @you = @transaction.lender.profile.chat_name
     else
-      @lender_borrower = User.find(@transaction.lender_id).profile.chat_name
-      @you =  User.find(@transaction.borrower_id).profile.chat_name
+      @lender_borrower = @transaction.lender.profile.chat_name
+      @you = @transaction.borrower.profile.chat_name
     end
 
     if params[:id].blank?
