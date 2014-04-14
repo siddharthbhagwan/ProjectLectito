@@ -5,11 +5,11 @@
 <%= content_tag 'a', 'Filter By Date Range ->', id: :dates_filter_toggle %><br/><br/>
 <div id='dates_filter_div' style='display:none;'>
   <div class='col-md-3'>
-    <%= text_field_tag :min_req, nil, :placeholder => 'Min Req Date (YYYY-MM-DD)', class: 'form-control' %>
+    <%= text_field_tag :min_req, nil, placeholder: 'Min Req Date (YYYY-MM-DD)', class: 'form-control' %>
   </div>
-  <div class='col-md-3'>  
-    <%= text_field_tag :max_req, nil, :placeholder => 'Max Req Date (YYYY-MM-DD)', class: 'form-control' %>
-  </div>  
+  <div class='col-md-3'>
+    <%= text_field_tag :max_req, nil, placeholder: 'Max Req Date (YYYY-MM-DD)', class: 'form-control' %>
+  </div>
 </div>
 <br/>
 
@@ -29,17 +29,15 @@
       <% @t_history.each do |th| %>
         <tr>
           <td><%= link_to th.id, transaction_details_path(th.id) %></td>
-          <!-- Book Name -->
+
           <% th_book = th.inventory.book %>
           <td><%= link_to th_book.book_name, book_history_path(th_book.id) %></td>
-        <!-- Checking If user is Lender or borrower for this transaction -->
+
           <% if th.lender_id == current_user.id %>
-            <!-- Link To full Profile -->
             <td>
               <%= link_to th.borrower.full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
             </td>
 
-            <!-- feedback -->
             <td>
               <%= th.borrower_feedback %>
             </td>
