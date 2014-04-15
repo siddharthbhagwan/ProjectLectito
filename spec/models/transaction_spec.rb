@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 4 tests
+# 5 tests
 
 describe Transaction do
   
@@ -26,6 +26,11 @@ describe Transaction do
     chat_association = Transaction.reflect_on_association(:lender)
     chat_association.macro.should == :belongs_to
     chat_association.options[:class_name].should == 'User'
+  end
+
+  it 'Should belong to an inventory ' do
+    inventory_association = Transaction.reflect_on_association(:inventory)
+    inventory_association.macro.should == :belongs_to
   end
 
 end

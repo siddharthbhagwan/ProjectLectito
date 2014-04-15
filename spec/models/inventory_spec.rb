@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 4 tests
+# 6 tests
 
 describe Inventory do
   
@@ -24,6 +24,17 @@ describe Inventory do
   it 'Should belong to a user ' do
     user_association = Inventory.reflect_on_association(:user)
     user_association.macro.should == :belongs_to
+  end
+
+  it 'Should have many transactions ' do
+    transaction_association = Inventory.reflect_on_association(:transactions)
+    transaction_association.macro.should == :has_many
+  end
+
+  it 'Should belong to an address through a foreign key ' do
+    address_association = Inventory.reflect_on_association(:address)
+    address_association.macro.should == :belongs_to
+    address_association.options[:foreign_key].should == :available_in_city
   end
 
 end

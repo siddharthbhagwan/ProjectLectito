@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# 7 tests
+# 8 tests
 
 describe Address do
 
@@ -40,6 +40,12 @@ describe Address do
   it 'Should belong to a user ' do
     user_association = Address.reflect_on_association(:user)
     user_association.macro.should == :belongs_to
+  end
+
+  it 'Should have many inventories through a foreign key ' do
+    inventories_association = Address.reflect_on_association(:inventories)
+    inventories_association.macro.should == :has_many
+    inventories_association.options[:foreign_key].should == :available_in_city
   end
 
 end
