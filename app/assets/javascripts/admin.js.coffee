@@ -22,27 +22,27 @@ before_send = ->
 # Datatables req date range filter
 # Last 2 else return true means display the row ( fn is called for each row)
 $.fn.dataTableExt.afnFiltering.push (oSettings, aData, iDataIndex) ->
-  if $("#min_req").val() isnt undefined and $("#max_req").val() isnt undefined
-    if $("#min_req").val() isnt "" or $("#max_req").val() isnt ""
-      iMin_temp = $("#min_req").val()
-      iMin_temp = "2013-12-20"  if iMin_temp is ""
+  if $('#min_req').val() isnt undefined and $('#max_req').val() isnt undefined
+    if $('#min_req').val() isnt '' or $('#max_req').val() isnt ''
+      iMin_temp = $('#min_req').val()
+      iMin_temp = '2013-12-20'  if iMin_temp is ''
 
-      iMax_temp = $("#max_req").val()
-      iMax_temp = "2016-01-01"  if iMax_temp is ""
+      iMax_temp = $('#max_req').val()
+      iMax_temp = '2016-01-01'  if iMax_temp is ''
 
-      arr_min = iMin_temp.split("-")
-      arr_max = iMax_temp.split("-")
-      arr_date = aData[4].split("-")
+      arr_min = iMin_temp.split('-')
+      arr_max = iMax_temp.split('-')
+      arr_date = aData[4].split('-')
 
       iMin = new Date(arr_min[0], arr_min[1], arr_min[2], 0, 0, 0, 0)
       iMax = new Date(arr_max[0], arr_max[1], arr_max[2], 0, 0, 0, 0)
       iDate = new Date(arr_date[0], arr_date[1], arr_date[2], 0, 0, 0, 0)
 
-      if iMin is "" and iMax is ""
+      if iMin is '' and iMax is ''
         return true
-      else if iMin is "" and iDate < iMax
+      else if iMin is '' and iDate < iMax
         return true
-      else if iMin <= iDate and "" is iMax
+      else if iMin <= iDate and '' is iMax
         return true
       else return true  if iMin <= iDate and iDate <= iMax
     else

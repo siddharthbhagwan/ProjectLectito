@@ -14,7 +14,7 @@ $(document).ready ->
     search_city = $('#city').val()
     search_by_author = $('#search_by_author').val()
     search_by_book_name = $('#search_by_book_name').val()
-    $('#search_results_table').remove() 
+    $('#search_results_table').remove()
     $('#city_validation').empty()
     $('#author_book_validation').empty()
     $('#search_text').hide()
@@ -168,7 +168,7 @@ $(document).ready ->
 #--------------------------------------------------------------------------------------------------------------------
 # Autocomplete for Adding Inventory
 
-  $('#book_name').autocomplete( 
+  $('#book_name').autocomplete(
     source: (request, response) ->
       $.ajax
         url: '/inventory/autocomplete_book_details'

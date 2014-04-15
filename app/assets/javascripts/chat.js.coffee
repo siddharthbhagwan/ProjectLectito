@@ -29,7 +29,7 @@ $(document).ready ->
           type: 'page'
           you: you
 
-        success: (msg) ->          
+        success: (msg) ->
           
         error: (jqXHR, textStatus, errorThrown) ->
 
@@ -121,7 +121,7 @@ $(document).ready ->
               $('#chat_div_' + trid).chatbox('option', 'boxManager').addMsg msg[i], msg[i+1], 'ct_' + msg[i+2], true
               i = i + 3
 
-          complete: (jqXHR, textStatus) ->  
+          complete: (jqXHR, textStatus) ->
 
           error: (jqXHR, textStatus, errorThrown) ->
 
@@ -227,7 +227,7 @@ $(document).ready ->
               if $("div[id^='chat_div_']").length is 1
                 $('#chat_div_' + pData[1].trid).next().find('textarea').eq(0).focus()
 
-            # Chat box already initialized 
+            # Chat box already initialized
             else
               $('#chat_div_' + pData[1].trid).chatbox(
                 id: 'chatbox_' + pData[1].trid
@@ -293,7 +293,7 @@ $(document).ready ->
 
     error: (jqXHR, textStatus, errorThrown) ->
       # setTimeout $.unblockUI
-      # $("#error_message").dialog "open" 
+      # $("#error_message").dialog "open"
 
 #--------------------------------------------------------------------------------------------------------------------
   # Keep page chat text box scrolled down
@@ -310,6 +310,3 @@ $(document).ready ->
       $(this).parent().prev().children().eq(1).click()
       if $('div[id^="chat_div_"]').length isnt 0
         $('div[id^="chat_div_"]').next().find('textarea').eq(0).focus()
-
-#---------------------------------------------------------------------------------------------------------------------
-

@@ -24,7 +24,7 @@
             <td><%= t.borrower.full_name %></td>
           <% else %>
             <td><%= t.lender.full_name %></td>
-          <% end %>  
+          <% end %>
           <td class='manage'><%= link_to 'Message', chat_path(t.id), class: 'btn btn-default '%></td>
           <!-- #TODO Check for alternative to double querying, or is it cached? -->
           <td class='manage'><%= tag 'input', type: 'button', id: "chatbox_#{t.id}", class: 'btn btn-default', value: 'Chat', 'data-trid' => t.id, 'data-title' => t.inventory.book.book_name, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => t.lender.profile.chat_name, 'data-borrowercn' => t.borrower.profile.chat_name %></td>

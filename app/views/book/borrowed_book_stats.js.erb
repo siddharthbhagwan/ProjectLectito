@@ -18,7 +18,7 @@ $table_header2 = "<thead><tr id='sub_search_results_table_header2'><th colspan='
 	<%= i = 0 %>
 	<% while i< @borrowed_list.length %>
 		$status_row += "<tbody><tr><td><%= Address.find(@borrowed_list[i].available_in_city).city %></td><td><%= @borrowed_list[i].rental_price.to_s %></td></tr>"
-		<% i+= 1 %>	
+		<% i+= 1 %>
 	<% end %>
 <% end %>
 

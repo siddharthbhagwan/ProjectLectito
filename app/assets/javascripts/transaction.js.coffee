@@ -60,7 +60,7 @@ $(document).ready ->
   before_send = ->
     $.blockUI
       theme:     true, 
-      title:    'Please Wait', 
+      title:    'Please Wait',
       message:  '<p>Your request is being processed</p>'
       draggable: false
 

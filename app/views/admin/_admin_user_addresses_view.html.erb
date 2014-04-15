@@ -12,7 +12,7 @@
       <tr>
         <td colspan='6'>User has not added any addresses as of now </td>
       </tr>
-    <% else %> 
+    <% else %>
       <% @user.addresses.each do |ua| %>
         <tr>
           <td><%= ua.address_line1 %></td>
