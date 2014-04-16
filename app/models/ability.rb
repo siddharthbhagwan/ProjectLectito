@@ -14,7 +14,6 @@ class Ability
       can :manage, Transaction
       can :manage, Inventory
       can :manage, Chat
-      cannot :manage, Book
     end
   end
 end
