@@ -26,9 +26,9 @@ gem 'font-awesome-sass'
 gem 'newrelic_rpm'
 
 # add these gems to help with the transition:
-gem 'rails-observers'
-#gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+# gem 'rails-observers'
+# gem 'actionpack-page_caching'
+# gem 'actionpack-action_caching'
 
 # Gems used only for assets and not required
 # in production environments by default.
