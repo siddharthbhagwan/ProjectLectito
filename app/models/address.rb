@@ -11,4 +11,7 @@ class Address < ActiveRecord::Base
     self.address_line1.gsub(/\r/,'')#.gsub(/\n/,'')
   end
 
+  def address_summary_newline
+    self.address_line1.gsub(/\r/,'').gsub(/\n/,'')
+  end
 end
