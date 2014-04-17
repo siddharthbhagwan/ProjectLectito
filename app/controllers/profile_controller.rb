@@ -275,11 +275,11 @@ class ProfileController < ApplicationController
     @transactions.each do |t|
       if t.lender_id == current_user.id
         if t.borrower_comments != '' && !t.borrower_comments.nil?
-          @comment_history.push(t.borrower_comments + ' ~ ' + t.borrower.full_name)
+          @comment_history.push(t.borrower_comments + ' ~ ' + t.borrower.full_name + ', ' + t.returned_date.to_date.to_s(:long))
         end
       else
         if t.lender_comments != '' && !t.lender_comments.nil?
-          @comment_history.push(t.lender_comments + ' ~ ' + t.lender.full_name)
+          @comment_history.push(t.lender_comments + ' ~ ' + t.lender.full_name + ', ' + t.returned_date.to_date.to_s(:long))
         end
       end
     end
