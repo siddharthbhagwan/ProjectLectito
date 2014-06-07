@@ -21,9 +21,9 @@
 								&nbsp;<i class='fa fa-user' id='public_rating_<%= c.id %>'>&nbsp;</i>
 								<%= link_to(c.lender.full_name, "javascript:void(0)", id: "name_chat_#{c.id}") %> &nbsp;
 								<% if (DateTime.now.to_time - c.lender.profile.last_seen_at < 6.5 ) %>
-									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => c.lender.profile.chat_name, 'data-borrowercn' => c.borrower.profile.chat_name, 'data-title' => c.inventory.book.book_name) %>
+									<%= image_tag('online_dot.png', size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => current_user.chat_name, 'data-lendercn' => c.lender.chat_name, 'data-borrowercn' => c.borrower.chat_name, 'data-title' => c.inventory.book.book_name) %>
 									<% else %>
-										<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => c.lender.profile.chat_name, 'data-borrowercn' => c.borrower.profile.chat_name, 'data-title' => c.inventory.book.book_name) %>
+										<%= image_tag('online_dot.png', hidden: :true, size: '12x12', class: 'img-circle', id: 'online_' + c.id.to_s, 'data-trid' => c.id, 'data-currentcn' => current_user.chat_name, 'data-lendercn' => c.lender.chat_name, 'data-borrowercn' => c.borrower.chat_name, 'data-title' => c.inventory.book.book_name) %>
 									<% end %>
 							</td>
 

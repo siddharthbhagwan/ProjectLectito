@@ -27,9 +27,9 @@
             <td>
               <%= link_to th.borrower.full_name, '/profile/public_rating/#{th.id}' %> &nbsp;
               <% if (DateTime.now.to_time - th.borrower.profile.last_seen_at < 6 ) %>
-                <%= image_tag('online_dot.png', class: 'online_ img-circle' + th.borrower_id.to_s, size: '12x12', id: 'online_' + th.borrower_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => th.lender.profile.chat_name, 'data-borrowercn' => th.borrower.profile.chat_name, 'data-title' => th.inventory.book.book_name) %>
+                <%= image_tag('online_dot.png', class: 'online_ img-circle' + th.borrower_id.to_s, size: '12x12', id: 'online_' + th.borrower_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.chat_name, 'data-lendercn' => th.lender.chat_name, 'data-borrowercn' => th.borrower.chat_name, 'data-title' => th.inventory.book.book_name) %>
               <% else %>
-                <%= image_tag('online_dot.png', hidden: :true, class: 'online_ img-circle' + th.borrower_id.to_s, size: '12x12', id: 'online_' + th.borrower_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => th.lender.profile.chat_name, 'data-borrowercn' => th.borrower.profile.chat_name, 'data-title' => th.inventory.book.book_name) %>
+                <%= image_tag('online_dot.png', hidden: :true, class: 'online_ img-circle' + th.borrower_id.to_s, size: '12x12', id: 'online_' + th.borrower_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.chat_name, 'data-lendercn' => th.lender.chat_name, 'data-borrowercn' => th.borrower.chat_name, 'data-title' => th.inventory.book.book_name) %>
               <% end %>
             </td>
 
@@ -40,9 +40,9 @@
             <td>
               <%= link_to th.lender.full_name, "/profile/public_rating/#{th.id}" %> &nbsp;
               <% if (DateTime.now.to_time - th.lender.profile.last_seen_at < 6 ) %> 
-                <%= image_tag('online_dot.png', size: '12x12', class: 'online_ img-circle' + th.lender_id.to_s, id: 'online_' + th.lender_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => th.lender.profile.chat_name, 'data-borrowercn' => th.borrower.profile.chat_name, 'data-title' => th.inventory.book.book_name) %>
+                <%= image_tag('online_dot.png', size: '12x12', class: 'online_ img-circle' + th.lender_id.to_s, id: 'online_' + th.lender_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.chat_name, 'data-lendercn' => th.lender.chat_name, 'data-borrowercn' => th.borrower.chat_name, 'data-title' => th.inventory.book.book_name) %>
               <% else %>
-                <%= image_tag('online_dot.png', size: '12x12', hidden: :true, class: 'online_ img-circle' + th.lender_id.to_s, id: 'online_' + th.lender_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.profile.chat_name, 'data-lendercn' => th.lender.profile.chat_name, 'data-borrowercn' => th.borrower.profile.chat_name, 'data-title' => th.inventory.book.book_name) %>
+                <%= image_tag('online_dot.png', size: '12x12', hidden: :true, class: 'online_ img-circle' + th.lender_id.to_s, id: 'online_' + th.lender_id.to_s, 'data-trid' => th.id, 'data-currentcn' => current_user.chat_name, 'data-lendercn' => th.lender.chat_name, 'data-borrowercn' => th.borrower.chat_name, 'data-title' => th.inventory.book.book_name) %>
               <% end %>
             </td>
             <td>

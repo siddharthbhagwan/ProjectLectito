@@ -108,9 +108,9 @@ class TransactionController < ApplicationController
 	    book_name = accepted_request.inventory.book.book_name
 	    acceptance_date = accepted_request.acceptance_date.to_s(:long)
 	    delivery_mode = (accepted_request.borrower.is_delivery or accepted_request.lender.is_delivery)
-	    currentcn = current_user.profile.chat_name
-	    borrowercn = accepted_request.borrower.profile.chat_name
-	    lendercn = accepted_request.lender.profile.chat_name
+	    currentcn = current_user.chat_name
+	    borrowercn = accepted_request.borrower.chat_name
+	    lendercn = accepted_request.lender.chat_name
 	    title = accepted_request.inventory.book.book_name
 	    request_date = accepted_request.request_date.to_s(:long)
 

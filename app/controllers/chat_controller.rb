@@ -7,27 +7,27 @@ class ChatController < ApplicationController
     @book = @transaction.inventory.book.book_name
     if current_user.id == @transaction.lender_id
       @lender_borrower = @transaction.borrower.full_name
-      @you = @transaction.lender.profile.chat_name
+      @you = @transaction.lender.chat_name
     else
       @lender_borrower = @transaction.lender.full_name
-      @you =  @transaction.borrower.profile.chat_name
+      @you =  @transaction.borrower.chat_name
     end
 
     last_10_chats = Chat.where(transaction_id: params[:id]).last(10)
     @chat_history = String.new
     last_10_chats.each do |l|
-      @chat_history << User.find(l.from_user).profile.chat_name + " : " + l.body + "\n"
+      @chat_history << User.find(l.from_user).chat_name + " : " + l.body + "\n"
     end
   end
 
   def box_chat_history
     @transaction = Transaction.where(id: params[:trid]).take
     if current_user.id == @transaction.lender_id
-      @lender_borrower = @transaction.borrower.profile.chat_name
-      @you = @transaction.lender.profile.chat_name
+      @lender_borrower = @transaction.borrower.chat_name
+      @you = @transaction.lender.chat_name
     else
-      @lender_borrower = @transaction.lender.profile.chat_name
-      @you = @transaction.borrower.profile.chat_name
+      @lender_borrower = @transaction.lender.chat_name
+      @you = @transaction.borrower.chat_name
     end
 
     if params[:id].blank?
@@ -38,7 +38,7 @@ class ChatController < ApplicationController
 
     chat_history = Array.new
     last_5_chats.each do |l|
-      chat_history << User.find(l.from_user).profile.chat_name
+      chat_history << User.find(l.from_user).chat_name
       chat_history << l.body
       chat_history << l.id
     end

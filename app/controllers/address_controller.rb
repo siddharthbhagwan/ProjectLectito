@@ -32,7 +32,7 @@ class AddressController < ApplicationController
 
   # List all addresses
   def index
-    @address = User.where(id: current_user.id).first.addresses
+    @address = current_user.addresses
     chatbox
 
     respond_to do |format|

@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def chat_name
+    profile.chat_name
+  end
+
   def full_name
     profile.user_first_name + ' ' + profile.user_last_name
   end
