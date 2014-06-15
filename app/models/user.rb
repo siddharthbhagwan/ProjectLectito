@@ -20,6 +20,12 @@ class User < ActiveRecord::Base
   has_many :inventories ,dependent: :destroy
   has_many :books, through: :inventories
   has_many :transactions, dependent: :destroy
+  # Using chat_name instead, for readability
+  # delegate :chat_name, to: :profile
+
+  def find_current_inventories
+    inventories.find_current
+  end
 
   # Returns Full name, or Email, which ever is available
   def welcome_name
